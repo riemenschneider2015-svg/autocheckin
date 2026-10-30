@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – AutoCheckin Mechlerstr.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: rgba(255, 255, 255, 0.1);
+      --primary: #38bdf8;
+      --accent: #22c55e;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f172a;
+      color: var(--text);
+      padding: 24px 16px;
+      min-height: 100vh;
+    }
+    .wrapper { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+    .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    h1 { font-size: 24px; font-weight: 800; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+    .card-title { font-size: 17px; font-weight: 700; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+    
+    /* Login */
+    #loginCard { max-width: 400px; margin: 60px auto; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    label { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+    input, select, textarea {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+    }
+    input:focus { outline: none; border-color: var(--primary); }
+    
+    .btn {
+      background: var(--primary);
+      color: #0f172a;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-sm { padding: 6px 12px; font-size: 12px; border-radius: 8px; }
+    
+    /* Table */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; padding: 10px; color: var(--text-muted); border-bottom: 1px solid var(--border); }
+    td { padding: 12px 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-active { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
+    .badge-future { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+    .badge-expired { background: rgba(148, 163, 184, 0.2); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.4); }
+    .badge-admin { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media(max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  <!-- Login Card -->
+  <div id="loginCard" class="card">
+    <h2 style="margin-bottom: 16px;">🔑 Admin Login</h2>
+    <div class="form-group">
+      <label>Master-PIN / Admin-Passwort</label>
+      <input type="password" id="adminPasswordInput" placeholder="Passwort eingeben">
+    </div>
+    <button class="btn" style="width: 100%; justify-content: center;" onclick="doLogin()">Anmelden</button>
+  </div>
+
+  <!-- Main Dashboard (hidden until logged in) -->
+  <div id="mainDashboard" style="display: none; flex-direction: column; gap: 24px;">
+    <header class="header">
+      <div>
+        <h1>🏢 Mechlerstr. – PIN Management</h1>
+        <p style="color: var(--text-muted); font-size: 13px;">AutoCheckin & Zeitgesteuerte PINs</p>
+      </div>
+      <button class="btn btn-sm btn-danger" onclick="logout()">Abmelden</button>
+    </header>
+
+    <!-- Add New PIN Form -->
+    <div class="card">
+      <div class="card-title">
+        <span>➕ Neuen Gast-PIN anlegen</span>
+        <button class="btn btn-sm" onclick="generateRandomPin()">Zufälligen PIN (5-stellig)</button>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Gast Name</label>
+          <input type="text" id="newGuestName" placeholder="z. B. Max Mustermann">
+        </div>
+        <div class="form-group">
+          <label>PIN Code</label>
+          <input type="text" id="newPinCode" placeholder="z. B. 48192">
+        </div>
+        <div class="form-group">
+          <label>Gültig ab (Check-In)</label>
+          <input type="datetime-local" id="newValidFrom">
+        </div>
+        <div class="form-group">
+          <label>Gültig bis (Check-Out)</label>
+          <input type="datetime-local" id="newValidUntil">
+        </div>
+      </div>
+      <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+        <button class="btn" onclick="saveNewPin()">PIN speichern</button>
+      </div>
+    </div>
+
+    <!-- Active PINs Table -->
+    <div class="card">
+      <div class="card-title">
+        <span>📋 Alle PIN-Codes</span>
+        <button class="btn btn-sm" onclick="loadData()">Aktualisieren</button>
+      </div>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Name / Buchung</th>
+              <th>PIN</th>
+              <th>Gültig ab</th>
+              <th>Gültig bis</th>
+              <th>Check-in Link</th>
+              <th>Aktion</th>
+            </tr>
+          </thead>
+          <tbody id="pinsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Live Logs -->
+    <div class="card">
+      <div class="card-title">
+        <span>📜 Letzte Türöffnungen & Zugriffe</span>
+      </div>
+      <div style="max-height: 250px; overflow-y: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Zeitpunkt</th>
+              <th>Gast</th>
+              <th>Tür</th>
+              <th>Status</th>
+              <th>Meldung</th>
+              <th>IP</th>
+            </tr>
+          </thead>
+          <tbody id="logsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let adminPin = localStorage.getItem('admin_pin') || '';
+
+  window.addEventListener('DOMContentLoaded', () => {
+    if (adminPin) {
+      document.getElementById('loginCard').style.display = 'none';
+      document.getElementById('mainDashboard').style.display = 'flex';
+      initDateInputs();
+      loadData();
+    }
+  });
+
+  function initDateInputs() {
+    const now = new Date();
+    now.setHours(14, 0, 0, 0);
+    const in3Days = new Date(now);
+    in3Days.setDate(in3Days.getDate() + 3);
+    in3Days.setHours(11, 0, 0, 0);
+
+    const pad = (n) => String(n).padStart(2, '0');
+    const toIso = (d) => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+
+    document.getElementById('newValidFrom').value = toIso(now);
+    document.getElementById('newValidUntil').value = toIso(in3Days);
+  }
+
+  function doLogin() {
+    const val = document.getElementById('adminPasswordInput').value.trim();
+    if (!val) return;
+    adminPin = val;
+    localStorage.setItem('admin_pin', adminPin);
+    document.getElementById('loginCard').style.display = 'none';
+    document.getElementById('mainDashboard').style.display = 'flex';
+    initDateInputs();
+    loadData();
+  }
+
+  function logout() {
+    localStorage.removeItem('admin_pin');
+    location.reload();
+  }
+
+  function generateRandomPin() {
+    const p = Math.floor(10000 + Math.random() * 90000).toString();
+    document.getElementById('newPinCode').value = p;
+  }
+
+  async function loadData() {
+    try {
+      const res = await fetch(`api.php?action=admin_list&admin_pin=${encodeURIComponent(adminPin)}`);
+      const data = await res.json();
+      if (!data.success) {
+        alert(data.error || 'Fehler beim Laden');
+        logout();
+        return;
+      }
+      renderPins(data.pins || []);
+      renderLogs(data.logs || []);
+    } catch (e) {
+      alert('Verbindungsfehler zur API');
+    }
+  }
+
+  function renderPins(pins) {
+    const tb = document.getElementById('pinsTableBody');
+    tb.innerHTML = '';
+    const now = new Date();
+
+    pins.forEach(p => {
+      const from = new Date(p.valid_from);
+      const until = new Date(p.valid_until);
+
+      let badge = '';
+      if (p.role === 'admin') {
+        badge = '<span class="badge badge-admin">Master</span>';
+      } else if (now < from) {
+        badge = '<span class="badge badge-future">Zukünftig</span>';
+      } else if (now > until) {
+        badge = '<span class="badge badge-expired">Abgelaufen</span>';
+      } else {
+        badge = '<span class="badge badge-active">Aktiv</span>';
+      }
+
+      const host = window.location.origin + window.location.pathname.replace('admin.html', '').replace('admin.php', '');
+      const link = `${host}?code=${p.pin}`;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${badge}</td>
+        <td><b>${p.name || 'Gast'}</b><br><small style="color:var(--text-muted);">${p.booking_id || ''}</small></td>
+        <td><code style="font-size:15px; color:var(--primary); font-weight:700;">${p.pin}</code></td>
+        <td>${from.toLocaleDateString('de-DE')} ${from.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'})}</td>
+        <td>${until.toLocaleDateString('de-DE')} ${until.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'})}</td>
+        <td>
+          <button class="btn btn-sm" onclick="copyLink('${link}')">📋 Link kopieren</button>
+        </td>
+        <td>
+          ${p.role !== 'admin' ? `<button class="btn btn-sm btn-danger" onclick="deletePin('${p.pin}')">Löschen</button>` : '<em>Fest</em>'}
+        </td>
+      `;
+      tb.appendChild(tr);
+    });
+  }
+
+  function renderLogs(logs) {
+    const tb = document.getElementById('logsTableBody');
+    tb.innerHTML = '';
+    logs.forEach(l => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${l.timestamp}</td>
+        <td>${l.guest}</td>
+        <td>${l.door === 'haustuer' ? '🚪 Haustür' : '🔑 Wohnungstür'}</td>
+        <td>${l.success ? '<span style="color:#4ade80;">OK</span>' : '<span style="color:#ef4444;">Fehlgeschlagen</span>'}</td>
+        <td>${l.message}</td>
+        <td><code>${l.ip}</code></td>
+      `;
+      tb.appendChild(tr);
+    });
+  }
+
+  function copyLink(link) {
+    navigator.clipboard.writeText(link).then(() => {
+      alert("Gast-Link in die Zwischenablage kopiert:\n" + link);
+    });
+  }
+
+  async function saveNewPin() {
+    const name = document.getElementById('newGuestName').value.trim();
+    const pin = document.getElementById('newPinCode').value.trim();
+    const valid_from = document.getElementById('newValidFrom').value;
+    const valid_until = document.getElementById('newValidUntil').value;
+
+    if (!pin) {
+      alert('Bitte einen PIN eingeben oder generieren');
+      return;
+    }
+
+    try {
+      const res = await fetch('api.php?action=admin_save_pin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          admin_pin: adminPin,
+          name: name || 'Gast',
+          pin: pin,
+          valid_from: valid_from,
+          valid_until: valid_until
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('PIN erfolgreich gespeichert!');
+        document.getElementById('newGuestName').value = '';
+        generateRandomPin();
+        loadData();
+      } else {
+        alert(data.error || 'Fehler beim Speichern');
+      }
+    } catch (e) {
+      alert('Netzwerkfehler');
+    }
+  }
+
+  async function deletePin(pin) {
+    if (!confirm(`Möchtest du den PIN ${pin} wirklich löschen?`)) return;
+    try {
+      const res = await fetch('api.php?action=admin_delete_pin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ admin_pin: adminPin, pin: pin })
+      });
+      const data = await res.json();
+      if (data.success) {
+        loadData();
+      }
+    } catch (e) {
+      alert('Fehler beim Löschen');
+    }
+  }
+</script>
+
+</body>
+</html>

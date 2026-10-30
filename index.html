@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AutoCheckin – Mechlerstr. Leipzig | StayInLeipzig</title>
+  <meta name="theme-color" content="#1e293b">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.85);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --primary: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --accent-green: #22c55e;
+      --accent-red: #ef4444;
+      --accent-amber: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --key-bg: rgba(51, 65, 85, 0.65);
+      --key-active: rgba(71, 85, 105, 0.95);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at 50% 10%, #1e293b 0%, #0f172a 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 16px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 6px;
+    }
+
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: rgba(56, 189, 248, 0.12);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .lang-toggle {
+      display: flex;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      padding: 3px;
+      border: 1px solid var(--card-border);
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--primary);
+      color: #0f172a;
+    }
+
+    /* Main Card */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .title-area {
+      text-align: center;
+    }
+
+    .title-area h1 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .title-area p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* PIN Auto-badge */
+    .auto-pin-banner {
+      display: none;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      padding: 12px;
+      border-radius: 12px;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .auto-pin-banner.active {
+      display: block;
+    }
+
+    .auto-pin-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .auto-pin-sub {
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-top: 3px;
+    }
+
+    /* PIN Display */
+    .pin-display-wrapper {
+      position: relative;
+    }
+
+    .pin-display {
+      background: rgba(15, 23, 42, 0.7);
+      border: 2px solid var(--card-border);
+      border-radius: 14px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .pin-display.focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    .pin-digit {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: var(--text);
+    }
+
+    .pin-placeholder {
+      font-size: 14px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    /* Door Action Buttons */
+    .doors-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-door {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-radius: 16px;
+      border: none;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-door:active {
+      transform: scale(0.98);
+    }
+
+    .btn-door:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-haustuer {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .btn-wohnungstuer {
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .door-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .door-icon {
+      font-size: 26px;
+    }
+
+    .door-text {
+      text-align: left;
+    }
+
+    .door-title {
+      font-size: 16px;
+      font-weight: 700;
+      display: block;
+    }
+
+    .door-desc {
+      font-size: 12px;
+      opacity: 0.8;
+      font-weight: 500;
+    }
+
+    .door-arrow {
+      font-size: 20px;
+      opacity: 0.7;
+    }
+
+    /* Keypad */
+    .keypad-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .keypad-toggle-btn {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      border-radius: 10px;
+      padding: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .key-btn {
+      background: var(--key-bg);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      height: 52px;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .key-btn:active {
+      background: var(--key-active);
+      transform: scale(0.95);
+    }
+
+    .key-btn.fn {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* Countdown & Status */
+    .status-overlay {
+      display: none;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .status-overlay.active {
+      display: block;
+    }
+
+    .status-icon {
+      font-size: 42px;
+      margin-bottom: 10px;
+      animation: pulse 1.5s infinite;
+    }
+
+    .status-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .status-msg {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 100%;
+      background: var(--accent-green);
+      transition: width 1s linear;
+    }
+
+    .status-seconds {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Directions Box */
+    .directions-card {
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .directions-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .directions-text h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 3px;
+    }
+
+    .directions-text p {
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    /* Emergency Footer */
+    .emergency-footer {
+      text-align: center;
+      padding: 8px 0;
+    }
+
+    .btn-help {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #fca5a5;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-help:active {
+      transform: scale(0.97);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-badge">
+        <span>🏢</span>
+        <span>Mechlerstr. Leipzig</span>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+    </header>
+
+    <!-- Main Card -->
+    <main class="card">
+      <div class="title-area">
+        <h1 data-i18n="title">AutoCheckin Mechlerstr.</h1>
+        <p data-i18n="subtitle">Tippen Sie Ihren PIN ein oder nutzen Sie den Link aus Ihrer Buchung zum Öffnen der Türen.</p>
+      </div>
+
+      <!-- Auto-PIN Banner (shown when ?code=1234 is passed) -->
+      <div id="autoPinBanner" class="auto-pin-banner">
+        <div class="auto-pin-title">
+          <span>✓</span> <span id="autoPinGuestName">PIN erfolgreich geladen</span>
+        </div>
+        <div class="auto-pin-sub" id="autoPinDetails">Sie können die Türen jetzt direkt per Klick öffnen.</div>
+      </div>
+
+      <!-- PIN Input Display -->
+      <div class="pin-display-wrapper">
+        <div id="pinDisplay" class="pin-display focus" onclick="focusPinInput()">
+          <span id="pinText" class="pin-placeholder" data-i18n="pinPlaceholder">PIN hier eingeben...</span>
+        </div>
+      </div>
+
+      <!-- Door Buttons -->
+      <div class="doors-grid">
+        <button id="btnHaustuer" class="btn-door btn-haustuer" onclick="openDoor('haustuer')">
+          <div class="door-left">
+            <span class="door-icon">🚪</span>
+            <div class="door-text">
+              <span class="door-title" data-i18n="houseDoorTitle">Haustür öffnen</span>
+              <span class="door-desc" data-i18n="houseDoorDesc">Unten am Hauseingang</span>
+            </div>
+          </div>
+          <span class="door-arrow">➔</span>
+        </button>
+
+        <button id="btnWohnungstuer" class="btn-door btn-wohnungstuer" onclick="openDoor('wohnungstuer')">
+          <div class="door-left">
+            <span class="door-icon">🔑</span>
+            <div class="door-text">
+              <span class="door-title" data-i18n="aptDoorTitle">Wohnungstür öffnen</span>
+              <span class="door-desc" data-i18n="aptDoorDesc">Dachgeschoss rechts</span>
+            </div>
+          </div>
+          <span class="door-arrow">➔</span>
+        </button>
+      </div>
+
+      <!-- Live Door Opening Countdown / Status Overlay -->
+      <div id="statusOverlay" class="status-overlay">
+        <div id="statusIcon" class="status-icon">🔓</div>
+        <div id="statusTitle" class="status-title">Haustür entriegelt!</div>
+        <div id="statusMsg" class="status-msg">Bitte jetzt kräftig gegen die Tür drücken.</div>
+        <div class="progress-bar-bg">
+          <div id="progressBar" class="progress-bar-fill"></div>
+        </div>
+        <div id="statusSeconds" class="status-seconds">Schließt in 10s</div>
+      </div>
+
+      <!-- Keypad -->
+      <div class="keypad-container" id="keypadContainer">
+        <div class="keypad-grid">
+          <button class="key-btn" onclick="pressKey('1')">1</button>
+          <button class="key-btn" onclick="pressKey('2')">2</button>
+          <button class="key-btn" onclick="pressKey('3')">3</button>
+          <button class="key-btn" onclick="pressKey('4')">4</button>
+          <button class="key-btn" onclick="pressKey('5')">5</button>
+          <button class="key-btn" onclick="pressKey('6')">6</button>
+          <button class="key-btn" onclick="pressKey('7')">7</button>
+          <button class="key-btn" onclick="pressKey('8')">8</button>
+          <button class="key-btn" onclick="pressKey('9')">9</button>
+          <button class="key-btn fn" onclick="clearPin()">C</button>
+          <button class="key-btn" onclick="pressKey('0')">0</button>
+          <button class="key-btn fn" onclick="backspacePin()">⌫</button>
+        </div>
+      </div>
+
+      <!-- Wegbeschreibung -->
+      <div class="directions-card">
+        <div class="directions-icon">📍</div>
+        <div class="directions-text">
+          <h4 data-i18n="directionsTitle">Weg zur Ferienwohnung:</h4>
+          <p data-i18n="directionsDesc">Laufen Sie nach der Haustür die Treppe hoch bis ins Dachgeschoss. Die Wohnung in der Mitte rechts ist Ihre Ferienwohnung.</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Emergency Footer -->
+    <footer class="emergency-footer">
+      <a href="tel:004915227441736" class="btn-help">
+        <span>📞</span>
+        <span data-i18n="helpBtn">Probleme? Sophie anrufen (+49 152 27441736)</span>
+      </a>
+    </footer>
+  </div>
+
+  <script>
+    let currentPin = '';
+    let countdownTimer = null;
+    let currentLang = 'de';
+
+    const translations = {
+      de: {
+        title: "AutoCheckin Mechlerstr.",
+        subtitle: "Tippen Sie Ihren PIN ein oder nutzen Sie den Link aus Ihrer Buchung zum Öffnen der Türen.",
+        pinPlaceholder: "PIN hier eingeben...",
+        houseDoorTitle: "Haustür öffnen",
+        houseDoorDesc: "Unten am Hauseingang",
+        aptDoorTitle: "Wohnungstür öffnen",
+        aptDoorDesc: "Dachgeschoss rechts",
+        directionsTitle: "Weg zur Ferienwohnung:",
+        directionsDesc: "Laufen Sie nach der Haustür die Treppe hoch bis ins Dachgeschoss. Die Wohnung in der Mitte rechts ist Ihre Ferienwohnung.",
+        helpBtn: "Probleme? Sophie anrufen (+49 152 27441736)",
+        autoLoadedTitle: "PIN erfolgreich geladen",
+        autoLoadedSub: "Sie können die Türen jetzt direkt per Klick öffnen.",
+        openDoorSuccess: "wurde entriegelt!",
+        pushDoorNow: "Bitte jetzt kräftig gegen die Tür drücken.",
+        closesIn: "Schließt in",
+        invalidPin: "Falscher PIN oder Buchung abgelaufen!",
+        pinRequired: "Bitte geben Sie zuerst Ihren PIN ein."
+      },
+      en: {
+        title: "AutoCheckin Mechlerstr.",
+        subtitle: "Enter your PIN code or use the link from your booking confirmation to open the doors.",
+        pinPlaceholder: "Enter PIN here...",
+        houseDoorTitle: "Open Main Entrance",
+        houseDoorDesc: "Ground floor building entrance",
+        aptDoorTitle: "Open Apartment Door",
+        aptDoorDesc: "Top floor on the right",
+        directionsTitle: "Directions to Apartment:",
+        directionsDesc: "After entering the building, walk up the stairs to the top floor. The apartment in the middle right is yours.",
+        helpBtn: "Need help? Call Sophie (+49 152 27441736)",
+        autoLoadedTitle: "PIN code loaded",
+        autoLoadedSub: "You can now open the doors directly with 1 tap.",
+        openDoorSuccess: "unlocked!",
+        pushDoorNow: "Please push against the door now.",
+        closesIn: "Closes in",
+        invalidPin: "Invalid PIN or booking expired!",
+        pinRequired: "Please enter your PIN first."
+      }
+    };
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+      });
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      updatePinDisplay();
+    }
+
+    function pressKey(num) {
+      if (currentPin.length >= 8) return;
+      currentPin += num;
+      if (navigator.vibrate) navigator.vibrate(20);
+      updatePinDisplay();
+    }
+
+    function clearPin() {
+      currentPin = '';
+      updatePinDisplay();
+    }
+
+    function backspacePin() {
+      currentPin = currentPin.slice(0, -1);
+      updatePinDisplay();
+    }
+
+    function updatePinDisplay() {
+      const pinText = document.getElementById('pinText');
+      if (currentPin.length === 0) {
+        pinText.className = 'pin-placeholder';
+        pinText.textContent = translations[currentLang].pinPlaceholder;
+      } else {
+        pinText.className = 'pin-digit';
+        pinText.textContent = currentPin;
+      }
+    }
+
+    // Check URL parameters on load: ?code=1234 or ?pin=1234
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const codeParam = urlParams.get('code') || urlParams.get('pin');
+
+      if (codeParam) {
+        currentPin = codeParam.trim();
+        updatePinDisplay();
+        verifyPinSilently(currentPin);
+      }
+    });
+
+    async function verifyPinSilently(pin) {
+      try {
+        const res = await fetch(`api.php?action=verify&pin=${encodeURIComponent(pin)}`);
+        const data = await res.json();
+        if (data.success) {
+          const banner = document.getElementById('autoPinBanner');
+          const guestEl = document.getElementById('autoPinGuestName');
+          const detailsEl = document.getElementById('autoPinDetails');
+          guestEl.textContent = `Willkommen ${data.guest}!`;
+          detailsEl.textContent = `PIN gültig bis ${new Date(data.valid_until).toLocaleDateString('de-DE')} • Türen jetzt öffnen:`;
+          banner.classList.add('active');
+        }
+      } catch (e) {
+        // Fallback gracefully if API not ready yet
+      }
+    }
+
+    async function openDoor(door) {
+      if (!currentPin) {
+        alert(translations[currentLang].pinRequired);
+        return;
+      }
+
+      const btnHouse = document.getElementById('btnHaustuer');
+      const btnApt = document.getElementById('btnWohnungstuer');
+      btnHouse.disabled = true;
+      btnApt.disabled = true;
+
+      try {
+        const res = await fetch('api.php?action=open', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin: currentPin, door: door })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          showCountdown(data.door_name || (door === 'haustuer' ? 'Haustür' : 'Wohnungstür'), data.seconds || 10, data.directions);
+        } else {
+          alert(data.error || translations[currentLang].invalidPin);
+          btnHouse.disabled = false;
+          btnApt.disabled = false;
+        }
+      } catch (e) {
+        alert("Netzwerkfehler! Bitte Sophie anrufen.");
+        btnHouse.disabled = false;
+        btnApt.disabled = false;
+      }
+    }
+
+    function showCountdown(doorName, totalSeconds, customDirections) {
+      const overlay = document.getElementById('statusOverlay');
+      const titleEl = document.getElementById('statusTitle');
+      const msgEl = document.getElementById('statusMsg');
+      const barEl = document.getElementById('progressBar');
+      const secEl = document.getElementById('statusSeconds');
+
+      overlay.classList.add('active');
+      titleEl.textContent = `${doorName} ${translations[currentLang].openDoorSuccess}`;
+      msgEl.textContent = customDirections || translations[currentLang].pushDoorNow;
+
+      let remaining = totalSeconds;
+      barEl.style.width = '100%';
+      secEl.textContent = `${translations[currentLang].closesIn} ${remaining}s`;
+
+      clearInterval(countdownTimer);
+      countdownTimer = setInterval(() => {
+        remaining--;
+        const pct = (remaining / totalSeconds) * 100;
+        barEl.style.width = `${Math.max(0, pct)}%`;
+        secEl.textContent = `${translations[currentLang].closesIn} ${Math.max(0, remaining)}s`;
+
+        if (remaining <= 0) {
+          clearInterval(countdownTimer);
+          overlay.classList.remove('active');
+          document.getElementById('btnHaustuer').disabled = false;
+          document.getElementById('btnWohnungstuer').disabled = false;
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

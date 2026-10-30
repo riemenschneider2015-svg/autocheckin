@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+
+# Local runtime logs & ratelimit state
+access_log.json
+ratelimit.json
+loginversuche.csv
+bruteforceschutz.txt
+
+# Backup folder
+_legacy_backup/
+
+# Sensitive local config overrides (if any)
+.env
