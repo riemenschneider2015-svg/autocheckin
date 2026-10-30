@@ -690,8 +690,8 @@
     }
 
     function getApiEndpoint(action) {
-      const isGitHub = window.location.hostname.includes('github.io');
-      const base = isGitHub ? 'https://fhem-tuer-mechler-leipzig.stayinleipzig.de' : '';
+      const isTunnelHost = (window.location.hostname === 'fhem-tuer-mechler-leipzig.stayinleipzig.de');
+      const base = isTunnelHost ? '' : 'https://fhem-tuer-mechler-leipzig.stayinleipzig.de';
       return `${base}/api.php?action=${action}`;
     }
 

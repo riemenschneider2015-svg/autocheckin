@@ -232,9 +232,15 @@
     document.getElementById('newPinCode').value = p;
   }
 
+  function getApiEndpoint(action) {
+    const isTunnelHost = (window.location.hostname === 'fhem-tuer-mechler-leipzig.stayinleipzig.de');
+    const base = isTunnelHost ? '' : 'https://fhem-tuer-mechler-leipzig.stayinleipzig.de';
+    return `${base}/api.php?action=${action}`;
+  }
+
   async function loadData() {
     try {
-      const res = await fetch(`api.php?action=admin_list&admin_pin=${encodeURIComponent(adminPin)}`);
+      const res = await fetch(getApiEndpoint(`admin_list&admin_pin=${encodeURIComponent(adminPin)}`));
       const data = await res.json();
       if (!data.success) {
         alert(data.error || 'Fehler beim Laden');
@@ -324,7 +330,7 @@
     }
 
     try {
-      const res = await fetch('api.php?action=admin_save_pin', {
+      const res = await fetch(getApiEndpoint('admin_save_pin'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -352,7 +358,7 @@
   async function deletePin(pin) {
     if (!confirm(`Möchtest du den PIN ${pin} wirklich löschen?`)) return;
     try {
-      const res = await fetch('api.php?action=admin_delete_pin', {
+      const res = await fetch(getApiEndpoint('admin_delete_pin'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ admin_pin: adminPin, pin: pin })
