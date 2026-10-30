@@ -46,7 +46,7 @@ function checkRateLimit($ip, $maxAttempts = 5, $lockoutMinutes = 10) {
             $remaining = ceil(($entry['locked_until'] - $now) / 60);
             return [
                 'allowed' => false,
-                'message' => "Zu viele Fehlversuche! Login für $remaining Minute(n) gesperrt. Bitte Sophie anrufen."
+                'message' => "Zu viele Fehlversuche! Login für $remaining Minute(n) gesperrt. Bitte Falko anrufen (015253453390)."
             ];
         }
         // Reset window if older than lockoutMinutes * 60
@@ -184,7 +184,7 @@ if (!$rateStatus['allowed'] && $action !== 'settings') {
         'success' => false,
         'error' => $rateStatus['message'],
         'locked' => true,
-        'contact' => $settings['contact_phone'] ?? '+4915227441736'
+        'contact' => $settings['contact_phone'] ?? '015253453390'
     ]);
     exit();
 }
@@ -247,7 +247,7 @@ if ($action === 'open') {
             'success' => false,
             'error' => $msg,
             'status' => $status,
-            'contact' => $settings['contact_phone'] ?? '+4915227441736'
+            'contact' => $settings['contact_phone'] ?? '015253453390'
         ]);
         exit();
     }
@@ -281,7 +281,7 @@ if ($action === 'open') {
         echo json_encode([
             'success' => false,
             'error' => 'Die Türsteuerung konnte nicht erreicht werden. Bitte rufen Sie direkt Sophie an.',
-            'contact' => $settings['contact_phone'] ?? '+4915227441736'
+            'contact' => $settings['contact_phone'] ?? '015253453390'
         ]);
     }
     exit();

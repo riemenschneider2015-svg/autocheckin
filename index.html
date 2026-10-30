@@ -2,27 +2,27 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>AutoCheckin – Mechlerstr. Leipzig | StayInLeipzig</title>
   <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0f172a;
-      --card-bg: rgba(30, 41, 59, 0.88);
+      --card-bg: rgba(30, 41, 59, 0.92);
       --card-border: rgba(255, 255, 255, 0.1);
       --primary: #38bdf8;
-      --primary-hover: #0ea5e9;
       --accent-green: #22c55e;
       --accent-red: #ef4444;
-      --accent-amber: #f59e0b;
       --text: #f8fafc;
       --text-muted: #94a3b8;
-      --key-bg: rgba(51, 65, 85, 0.65);
+      --key-bg: rgba(51, 65, 85, 0.7);
       --key-active: rgba(71, 85, 105, 0.95);
-      --radius: 20px;
+      --radius: 18px;
     }
 
     * {
@@ -33,103 +33,109 @@
       user-select: none;
     }
 
-    body {
+    html, body {
+      height: 100%;
+      height: 100dvh;
+      overflow: hidden;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: radial-gradient(circle at 50% 10%, #1e293b 0%, #0f172a 100%);
+      background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
       color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 16px;
-      overflow-x: hidden;
     }
 
-    .container {
-      width: 100%;
-      max-width: 440px;
+    /* Single Mobile Screen Container */
+    .app-screen {
+      height: 100%;
+      height: 100dvh;
+      max-width: 430px;
       margin: 0 auto;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      justify-content: space-between;
+      gap: 8px;
     }
 
-    /* Header & Languages */
-    .header {
+    /* Top Bar: Logo & Language Pills */
+    .top-bar {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      padding: 4px 2px;
+      gap: 6px;
+      flex-shrink: 0;
     }
 
-    .header-top {
+    .top-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0 4px;
     }
 
     .logo-badge {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 700;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
       letter-spacing: 0.5px;
       text-transform: uppercase;
       color: var(--primary);
       background: rgba(56, 189, 248, 0.12);
-      padding: 6px 14px;
+      padding: 4px 10px;
       border-radius: 999px;
       border: 1px solid rgba(56, 189, 248, 0.25);
     }
 
-    /* Multi-language Selector Bar */
+    .brand-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    /* 5-Language Selector */
     .lang-bar {
       display: flex;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.06);
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.05);
       border-radius: 999px;
-      padding: 3px;
+      padding: 2px;
       border: 1px solid var(--card-border);
-      gap: 2px;
-      overflow-x: auto;
     }
 
     .lang-btn {
+      flex: 1;
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 6px 11px;
-      font-size: 12px;
+      padding: 5px 0;
+      font-size: 11px;
       font-weight: 700;
       border-radius: 999px;
       cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      white-space: nowrap;
+      text-align: center;
+      transition: all 0.15s ease;
     }
 
     .lang-btn.active {
       background: var(--primary);
       color: #0f172a;
-      box-shadow: 0 2px 8px rgba(56, 189, 248, 0.35);
+      box-shadow: 0 2px 6px rgba(56, 189, 248, 0.35);
     }
 
-    /* Main Card */
-    .card {
+    /* Main Action Card */
+    .main-card {
       background: var(--card-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
-      padding: 22px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 10px;
+      flex-grow: 1;
+      justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
 
     .title-area {
@@ -137,29 +143,28 @@
     }
 
     .title-area h1 {
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 800;
-      margin-bottom: 6px;
-      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      margin-bottom: 2px;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .title-area p {
-      font-size: 13px;
+      font-size: 11px;
       color: var(--text-muted);
-      line-height: 1.45;
+      line-height: 1.35;
     }
 
-    /* Auto-PIN Banner */
+    /* Auto-PIN Welcome Pill */
     .auto-pin-banner {
       display: none;
-      background: rgba(34, 197, 94, 0.12);
+      background: rgba(34, 197, 94, 0.15);
       border: 1px solid rgba(34, 197, 94, 0.35);
-      padding: 12px 14px;
-      border-radius: 14px;
+      padding: 6px 10px;
+      border-radius: 10px;
       text-align: center;
-      animation: fadeIn 0.3s ease;
     }
 
     .auto-pin-banner.active {
@@ -167,53 +172,37 @@
     }
 
     .auto-pin-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--accent-green);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .auto-pin-sub {
-      font-size: 12px;
-      color: #cbd5e1;
-      margin-top: 3px;
     }
 
     /* PIN Display */
-    .pin-display-wrapper {
-      position: relative;
-    }
-
     .pin-display {
-      background: rgba(15, 23, 42, 0.75);
-      border: 2px solid var(--card-border);
-      border-radius: 14px;
-      height: 58px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid var(--card-border);
+      border-radius: 12px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       cursor: pointer;
-      transition: border-color 0.2s ease;
     }
 
     .pin-display.focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
     }
 
     .pin-digit {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 700;
-      letter-spacing: 5px;
+      letter-spacing: 4px;
       color: var(--text);
     }
 
     .pin-placeholder {
-      font-size: 14px;
+      font-size: 12px;
       color: #64748b;
       font-weight: 500;
     }
@@ -222,24 +211,21 @@
     .doors-grid {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
     }
 
     .btn-door {
-      position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 20px;
-      border-radius: 16px;
+      padding: 12px 14px;
+      border-radius: 14px;
       border: none;
       font-family: inherit;
-      font-size: 16px;
-      font-weight: 700;
       color: #ffffff;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
     }
 
     .btn-door:active {
@@ -249,7 +235,6 @@
     .btn-door:disabled {
       opacity: 0.55;
       cursor: not-allowed;
-      transform: none !important;
     }
 
     .btn-haustuer {
@@ -265,11 +250,11 @@
     .door-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 10px;
     }
 
     .door-icon {
-      font-size: 26px;
+      font-size: 22px;
     }
 
     .door-text {
@@ -277,70 +262,64 @@
     }
 
     .door-title {
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 800;
       display: block;
+      line-height: 1.2;
     }
 
     .door-desc {
-      font-size: 12px;
-      opacity: 0.82;
+      font-size: 11px;
+      opacity: 0.85;
       font-weight: 500;
     }
 
     .door-arrow {
-      font-size: 20px;
-      opacity: 0.75;
+      font-size: 16px;
+      opacity: 0.8;
     }
 
-    /* Keypad */
-    .keypad-container {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
+    /* Keypad (Ultra-compact) */
     .keypad-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 6px;
     }
 
     .key-btn {
       background: var(--key-bg);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 14px;
-      height: 52px;
-      font-size: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      height: 40px;
+      font-size: 17px;
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.15s ease;
+      transition: all 0.1s ease;
     }
 
     .key-btn:active {
       background: var(--key-active);
-      transform: scale(0.95);
+      transform: scale(0.94);
     }
 
     .key-btn.fn {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-muted);
       font-weight: 700;
     }
 
-    /* Status Overlay */
+    /* Live Door Countdown Overlay */
     .status-overlay {
       display: none;
-      background: rgba(15, 23, 42, 0.96);
+      background: rgba(15, 23, 42, 0.98);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 20px;
+      border-radius: 14px;
+      padding: 12px;
       text-align: center;
-      animation: fadeIn 0.25s ease;
     }
 
     .status-overlay.active {
@@ -348,31 +327,29 @@
     }
 
     .status-icon {
-      font-size: 42px;
-      margin-bottom: 10px;
-      animation: pulse 1.5s infinite;
+      font-size: 32px;
+      margin-bottom: 4px;
     }
 
     .status-title {
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 800;
-      margin-bottom: 6px;
+      margin-bottom: 3px;
     }
 
     .status-msg {
-      font-size: 13px;
+      font-size: 11px;
       color: #cbd5e1;
-      line-height: 1.5;
-      margin-bottom: 14px;
+      margin-bottom: 8px;
     }
 
     .progress-bar-bg {
       width: 100%;
-      height: 8px;
+      height: 6px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 999px;
       overflow: hidden;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
 
     .progress-bar-fill {
@@ -383,91 +360,77 @@
     }
 
     .status-seconds {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    /* Directions Box */
+    /* Compact Directions */
     .directions-card {
       background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      border-radius: 14px;
-      padding: 14px;
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 10px;
+      padding: 8px 10px;
       display: flex;
-      gap: 12px;
-      align-items: flex-start;
+      gap: 8px;
+      align-items: center;
     }
 
     .directions-icon {
-      font-size: 22px;
+      font-size: 16px;
       flex-shrink: 0;
     }
 
-    .directions-text h4 {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 3px;
-    }
-
     .directions-text p {
-      font-size: 12px;
+      font-size: 11px;
       color: #cbd5e1;
-      line-height: 1.45;
+      line-height: 1.35;
     }
 
-    /* Emergency Footer */
-    .emergency-footer {
+    /* Falko Emergency Footer */
+    .footer-area {
+      flex-shrink: 0;
       text-align: center;
-      padding: 6px 0 16px 0;
+      padding-bottom: 4px;
     }
 
     .btn-help {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(239, 68, 68, 0.12);
-      border: 1px solid rgba(239, 68, 68, 0.25);
+      justify-content: center;
+      gap: 6px;
+      background: rgba(239, 68, 68, 0.14);
+      border: 1px solid rgba(239, 68, 68, 0.3);
       color: #fca5a5;
       text-decoration: none;
-      padding: 10px 20px;
+      padding: 8px 16px;
       border-radius: 999px;
-      font-size: 13px;
-      font-weight: 600;
-      transition: all 0.2s ease;
+      font-size: 12px;
+      font-weight: 700;
+      width: 100%;
+      transition: all 0.15s ease;
     }
 
     .btn-help:active {
       transform: scale(0.97);
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-    }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- Header with Auto-Language Bar -->
-    <header class="header">
-      <div class="header-top">
+  <div class="app-screen">
+    <!-- Top Bar: Logo & 5 Languages -->
+    <header class="top-bar">
+      <div class="top-header">
         <div class="logo-badge">
           <span>🏢</span>
           <span>Mechlerstr. Leipzig</span>
         </div>
-        <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">StayInLeipzig</span>
+        <span class="brand-name">StayInLeipzig</span>
       </div>
 
       <!-- 5-Language Selector -->
-      <nav class="lang-bar" aria-label="Sprachauswahl">
+      <nav class="lang-bar" aria-label="Language selection">
         <button class="lang-btn active" data-lang="de" onclick="setLang('de')">🇩🇪 DE</button>
         <button class="lang-btn" data-lang="en" onclick="setLang('en')">🇬🇧 EN</button>
         <button class="lang-btn" data-lang="pl" onclick="setLang('pl')">🇵🇱 PL</button>
@@ -476,26 +439,23 @@
       </nav>
     </header>
 
-    <!-- Main Card -->
-    <main class="card">
+    <!-- Main Mobile Card -->
+    <main class="main-card">
       <div class="title-area">
         <h1 data-i18n="title">AutoCheckin Mechlerstr.</h1>
-        <p data-i18n="subtitle">Tippen Sie Ihren PIN ein oder nutzen Sie den Link aus Ihrer Buchung zum Öffnen der Türen.</p>
+        <p data-i18n="subtitle">PIN eingeben oder per Link direkt die Türen öffnen.</p>
       </div>
 
-      <!-- Auto-PIN Banner (shown when ?code=1234 is present) -->
+      <!-- Auto-PIN Banner -->
       <div id="autoPinBanner" class="auto-pin-banner">
         <div class="auto-pin-title">
-          <span>✓</span> <span id="autoPinGuestName" data-i18n="autoLoadedTitle">PIN erfolgreich geladen</span>
+          <span>✓</span> <span id="autoPinGuestName">PIN erfolgreich geladen</span>
         </div>
-        <div class="auto-pin-sub" id="autoPinDetails" data-i18n="autoLoadedSub">Sie können die Türen jetzt direkt per Klick öffnen.</div>
       </div>
 
       <!-- PIN Input Display -->
-      <div class="pin-display-wrapper">
-        <div id="pinDisplay" class="pin-display focus">
-          <span id="pinText" class="pin-placeholder" data-i18n="pinPlaceholder">PIN hier eingeben...</span>
-        </div>
+      <div class="pin-display focus" id="pinDisplay">
+        <span id="pinText" class="pin-placeholder" data-i18n="pinPlaceholder">PIN eingeben...</span>
       </div>
 
       <!-- Door Buttons -->
@@ -527,46 +487,43 @@
       <div id="statusOverlay" class="status-overlay">
         <div id="statusIcon" class="status-icon">🔓</div>
         <div id="statusTitle" class="status-title">Haustür entriegelt!</div>
-        <div id="statusMsg" class="status-msg">Bitte jetzt kräftig gegen die Tür drücken.</div>
+        <div id="statusMsg" class="status-msg">Bitte jetzt gegen die Tür drücken.</div>
         <div class="progress-bar-bg">
           <div id="progressBar" class="progress-bar-fill"></div>
         </div>
         <div id="statusSeconds" class="status-seconds">Schließt in 10s</div>
       </div>
 
-      <!-- Keypad -->
-      <div class="keypad-container" id="keypadContainer">
-        <div class="keypad-grid">
-          <button class="key-btn" onclick="pressKey('1')">1</button>
-          <button class="key-btn" onclick="pressKey('2')">2</button>
-          <button class="key-btn" onclick="pressKey('3')">3</button>
-          <button class="key-btn" onclick="pressKey('4')">4</button>
-          <button class="key-btn" onclick="pressKey('5')">5</button>
-          <button class="key-btn" onclick="pressKey('6')">6</button>
-          <button class="key-btn" onclick="pressKey('7')">7</button>
-          <button class="key-btn" onclick="pressKey('8')">8</button>
-          <button class="key-btn" onclick="pressKey('9')">9</button>
-          <button class="key-btn fn" onclick="clearPin()">C</button>
-          <button class="key-btn" onclick="pressKey('0')">0</button>
-          <button class="key-btn fn" onclick="backspacePin()">⌫</button>
-        </div>
+      <!-- Compact Keypad -->
+      <div class="keypad-grid" id="keypadGrid">
+        <button class="key-btn" onclick="pressKey('1')">1</button>
+        <button class="key-btn" onclick="pressKey('2')">2</button>
+        <button class="key-btn" onclick="pressKey('3')">3</button>
+        <button class="key-btn" onclick="pressKey('4')">4</button>
+        <button class="key-btn" onclick="pressKey('5')">5</button>
+        <button class="key-btn" onclick="pressKey('6')">6</button>
+        <button class="key-btn" onclick="pressKey('7')">7</button>
+        <button class="key-btn" onclick="pressKey('8')">8</button>
+        <button class="key-btn" onclick="pressKey('9')">9</button>
+        <button class="key-btn fn" onclick="clearPin()">C</button>
+        <button class="key-btn" onclick="pressKey('0')">0</button>
+        <button class="key-btn fn" onclick="backspacePin()">⌫</button>
       </div>
 
-      <!-- Wegbeschreibung -->
+      <!-- Compact Directions -->
       <div class="directions-card">
         <div class="directions-icon">📍</div>
         <div class="directions-text">
-          <h4 data-i18n="directionsTitle">Weg zur Ferienwohnung:</h4>
-          <p data-i18n="directionsDesc">Laufen Sie nach der Haustür die Treppe hoch bis ins Dachgeschoss. Die Wohnung in der Mitte rechts ist Ihre Ferienwohnung.</p>
+          <p data-i18n="directionsDesc">Nach der Haustür die Treppe hoch ins Dachgeschoss. Die Wohnung in der Mitte rechts ist Ihre Ferienwohnung.</p>
         </div>
       </div>
     </main>
 
-    <!-- Emergency Footer -->
-    <footer class="emergency-footer">
-      <a href="tel:004915227441736" class="btn-help">
+    <!-- Falko Emergency Contact Footer -->
+    <footer class="footer-area">
+      <a href="tel:015253453390" class="btn-help">
         <span>📞</span>
-        <span data-i18n="helpBtn">Probleme? Sophie anrufen (+49 152 27441736)</span>
+        <span data-i18n="helpBtn">Probleme? Falko anrufen (0152 53453390)</span>
       </a>
     </footer>
   </div>
@@ -576,111 +533,100 @@
     let countdownTimer = null;
     let currentLang = 'de';
 
-    // 5-Language Dictionary
+    // 5-Language Dictionary with Falko Contact
     const translations = {
       de: {
         title: "AutoCheckin Mechlerstr.",
-        subtitle: "Tippen Sie Ihren PIN ein oder nutzen Sie den Link aus Ihrer Buchung zum Öffnen der Türen.",
-        pinPlaceholder: "PIN hier eingeben...",
+        subtitle: "PIN eingeben oder per Link direkt öffnen.",
+        pinPlaceholder: "PIN eingeben...",
         houseDoorTitle: "Haustür öffnen",
         houseDoorDesc: "Unten am Hauseingang",
         aptDoorTitle: "Wohnungstür öffnen",
         aptDoorDesc: "Dachgeschoss rechts",
-        directionsTitle: "Weg zur Ferienwohnung:",
-        directionsDesc: "Laufen Sie nach der Haustür die Treppe hoch bis ins Dachgeschoss. Die Wohnung in der Mitte rechts ist Ihre Ferienwohnung.",
-        helpBtn: "Probleme? Sophie anrufen (+49 152 27441736)",
+        directionsDesc: "Nach der Haustür die Treppe hoch ins Dachgeschoss. Die Wohnung in der Mitte rechts ist Ihre Ferienwohnung.",
+        helpBtn: "Probleme? Falko anrufen (0152 53453390)",
         autoLoadedTitle: "PIN erfolgreich geladen",
-        autoLoadedSub: "Sie können die Türen jetzt direkt per Klick öffnen.",
         openDoorSuccess: "wurde entriegelt!",
         pushDoorNow: "Bitte jetzt kräftig gegen die Tür drücken.",
         closesIn: "Schließt in",
         invalidPin: "Falscher PIN oder Buchung abgelaufen!",
         pinRequired: "Bitte geben Sie zuerst Ihren PIN ein.",
-        networkError: "Verbindungsfehler! Bitte Sophie anrufen."
+        networkError: "Verbindungsfehler! Bitte Falko anrufen."
       },
       en: {
         title: "AutoCheckin Mechlerstr.",
-        subtitle: "Enter your PIN code or use the link from your booking confirmation to open the doors.",
-        pinPlaceholder: "Enter PIN here...",
+        subtitle: "Enter PIN or tap directly from your link.",
+        pinPlaceholder: "Enter PIN...",
         houseDoorTitle: "Open Building Entrance",
-        houseDoorDesc: "Ground floor street entrance",
+        houseDoorDesc: "Ground floor street door",
         aptDoorTitle: "Open Apartment Door",
         aptDoorDesc: "Top floor on the right",
-        directionsTitle: "Directions to Apartment:",
-        directionsDesc: "After entering the building, walk up the stairs to the top floor (attic). The apartment in the middle right is yours.",
-        helpBtn: "Need help? Call Sophie (+49 152 27441736)",
+        directionsDesc: "After entering the building, walk up the stairs to the top floor. The apartment in the middle right is yours.",
+        helpBtn: "Need help? Call Falko (+49 152 53453390)",
         autoLoadedTitle: "PIN code loaded",
-        autoLoadedSub: "You can now open the doors directly with 1 tap.",
         openDoorSuccess: "unlocked!",
-        pushDoorNow: "Please push firmly against the door now.",
+        pushDoorNow: "Please push against the door now.",
         closesIn: "Closes in",
         invalidPin: "Invalid PIN or booking expired!",
         pinRequired: "Please enter your PIN first.",
-        networkError: "Connection error! Please call Sophie."
+        networkError: "Connection error! Please call Falko."
       },
       pl: {
         title: "AutoCheckin Mechlerstr.",
-        subtitle: "Wpisz kod PIN lub użyj linku z potwierdzenia rezerwacji, aby otworzyć drzwi.",
-        pinPlaceholder: "Wpisz PIN tutaj...",
+        subtitle: "Wpisz PIN lub otwórz drzwi z linku.",
+        pinPlaceholder: "Wpisz PIN...",
         houseDoorTitle: "Otwórz drzwi wejściowe",
-        houseDoorDesc: "Wejście główne do kamienicy",
+        houseDoorDesc: "Wejście do kamienicy",
         aptDoorTitle: "Otwórz drzwi do apartamentu",
         aptDoorDesc: "Ostatnie piętro po prawej",
-        directionsTitle: "Wskazówki dojazdu:",
-        directionsDesc: "Po wejściu do budynku wejdź po schodach na ostatnie piętro (poddasze). Mieszkanie pośrodku po prawej stronie to Twój apartament.",
-        helpBtn: "Problemy? Zadzwoń do Sophie (+49 152 27441736)",
+        directionsDesc: "Po wejściu do budynku wejdź po schodach na ostatnie piętro (poddasze). Mieszkanie po prawej to Twój apartament.",
+        helpBtn: "Problemy? Zadzwoń do Falko (+49 152 53453390)",
         autoLoadedTitle: "PIN wczytany pomyślnie",
-        autoLoadedSub: "Możesz teraz otworzyć drzwi jednym kliknięciem.",
         openDoorSuccess: "zostały otwarte!",
         pushDoorNow: "Pchnij teraz mocno drzwi, aby wejść.",
         closesIn: "Zamknięcie za",
         invalidPin: "Nieprawidłowy PIN lub rezerwacja wygasła!",
-        pinRequired: "Proszę najpierw wprowadzić kod PIN.",
-        networkError: "Błąd połączenia! Zadzwoń do Sophie."
+        pinRequired: "Proszę najpierw wprowadzić PIN.",
+        networkError: "Błąd połączenia! Zadzwoń do Falko."
       },
       uk: {
         title: "AutoCheckin Mechlerstr.",
-        subtitle: "Введіть PIN-код або скористайтеся посиланням із бронювання, щоб відчинити двері.",
-        pinPlaceholder: "Введіть PIN тут...",
+        subtitle: "Введіть PIN або відчиніть двері з посилання.",
+        pinPlaceholder: "Введіть PIN...",
         houseDoorTitle: "Відчинити під'їзд",
         houseDoorDesc: "Вхідні двері будинку",
         aptDoorTitle: "Відчинити квартиру",
         aptDoorDesc: "Верхній поверх праворуч",
-        directionsTitle: "Як знайти квартиру:",
-        directionsDesc: "Після входу підніміться сходами на останній поверх (мансарда). Квартира посередині праворуч — це ваші апартаменти.",
-        helpBtn: "Потрібна допомога? Подзвонити Софі (+49 152 27441736)",
+        directionsDesc: "Після входу підніміться сходами на останній поверх (мансарда). Квартира посередині праворуч — ваша.",
+        helpBtn: "Потрібна допомога? Подзвонити Фалько (+49 152 53453390)",
         autoLoadedTitle: "PIN-код завантажено",
-        autoLoadedSub: "Тепер ви можете відчинити двері в один клік.",
         openDoorSuccess: "відчинено!",
         pushDoorNow: "Будь ласка, штовхніть двері зараз.",
         closesIn: "Зачиниться через",
-        invalidPin: "Невірний PIN або термін бронювання закінчився!",
+        invalidPin: "Невірний PIN або термін закінчився!",
         pinRequired: "Будь ласка, спочатку введіть PIN-код.",
-        networkError: "Помилка зв'язку! Будь ласка, зателефонуйте Софі."
+        networkError: "Помилка зв'язку! Зателефонуйте Фалько."
       },
       ru: {
         title: "AutoCheckin Mechlerstr.",
-        subtitle: "Введите PIN-код или перейдите по ссылке из бронирования, чтобы открыть двери.",
+        subtitle: "Введите PIN или откройте двери по ссылке.",
         pinPlaceholder: "Введите PIN...",
         houseDoorTitle: "Открыть подъезд",
         houseDoorDesc: "Входные двери в дом",
         aptDoorTitle: "Открыть квартиру",
         aptDoorDesc: "Верхний этаж справа",
-        directionsTitle: "Как пройти в квартиру:",
-        directionsDesc: "После входа в подъезд поднимитесь по лестнице на самый верхний этаж (мансарду). Квартира посередине справа — ваши апартаменты.",
-        helpBtn: "Нужна помощь? Позвонить Софи (+49 152 27441736)",
+        directionsDesc: "После входа в подъезд поднимитесь по лестнице на самый верхний этаж (мансарду). Квартира посередине справа — ваша.",
+        helpBtn: "Нужна помощь? Позвонить Фалько (+49 152 53453390)",
         autoLoadedTitle: "PIN-код успешно загружен",
-        autoLoadedSub: "Теперь вы можете открыть двери в один клик.",
         openDoorSuccess: "открыто!",
         pushDoorNow: "Пожалуйста, толкните дверь прямо сейчас.",
         closesIn: "Закроется через",
-        invalidPin: "Неверный PIN или срок бронирования истек!",
+        invalidPin: "Неверный PIN или срок истек!",
         pinRequired: "Пожалуйста, сначала введите PIN-код.",
-        networkError: "Ошибка связи! Пожалуйста, позвоните Софи."
+        networkError: "Ошибка связи! Позвоните Фалько."
       }
     };
 
-    // Automatic Browser Language Detection
     function detectLanguage() {
       const saved = localStorage.getItem('stayinleipzig_lang');
       if (saved && translations[saved]) return saved;
@@ -743,21 +689,15 @@
       }
     }
 
-    // Determine API Endpoint (works on same host, GitHub Pages, or direct Pi tunnel)
     function getApiEndpoint(action) {
       const isGitHub = window.location.hostname.includes('github.io');
-      const base = isGitHub 
-        ? 'https://fhem-tuer-mechler-leipzig.stayinleipzig.de' 
-        : '';
+      const base = isGitHub ? 'https://fhem-tuer-mechler-leipzig.stayinleipzig.de' : '';
       return `${base}/api.php?action=${action}`;
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      // 1. Detect and apply language
-      const initialLang = detectLanguage();
-      setLang(initialLang);
+      setLang(detectLanguage());
 
-      // 2. Read URL params: ?code=1234 or ?pin=1234
       const urlParams = new URLSearchParams(window.location.search);
       const codeParam = urlParams.get('code') || urlParams.get('pin');
 
@@ -776,14 +716,10 @@
         if (data.success) {
           const banner = document.getElementById('autoPinBanner');
           const guestEl = document.getElementById('autoPinGuestName');
-          const detailsEl = document.getElementById('autoPinDetails');
           guestEl.textContent = `${data.guest} – PIN OK!`;
-          detailsEl.textContent = translations[currentLang].autoLoadedSub;
           banner.classList.add('active');
         }
-      } catch (e) {
-        // Silent fallback
-      }
+      } catch (e) {}
     }
 
     async function openDoor(door) {

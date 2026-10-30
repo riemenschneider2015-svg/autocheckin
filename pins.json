@@ -1,9 +1,9 @@
 {
   "settings": {
     "apartment_name": "Mechlerstraße Leipzig",
-    "contact_name": "Sophie",
-    "contact_phone": "+4915227441736",
-    "contact_email": "seydlitz.sophie@googlemail.com",
+    "contact_name": "Falko",
+    "contact_phone": "015253453390",
+    "contact_email": "falko.riemenschneider@gmx.de",
     "fhem_tunnel_url": "https://fhem-tuer-mechler-leipzig.stayinleipzig.de",
     "fhem_local_url": "http://127.0.0.1:8083",
     "fhem_user": "admin",

@@ -282,7 +282,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
             })
         else:
             log_access(ip, pin, entry.get("name", "Gast"), door, False, f"Fehler Türsteuerung: {res_msg}")
-            self.send_json({"success": False, "error": "Türsteuerung nicht erreichbar. Bitte Sophie anrufen."})
+            self.send_json({"success": False, "error": "Türsteuerung nicht erreichbar. Bitte Falko anrufen (015253453390)."})
 
     def handle_admin_list(self, parsed):
         qs = urllib.parse.parse_qs(parsed.query)
