@@ -93,7 +93,7 @@
     <h2 style="margin-bottom: 16px;">🔑 Admin Login</h2>
     <div class="form-group">
       <label>Master-PIN / Admin-Passwort</label>
-      <input type="password" id="adminPasswordInput" placeholder="Passwort eingeben">
+      <input type="password" id="adminPasswordInput" placeholder="Passwort oder Master-PIN" onkeyup="if(event.key==='Enter') doLogin()">
     </div>
     <button class="btn" style="width: 100%; justify-content: center;" onclick="doLogin()">Anmelden</button>
   </div>
