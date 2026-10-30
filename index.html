@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>AutoCheckin – Mechlerstr. Leipzig | StayInLeipzig</title>
-  <meta name="theme-color" content="#1e293b">
+  <meta name="theme-color" content="#0f172a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0f172a;
-      --card-bg: rgba(30, 41, 59, 0.85);
+      --card-bg: rgba(30, 41, 59, 0.88);
       --card-border: rgba(255, 255, 255, 0.1);
       --primary: #38bdf8;
       --primary-hover: #0ea5e9;
@@ -52,15 +52,21 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
-    /* Header */
+    /* Header & Languages */
     .header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 4px 2px;
+    }
+
+    .header-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 6px;
     }
 
     .logo-badge {
@@ -78,29 +84,38 @@
       border: 1px solid rgba(56, 189, 248, 0.25);
     }
 
-    .lang-toggle {
+    /* Multi-language Selector Bar */
+    .lang-bar {
       display: flex;
-      background: rgba(255, 255, 255, 0.08);
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.06);
       border-radius: 999px;
       padding: 3px;
       border: 1px solid var(--card-border);
+      gap: 2px;
+      overflow-x: auto;
     }
 
     .lang-btn {
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 5px 12px;
+      padding: 6px 11px;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       border-radius: 999px;
       cursor: pointer;
       transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
     }
 
     .lang-btn.active {
       background: var(--primary);
       color: #0f172a;
+      box-shadow: 0 2px 8px rgba(56, 189, 248, 0.35);
     }
 
     /* Main Card */
@@ -110,11 +125,11 @@
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      padding: 22px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
     }
 
     .title-area {
@@ -133,16 +148,16 @@
     .title-area p {
       font-size: 13px;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
-    /* PIN Auto-badge */
+    /* Auto-PIN Banner */
     .auto-pin-banner {
       display: none;
       background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.3);
-      padding: 12px;
-      border-radius: 12px;
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      padding: 12px 14px;
+      border-radius: 14px;
       text-align: center;
       animation: fadeIn 0.3s ease;
     }
@@ -173,14 +188,14 @@
     }
 
     .pin-display {
-      background: rgba(15, 23, 42, 0.7);
+      background: rgba(15, 23, 42, 0.75);
       border: 2px solid var(--card-border);
       border-radius: 14px;
-      height: 60px;
+      height: 58px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       cursor: pointer;
       transition: border-color 0.2s ease;
     }
@@ -193,7 +208,7 @@
     .pin-digit {
       font-size: 24px;
       font-weight: 700;
-      letter-spacing: 4px;
+      letter-spacing: 5px;
       color: var(--text);
     }
 
@@ -269,13 +284,13 @@
 
     .door-desc {
       font-size: 12px;
-      opacity: 0.8;
+      opacity: 0.82;
       font-weight: 500;
     }
 
     .door-arrow {
       font-size: 20px;
-      opacity: 0.7;
+      opacity: 0.75;
     }
 
     /* Keypad */
@@ -283,21 +298,6 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-    }
-
-    .keypad-toggle-btn {
-      background: transparent;
-      border: 1px solid var(--card-border);
-      color: var(--text-muted);
-      border-radius: 10px;
-      padding: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
     }
 
     .keypad-grid {
@@ -329,12 +329,13 @@
     .key-btn.fn {
       font-size: 14px;
       color: var(--text-muted);
+      font-weight: 700;
     }
 
-    /* Countdown & Status */
+    /* Status Overlay */
     .status-overlay {
       display: none;
-      background: rgba(15, 23, 42, 0.95);
+      background: rgba(15, 23, 42, 0.96);
       border: 1px solid var(--card-border);
       border-radius: 16px;
       padding: 20px;
@@ -419,7 +420,7 @@
     /* Emergency Footer */
     .emergency-footer {
       text-align: center;
-      padding: 8px 0;
+      padding: 6px 0 16px 0;
     }
 
     .btn-help {
@@ -455,16 +456,24 @@
 <body>
 
   <div class="container">
-    <!-- Header -->
+    <!-- Header with Auto-Language Bar -->
     <header class="header">
-      <div class="logo-badge">
-        <span>🏢</span>
-        <span>Mechlerstr. Leipzig</span>
+      <div class="header-top">
+        <div class="logo-badge">
+          <span>🏢</span>
+          <span>Mechlerstr. Leipzig</span>
+        </div>
+        <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">StayInLeipzig</span>
       </div>
-      <div class="lang-toggle">
-        <button class="lang-btn active" onclick="setLang('de')">DE</button>
-        <button class="lang-btn" onclick="setLang('en')">EN</button>
-      </div>
+
+      <!-- 5-Language Selector -->
+      <nav class="lang-bar" aria-label="Sprachauswahl">
+        <button class="lang-btn active" data-lang="de" onclick="setLang('de')">🇩🇪 DE</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">🇬🇧 EN</button>
+        <button class="lang-btn" data-lang="pl" onclick="setLang('pl')">🇵🇱 PL</button>
+        <button class="lang-btn" data-lang="uk" onclick="setLang('uk')">🇺🇦 UK</button>
+        <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">🇷🇺 RU</button>
+      </nav>
     </header>
 
     <!-- Main Card -->
@@ -474,17 +483,17 @@
         <p data-i18n="subtitle">Tippen Sie Ihren PIN ein oder nutzen Sie den Link aus Ihrer Buchung zum Öffnen der Türen.</p>
       </div>
 
-      <!-- Auto-PIN Banner (shown when ?code=1234 is passed) -->
+      <!-- Auto-PIN Banner (shown when ?code=1234 is present) -->
       <div id="autoPinBanner" class="auto-pin-banner">
         <div class="auto-pin-title">
-          <span>✓</span> <span id="autoPinGuestName">PIN erfolgreich geladen</span>
+          <span>✓</span> <span id="autoPinGuestName" data-i18n="autoLoadedTitle">PIN erfolgreich geladen</span>
         </div>
-        <div class="auto-pin-sub" id="autoPinDetails">Sie können die Türen jetzt direkt per Klick öffnen.</div>
+        <div class="auto-pin-sub" id="autoPinDetails" data-i18n="autoLoadedSub">Sie können die Türen jetzt direkt per Klick öffnen.</div>
       </div>
 
       <!-- PIN Input Display -->
       <div class="pin-display-wrapper">
-        <div id="pinDisplay" class="pin-display focus" onclick="focusPinInput()">
+        <div id="pinDisplay" class="pin-display focus">
           <span id="pinText" class="pin-placeholder" data-i18n="pinPlaceholder">PIN hier eingeben...</span>
         </div>
       </div>
@@ -567,6 +576,7 @@
     let countdownTimer = null;
     let currentLang = 'de';
 
+    // 5-Language Dictionary
     const translations = {
       de: {
         title: "AutoCheckin Mechlerstr.",
@@ -585,34 +595,117 @@
         pushDoorNow: "Bitte jetzt kräftig gegen die Tür drücken.",
         closesIn: "Schließt in",
         invalidPin: "Falscher PIN oder Buchung abgelaufen!",
-        pinRequired: "Bitte geben Sie zuerst Ihren PIN ein."
+        pinRequired: "Bitte geben Sie zuerst Ihren PIN ein.",
+        networkError: "Verbindungsfehler! Bitte Sophie anrufen."
       },
       en: {
         title: "AutoCheckin Mechlerstr.",
         subtitle: "Enter your PIN code or use the link from your booking confirmation to open the doors.",
         pinPlaceholder: "Enter PIN here...",
-        houseDoorTitle: "Open Main Entrance",
-        houseDoorDesc: "Ground floor building entrance",
+        houseDoorTitle: "Open Building Entrance",
+        houseDoorDesc: "Ground floor street entrance",
         aptDoorTitle: "Open Apartment Door",
         aptDoorDesc: "Top floor on the right",
         directionsTitle: "Directions to Apartment:",
-        directionsDesc: "After entering the building, walk up the stairs to the top floor. The apartment in the middle right is yours.",
+        directionsDesc: "After entering the building, walk up the stairs to the top floor (attic). The apartment in the middle right is yours.",
         helpBtn: "Need help? Call Sophie (+49 152 27441736)",
         autoLoadedTitle: "PIN code loaded",
         autoLoadedSub: "You can now open the doors directly with 1 tap.",
         openDoorSuccess: "unlocked!",
-        pushDoorNow: "Please push against the door now.",
+        pushDoorNow: "Please push firmly against the door now.",
         closesIn: "Closes in",
         invalidPin: "Invalid PIN or booking expired!",
-        pinRequired: "Please enter your PIN first."
+        pinRequired: "Please enter your PIN first.",
+        networkError: "Connection error! Please call Sophie."
+      },
+      pl: {
+        title: "AutoCheckin Mechlerstr.",
+        subtitle: "Wpisz kod PIN lub użyj linku z potwierdzenia rezerwacji, aby otworzyć drzwi.",
+        pinPlaceholder: "Wpisz PIN tutaj...",
+        houseDoorTitle: "Otwórz drzwi wejściowe",
+        houseDoorDesc: "Wejście główne do kamienicy",
+        aptDoorTitle: "Otwórz drzwi do apartamentu",
+        aptDoorDesc: "Ostatnie piętro po prawej",
+        directionsTitle: "Wskazówki dojazdu:",
+        directionsDesc: "Po wejściu do budynku wejdź po schodach na ostatnie piętro (poddasze). Mieszkanie pośrodku po prawej stronie to Twój apartament.",
+        helpBtn: "Problemy? Zadzwoń do Sophie (+49 152 27441736)",
+        autoLoadedTitle: "PIN wczytany pomyślnie",
+        autoLoadedSub: "Możesz teraz otworzyć drzwi jednym kliknięciem.",
+        openDoorSuccess: "zostały otwarte!",
+        pushDoorNow: "Pchnij teraz mocno drzwi, aby wejść.",
+        closesIn: "Zamknięcie za",
+        invalidPin: "Nieprawidłowy PIN lub rezerwacja wygasła!",
+        pinRequired: "Proszę najpierw wprowadzić kod PIN.",
+        networkError: "Błąd połączenia! Zadzwoń do Sophie."
+      },
+      uk: {
+        title: "AutoCheckin Mechlerstr.",
+        subtitle: "Введіть PIN-код або скористайтеся посиланням із бронювання, щоб відчинити двері.",
+        pinPlaceholder: "Введіть PIN тут...",
+        houseDoorTitle: "Відчинити під'їзд",
+        houseDoorDesc: "Вхідні двері будинку",
+        aptDoorTitle: "Відчинити квартиру",
+        aptDoorDesc: "Верхній поверх праворуч",
+        directionsTitle: "Як знайти квартиру:",
+        directionsDesc: "Після входу підніміться сходами на останній поверх (мансарда). Квартира посередині праворуч — це ваші апартаменти.",
+        helpBtn: "Потрібна допомога? Подзвонити Софі (+49 152 27441736)",
+        autoLoadedTitle: "PIN-код завантажено",
+        autoLoadedSub: "Тепер ви можете відчинити двері в один клік.",
+        openDoorSuccess: "відчинено!",
+        pushDoorNow: "Будь ласка, штовхніть двері зараз.",
+        closesIn: "Зачиниться через",
+        invalidPin: "Невірний PIN або термін бронювання закінчився!",
+        pinRequired: "Будь ласка, спочатку введіть PIN-код.",
+        networkError: "Помилка зв'язку! Будь ласка, зателефонуйте Софі."
+      },
+      ru: {
+        title: "AutoCheckin Mechlerstr.",
+        subtitle: "Введите PIN-код или перейдите по ссылке из бронирования, чтобы открыть двери.",
+        pinPlaceholder: "Введите PIN...",
+        houseDoorTitle: "Открыть подъезд",
+        houseDoorDesc: "Входные двери в дом",
+        aptDoorTitle: "Открыть квартиру",
+        aptDoorDesc: "Верхний этаж справа",
+        directionsTitle: "Как пройти в квартиру:",
+        directionsDesc: "После входа в подъезд поднимитесь по лестнице на самый верхний этаж (мансарду). Квартира посередине справа — ваши апартаменты.",
+        helpBtn: "Нужна помощь? Позвонить Софи (+49 152 27441736)",
+        autoLoadedTitle: "PIN-код успешно загружен",
+        autoLoadedSub: "Теперь вы можете открыть двери в один клик.",
+        openDoorSuccess: "открыто!",
+        pushDoorNow: "Пожалуйста, толкните дверь прямо сейчас.",
+        closesIn: "Закроется через",
+        invalidPin: "Неверный PIN или срок бронирования истек!",
+        pinRequired: "Пожалуйста, сначала введите PIN-код.",
+        networkError: "Ошибка связи! Пожалуйста, позвоните Софи."
       }
     };
 
+    // Automatic Browser Language Detection
+    function detectLanguage() {
+      const saved = localStorage.getItem('stayinleipzig_lang');
+      if (saved && translations[saved]) return saved;
+
+      const browserLangs = navigator.languages || [navigator.language || navigator.userLanguage || 'de'];
+      for (let lang of browserLangs) {
+        const l = lang.toLowerCase();
+        if (l.startsWith('de')) return 'de';
+        if (l.startsWith('en')) return 'en';
+        if (l.startsWith('pl')) return 'pl';
+        if (l.startsWith('uk')) return 'uk';
+        if (l.startsWith('ru')) return 'ru';
+      }
+      return 'de';
+    }
+
     function setLang(lang) {
+      if (!translations[lang]) lang = 'de';
       currentLang = lang;
+      localStorage.setItem('stayinleipzig_lang', lang);
+
       document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
       });
+
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang][key]) {
@@ -650,8 +743,21 @@
       }
     }
 
-    // Check URL parameters on load: ?code=1234 or ?pin=1234
+    // Determine API Endpoint (works on same host, GitHub Pages, or direct Pi tunnel)
+    function getApiEndpoint(action) {
+      const isGitHub = window.location.hostname.includes('github.io');
+      const base = isGitHub 
+        ? 'https://fhem-tuer-mechler-leipzig.stayinleipzig.de' 
+        : '';
+      return `${base}/api.php?action=${action}`;
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
+      // 1. Detect and apply language
+      const initialLang = detectLanguage();
+      setLang(initialLang);
+
+      // 2. Read URL params: ?code=1234 or ?pin=1234
       const urlParams = new URLSearchParams(window.location.search);
       const codeParam = urlParams.get('code') || urlParams.get('pin');
 
@@ -664,18 +770,19 @@
 
     async function verifyPinSilently(pin) {
       try {
-        const res = await fetch(`api.php?action=verify&pin=${encodeURIComponent(pin)}`);
+        const url = getApiEndpoint(`verify&pin=${encodeURIComponent(pin)}`);
+        const res = await fetch(url);
         const data = await res.json();
         if (data.success) {
           const banner = document.getElementById('autoPinBanner');
           const guestEl = document.getElementById('autoPinGuestName');
           const detailsEl = document.getElementById('autoPinDetails');
-          guestEl.textContent = `Willkommen ${data.guest}!`;
-          detailsEl.textContent = `PIN gültig bis ${new Date(data.valid_until).toLocaleDateString('de-DE')} • Türen jetzt öffnen:`;
+          guestEl.textContent = `${data.guest} – PIN OK!`;
+          detailsEl.textContent = translations[currentLang].autoLoadedSub;
           banner.classList.add('active');
         }
       } catch (e) {
-        // Fallback gracefully if API not ready yet
+        // Silent fallback
       }
     }
 
@@ -691,7 +798,8 @@
       btnApt.disabled = true;
 
       try {
-        const res = await fetch('api.php?action=open', {
+        const url = getApiEndpoint('open');
+        const res = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ pin: currentPin, door: door })
@@ -699,14 +807,18 @@
         const data = await res.json();
 
         if (data.success) {
-          showCountdown(data.door_name || (door === 'haustuer' ? 'Haustür' : 'Wohnungstür'), data.seconds || 10, data.directions);
+          showCountdown(
+            data.door_name || (door === 'haustuer' ? translations[currentLang].houseDoorTitle : translations[currentLang].aptDoorTitle),
+            data.seconds || 10,
+            data.directions
+          );
         } else {
           alert(data.error || translations[currentLang].invalidPin);
           btnHouse.disabled = false;
           btnApt.disabled = false;
         }
       } catch (e) {
-        alert("Netzwerkfehler! Bitte Sophie anrufen.");
+        alert(translations[currentLang].networkError);
         btnHouse.disabled = false;
         btnApt.disabled = false;
       }
