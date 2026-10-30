@@ -349,7 +349,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         seconds = settings.get("door_open_seconds_house", 10) if door == "haustuer" else settings.get("door_open_seconds_apt", 30)
 
         if ok:
-            directions = ("Bitte jetzt gegen die Haustuer druecken und bis ins Dachgeschoss laufen. Die Wohnung in der Mitte rechts ist Ihre Ferienwohnung."
+            directions = ("Bitte jetzt gegen die Haustuer druecken und bis ins Dachgeschoss laufen. Die Tuer in der Mitte mit dem grauen Willkommen-Schild ist Ihre Ferienwohnung."
                           if door == "haustuer" else "Bitte jetzt gegen die Wohnungstuer druecken. Herzlich Willkommen!")
             log_access(ip, pin, entry.get("name", "Gast"), door, True, "{0} geoeffnet".format(door_name))
             self.send_json({

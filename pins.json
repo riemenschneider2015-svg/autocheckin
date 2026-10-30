@@ -1,11 +1,11 @@
 {
   "settings": {
-    "apartment_name": "Mechlerstraße Leipzig",
+    "apartment_name": "Mechlerstr. 10 Leipzig",
     "contact_name": "Falko",
     "contact_phone": "015253453390",
     "contact_email": "falko.riemenschneider@gmx.de",
     "fhem_tunnel_url": "https://fhem-tuer-mechler-leipzig.stayinleipzig.de",
-    "fhem_local_url": "http://127.0.0.1:8083",
+    "fhem_local_url": "http://127.0.0.1:8086",
     "fhem_user": "admin",
     "fhem_pass": "octasias",
     "max_failed_attempts": 5,
