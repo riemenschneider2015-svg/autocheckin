@@ -118,7 +118,7 @@ def record_attempt(ip, success, max_attempts=5, lockout_minutes=10):
 
 def find_pin(pin_code, pins, settings):
     now = datetime.now()
-    grace_before = timedelta(minutes=settings.get("grace_period_minutes_before", 30))
+    grace_before = timedelta(minutes=settings.get("grace_period_minutes_before", 0))
     grace_after = timedelta(minutes=settings.get("grace_period_minutes_after", 60))
 
     for p in pins:
@@ -295,12 +295,14 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         self.verify_pin_response(pin)
 
     def verify_pin_response(self, pin):
+        ip = self.get_client_ip()
         data = load_data()
         settings = data.get("settings", {})
         pins = data.get("pins", [])
         valid, entry, status = find_pin(pin, pins, settings)
 
         if valid:
+            log_access(ip, pin, entry.get("name", "Gast"), "verify", True, "PIN geprueft: Aktiv fuer " + str(entry.get("name", "Gast")))
             self.send_json({
                 "success": True,
                 "status": "active",
@@ -312,10 +314,17 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         else:
             msg = "Falscher PIN"
             if status == "future":
-                msg = "Check-in ist erst ab {0} moeglich.".format(entry.get("valid_from"))
+                msg = "Check-in ist erst ab {0} moeglich.".format(entry.get("valid_from") if entry else "")
             elif status == "expired":
-                msg = "PIN ist abgelaufen (Check-out war {0}).".format(entry.get("valid_until"))
-            self.send_json({"success": False, "status": status, "error": msg})
+                msg = "PIN ist abgelaufen (Check-out war {0}).".format(entry.get("valid_until") if entry else "")
+            log_access(ip, pin, entry.get("name") if entry else "", "verify", False, "PIN Pruefung: " + msg)
+            self.send_json({
+                "success": False,
+                "status": status,
+                "error": msg,
+                "valid_from": entry.get("valid_from") if entry else None,
+                "valid_until": entry.get("valid_until") if entry else None
+            })
 
     def handle_open(self, payload):
         ip = self.get_client_ip()
@@ -325,6 +334,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
 
         allowed, rmsg = check_rate_limit(ip, settings.get("max_failed_attempts", 5), settings.get("lockout_minutes", 10))
         if not allowed:
+            log_access(ip, payload.get("pin", ""), "", payload.get("door", ""), False, "Gesperrt wegen Rate-Limit")
             self.send_json({"success": False, "error": rmsg, "locked": True}, code=429)
             return
 
@@ -340,7 +350,14 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
             elif status == "expired":
                 msg = "Ihr PIN ist abgelaufen (Check-out war {0}).".format(entry.get("valid_until") if entry else "")
             log_access(ip, pin, entry.get("name") if entry else "", door, False, msg)
-            self.send_json({"success": False, "error": msg, "status": status, "contact": "015253453390"})
+            self.send_json({
+                "success": False,
+                "error": msg,
+                "status": status,
+                "contact": "015253453390",
+                "valid_from": entry.get("valid_from") if entry else None,
+                "valid_until": entry.get("valid_until") if entry else None
+            })
             return
 
         record_attempt(ip, True)

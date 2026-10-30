@@ -6,42 +6,22 @@
     "contact_email": "falko.riemenschneider@gmx.de",
     "fhem_tunnel_url": "https://fhem-tuer-mechler-leipzig.stayinleipzig.de",
     "fhem_local_url": "http://127.0.0.1:8086",
-    "fhem_user": "admin",
-    "fhem_pass": "octasias",
     "max_failed_attempts": 5,
     "lockout_minutes": 10,
-    "grace_period_minutes_before": 30,
+    "grace_period_minutes_before": 0,
     "grace_period_minutes_after": 60,
     "door_open_seconds_house": 10,
     "door_open_seconds_apt": 30
   },
   "pins": [
     {
-      "pin": "24818",
-      "name": "Aktueller Gast",
-      "booking_id": "BOOK-2026-001",
-      "valid_from": "2026-10-30T12:00:00",
-      "valid_until": "2026-11-05T11:00:00",
-      "active": true,
+      "pin": "12345",
+      "name": "Muster-Gast (Demo)",
+      "booking_id": "DEMO-2026-001",
+      "valid_from": "2026-01-01T15:00:00",
+      "valid_until": "2099-12-31T11:00:00",
+      "active": false,
       "role": "guest"
-    },
-    {
-      "pin": "23951",
-      "name": "Nächster Gast",
-      "booking_id": "BOOK-2026-002",
-      "valid_from": "2026-11-05T15:00:00",
-      "valid_until": "2026-11-10T11:00:00",
-      "active": true,
-      "role": "guest"
-    },
-    {
-      "pin": "04157",
-      "name": "Master Sophie & Falko",
-      "booking_id": "MASTER-01",
-      "valid_from": "2020-01-01T00:00:00",
-      "valid_until": "2099-12-31T23:59:59",
-      "active": true,
-      "role": "admin"
     }
   ]
 }

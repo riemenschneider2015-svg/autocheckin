@@ -207,76 +207,101 @@
       font-weight: 500;
     }
 
-    /* Door Action Buttons */
+    /* Door Action Buttons (Centered & Premium) */
     .doors-grid {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
+      width: 100%;
     }
 
     .btn-door {
+      position: relative;
+      overflow: hidden;
       display: flex;
+      flex-direction: row;
       align-items: center;
-      justify-content: space-between;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: none;
+      justify-content: center;
+      text-align: center;
+      gap: 12px;
+      padding: 13px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
       font-family: inherit;
       color: #ffffff;
       cursor: pointer;
-      transition: all 0.15s ease;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-door::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    }
+
+    .btn-door:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
     }
 
     .btn-door:active {
-      transform: scale(0.98);
+      transform: scale(0.985);
     }
 
     .btn-door:disabled {
       opacity: 0.55;
       cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
 
     .btn-haustuer {
       background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);
     }
 
     .btn-wohnungstuer {
-      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
-      border: 1px solid rgba(52, 211, 153, 0.3);
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      border-color: rgba(52, 211, 153, 0.4);
+      box-shadow: 0 4px 16px rgba(5, 150, 105, 0.35);
     }
 
-    .door-left {
+    .door-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.18);
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
     }
 
-    .door-icon {
-      font-size: 22px;
-    }
-
-    .door-text {
-      text-align: left;
+    .door-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
     .door-title {
-      font-size: 15px;
+      font-size: 15.5px;
       font-weight: 800;
-      display: block;
+      letter-spacing: -0.2px;
       line-height: 1.2;
     }
 
     .door-desc {
-      font-size: 11px;
-      opacity: 0.85;
+      font-size: 11.5px;
+      opacity: 0.9;
       font-weight: 500;
-    }
-
-    .door-arrow {
-      font-size: 16px;
-      opacity: 0.8;
+      margin-top: 2px;
     }
 
     /* Keypad (Ultra-compact) */
@@ -414,6 +439,110 @@
     .btn-help:active {
       transform: scale(0.97);
     }
+  
+    /* Error / Gateway Unreachable Modal */
+    .error-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .error-modal.active {
+      display: flex;
+    }
+
+    .error-modal-card {
+      background: #1e293b;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 20px;
+      padding: 24px 20px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      animation: popIn 0.25s ease-out;
+    }
+
+    .error-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .error-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #f87171;
+      margin-bottom: 8px;
+    }
+
+    .error-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.45;
+      margin-bottom: 20px;
+    }
+
+    .error-modal-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-retry {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 14px;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .btn-retry:active {
+      transform: scale(0.98);
+    }
+
+    .btn-call-host {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
   </style>
 </head>
 <body>
@@ -429,10 +558,11 @@
         <span class="brand-name">StayInLeipzig</span>
       </div>
 
-      <!-- 5-Language Selector -->
+      <!-- 6-Language Selector -->
       <nav class="lang-bar" aria-label="Language selection">
         <button class="lang-btn active" data-lang="de" onclick="setLang('de')">🇩🇪 DE</button>
         <button class="lang-btn" data-lang="en" onclick="setLang('en')">🇬🇧 EN</button>
+        <button class="lang-btn" data-lang="es" onclick="setLang('es')">🇪🇸 ES</button>
         <button class="lang-btn" data-lang="pl" onclick="setLang('pl')">🇵🇱 PL</button>
         <button class="lang-btn" data-lang="uk" onclick="setLang('uk')">🇺🇦 UK</button>
         <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">🇷🇺 RU</button>
@@ -458,28 +588,22 @@
         <span id="pinText" class="pin-placeholder" data-i18n="pinPlaceholder">PIN eingeben...</span>
       </div>
 
-      <!-- Door Buttons -->
+      <!-- Door Buttons (Centered & Premium) -->
       <div class="doors-grid">
         <button id="btnHaustuer" class="btn-door btn-haustuer" onclick="openDoor('haustuer')">
-          <div class="door-left">
-            <span class="door-icon">🚪</span>
-            <div class="door-text">
-              <span class="door-title" data-i18n="houseDoorTitle">Haustür öffnen</span>
-              <span class="door-desc" data-i18n="houseDoorDesc">Unten am Hauseingang</span>
-            </div>
+          <div class="door-icon-wrap">🚪</div>
+          <div class="door-center">
+            <span class="door-title" data-i18n="houseDoorTitle">Haustür öffnen</span>
+            <span class="door-desc" data-i18n="houseDoorDesc">Unten am Hauseingang</span>
           </div>
-          <span class="door-arrow">➔</span>
         </button>
 
         <button id="btnWohnungstuer" class="btn-door btn-wohnungstuer" onclick="openDoor('wohnungstuer')">
-          <div class="door-left">
-            <span class="door-icon">🔑</span>
-            <div class="door-text">
-              <span class="door-title" data-i18n="aptDoorTitle">Wohnungstür öffnen</span>
-              <span class="door-desc" data-i18n="aptDoorDesc">Dachgeschoss Mitte (graues Schild)</span>
-            </div>
+          <div class="door-icon-wrap">🔑</div>
+          <div class="door-center">
+            <span class="door-title" data-i18n="aptDoorTitle">Wohnungstür öffnen</span>
+            <span class="door-desc" data-i18n="aptDoorDesc">Dachgeschoss Mitte (graues Schild)</span>
           </div>
-          <span class="door-arrow">➔</span>
         </button>
       </div>
 
@@ -517,6 +641,24 @@
           <p data-i18n="directionsDesc">Dachgeschoss hochlaufen, dann die Tür in der Mitte mit dem grauen Willkommen-Schild.</p>
         </div>
       </div>
+          <!-- Gateway Error & Retry / Call Falko Modal -->
+      <div id="errorModal" class="error-modal">
+        <div class="error-modal-card">
+          <div class="error-icon">⚠️</div>
+          <h2 id="errorModalTitle" class="error-title">Verbindung zum Schloss nicht möglich</h2>
+          <p id="errorModalDesc" class="error-desc">Das Tür-Gateway antwortet gerade nicht. Bitte noch einmal probieren oder Host Falko anrufen.</p>
+          <div class="error-modal-actions">
+            <button id="btnRetryDoor" class="btn-retry" onclick="retryLastDoorAction()">
+              <span>🔄</span> <span id="errorRetryText">Noch einmal probieren</span>
+            </button>
+            <a href="tel:015253453390" class="btn-call-host">
+              <span>📞</span> <span id="errorCallText">Host Falko anrufen: 0152 53453390</span>
+            </a>
+            <button class="btn-close-modal" onclick="closeErrorModal()">✕ Schließen</button>
+          </div>
+        </div>
+      </div>
+
     </main>
 
     <!-- Falko Emergency Contact Footer -->
@@ -533,7 +675,7 @@
     let countdownTimer = null;
     let currentLang = 'de';
 
-    // 5-Language Dictionary with Falko Contact
+    // 6-Language Dictionary with Falko Contact
     const translations = {
       de: {
         title: "AutoCheckin Mechlerstr. 10",
@@ -551,7 +693,13 @@
         closesIn: "Schließt in",
         invalidPin: "Falscher PIN oder Buchung abgelaufen!",
         pinRequired: "Bitte geben Sie zuerst Ihren PIN ein.",
-        networkError: "Verbindungsfehler! Bitte Falko anrufen."
+        networkError: "Verbindungsfehler! Bitte Falko anrufen.",
+        futurePin: "Ihr PIN ist noch nicht aktiv (erst ab {0} Uhr gültig).",
+        expiredPin: "Ihr PIN ist abgelaufen (Check-out war {0} Uhr).",
+        gatewayErrorTitle: "Verbindung zum Schloss nicht möglich",
+        gatewayErrorDesc: "Das Tür-Gateway antwortet gerade nicht. Bitte noch einmal probieren oder Host Falko direkt anrufen.",
+        retryBtn: "Noch einmal probieren",
+        callHostBtn: "Host Falko anrufen (0152 53453390)"
       },
       en: {
         title: "AutoCheckin Mechlerstr. 10",
@@ -569,7 +717,37 @@
         closesIn: "Closes in",
         invalidPin: "Invalid PIN or booking expired!",
         pinRequired: "Please enter your PIN first.",
-        networkError: "Connection error! Please call Falko."
+        networkError: "Connection error! Please call Falko.",
+        futurePin: "Your PIN is not active yet (valid from {0}).",
+        expiredPin: "Your PIN has expired (check-out was {0}).",
+        gatewayErrorTitle: "Cannot reach door gateway",
+        gatewayErrorDesc: "The door gateway is currently not responding. Please retry or call host Falko directly.",
+        retryBtn: "Try again",
+        callHostBtn: "Call host Falko (+49 152 53453390)"
+      },
+      es: {
+        title: "AutoCheckin Mechlerstr. 10",
+        subtitle: "Introduce el PIN o pulsa directamente desde tu enlace.",
+        pinPlaceholder: "Introduce el PIN...",
+        houseDoorTitle: "Abrir puerta del edificio",
+        houseDoorDesc: "Abajo, en la entrada a la calle",
+        aptDoorTitle: "Abrir puerta del apartamento",
+        aptDoorDesc: "Ático en el centro (letrero gris)",
+        directionsDesc: "Sube las escaleras hasta el ático (último piso). La puerta del centro con el letrero gris 'Willkommen' es tu apartamento.",
+        helpBtn: "¿Problemas? Llamar a Falko (+49 152 53453390)",
+        autoLoadedTitle: "PIN cargado correctamente",
+        openDoorSuccess: "¡desbloqueada!",
+        pushDoorNow: "Por favor, empuja la puerta con fuerza ahora.",
+        closesIn: "Se cierra en",
+        invalidPin: "¡PIN incorrecto o reserva caducada!",
+        pinRequired: "Por favor, introduce tu código PIN primero.",
+        networkError: "¡Error de conexión! Por favor llama a Falko.",
+        futurePin: "Tu PIN aún no está activo (válido a partir de {0}).",
+        expiredPin: "Tu PIN ha caducado (el check-out fue {0}).",
+        gatewayErrorTitle: "No se puede conectar con la puerta",
+        gatewayErrorDesc: "La puerta no responde en este momento. Por favor, inténtalo de nuevo o llama al anfitrión Falko.",
+        retryBtn: "Intentar de nuevo",
+        callHostBtn: "Llamar al anfitrión Falko (+49 152 53453390)"
       },
       pl: {
         title: "AutoCheckin Mechlerstr. 10",
@@ -587,7 +765,13 @@
         closesIn: "Zamknięcie za",
         invalidPin: "Nieprawidłowy PIN lub rezerwacja wygasła!",
         pinRequired: "Proszę najpierw wprowadzić PIN.",
-        networkError: "Błąd połączenia! Zadzwoń do Falko."
+        networkError: "Błąd połączenia! Zadzwoń do Falko.",
+        futurePin: "Twój PIN nie jest jeszcze aktywny (ważny od {0}).",
+        expiredPin: "Twój PIN wygasł (wymeldowanie było {0}).",
+        gatewayErrorTitle: "Brak połączenia z zamkiem",
+        gatewayErrorDesc: "Brama zamka nie odpowiada. Spróbuj ponownie lub zadzwoń bezpośrednio do gospodarza Falko.",
+        retryBtn: "Spróbuj ponownie",
+        callHostBtn: "Zadzwoń do Falko (+49 152 53453390)"
       },
       uk: {
         title: "AutoCheckin Mechlerstr. 10",
@@ -605,7 +789,13 @@
         closesIn: "Зачиниться через",
         invalidPin: "Невірний PIN або термін закінчився!",
         pinRequired: "Будь ласка, спочатку введіть PIN-код.",
-        networkError: "Помилка зв'язку! Зателефонуйте Фалько."
+        networkError: "Помилка зв'язку! Зателефонуйте Фалько.",
+        futurePin: "Ваш PIN-код ще не активний (дійсний з {0}).",
+        expiredPin: "Ваш PIN-код прострочений (виїзд був {0}).",
+        gatewayErrorTitle: "Немає зв'язку із замком",
+        gatewayErrorDesc: "Шлюз дверей зараз не відповідає. Спробуйте ще раз або зателефонуйте господарю Фалько.",
+        retryBtn: "Спробувати ще раз",
+        callHostBtn: "Подзвонити Фалько (+49 152 53453390)"
       },
       ru: {
         title: "AutoCheckin Mechlerstr. 10",
@@ -623,11 +813,34 @@
         closesIn: "Закроется через",
         invalidPin: "Неверный PIN или срок истек!",
         pinRequired: "Пожалуйста, сначала введите PIN-код.",
-        networkError: "Ошибка связи! Позвоните Фалько."
+        networkError: "Ошибка связи! Позвоните Фалько.",
+        futurePin: "Ваш PIN-код ещё не активен (действует с {0}).",
+        expiredPin: "Срок действия вашего PIN-кода истёк (выезд был {0}).",
+        gatewayErrorTitle: "Нет связи с замком",
+        gatewayErrorDesc: "Дверной шлюз не отвечает. Попробуйте ещё раз или позвоните хозяину Фалько напрямую.",
+        retryBtn: "Попробовать ещё раз",
+        callHostBtn: "Позвонить Фалько (+49 152 53453390)"
       }
     };
 
+    function formatDateTime(isoStr) {
+      if (!isoStr) return '';
+      try {
+        const d = new Date(isoStr.replace(' ', 'T'));
+        if (isNaN(d.getTime())) return isoStr;
+        return d.toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      } catch (e) {
+        return isoStr;
+      }
+    }
+
     function detectLanguage() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlLang = urlParams.get('lang');
+      if (urlLang && translations[urlLang.toLowerCase()]) {
+        return urlLang.toLowerCase();
+      }
+
       const saved = localStorage.getItem('stayinleipzig_lang');
       if (saved && translations[saved]) return saved;
 
@@ -635,6 +848,7 @@
       for (let lang of browserLangs) {
         const l = lang.toLowerCase();
         if (l.startsWith('de')) return 'de';
+        if (l.startsWith('es')) return 'es';
         if (l.startsWith('en')) return 'en';
         if (l.startsWith('pl')) return 'pl';
         if (l.startsWith('uk')) return 'uk';
@@ -713,21 +927,44 @@
         const url = getApiEndpoint(`verify&pin=${encodeURIComponent(pin)}`);
         const res = await fetch(url);
         const data = await res.json();
+        const banner = document.getElementById('autoPinBanner');
+        const guestEl = document.getElementById('autoPinGuestName');
+
         if (data.success) {
-          const banner = document.getElementById('autoPinBanner');
-          const guestEl = document.getElementById('autoPinGuestName');
-          guestEl.textContent = `${data.guest} – PIN OK!`;
+          guestEl.textContent = `✓ ${data.guest} – PIN OK!`;
+          banner.style.background = 'rgba(34, 197, 94, 0.15)';
+          banner.style.borderColor = 'rgba(34, 197, 94, 0.35)';
+          guestEl.style.color = 'var(--accent-green)';
+          banner.classList.add('active');
+        } else if (data.status === 'future') {
+          const fromStr = data.valid_from ? formatDateTime(data.valid_from) : '';
+          const msg = (translations[currentLang].futurePin || data.error).replace('{0}', fromStr);
+          guestEl.textContent = `⏳ ${msg}`;
+          banner.style.background = 'rgba(234, 179, 8, 0.15)';
+          banner.style.borderColor = 'rgba(234, 179, 8, 0.35)';
+          guestEl.style.color = '#facc15';
+          banner.classList.add('active');
+        } else if (data.status === 'expired') {
+          const untilStr = data.valid_until ? formatDateTime(data.valid_until) : '';
+          const msg = (translations[currentLang].expiredPin || data.error).replace('{0}', untilStr);
+          guestEl.textContent = `⚠️ ${msg}`;
+          banner.style.background = 'rgba(239, 68, 68, 0.15)';
+          banner.style.borderColor = 'rgba(239, 68, 68, 0.35)';
+          guestEl.style.color = '#f87171';
           banner.classList.add('active');
         }
       } catch (e) {}
     }
 
-    async function openDoor(door) {
+    let lastDoorAttempt = null;
+
+    async function openDoor(door, isRetry = false) {
       if (!currentPin) {
         alert(translations[currentLang].pinRequired);
         return;
       }
 
+      lastDoorAttempt = door;
       const btnHouse = document.getElementById('btnHaustuer');
       const btnApt = document.getElementById('btnWohnungstuer');
       btnHouse.disabled = true;
@@ -735,29 +972,76 @@
 
       try {
         const url = getApiEndpoint('open');
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
+
         const res = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pin: currentPin, door: door })
+          body: JSON.stringify({ pin: currentPin, door: door }),
+          signal: controller.signal
         });
+        clearTimeout(timeoutId);
+
+        if (!res.ok && res.status >= 500) {
+          throw new Error('Server returned ' + res.status);
+        }
+
         const data = await res.json();
 
         if (data.success) {
+          closeErrorModal();
           showCountdown(
             data.door_name || (door === 'haustuer' ? translations[currentLang].houseDoorTitle : translations[currentLang].aptDoorTitle),
             data.seconds || 10,
             (door === 'haustuer' ? translations[currentLang].directionsDesc : translations[currentLang].pushDoorNow)
           );
         } else {
-          alert(data.error || translations[currentLang].invalidPin);
+          let err = data.error || translations[currentLang].invalidPin;
+          if (data.status === 'future' && translations[currentLang].futurePin) {
+            err = translations[currentLang].futurePin.replace('{0}', formatDateTime(data.valid_from));
+          } else if (data.status === 'expired' && translations[currentLang].expiredPin) {
+            err = translations[currentLang].expiredPin.replace('{0}', formatDateTime(data.valid_until));
+          }
+          alert(err);
           btnHouse.disabled = false;
           btnApt.disabled = false;
         }
       } catch (e) {
-        alert(translations[currentLang].networkError);
-        btnHouse.disabled = false;
-        btnApt.disabled = false;
+        console.warn('Door opening error:', e);
+        if (!isRetry) {
+          // Automatic 1st retry after 1.5 seconds
+          setTimeout(() => {
+            openDoor(door, true);
+          }, 1500);
+        } else {
+          // 2nd attempt failed: Show Gateway Error Modal with Retry & Call Falko buttons!
+          btnHouse.disabled = false;
+          btnApt.disabled = false;
+          showErrorModal();
+        }
       }
+    }
+
+    function retryLastDoorAction() {
+      closeErrorModal();
+      if (lastDoorAttempt) {
+        openDoor(lastDoorAttempt, false);
+      }
+    }
+
+    function showErrorModal() {
+      const modal = document.getElementById('errorModal');
+      document.getElementById('errorModalTitle').textContent = translations[currentLang].gatewayErrorTitle;
+      document.getElementById('errorModalDesc').textContent = translations[currentLang].gatewayErrorDesc;
+      document.getElementById('errorRetryText').textContent = translations[currentLang].retryBtn;
+      document.getElementById('errorCallText').textContent = translations[currentLang].callHostBtn;
+      modal.classList.add('active');
+    }
+
+    function closeErrorModal() {
+      const modal = document.getElementById('errorModal');
+      if (modal) modal.classList.remove('active');
     }
 
     function showCountdown(doorName, totalSeconds, customDirections) {
