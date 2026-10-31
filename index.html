@@ -362,10 +362,71 @@
       margin-bottom: 3px;
     }
 
+    .status-buzzer-notice {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      color: #fde68a;
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin: 8px 0;
+      font-size: 12.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      line-height: 1.3;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.25);
+      animation: buzzerPulse 1.2s ease-in-out infinite alternate;
+    }
+
+    .buzzer-anim-icon {
+      font-size: 16px;
+      display: inline-block;
+      animation: ringBuzzer 0.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes ringBuzzer {
+      0% { transform: rotate(-12deg); }
+      100% { transform: rotate(12deg); }
+    }
+
+    @keyframes buzzerPulse {
+      0% {
+        transform: scale(0.99);
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
+      }
+      100% {
+        transform: scale(1.02);
+        box-shadow: 0 0 18px rgba(245, 158, 11, 0.45);
+      }
+    }
+
     .status-msg {
-      font-size: 11px;
+      font-size: 11.5px;
       color: #cbd5e1;
       margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .buzzer-tip {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fde68a;
+      border-radius: 10px;
+      padding: 7px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      line-height: 1.35;
+      text-align: left;
+    }
+
+    .buzzer-tip-icon {
+      font-size: 15px;
+      flex-shrink: 0;
     }
 
     .progress-bar-bg {
@@ -611,11 +672,21 @@
       <div id="statusOverlay" class="status-overlay">
         <div id="statusIcon" class="status-icon">🔓</div>
         <div id="statusTitle" class="status-title">Haustür entriegelt!</div>
-        <div id="statusMsg" class="status-msg">Bitte jetzt gegen die Tür drücken.</div>
+        <div id="statusBuzzerNotice" class="status-buzzer-notice">
+          <span class="buzzer-anim-icon">🔔</span>
+          <span id="statusBuzzerText" data-i18n="pushWhenBuzzing">Immer kräftig gegen die Tür drücken, wenn es summt!</span>
+        </div>
+        <div id="statusMsg" class="status-msg">Immer kräftig gegen die Tür drücken, wenn es summt!</div>
         <div class="progress-bar-bg">
           <div id="progressBar" class="progress-bar-fill"></div>
         </div>
         <div id="statusSeconds" class="status-seconds">Schließt in 10s</div>
+      </div>
+
+      <!-- Compact Buzzer Hint -->
+      <div class="buzzer-tip">
+        <span class="buzzer-tip-icon">🔔</span>
+        <span class="buzzer-tip-text" data-i18n="buzzerTip">Wichtig: Immer kräftig gegen die Tür drücken, wenn es summt!</span>
       </div>
 
       <!-- Compact Keypad -->
@@ -685,11 +756,15 @@
         houseDoorDesc: "Unten am Hauseingang",
         aptDoorTitle: "Wohnungstür öffnen",
         aptDoorDesc: "Dachgeschoss Mitte (graues Schild)",
+        buzzerTip: "Wichtig: Immer kräftig gegen die Tür drücken, wenn es summt!",
+        pushWhenBuzzing: "Immer kräftig gegen die Tür drücken, wenn es summt!",
+        houseDoorSuccessMsg: "Danach die Treppen hoch ins Dachgeschoss laufen (Tür in der Mitte mit grauem Schild).",
+        aptDoorSuccessMsg: "Herzlich willkommen in Ihrer Ferienwohnung!",
         directionsDesc: "Dachgeschoss hochlaufen, dann die Tür in der Mitte mit dem grauen Willkommen-Schild.",
         helpBtn: "Probleme? Falko anrufen (0152 53453390)",
         autoLoadedTitle: "PIN erfolgreich geladen",
         openDoorSuccess: "wurde entriegelt!",
-        pushDoorNow: "Bitte jetzt kräftig gegen die Tür drücken.",
+        pushDoorNow: "Immer kräftig gegen die Tür drücken, wenn es summt!",
         closesIn: "Schließt in",
         invalidPin: "Falscher PIN oder Buchung abgelaufen!",
         pinRequired: "Bitte geben Sie zuerst Ihren PIN ein.",
@@ -709,11 +784,15 @@
         houseDoorDesc: "Ground floor street door",
         aptDoorTitle: "Open Apartment Door",
         aptDoorDesc: "Top floor middle (grey sign)",
+        buzzerTip: "Important: Always push firmly against the door when you hear the buzzer!",
+        pushWhenBuzzing: "Always push firmly against the door while it buzzes!",
+        houseDoorSuccessMsg: "Then walk up to the top floor (attic): middle door with the grey sign.",
+        aptDoorSuccessMsg: "Welcome to your apartment!",
         directionsDesc: "Walk up to the top floor (attic). The door in the middle with the grey 'Willkommen' sign is your apartment.",
         helpBtn: "Need help? Call Falko (+49 152 53453390)",
         autoLoadedTitle: "PIN code loaded",
         openDoorSuccess: "unlocked!",
-        pushDoorNow: "Please push against the door now.",
+        pushDoorNow: "Always push firmly against the door while it buzzes!",
         closesIn: "Closes in",
         invalidPin: "Invalid PIN or booking expired!",
         pinRequired: "Please enter your PIN first.",
@@ -733,11 +812,15 @@
         houseDoorDesc: "Abajo, en la entrada a la calle",
         aptDoorTitle: "Abrir puerta del apartamento",
         aptDoorDesc: "Ático en el centro (letrero gris)",
+        buzzerTip: "Importante: ¡Empuja siempre con fuerza la puerta cuando escuches el zumbador!",
+        pushWhenBuzzing: "¡Empuja siempre con fuerza la puerta mientras suena el zumbador!",
+        houseDoorSuccessMsg: "Después sube al ático: la puerta del centro con el letrero gris.",
+        aptDoorSuccessMsg: "¡Bienvenido/a a tu apartamento!",
         directionsDesc: "Sube las escaleras hasta el ático (último piso). La puerta del centro con el letrero gris 'Willkommen' es tu apartamento.",
         helpBtn: "¿Problemas? Llamar a Falko (+49 152 53453390)",
         autoLoadedTitle: "PIN cargado correctamente",
         openDoorSuccess: "¡desbloqueada!",
-        pushDoorNow: "Por favor, empuja la puerta con fuerza ahora.",
+        pushDoorNow: "¡Empuja siempre con fuerza la puerta mientras suena el zumbador!",
         closesIn: "Se cierra en",
         invalidPin: "¡PIN incorrecto o reserva caducada!",
         pinRequired: "Por favor, introduce tu código PIN primero.",
@@ -757,11 +840,15 @@
         houseDoorDesc: "Wejście do kamienicy",
         aptDoorTitle: "Otwórz drzwi do apartamentu",
         aptDoorDesc: "Poddasze na środku (szary szyld)",
+        buzzerTip: "Ważne: Zawsze mocno pchnij drzwi, gdy brzęczy brzęczyk!",
+        pushWhenBuzzing: "Zawsze mocno pchnij drzwi, gdy brzęczy brzęczyk!",
+        houseDoorSuccessMsg: "Następnie wejdź na poddasze: środkowe drzwi z szarym szyldem.",
+        aptDoorSuccessMsg: "Serdecznie witamy w apartamencie!",
         directionsDesc: "Wejdź po schodach na poddasze. Drzwi na środku z szarym szyldem 'Willkommen' to Twój apartament.",
         helpBtn: "Problemy? Zadzwoń do Falko (+49 152 53453390)",
         autoLoadedTitle: "PIN wczytany pomyślnie",
         openDoorSuccess: "zostały otwarte!",
-        pushDoorNow: "Pchnij teraz mocno drzwi, aby wejść.",
+        pushDoorNow: "Zawsze mocno pchnij drzwi, gdy brzęczy brzęczyk!",
         closesIn: "Zamknięcie za",
         invalidPin: "Nieprawidłowy PIN lub rezerwacja wygasła!",
         pinRequired: "Proszę najpierw wprowadzić PIN.",
@@ -781,11 +868,15 @@
         houseDoorDesc: "Вхідні двері будинку",
         aptDoorTitle: "Відчинити квартиру",
         aptDoorDesc: "Мансарда посередині (сіра табличка)",
+        buzzerTip: "Важливо: Завжди сильно штовхайте двері, коли звучить зумер (дзижчить)!",
+        pushWhenBuzzing: "Завжди сильно штовхайте двері, коли звучить зумер (дзижчить)!",
+        houseDoorSuccessMsg: "Потім підніміться на мансарду: двері посередині з сірою табличкою.",
+        aptDoorSuccessMsg: "Ласкаво просимо до ваших апартаментів!",
         directionsDesc: "Підніміться сходами на мансардний поверх. Двері посередині з сірою табличкою «Willkommen» — ваша квартира.",
         helpBtn: "Потрібна допомога? Подзвонити Фалько (+49 152 53453390)",
         autoLoadedTitle: "PIN-код завантажено",
         openDoorSuccess: "відчинено!",
-        pushDoorNow: "Будь ласка, штовхніть двері зараз.",
+        pushDoorNow: "Завжди сильно штовхайте двері, коли звучить зумер (дзижчить)!",
         closesIn: "Зачиниться через",
         invalidPin: "Невірний PIN або термін закінчився!",
         pinRequired: "Будь ласка, спочатку введіть PIN-код.",
@@ -805,11 +896,15 @@
         houseDoorDesc: "Входные двери в дом",
         aptDoorTitle: "Открыть квартиру",
         aptDoorDesc: "Мансарда посередине (серая табличка)",
+        buzzerTip: "Важно: Всегда сильно толкайте дверь, когда звучит зуммер (жужжит)!",
+        pushWhenBuzzing: "Всегда сильно толкайте дверь, когда звучит зуммер (жужжит)!",
+        houseDoorSuccessMsg: "Затем поднимитесь на мансарду: дверь посередине с серой табличкой.",
+        aptDoorSuccessMsg: "Добро пожаловать в апартаменты!",
         directionsDesc: "Поднимитесь по лестнице на самый верхний этаж (мансарду). Дверь посередине с серой табличкой «Willkommen» — ваша квартира.",
         helpBtn: "Нужна помощь? Позвонить Фалько (+49 152 53453390)",
         autoLoadedTitle: "PIN-код успешно загружен",
         openDoorSuccess: "открыто!",
-        pushDoorNow: "Пожалуйста, толкните дверь прямо сейчас.",
+        pushDoorNow: "Всегда сильно толкайте дверь, когда звучит зуммер (жужжит)!",
         closesIn: "Закроется через",
         invalidPin: "Неверный PIN или срок истек!",
         pinRequired: "Пожалуйста, сначала введите PIN-код.",
@@ -991,10 +1086,14 @@
 
         if (data.success) {
           closeErrorModal();
+          const doorLabel = (door === 'haustuer')
+            ? (currentLang === 'de' ? 'Haustür' : (currentLang === 'en' ? 'Building entrance' : (currentLang === 'es' ? 'Puerta del edificio' : (currentLang === 'pl' ? 'Drzwi wejściowe' : (currentLang === 'uk' ? 'Під\'їзд' : 'Подъезд')))))
+            : (currentLang === 'de' ? 'Wohnungstür' : (currentLang === 'en' ? 'Apartment door' : (currentLang === 'es' ? 'Puerta del apartamento' : (currentLang === 'pl' ? 'Drzwi do apartamentu' : (currentLang === 'uk' ? 'Двері квартири' : 'Дверь в квартиру')))));
+
           showCountdown(
-            data.door_name || (door === 'haustuer' ? translations[currentLang].houseDoorTitle : translations[currentLang].aptDoorTitle),
-            data.seconds || 10,
-            (door === 'haustuer' ? translations[currentLang].directionsDesc : translations[currentLang].pushDoorNow)
+            doorLabel,
+            data.seconds || (door === 'haustuer' ? 10 : 30),
+            (door === 'haustuer' ? translations[currentLang].houseDoorSuccessMsg : translations[currentLang].aptDoorSuccessMsg)
           );
         } else {
           let err = data.error || translations[currentLang].invalidPin;
@@ -1047,13 +1146,17 @@
     function showCountdown(doorName, totalSeconds, customDirections) {
       const overlay = document.getElementById('statusOverlay');
       const titleEl = document.getElementById('statusTitle');
+      const buzzerTextEl = document.getElementById('statusBuzzerText');
       const msgEl = document.getElementById('statusMsg');
       const barEl = document.getElementById('progressBar');
       const secEl = document.getElementById('statusSeconds');
 
       overlay.classList.add('active');
       titleEl.textContent = `${doorName} ${translations[currentLang].openDoorSuccess}`;
-      msgEl.textContent = customDirections || translations[currentLang].pushDoorNow;
+      if (buzzerTextEl) {
+        buzzerTextEl.textContent = translations[currentLang].pushWhenBuzzing;
+      }
+      msgEl.textContent = customDirections || translations[currentLang].pushWhenBuzzing;
 
       let remaining = totalSeconds;
       barEl.style.width = '100%';

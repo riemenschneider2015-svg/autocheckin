@@ -262,8 +262,8 @@ if ($action === 'open') {
         $doorName = ($door === 'haustuer') ? 'Haustür' : 'Wohnungstür';
         $seconds = ($door === 'haustuer') ? ($settings['door_open_seconds_house'] ?? 10) : ($settings['door_open_seconds_apt'] ?? 30);
         $directions = ($door === 'haustuer')
-            ? 'Bitte drücken Sie jetzt gegen die Haustür und laufen Sie die Treppe hoch bis ins Dachgeschoss. Die Wohnung in der Mitte rechts ist Ihre Ferienwohnung.'
-            : 'Bitte drücken Sie jetzt gegen die Wohnungstür. Herzlich Willkommen!';
+            ? 'Bitte immer kräftig gegen die Haustür drücken, wenn es summt! Danach die Treppe hoch bis ins Dachgeschoss laufen (Tür in der Mitte mit dem grauen Willkommen-Schild).'
+            : 'Bitte immer kräftig gegen die Wohnungstür drücken, wenn es summt. Herzlich Willkommen!';
 
         logAccess($pin, $entry['name'] ?? '', $door, true, "$doorName erfolgreich geöffnet");
 
