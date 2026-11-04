@@ -757,6 +757,24 @@
       .replace(/Tuersteuerung/g, 'Türsteuerung');
   }
 
+  function formatEuropeanTimestamp(str) {
+    if (!str) return '';
+    try {
+      const d = new Date(str.replace(' ', 'T'));
+      if (isNaN(d.getTime())) return str;
+      const pad = (n) => String(n).padStart(2, '0');
+      const day = pad(d.getDate());
+      const month = pad(d.getMonth() + 1);
+      const year = d.getFullYear();
+      const hours = pad(d.getHours());
+      const mins = pad(d.getMinutes());
+      const secs = pad(d.getSeconds());
+      return `${day}.${month}.${year} ${hours}:${mins}:${secs} Uhr`;
+    } catch (e) {
+      return str;
+    }
+  }
+
   function renderLogs(logs) {
     const tb = document.getElementById('logsTableBody');
     tb.innerHTML = '';
@@ -764,7 +782,7 @@
       const tr = document.createElement('tr');
       const doorDisplay = (l.door === 'haustuer') ? '🚪 Haustür' : ((l.door === 'wohnungstuer') ? '🔑 Wohnungstür' : (l.door || '-'));
       tr.innerHTML = `
-        <td>${l.timestamp}</td>
+        <td style="white-space: nowrap;">${formatEuropeanTimestamp(l.timestamp)}</td>
         <td>${l.guest}</td>
         <td>${doorDisplay}</td>
         <td>${l.success ? '<span style="color:#4ade80;">OK</span>' : '<span style="color:#ef4444;">Fehlgeschlagen</span>'}</td>
