@@ -610,7 +610,7 @@
       const hours = pad(d.getHours());
       const mins = pad(d.getMinutes());
 
-      return `${day}.${month}.${year}, ${hours}:${mins} Uhr`;
+      return `${day}.${month}.${year} um ${hours}:${mins} Uhr`;
     } catch (e) {
       return dateStr;
     }
@@ -655,24 +655,49 @@
       const pad = (n) => String(n).padStart(2, '0');
       let badge = '';
       if (p.role === 'admin') {
-        badge = '<span class="badge badge-admin" style="white-space:nowrap;">🔑 Master-PIN</span>';
+        badge = `
+          <div style="display:inline-flex; flex-direction:column; gap:3px; align-items:flex-start;">
+            <span class="badge badge-admin">🔑 Master-PIN</span>
+            <small style="color:#fbbf24; font-size:11px; font-weight:600; white-space:nowrap;">(Dauerhaft aktiv)</small>
+          </div>
+        `;
       } else if (checkinTime) {
         statCheckedInCount++;
         if (isCurrentStay) statActiveCount++;
         const timeFormatted = formatCheckinTime(checkinTime);
         const titleAttr = `Eingecheckt: ${checkinTime}${checkinDoor ? ' an ' + checkinDoor : ''}`;
-        badge = `<span class="badge badge-checked-in" style="white-space:nowrap;" title="${titleAttr}">🟢 Eingecheckt: ${timeFormatted}</span>`;
+        badge = `
+          <div style="display:inline-flex; flex-direction:column; gap:3px; align-items:flex-start;">
+            <span class="badge badge-checked-in" title="${titleAttr}">🟢 Eingecheckt</span>
+            <small style="color:#94a3b8; font-size:11px; font-weight:600; white-space:nowrap;">(${timeFormatted})</small>
+          </div>
+        `;
       } else if (now < from) {
         statFutureCount++;
         const fromDateStr = `${pad(from.getDate())}.${pad(from.getMonth() + 1)}.${from.getFullYear()}`;
         const fromTimeStr = `${pad(from.getHours())}:${pad(from.getMinutes())} Uhr`;
-        badge = `<span class="badge badge-future" style="white-space:nowrap;">🗓️ Zukünftig (ab ${fromDateStr}, ${fromTimeStr})</span>`;
+        badge = `
+          <div style="display:inline-flex; flex-direction:column; gap:3px; align-items:flex-start;">
+            <span class="badge badge-future">🗓️ Zukünftig</span>
+            <small style="color:#38bdf8; font-size:11px; font-weight:600; white-space:nowrap;">(ab ${fromDateStr} um ${fromTimeStr})</small>
+          </div>
+        `;
       } else if (now > until) {
-        badge = '<span class="badge badge-expired" style="white-space:nowrap;">⚪ Abgelaufen (Nicht angereist)</span>';
+        badge = `
+          <div style="display:inline-flex; flex-direction:column; gap:3px; align-items:flex-start;">
+            <span class="badge badge-expired">⚪ Abgelaufen</span>
+            <small style="color:#94a3b8; font-size:11px; font-weight:600; white-space:nowrap;">(Nicht angereist)</small>
+          </div>
+        `;
       } else {
         // Active time window, waiting for arrival
         statActiveCount++;
-        badge = '<span class="badge badge-waiting" style="white-space:nowrap;">⏳ Noch nicht da (Wartet auf Anreise)</span>';
+        badge = `
+          <div style="display:inline-flex; flex-direction:column; gap:3px; align-items:flex-start;">
+            <span class="badge badge-waiting">⏳ Noch nicht da</span>
+            <small style="color:#facc15; font-size:11px; font-weight:600; white-space:nowrap;">(Wartet auf Anreise)</small>
+          </div>
+        `;
       }
 
       const host = window.location.origin + window.location.pathname.replace('admin.html', '').replace('admin.php', '');
