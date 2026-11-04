@@ -138,6 +138,41 @@
       color: var(--text);
     }
 
+    .sort-select {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .sort-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .sortable-th {
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      transition: color 0.15s;
+    }
+    .sortable-th:hover {
+      color: var(--primary);
+    }
+    .sort-icon {
+      font-size: 11px;
+      margin-left: 3px;
+      opacity: 0.65;
+    }
+    .sortable-th.active-sort {
+      color: var(--primary);
+    }
+    .sortable-th.active-sort .sort-icon {
+      opacity: 1;
+    }
+
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     @media(max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
   </style>
@@ -214,17 +249,37 @@
     <div class="card">
       <div class="card-title">
         <span>📋 Alle PIN-Codes & Check-in-Status</span>
-        <button class="btn btn-sm" onclick="loadData()">Aktualisieren</button>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <select id="sortSelect" onchange="onSortSelectChange(this.value)" class="sort-select" title="Sortierung auswählen">
+            <option value="smart_desc">⚡ Aktive zuerst (Neueste absteigend)</option>
+            <option value="from_desc">📅 Gültig ab (Absteigend ⬇️)</option>
+            <option value="from_asc">📅 Gültig ab (Aufsteigend ⬆️)</option>
+            <option value="until_desc">📅 Gültig bis (Absteigend ⬇️)</option>
+            <option value="until_asc">📅 Gültig bis (Aufsteigend ⬆️)</option>
+            <option value="guest_asc">👤 Gastname (A ➔ Z ⬆️)</option>
+            <option value="guest_desc">👤 Gastname (Z ➔ A ⬇️)</option>
+            <option value="status_desc">🟢 Check-in Status</option>
+          </select>
+          <button class="btn btn-sm" onclick="loadData()">Aktualisieren</button>
+        </div>
       </div>
       <div style="overflow-x: auto;">
         <table>
           <thead>
             <tr>
-              <th>Check-in Status</th>
-              <th>Gast / Buchung</th>
+              <th id="th_status" class="sortable-th" onclick="toggleSort('status')" title="Nach Status sortieren">
+                Check-in Status <span id="sort_status" class="sort-icon">↕️</span>
+              </th>
+              <th id="th_guest" class="sortable-th" onclick="toggleSort('guest')" title="Klicken für A-Z / Z-A Sortierung">
+                Gast / Buchung <span id="sort_guest" class="sort-icon">↕️</span>
+              </th>
               <th>PIN</th>
-              <th>Gültig ab</th>
-              <th>Gültig bis</th>
+              <th id="th_valid_from" class="sortable-th" onclick="toggleSort('valid_from')" title="Klicken für Auf-/Absteigend">
+                Gültig ab <span id="sort_valid_from" class="sort-icon">⬇️</span>
+              </th>
+              <th id="th_valid_until" class="sortable-th" onclick="toggleSort('valid_until')" title="Klicken für Auf-/Absteigend">
+                Gültig bis <span id="sort_valid_until" class="sort-icon">↕️</span>
+              </th>
               <th>Check-in Link</th>
               <th>Aktion</th>
             </tr>
@@ -311,6 +366,13 @@
     return `${base}/api.php?action=${action}`;
   }
 
+  let cachedPins = [];
+  let cachedLogs = [];
+  let currentSort = {
+    field: 'smart_validity', // default: Immer aktive zuerst, dann Gültigkeit absteigend
+    direction: 'desc'
+  };
+
   async function loadData() {
     try {
       const res = await fetch(getApiEndpoint(`admin_list&admin_pin=${encodeURIComponent(adminPin)}`));
@@ -320,11 +382,161 @@
         logout();
         return;
       }
-      renderPins(data.pins || [], data.logs || []);
-      renderLogs(data.logs || []);
+      cachedPins = data.pins || [];
+      cachedLogs = data.logs || [];
+      applySortAndRender();
+      renderLogs(cachedLogs);
     } catch (e) {
       alert('Verbindungsfehler zur API');
     }
+  }
+
+  function onSortSelectChange(val) {
+    if (val === 'smart_desc') {
+      currentSort = { field: 'smart_validity', direction: 'desc' };
+    } else if (val === 'from_desc') {
+      currentSort = { field: 'valid_from', direction: 'desc' };
+    } else if (val === 'from_asc') {
+      currentSort = { field: 'valid_from', direction: 'asc' };
+    } else if (val === 'until_desc') {
+      currentSort = { field: 'valid_until', direction: 'desc' };
+    } else if (val === 'until_asc') {
+      currentSort = { field: 'valid_until', direction: 'asc' };
+    } else if (val === 'guest_asc') {
+      currentSort = { field: 'guest', direction: 'asc' };
+    } else if (val === 'guest_desc') {
+      currentSort = { field: 'guest', direction: 'desc' };
+    } else if (val === 'status_desc') {
+      currentSort = { field: 'status', direction: 'desc' };
+    }
+    applySortAndRender();
+  }
+
+  function toggleSort(field) {
+    if (currentSort.field === field) {
+      currentSort.direction = (currentSort.direction === 'asc') ? 'desc' : 'asc';
+    } else {
+      currentSort.field = field;
+      currentSort.direction = (field === 'guest') ? 'asc' : 'desc';
+    }
+    syncSortSelect();
+    applySortAndRender();
+  }
+
+  function syncSortSelect() {
+    const sel = document.getElementById('sortSelect');
+    if (!sel) return;
+    if (currentSort.field === 'smart_validity') {
+      sel.value = 'smart_desc';
+    } else if (currentSort.field === 'valid_from') {
+      sel.value = currentSort.direction === 'asc' ? 'from_asc' : 'from_desc';
+    } else if (currentSort.field === 'valid_until') {
+      sel.value = currentSort.direction === 'asc' ? 'until_asc' : 'until_desc';
+    } else if (currentSort.field === 'guest') {
+      sel.value = currentSort.direction === 'asc' ? 'guest_asc' : 'guest_desc';
+    } else if (currentSort.field === 'status') {
+      sel.value = 'status_desc';
+    }
+  }
+
+  function updateSortIcons() {
+    ['status', 'guest', 'valid_from', 'valid_until'].forEach(f => {
+      const iconEl = document.getElementById(`sort_${f}`);
+      const thEl = document.getElementById(`th_${f}`);
+      if (!iconEl) return;
+      const isCurrent = (currentSort.field === f) || (f === 'valid_from' && currentSort.field === 'smart_validity');
+      if (isCurrent) {
+        iconEl.textContent = (currentSort.direction === 'asc') ? ' ⬆️' : ' ⬇️';
+        if (thEl) thEl.classList.add('active-sort');
+      } else {
+        iconEl.textContent = ' ↕️';
+        if (thEl) thEl.classList.remove('active-sort');
+      }
+    });
+  }
+
+  function sortPinsList(pins, logs = []) {
+    const now = new Date();
+
+    // Map earliest check-in timestamp from logs
+    const logCheckins = {};
+    if (Array.isArray(logs)) {
+      logs.forEach(l => {
+        if (l.success && l.guest && l.guest !== 'Unbekannt') {
+          if (!logCheckins[l.guest] || new Date(l.timestamp) < new Date(logCheckins[l.guest].timestamp)) {
+            logCheckins[l.guest] = l;
+          }
+        }
+      });
+    }
+
+    return [...pins].sort((a, b) => {
+      // 1. MASTER-PIN IMMER ALS ALLERLETZTES GANZ UNTEN!
+      const aIsMaster = (a.role === 'admin' || a.pin === '04157');
+      const bIsMaster = (b.role === 'admin' || b.pin === '04157');
+      if (aIsMaster && !bIsMaster) return 1;
+      if (!aIsMaster && bIsMaster) return -1;
+      if (aIsMaster && bIsMaster) return 0;
+
+      const aFrom = new Date(a.valid_from);
+      const aUntil = new Date(a.valid_until);
+      const bFrom = new Date(b.valid_from);
+      const bUntil = new Date(b.valid_until);
+
+      const aIsActive = (now >= aFrom && now <= aUntil);
+      const bIsActive = (now >= bFrom && now <= bUntil);
+
+      const dir = (currentSort.direction === 'asc') ? 1 : -1;
+
+      // 2. SORTIERUNG NACH GASTNAME
+      if (currentSort.field === 'guest') {
+        const aName = (a.name || '').trim().toLowerCase();
+        const bName = (b.name || '').trim().toLowerCase();
+        return aName.localeCompare(bName, 'de') * dir;
+      }
+
+      // 3. SORTIERUNG NACH GÜLTIG BIS
+      if (currentSort.field === 'valid_until') {
+        // Aktive immer oben priorisieren
+        if (aIsActive && !bIsActive) return -1;
+        if (!aIsActive && bIsActive) return 1;
+        return (aUntil - bUntil) * dir;
+      }
+
+      // 4. SORTIERUNG NACH GÜLTIG AB
+      if (currentSort.field === 'valid_from') {
+        // Aktive immer oben priorisieren
+        if (aIsActive && !bIsActive) return -1;
+        if (!aIsActive && bIsActive) return 1;
+        return (aFrom - bFrom) * dir;
+      }
+
+      // 5. SORTIERUNG NACH STATUS
+      if (currentSort.field === 'status') {
+        const getWeight = (p, from, until) => {
+          const hasCheckin = p.checked_in_at || logCheckins[p.name];
+          if (now >= from && now <= until) return hasCheckin ? 4 : 3;
+          if (now < from) return 2;
+          return 1;
+        };
+        const diff = getWeight(a, aFrom, aUntil) - getWeight(b, bFrom, bUntil);
+        if (diff !== 0) return diff * dir;
+        return (bFrom - aFrom);
+      }
+
+      // 6. DEFAULT: SMART_VALIDITY ("immer die aktiven und dann absteigend")
+      // Aktive Buchungen IMMER zuerst:
+      if (aIsActive && !bIsActive) return -1;
+      if (!aIsActive && bIsActive) return 1;
+      // Dann nach Gültigkeit absteigend (neueste oben)
+      return (bFrom - aFrom);
+    });
+  }
+
+  function applySortAndRender() {
+    updateSortIcons();
+    const sorted = sortPinsList(cachedPins, cachedLogs);
+    renderPins(sorted, cachedLogs);
   }
 
   function formatCheckinTime(dateStr) {
@@ -360,14 +572,7 @@
     tb.innerHTML = '';
     const now = new Date();
 
-    // Sort pins: Guest PINs first, Master-Codes always at the very bottom
-    const sortedPins = [...pins].sort((a, b) => {
-      const aIsMaster = (a.role === 'admin' || a.pin === '04157');
-      const bIsMaster = (b.role === 'admin' || b.pin === '04157');
-      if (aIsMaster && !bIsMaster) return 1;
-      if (!aIsMaster && bIsMaster) return -1;
-      return new Date(a.valid_from) - new Date(b.valid_from);
-    });
+    const sortedPins = pins;
 
     // Map earliest successful door opening from logs for cross-referencing
     const logCheckins = {};
