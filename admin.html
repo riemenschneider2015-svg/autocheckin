@@ -235,6 +235,50 @@
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     @media(max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    /* Desktop table vs Mobile cards */
+    .desktop-table-container {
+      display: block;
+      overflow-x: auto;
+    }
+    .mobile-cards-container {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 16px 10px;
+      }
+      .wrapper {
+        gap: 18px;
+      }
+      .card {
+        padding: 16px 14px;
+        border-radius: 14px;
+      }
+      .desktop-table-container {
+        display: none !important;
+      }
+      .mobile-cards-container {
+        display: flex !important;
+      }
+      .card-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .card-title > div {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .sort-select {
+        flex: 1 1 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -362,7 +406,8 @@
           <button class="btn btn-sm" onclick="loadData()">Aktualisieren</button>
         </div>
       </div>
-      <div style="overflow-x: auto;">
+      <!-- Desktop Table View (screens > 768px) -->
+      <div class="desktop-table-container">
         <table>
           <thead>
             <tr>
@@ -386,6 +431,9 @@
           <tbody id="pinsTableBody"></tbody>
         </table>
       </div>
+
+      <!-- Mobile Cards View (screens <= 768px: No horizontal scrolling!) -->
+      <div id="pinsCardsContainer" class="mobile-cards-container"></div>
     </div>
 
     <!-- Live Logs -->
@@ -789,7 +837,9 @@
 
   function renderPins(pins, logs = []) {
     const tb = document.getElementById('pinsTableBody');
-    tb.innerHTML = '';
+    const cardsContainer = document.getElementById('pinsCardsContainer');
+    if (tb) tb.innerHTML = '';
+    if (cardsContainer) cardsContainer.innerHTML = '';
     const now = new Date();
 
     const sortedPins = pins;
@@ -875,32 +925,87 @@
       const host = window.location.origin + window.location.pathname.replace('admin.html', '').replace('admin.php', '');
       const link = `${host}?code=${p.pin}`;
 
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td style="white-space: nowrap;">${badge}</td>
-        <td>
-          <b style="font-size: 14px;">${p.name || 'Gast'}</b>
-          ${p.booking_id ? `<br><small style="color:var(--text-muted); font-size:11px;">Buchung: ${p.booking_id}</small>` : ''}
-        </td>
-        <td><code style="font-size:15px; color:var(--primary); font-weight:700;">${p.pin}</code></td>
-        <td style="white-space: nowrap;">${pad(from.getDate())}.${pad(from.getMonth() + 1)}.${from.getFullYear()} ${pad(from.getHours())}:${pad(from.getMinutes())} Uhr</td>
-        <td style="white-space: nowrap;">${pad(until.getDate())}.${pad(until.getMonth() + 1)}.${until.getFullYear()} ${pad(until.getHours())}:${pad(until.getMinutes())} Uhr</td>
-        <td>
+      // 1. Desktop Table Row
+      if (tb) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="white-space: nowrap;">${badge}</td>
+          <td>
+            <b style="font-size: 14px;">${p.name || 'Gast'}</b>
+            ${p.booking_id ? `<br><small style="color:var(--text-muted); font-size:11px;">Buchung: ${p.booking_id}</small>` : ''}
+          </td>
+          <td><code style="font-size:15px; color:var(--primary); font-weight:700;">${p.pin}</code></td>
+          <td style="white-space: nowrap;">${pad(from.getDate())}.${pad(from.getMonth() + 1)}.${from.getFullYear()} ${pad(from.getHours())}:${pad(from.getMinutes())} Uhr</td>
+          <td style="white-space: nowrap;">${pad(until.getDate())}.${pad(until.getMonth() + 1)}.${until.getFullYear()} ${pad(until.getHours())}:${pad(until.getMinutes())} Uhr</td>
+          <td>
+            ${p.role === 'admin' ? `
+              <button class="btn btn-sm btn-link-only" onclick="copyLink('${link}')" title="Admin Check-in Link kopieren">🔗 Link</button>
+            ` : `
+              <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+                <button class="btn btn-sm btn-msg-en" onclick="copyGuestMessage('${p.pin}', 'en')" title="Komplette englische Begrüßungsnachricht mit Daten kopieren">✉️ Text (EN)</button>
+                <button class="btn btn-sm btn-msg-de" onclick="copyGuestMessage('${p.pin}', 'de')" title="Komplette deutsche Begrüßungsnachricht mit Daten kopieren">🇩🇪 Text (DE)</button>
+                <button class="btn btn-sm btn-link-only" onclick="copyLink('${link}')" title="Nur den Check-in Link kopieren">🔗 Link</button>
+              </div>
+            `}
+          </td>
+          <td>
+            ${p.role !== 'admin' ? `<button class="btn btn-sm btn-danger" onclick="deletePin('${p.pin}')">Löschen</button>` : '<em>Fest</em>'}
+          </td>
+        `;
+        tb.appendChild(tr);
+      }
+
+      // 2. Mobile Responsive Card (NO HORIZONTAL SCROLLING!)
+      if (cardsContainer) {
+        const cardEl = document.createElement('div');
+        cardEl.className = 'mobile-booking-card';
+        cardEl.style.cssText = 'background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 14px; padding: 14px 15px; display: flex; flex-direction: column; gap: 11px;';
+
+        cardEl.innerHTML = `
+          <!-- Header: Guest Name + PIN badge + Status Badge -->
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+            <div>
+              <div style="font-size:15.5px; font-weight:700; color:#ffffff;">${p.name || 'Gast'}</div>
+              <div style="margin-top:4px; display:flex; align-items:center; gap:6px;">
+                <span style="font-size:11.5px; color:var(--text-muted); font-weight:600;">PIN:</span>
+                <code style="font-size:15px; color:var(--primary); font-weight:800; background:rgba(56,189,248,0.12); padding:2px 8px; border-radius:6px; letter-spacing:0.5px;">${p.pin}</code>
+                ${p.booking_id ? `<span style="font-size:11px; color:var(--text-muted);">(${p.booking_id})</span>` : ''}
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:flex-end;">
+              ${badge}
+            </div>
+          </div>
+
+          <!-- Stay Period Box -->
+          <div style="background:rgba(15,23,42,0.65); border:1px solid rgba(255,255,255,0.06); padding:9px 12px; border-radius:9px; font-size:12px; color:#cbd5e1; display:flex; align-items:center; justify-content:space-between; gap:6px;">
+            <div>
+              <span style="color:var(--text-muted); font-size:10.5px; display:block; text-transform:uppercase;">Check-in ab:</span>
+              <b style="color:#f1f5f9;">${pad(from.getDate())}.${pad(from.getMonth() + 1)}., ${pad(from.getHours())}:${pad(from.getMinutes())} Uhr</b>
+            </div>
+            <span style="color:var(--primary); font-size:14px; font-weight:700;">➔</span>
+            <div style="text-align:right;">
+              <span style="color:var(--text-muted); font-size:10.5px; display:block; text-transform:uppercase;">Check-out bis:</span>
+              <b style="color:#f1f5f9;">${pad(until.getDate())}.${pad(until.getMonth() + 1)}., ${pad(until.getHours())}:${pad(until.getMinutes())} Uhr</b>
+            </div>
+          </div>
+
+          <!-- Touch Action Buttons (Full width on mobile) -->
           ${p.role === 'admin' ? `
-            <button class="btn btn-sm btn-link-only" onclick="copyLink('${link}')" title="Admin Check-in Link kopieren">🔗 Link</button>
+            <div style="display:flex; justify-content:flex-end; margin-top:2px;">
+              <button class="btn btn-sm btn-link-only" style="padding:9px 16px; font-size:13px; font-weight:600; width:100%; justify-content:center;" onclick="copyLink('${link}')">🔗 Admin Check-in Link kopieren</button>
+            </div>
           ` : `
-            <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
-              <button class="btn btn-sm btn-msg-en" onclick="copyGuestMessage('${p.pin}', 'en')" title="Komplette englische Begrüßungsnachricht mit Daten kopieren">✉️ Text (EN)</button>
-              <button class="btn btn-sm btn-msg-de" onclick="copyGuestMessage('${p.pin}', 'de')" title="Komplette deutsche Begrüßungsnachricht mit Daten kopieren">🇩🇪 Text (DE)</button>
-              <button class="btn btn-sm btn-link-only" onclick="copyLink('${link}')" title="Nur den Check-in Link kopieren">🔗 Link</button>
+            <div style="display:grid; grid-template-columns: 1fr 1fr auto auto; gap:7px; align-items:center; margin-top:2px;">
+              <button class="btn btn-sm btn-msg-en" style="padding:9px 6px; font-size:12px; font-weight:700; justify-content:center;" onclick="copyGuestMessage('${p.pin}', 'en')" title="Komplette englische Begrüßungsnachricht kopieren">✉️ Text (EN)</button>
+              <button class="btn btn-sm btn-msg-de" style="padding:9px 6px; font-size:12px; font-weight:700; justify-content:center;" onclick="copyGuestMessage('${p.pin}', 'de')" title="Komplette deutsche Begrüßungsnachricht kopieren">🇩🇪 Text (DE)</button>
+              <button class="btn btn-sm btn-link-only" style="padding:9px 11px; font-size:13px;" onclick="copyLink('${link}')" title="Nur 1-Klick Check-in Link kopieren">🔗</button>
+              <button class="btn btn-sm btn-danger" style="padding:9px 11px; font-size:13px;" onclick="deletePin('${p.pin}')" title="PIN löschen">🗑️</button>
             </div>
           `}
-        </td>
-        <td>
-          ${p.role !== 'admin' ? `<button class="btn btn-sm btn-danger" onclick="deletePin('${p.pin}')">Löschen</button>` : '<em>Fest</em>'}
-        </td>
-      `;
-      tb.appendChild(tr);
+        `;
+        cardsContainer.appendChild(cardEl);
+      }
     });
 
     const elCheckedIn = document.getElementById('statCheckedIn');
