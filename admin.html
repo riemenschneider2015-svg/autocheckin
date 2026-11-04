@@ -293,8 +293,8 @@
         <span class="stat-value" style="color: #4ade80;" id="statCheckedIn">0</span>
       </div>
       <div class="stat-card">
-        <span class="stat-label">⏳ Wartet noch</span>
-        <span class="stat-value" style="color: #facc15;" id="statWaiting">0</span>
+        <span class="stat-label">🗓️ Zukünftige Buchungen</span>
+        <span class="stat-value" style="color: #38bdf8;" id="statFuture">0</span>
       </div>
       <div class="stat-card">
         <span class="stat-label">🏠 Aktive Aufenthalte</span>
@@ -644,7 +644,7 @@
     }
 
     let statCheckedInCount = 0;
-    let statWaitingCount = 0;
+    let statFutureCount = 0;
     let statActiveCount = 0;
 
     sortedPins.forEach(p => {
@@ -670,6 +670,7 @@
         const titleAttr = `Eingecheckt: ${checkinTime}${checkinDoor ? ' an ' + checkinDoor : ''}`;
         badge = `<span class="badge badge-checked-in" title="${titleAttr}">🟢 Eingecheckt (${timeFormatted})</span>`;
       } else if (now < from) {
+        statFutureCount++;
         const fromDateStr = from.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
         const fromTimeStr = from.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
         badge = `<span class="badge badge-future">🗓️ Zukünftig (ab ${fromDateStr} ${fromTimeStr})</span>`;
@@ -677,9 +678,8 @@
         badge = '<span class="badge badge-expired">⚪ Abgelaufen (Nicht angereist)</span>';
       } else {
         // Active time window, waiting for arrival
-        statWaitingCount++;
         statActiveCount++;
-        badge = '<span class="badge badge-waiting">⏳ Wartet noch / Noch nicht da</span>';
+        badge = '<span class="badge badge-waiting">⏳ Noch nicht da (Wartet auf Anreise)</span>';
       }
 
       const host = window.location.origin + window.location.pathname.replace('admin.html', '').replace('admin.php', '');
@@ -714,11 +714,29 @@
     });
 
     const elCheckedIn = document.getElementById('statCheckedIn');
-    const elWaiting = document.getElementById('statWaiting');
+    const elFuture = document.getElementById('statFuture');
     const elActive = document.getElementById('statActive');
     if (elCheckedIn) elCheckedIn.textContent = statCheckedInCount;
-    if (elWaiting) elWaiting.textContent = statWaitingCount;
+    if (elFuture) elFuture.textContent = statFutureCount;
     if (elActive) elActive.textContent = statActiveCount;
+  }
+
+  function formatLogMessage(msg) {
+    if (!msg) return '';
+    return msg
+      .replace(/Wohnungstuer/g, 'Wohnungstür')
+      .replace(/wohnungstuer/g, 'Wohnungstür')
+      .replace(/Haustuer/g, 'Haustür')
+      .replace(/haustuer/g, 'Haustür')
+      .replace(/geoeffnet/g, 'geöffnet')
+      .replace(/geprueft/g, 'geprüft')
+      .replace(/fuer/g, 'für')
+      .replace(/Tuer/g, 'Tür')
+      .replace(/tuer/g, 'Tür')
+      .replace(/kraeftig/g, 'kräftig')
+      .replace(/druecken/g, 'drücken')
+      .replace(/Ausloesen/g, 'Auslösen')
+      .replace(/Tuersteuerung/g, 'Türsteuerung');
   }
 
   function renderLogs(logs) {
@@ -726,12 +744,13 @@
     tb.innerHTML = '';
     logs.forEach(l => {
       const tr = document.createElement('tr');
+      const doorDisplay = (l.door === 'haustuer') ? '🚪 Haustür' : ((l.door === 'wohnungstuer') ? '🔑 Wohnungstür' : (l.door || '-'));
       tr.innerHTML = `
         <td>${l.timestamp}</td>
         <td>${l.guest}</td>
-        <td>${l.door === 'haustuer' ? '🚪 Haustür' : '🔑 Wohnungstür'}</td>
+        <td>${doorDisplay}</td>
         <td>${l.success ? '<span style="color:#4ade80;">OK</span>' : '<span style="color:#ef4444;">Fehlgeschlagen</span>'}</td>
-        <td>${l.message}</td>
+        <td>${formatLogMessage(l.message)}</td>
         <td><code>${l.ip}</code></td>
       `;
       tb.appendChild(tr);

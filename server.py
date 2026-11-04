@@ -89,7 +89,7 @@ def check_rate_limit(ip, max_attempts=5, lockout_minutes=10):
         entry = rates[ip]
         if entry.get("locked_until", 0) > now:
             rem = int((entry["locked_until"] - now) // 60) + 1
-            return False, "Zu viele Fehlversuche. Gesperrt fuer {0} Minute(n). Bitte Falko anrufen (015253453390).".format(rem)
+            return False, "Zu viele Fehlversuche. Gesperrt für {0} Minute(n). Bitte Falko anrufen (015253453390).".format(rem)
     return True, ""
 
 def record_attempt(ip, success, max_attempts=5, lockout_minutes=10):
@@ -170,7 +170,7 @@ def trigger_door(door, settings):
                     return True, "FHEM OK"
         except Exception:
             continue
-    return False, "Fehler beim Ausloesen der Tuer"
+    return False, "Fehler beim Auslösen der Tür"
 
 class CheckinHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -302,7 +302,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         valid, entry, status = find_pin(pin, pins, settings)
 
         if valid:
-            log_access(ip, pin, entry.get("name", "Gast"), "verify", True, "PIN geprueft: Aktiv fuer " + str(entry.get("name", "Gast")))
+            log_access(ip, pin, entry.get("name", "Gast"), "verify", True, "PIN geprüft: Aktiv für " + str(entry.get("name", "Gast")))
             self.send_json({
                 "success": True,
                 "status": "active",
@@ -362,12 +362,12 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
 
         record_attempt(ip, True)
         ok, res_msg = trigger_door(door, settings)
-        door_name = "Haustuer" if door == "haustuer" else "Wohnungstuer"
+        door_name = "Haustür" if door == "haustuer" else "Wohnungstür"
         seconds = settings.get("door_open_seconds_house", 10) if door == "haustuer" else settings.get("door_open_seconds_apt", 30)
 
         if ok:
-            directions = ("Bitte immer kraeftig gegen die Haustuer druecken, wenn es summt! Danach bis ins Dachgeschoss laufen (Tuer in der Mitte mit dem grauen Willkommen-Schild)."
-                          if door == "haustuer" else "Bitte immer kraeftig gegen die Wohnungstuer druecken, wenn es summt. Herzlich Willkommen!")
+            directions = ("Bitte immer kräftig gegen die Haustür drücken, wenn es summt! Danach bis ins Dachgeschoss laufen (Tür in der Mitte mit dem grauen Willkommen-Schild)."
+                          if door == "haustuer" else "Bitte immer kräftig gegen die Wohnungstür drücken, wenn es summt. Herzlich Willkommen!")
             
             # Record check-in timestamp on first successful door open
             now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -381,7 +381,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
                         break
                 save_data(data)
 
-            log_msg = "{0} geoeffnet".format(door_name) + (" (Erster Check-in)" if is_first else "")
+            log_msg = "{0} geöffnet".format(door_name) + (" (Erster Check-in)" if is_first else "")
             log_access(ip, pin, entry.get("name", "Gast"), door, True, log_msg)
             self.send_json({
                 "success": True,
@@ -393,8 +393,8 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
                 "guest": entry.get("name", "Gast")
             })
         else:
-            log_access(ip, pin, entry.get("name", "Gast"), door, False, "Fehler Tuersteuerung: " + res_msg)
-            self.send_json({"success": False, "error": "Tuersteuerung nicht erreichbar. Bitte Falko anrufen (015253453390).", "contact": "015253453390"})
+            log_access(ip, pin, entry.get("name", "Gast"), door, False, "Fehler Türsteuerung: " + res_msg)
+            self.send_json({"success": False, "error": "Türsteuerung nicht erreichbar. Bitte Falko anrufen (015253453390).", "contact": "015253453390"})
 
     def handle_admin_list(self, parsed):
         qs = urllib.parse.parse_qs(parsed.query)
