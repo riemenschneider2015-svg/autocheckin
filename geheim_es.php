@@ -72,7 +72,7 @@ if (strlen($bruteforce)<=$maxLogins) {
 flush();
 ?>
 <p class="pin">
-<a href="tel:004915227441736">Problemas con el check-in - Hagan click aquí para llamar a Sophie.</a>
+<a href="tel:015253453390">Problemas con el check-in - Hagan click aquí para llamar a Falko.</a>
 </p>
 </div>
 <?php
@@ -105,7 +105,7 @@ if ($url != '') {
 	if ($errno!==0) {
 		?>
 	    <p class='pinrot'><b>El autocheckin ha fallado</b></p>
-		<a href="tel:004915227441736" class="ui-btn ui-icon-phone ui-btn-icon-left">Llama a Sophie</a>
+		<a href="tel:015253453390" class="ui-btn ui-icon-phone ui-btn-icon-left">Llamar a Falko</a>
 		<?php
 	}
 }
@@ -124,19 +124,19 @@ flush();
 	</form>
 <?php
 if (isset($_POST['haustuer']) && $_POST['haustuer']!='') {
-	$empfaenger = "seydlitz.sophie@googlemail.com";
+	$empfaenger = "falko.riemenschneider@gmx.de";
 	$betreff = "Haustür Mechlerstr geöffnet";
 	$from = "From: Auto-checkin <falko.riemenschneider@gmx.de>";
 	$text = "Haustür Mechlerstr geöffnet";
 	mail($empfaenger, $betreff, $text, $from);	
 } else if (isset($_POST['wohnungauf']) && $_POST['wohnungauf']!='') {
-	$empfaenger = "seydlitz.sophie@googlemail.com";
+	$empfaenger = "falko.riemenschneider@gmx.de";
 	$betreff = "Wohnungstür Mechlerstr geöffnet";
 	$from = "From: Auto-checkin <falko.riemenschneider@gmx.de>";
 	$text = "Wohnungstür Mechlerstr geöffnet";
 	mail($empfaenger, $betreff, $text, $from);
 } else if (isset($_POST['wohnungzu']) && $_POST['wohnungzu']!='') {
-	$empfaenger = "seydlitz.sophie@googlemail.com";
+	$empfaenger = "falko.riemenschneider@gmx.de";
 	$betreff = "Wohnungstür Mechlerstr verschlossen";
 	$from = "From: Auto-checkin <falko.riemenschneider@gmx.de>";
 	$text = "Wohnungstür Mechlerstr verschlossen";

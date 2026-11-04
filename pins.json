@@ -15,6 +15,15 @@
   },
   "pins": [
     {
+      "pin": "04157",
+      "name": "Master Falko",
+      "booking_id": "MASTER-01",
+      "valid_from": "2020-01-01T00:00:00",
+      "valid_until": "2099-12-31T23:59:59",
+      "active": true,
+      "role": "admin"
+    },
+    {
       "pin": "12345",
       "name": "Muster-Gast (Demo)",
       "booking_id": "DEMO-2026-001",
