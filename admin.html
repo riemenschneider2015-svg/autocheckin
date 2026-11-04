@@ -245,6 +245,7 @@
       display: none;
       flex-direction: column;
       gap: 12px;
+      -webkit-overflow-scrolling: touch;
     }
 
     @media (max-width: 768px) {
@@ -440,8 +441,11 @@
     <div class="card">
       <div class="card-title">
         <span>📜 Letzte Türöffnungen & Zugriffe</span>
+        <span id="logsCountBadge" class="badge" style="background: rgba(255, 255, 255, 0.08); color: var(--text-muted); font-size: 11.5px; font-weight: 600;">0 Einträge</span>
       </div>
-      <div style="max-height: 250px; overflow-y: auto;">
+
+      <!-- Desktop Logs Table View (screens > 768px) -->
+      <div class="desktop-table-container" style="max-height: 280px; overflow-y: auto;">
         <table>
           <thead>
             <tr>
@@ -456,6 +460,9 @@
           <tbody id="logsTableBody"></tbody>
         </table>
       </div>
+
+      <!-- Mobile Logs Cards View (screens <= 768px: No horizontal scrolling!) -->
+      <div id="logsCardsContainer" class="mobile-cards-container" style="max-height: 380px; overflow-y: auto; gap: 9px; padding-right: 2px;"></div>
     </div>
   </div>
 </div>
@@ -534,6 +541,19 @@
       applySortAndRender();
       renderLogs(cachedLogs);
     } catch (e) {
+      console.warn('Verbindungsfehler zur Live-API, versuche lokales Backup pins.json...', e);
+      try {
+        const fbRes = await fetch('pins.json?t=' + Date.now());
+        if (fbRes.ok) {
+          const fbData = await fbRes.json();
+          cachedPins = fbData.pins || [];
+          cachedLogs = [];
+          applySortAndRender();
+          renderLogs(cachedLogs);
+          showToast('⚠️ Offline-Modus: PINs aus lokalem Stand geladen.');
+          return;
+        }
+      } catch (err) {}
       alert('Verbindungsfehler zur API');
     }
   }
@@ -1034,19 +1054,40 @@
       .replace(/Tuersteuerung/g, 'Türsteuerung');
   }
 
-  function formatEuropeanTimestamp(str) {
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function formatEuropeanTimestamp(str, relative = false) {
     if (!str) return '';
     try {
       const d = new Date(str.replace(' ', 'T'));
       if (isNaN(d.getTime())) return str;
       const pad = (n) => String(n).padStart(2, '0');
-      const day = pad(d.getDate());
-      const month = pad(d.getMonth() + 1);
-      const year = d.getFullYear();
       const hours = pad(d.getHours());
       const mins = pad(d.getMinutes());
       const secs = pad(d.getSeconds());
-      return `${day}.${month}.${year} ${hours}:${mins}:${secs} Uhr`;
+      const timePart = `${hours}:${mins}:${secs} Uhr`;
+
+      if (relative) {
+        const now = new Date();
+        const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const startOfLogDay = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+        const diffDays = Math.round((startOfToday - startOfLogDay) / (1000 * 60 * 60 * 24));
+        if (diffDays === 0) return `Heute, ${timePart}`;
+        if (diffDays === 1) return `Gestern, ${timePart}`;
+      }
+
+      const day = pad(d.getDate());
+      const month = pad(d.getMonth() + 1);
+      const year = d.getFullYear();
+      return `${day}.${month}.${year} ${timePart}`;
     } catch (e) {
       return str;
     }
@@ -1054,19 +1095,86 @@
 
   function renderLogs(logs) {
     const tb = document.getElementById('logsTableBody');
-    tb.innerHTML = '';
+    const cardsContainer = document.getElementById('logsCardsContainer');
+    const countBadge = document.getElementById('logsCountBadge');
+
+    if (tb) tb.innerHTML = '';
+    if (cardsContainer) cardsContainer.innerHTML = '';
+    if (countBadge) countBadge.textContent = `${logs ? logs.length : 0} Einträge`;
+
+    if (!logs || logs.length === 0) {
+      if (tb) {
+        tb.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:16px;">Keine Zugriffe protokolliert.</td></tr>';
+      }
+      if (cardsContainer) {
+        cardsContainer.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-size:12.5px; padding:20px; background:rgba(15,23,42,0.4); border-radius:10px;">Keine Zugriffe protokolliert.</div>';
+      }
+      return;
+    }
+
     logs.forEach(l => {
-      const tr = document.createElement('tr');
-      const doorDisplay = (l.door === 'haustuer') ? '🚪 Haustür' : ((l.door === 'wohnungstuer') ? '🔑 Wohnungstür' : (l.door || '-'));
-      tr.innerHTML = `
-        <td style="white-space: nowrap;">${formatEuropeanTimestamp(l.timestamp)}</td>
-        <td>${l.guest}</td>
-        <td>${doorDisplay}</td>
-        <td>${l.success ? '<span style="color:#4ade80;">OK</span>' : '<span style="color:#ef4444;">Fehlgeschlagen</span>'}</td>
-        <td>${formatLogMessage(l.message)}</td>
-        <td><code>${l.ip}</code></td>
-      `;
-      tb.appendChild(tr);
+      const doorDisplay = (l.door === 'haustuer') ? '🚪 Haustür' : ((l.door === 'wohnungstuer') ? '🔑 Wohnungstür' : (escapeHtml(l.door) || '-'));
+      const timeDesktop = formatEuropeanTimestamp(l.timestamp, false);
+      const timeMobile = formatEuropeanTimestamp(l.timestamp, true);
+      const rawMsg = formatLogMessage(l.message || '');
+      const msgSafe = escapeHtml(rawMsg);
+      const guestName = escapeHtml(l.guest || 'Unbekannt');
+      const isSuccess = !!l.success;
+      const ipSafe = escapeHtml(l.ip || '-');
+
+      // 1. Desktop Table Row
+      if (tb) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="white-space: nowrap;">${timeDesktop}</td>
+          <td><b>${guestName}</b></td>
+          <td>${doorDisplay}</td>
+          <td>${isSuccess ? '<span style="color:#4ade80; font-weight:600;">✓ OK</span>' : '<span style="color:#ef4444; font-weight:600;">✕ Fehlgeschlagen</span>'}</td>
+          <td>${msgSafe}</td>
+          <td><code>${ipSafe}</code></td>
+        `;
+        tb.appendChild(tr);
+      }
+
+      // 2. Mobile Responsive Card (Zero horizontal scrolling on phone)
+      if (cardsContainer) {
+        const card = document.createElement('div');
+        card.style.cssText = `
+          background: rgba(15, 23, 42, 0.7);
+          border: 1px solid ${isSuccess ? 'rgba(34, 197, 94, 0.22)' : 'rgba(239, 68, 68, 0.3)'};
+          border-left: 4px solid ${isSuccess ? '#22c55e' : '#ef4444'};
+          border-radius: 10px;
+          padding: 11px 13px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        `;
+
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <span style="font-size:13.5px; font-weight:700; color:#f8fafc;">${doorDisplay}</span>
+              <span style="color:var(--text-muted); font-size:11px;">•</span>
+              <b style="font-size:13px; color:#38bdf8;">${guestName}</b>
+            </div>
+            <span class="badge" style="background:${isSuccess ? 'rgba(34,197,94,0.18)' : 'rgba(239,68,68,0.18)'}; color:${isSuccess ? '#4ade80' : '#ef4444'}; border:1px solid ${isSuccess ? 'rgba(34,197,94,0.35)' : 'rgba(239,68,68,0.35)'}; font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:999px; white-space:nowrap;">
+              ${isSuccess ? '✓ OK' : '✕ Fehlgeschlagen'}
+            </span>
+          </div>
+
+          ${msgSafe ? `
+            <div style="font-size:12px; color:#cbd5e1; line-height:1.35;">
+              ${msgSafe}
+            </div>
+          ` : ''}
+
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:11px; color:var(--text-muted); padding-top:5px; border-top:1px solid rgba(255,255,255,0.05); margin-top:2px;">
+            <span>🕒 ${timeMobile}</span>
+            <code style="background:rgba(255,255,255,0.06); padding:1px 6px; border-radius:4px; font-size:10.5px; color:#94a3b8;">${ipSafe}</code>
+          </div>
+        `;
+        cardsContainer.appendChild(card);
+      }
     });
   }
 
