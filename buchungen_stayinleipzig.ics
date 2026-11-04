@@ -1,0 +1,29 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//StayInLeipzig//AutoCheckin Mechlerstr 10//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:StayInLeipzig Mechlerstr. 10
+X-WR-TIMEZONE:Europe/Berlin
+X-WR-CALDESC:Buchungen und Gaeste fuer Ferienwohnung Mechlerstr. 10 Leipzig
+BEGIN:VEVENT
+UID:BOOK-2026-001@stayinleipzig.de
+DTSTAMP:20261104T171351Z
+DTSTART:20261030T120000
+DTEND:20261105T110000
+SUMMARY:Aktueller Gast (PIN: 24818)
+DESCRIPTION:Gast: Aktueller Gast\nPIN: 24818\n1-Klick Check-in Link: https://checkin.stayinleipzig.de/?code=24818\nBuchungs-ID: BOOK-2026-001\nWohnung: Mechlerstraße 10, Dachgeschoss Mitte\nWLAN: gigacube-EA6A (PW: Leipzig2025#)\nHost Falko: 0152 53453390
+LOCATION:Mechlerstraße 10, 04105 Leipzig, Deutschland
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:MANUAL-1793789066@stayinleipzig.de
+DTSTAMP:20261104T171351Z
+DTSTART:20261127T140000
+DTEND:20261204T110000
+SUMMARY:Soybas (PIN: 93544)
+DESCRIPTION:Gast: Soybas\nPIN: 93544\n1-Klick Check-in Link: https://checkin.stayinleipzig.de/?code=93544\nBuchungs-ID: MANUAL-1793789066\nWohnung: Mechlerstraße 10, Dachgeschoss Mitte\nWLAN: gigacube-EA6A (PW: Leipzig2025#)\nHost Falko: 0152 53453390
+LOCATION:Mechlerstraße 10, 04105 Leipzig, Deutschland
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR

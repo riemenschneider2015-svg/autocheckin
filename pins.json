@@ -15,22 +15,31 @@
   },
   "pins": [
     {
-      "pin": "04157",
-      "name": "Master Falko",
-      "booking_id": "MASTER-01",
-      "valid_from": "2020-01-01T00:00:00",
-      "valid_until": "2099-12-31T23:59:59",
+      "pin": "24818",
+      "valid_from": "2026-10-30T12:00:00",
       "active": true,
-      "role": "admin"
+      "role": "guest",
+      "name": "Aktueller Gast",
+      "valid_until": "2026-11-05T11:00:00",
+      "booking_id": "BOOK-2026-001"
     },
     {
-      "pin": "12345",
-      "name": "Muster-Gast (Demo)",
-      "booking_id": "DEMO-2026-001",
-      "valid_from": "2026-01-01T15:00:00",
-      "valid_until": "2099-12-31T11:00:00",
-      "active": false,
-      "role": "guest"
+      "pin": "04157",
+      "valid_from": "2020-01-01T00:00:00",
+      "active": true,
+      "role": "admin",
+      "name": "Master Falko",
+      "valid_until": "2099-12-31T23:59:59",
+      "booking_id": "MASTER-01"
+    },
+    {
+      "pin": "93544",
+      "valid_from": "2026-11-27T14:00",
+      "active": true,
+      "role": "guest",
+      "name": "Soybas",
+      "valid_until": "2026-12-04T11:00",
+      "booking_id": "MANUAL-1793789066"
     }
   ]
 }

@@ -308,6 +308,8 @@
       <div class="card-title">
         <span>📋 Alle PIN-Codes & Check-in-Status</span>
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <button class="btn btn-sm" onclick="exportIcalFile()" title="Alle Buchungen als .ics Kalenderdatei herunterladen" style="background:#0284c7; color:#fff;">📅 iCal (.ics)</button>
+          <button class="btn btn-sm" onclick="copyIcalFeedUrl()" title="Live Kalender-Abo Link für Google Kalender / Apple Kalender / Outlook kopieren" style="background:#334155; color:#fff;">🔗 Kalender-Abo</button>
           <select id="sortSelect" onchange="onSortSelectChange(this.value)" class="sort-select" title="Sortierung auswählen">
             <option value="smart_desc">⚡ Aktive zuerst (Neueste absteigend)</option>
             <option value="from_desc">📅 Gültig ab (Absteigend ⬇️)</option>
@@ -842,6 +844,81 @@
       prompt("Bitte manuell kopieren (Strg+C / Kopieren):", text);
     }
     document.body.removeChild(textArea);
+  }
+
+  function exportIcalFile() {
+    if (!cachedPins || cachedPins.length === 0) {
+      alert("Keine Buchungen vorhanden.");
+      return;
+    }
+
+    const pad = (n) => String(n).padStart(2, '0');
+    const toIcalDt = (dateObj) => {
+      return `${dateObj.getFullYear()}${pad(dateObj.getMonth() + 1)}${pad(dateObj.getDate())}T${pad(dateObj.getHours())}${pad(dateObj.getMinutes())}${pad(dateObj.getSeconds())}`;
+    };
+
+    const now = new Date();
+    const nowStamp = `${now.getUTCFullYear()}${pad(now.getUTCMonth() + 1)}${pad(now.getUTCDate())}T${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}${pad(now.getUTCSeconds())}Z`;
+
+    let lines = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//StayInLeipzig//AutoCheckin Mechlerstr 10//DE",
+      "CALSCALE:GREGORIAN",
+      "METHOD:PUBLISH",
+      "X-WR-CALNAME:StayInLeipzig Mechlerstr. 10",
+      "X-WR-TIMEZONE:Europe/Berlin",
+      "X-WR-CALDESC:Buchungen und Gäste für Ferienwohnung Mechlerstr. 10 Leipzig"
+    ];
+
+    let count = 0;
+    cachedPins.forEach(p => {
+      if (p.role === 'admin') return;
+      const from = new Date(p.valid_from);
+      const until = new Date(p.valid_until);
+      if (isNaN(from.getTime()) || isNaN(until.getTime())) return;
+
+      count++;
+      const name = p.name || 'Gast';
+      const pin = p.pin || '';
+      const bookingId = p.booking_id || `PIN-${pin}`;
+      const dtStart = toIcalDt(from);
+      const dtEnd = toIcalDt(until);
+      const uid = `${bookingId}@stayinleipzig.de`;
+
+      const desc = `Gast: ${name}\\nPIN: ${pin}\\n1-Klick Check-in Link: https://checkin.stayinleipzig.de/?code=${pin}\\nBuchungs-ID: ${bookingId}\\nWohnung: Mechlerstraße 10, Dachgeschoss Mitte\\nWLAN: gigacube-EA6A (PW: Leipzig2025#)\\nHost Falko: 0152 53453390`;
+
+      lines.push("BEGIN:VEVENT");
+      lines.push(`UID:${uid}`);
+      lines.push(`DTSTAMP:${nowStamp}`);
+      lines.push(`DTSTART:${dtStart}`);
+      lines.push(`DTEND:${dtEnd}`);
+      lines.push(`SUMMARY:${name} (PIN: ${pin})`);
+      lines.push(`DESCRIPTION:${desc}`);
+      lines.push("LOCATION:Mechlerstraße 10, 04105 Leipzig, Deutschland");
+      lines.push("STATUS:CONFIRMED");
+      lines.push("END:VEVENT");
+    });
+
+    lines.push("END:VCALENDAR");
+
+    const icsContent = lines.join("\r\n");
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'stayinleipzig_mechler_buchungen.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showToast(`✅ iCal Kalender mit ${count} Buchung(en) heruntergeladen!`);
+  }
+
+  function copyIcalFeedUrl() {
+    const feedUrl = `${getApiEndpoint('ical')}&admin_pin=${encodeURIComponent(adminPin)}`;
+    copyTextToClipboard(feedUrl, "✅ iCal Kalender-Abo Link kopiert! In Google Kalender oder iPhone einfügen.");
   }
 
   function copyLink(link) {

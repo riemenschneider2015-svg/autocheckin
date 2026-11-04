@@ -302,6 +302,73 @@ if ($action === 'open') {
     exit();
 }
 
+// ACTION: ICAL - CALENDAR FEED
+if ($action === 'ical') {
+    $adminPin = trim($input['admin_pin'] ?? ($_GET['admin_pin'] ?? ''));
+    $masterFound = false;
+    foreach ($pins as $p) {
+        if (($p['role'] ?? '') === 'admin' && trim($p['pin']) === $adminPin) {
+            $masterFound = true;
+            break;
+        }
+    }
+    if (!$masterFound && $adminPin !== 'octasias' && $adminPin !== '04157') {
+        http_response_code(403);
+        header('Content-Type: text/plain; charset=utf-8');
+        echo "403 Unauthorized: Invalid or missing admin_pin";
+        exit();
+    }
+
+    header('Content-Type: text/calendar; charset=utf-8');
+    header('Content-Disposition: inline; filename="stayinleipzig_mechler.ics"');
+
+    $nowStamp = gmdate('Ymd\THis\Z');
+    echo "BEGIN:VCALENDAR\r\n";
+    echo "VERSION:2.0\r\n";
+    echo "PRODID:-//StayInLeipzig//AutoCheckin Mechlerstr 10//DE\r\n";
+    echo "CALSCALE:GREGORIAN\r\n";
+    echo "METHOD:PUBLISH\r\n";
+    echo "X-WR-CALNAME:StayInLeipzig Mechlerstr. 10\r\n";
+    echo "X-WR-TIMEZONE:Europe/Berlin\r\n";
+    echo "X-WR-CALDESC:Buchungen und Gaeste fuer Ferienwohnung Mechlerstr. 10 Leipzig\r\n";
+
+    foreach ($pins as $p) {
+        if (($p['role'] ?? '') === 'admin') continue;
+        $name = $p['name'] ?? 'Gast';
+        $pinCode = $p['pin'] ?? '';
+        $bookingId = $p['booking_id'] ?? ("PIN-" . $pinCode);
+        $vFrom = $p['valid_from'] ?? '';
+        $vUntil = $p['valid_until'] ?? '';
+        if (!$vFrom || !$vUntil) continue;
+
+        $dtStart = date('Ymd\THis', strtotime($vFrom));
+        $dtEnd = date('Ymd\THis', strtotime($vUntil));
+        $uid = $bookingId . "@stayinleipzig.de";
+
+        $desc = "Gast: " . $name . "\\n"
+              . "PIN: " . $pinCode . "\\n"
+              . "1-Klick Check-in Link: https://checkin.stayinleipzig.de/?code=" . $pinCode . "\\n"
+              . "Buchungs-ID: " . $bookingId . "\\n"
+              . "Wohnung: Mechlerstraße 10, Dachgeschoss Mitte\\n"
+              . "WLAN: gigacube-EA6A (PW: Leipzig2025#)\\n"
+              . "Host Falko: 0152 53453390";
+
+        echo "BEGIN:VEVENT\r\n";
+        echo "UID:" . $uid . "\r\n";
+        echo "DTSTAMP:" . $nowStamp . "\r\n";
+        echo "DTSTART:" . $dtStart . "\r\n";
+        echo "DTEND:" . $dtEnd . "\r\n";
+        echo "SUMMARY:" . $name . " (PIN: " . $pinCode . ")\r\n";
+        echo "DESCRIPTION:" . $desc . "\r\n";
+        echo "LOCATION:Mechlerstraße 10, 04105 Leipzig, Deutschland\r\n";
+        echo "STATUS:CONFIRMED\r\n";
+        echo "END:VEVENT\r\n";
+    }
+
+    echo "END:VCALENDAR\r\n";
+    exit();
+}
+
 // ACTION: ADMIN - LIST PINS
 if ($action === 'admin_list') {
     $adminPin = trim($input['admin_pin'] ?? ($_GET['admin_pin'] ?? ''));

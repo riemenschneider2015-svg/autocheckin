@@ -287,6 +287,9 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         if action == "admin_list":
             self.handle_admin_list(parsed)
             return
+        if action == "ical":
+            self.handle_ical(parsed)
+            return
         pin = qs.get("pin", [""])[0].strip()
         self.verify_pin_response(pin)
 
@@ -395,6 +398,84 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         else:
             log_access(ip, pin, entry.get("name", "Gast"), door, False, "Fehler Türsteuerung: " + res_msg)
             self.send_json({"success": False, "error": "Türsteuerung nicht erreichbar. Bitte Falko anrufen (015253453390).", "contact": "015253453390"})
+
+    def handle_ical(self, parsed):
+        qs = urllib.parse.parse_qs(parsed.query)
+        admin_pin = qs.get("admin_pin", [""])[0].strip()
+        if admin_pin not in ("04157", "octasias"):
+            self.send_response(403)
+            self.send_header("Content-Type", "text/plain; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(b"403 Unauthorized: Invalid admin_pin")
+            return
+
+        data = load_data()
+        pins = data.get("pins", [])
+        now_stamp = datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
+        lines = [
+            "BEGIN:VCALENDAR",
+            "VERSION:2.0",
+            "PRODID:-//StayInLeipzig//AutoCheckin Mechlerstr 10//DE",
+            "CALSCALE:GREGORIAN",
+            "METHOD:PUBLISH",
+            "X-WR-CALNAME:StayInLeipzig Mechlerstr. 10",
+            "X-WR-TIMEZONE:Europe/Berlin",
+            "X-WR-CALDESC:Buchungen und Gaeste fuer Ferienwohnung Mechlerstr. 10 Leipzig"
+        ]
+
+        def to_ical_dt(dt_str):
+            clean = dt_str.replace(" ", "T").replace("-", "").replace(":", "")
+            if "T" not in clean: clean += "T000000"
+            parts = clean.split("T")
+            return parts[0][:8] + "T" + (parts[1] + "000000")[:6]
+
+        for p in pins:
+            if p.get("role") == "admin": continue
+            name = p.get("name", "Gast")
+            pin = str(p.get("pin", ""))
+            booking_id = p.get("booking_id", f"PIN-{pin}")
+            valid_from = p.get("valid_from", "")
+            valid_until = p.get("valid_until", "")
+            if not valid_from or not valid_until: continue
+
+            dtstart = to_ical_dt(valid_from)
+            dtend = to_ical_dt(valid_until)
+            uid = f"{booking_id}@stayinleipzig.de"
+
+            desc = (
+                f"Gast: {name}\\n"
+                f"PIN: {pin}\\n"
+                f"1-Klick Check-in Link: https://checkin.stayinleipzig.de/?code={pin}\\n"
+                f"Buchungs-ID: {booking_id}\\n"
+                f"Wohnung: Mechlerstraße 10, Dachgeschoss Mitte\\n"
+                f"WLAN: gigacube-EA6A (PW: Leipzig2025#)\\n"
+                f"Host Falko: 0152 53453390"
+            )
+
+            lines.extend([
+                "BEGIN:VEVENT",
+                f"UID:{uid}",
+                f"DTSTAMP:{now_stamp}",
+                f"DTSTART:{dtstart}",
+                f"DTEND:{dtend}",
+                f"SUMMARY:{name} (PIN: {pin})",
+                f"DESCRIPTION:{desc}",
+                "LOCATION:Mechlerstraße 10, 04105 Leipzig, Deutschland",
+                "STATUS:CONFIRMED",
+                "END:VEVENT"
+            ])
+
+        lines.append("END:VCALENDAR")
+        lines.append("")
+
+        body = "\r\n".join(lines).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "text/calendar; charset=utf-8")
+        self.send_header("Content-Disposition", 'inline; filename="stayinleipzig_mechler.ics"')
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
 
     def handle_admin_list(self, parsed):
         qs = urllib.parse.parse_qs(parsed.query)
