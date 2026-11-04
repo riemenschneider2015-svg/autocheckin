@@ -686,8 +686,8 @@
           ${p.booking_id ? `<br><small style="color:var(--text-muted); font-size:11px;">Buchung: ${p.booking_id}</small>` : ''}
         </td>
         <td><code style="font-size:15px; color:var(--primary); font-weight:700;">${p.pin}</code></td>
-        <td>${from.toLocaleDateString('de-DE')} ${from.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'})}</td>
-        <td>${until.toLocaleDateString('de-DE')} ${until.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'})}</td>
+        <td style="white-space: nowrap;">${pad(from.getDate())}.${pad(from.getMonth() + 1)}.${from.getFullYear()} ${pad(from.getHours())}:${pad(from.getMinutes())} Uhr</td>
+        <td style="white-space: nowrap;">${pad(until.getDate())}.${pad(until.getMonth() + 1)}.${until.getFullYear()} ${pad(until.getHours())}:${pad(until.getMinutes())} Uhr</td>
         <td>
           ${p.role === 'admin' ? `
             <button class="btn btn-sm btn-link-only" onclick="copyLink('${link}')" title="Admin Check-in Link kopieren">🔗 Link</button>
@@ -823,18 +823,18 @@
     let fromTime = '15:00', untilTime = '11:00';
 
     if (!isNaN(dFrom.getTime())) {
-      fFromShort = `${pad(dFrom.getDate())}.${pad(dFrom.getMonth() + 1)}.${String(dFrom.getFullYear()).slice(-2)}`;
       fFromFull = `${pad(dFrom.getDate())}.${pad(dFrom.getMonth() + 1)}.${dFrom.getFullYear()}`;
-      fromTime = dFrom.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+      fFromShort = fFromFull; // Volles 4-stelliges Jahr (nicht kürzen)
+      fromTime = `${pad(dFrom.getHours())}:${pad(dFrom.getMinutes())}`;
     } else {
       fFromShort = pinObj.valid_from || '';
       fFromFull = pinObj.valid_from || '';
     }
 
     if (!isNaN(dUntil.getTime())) {
-      fUntilShort = `${pad(dUntil.getDate())}.${pad(dUntil.getMonth() + 1)}.${String(dUntil.getFullYear()).slice(-2)}`;
       fUntilFull = `${pad(dUntil.getDate())}.${pad(dUntil.getMonth() + 1)}.${dUntil.getFullYear()}`;
-      untilTime = dUntil.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+      fUntilShort = fUntilFull; // Volles 4-stelliges Jahr (nicht kürzen)
+      untilTime = `${pad(dUntil.getHours())}:${pad(dUntil.getMinutes())}`;
     } else {
       fUntilShort = pinObj.valid_until || '';
       fUntilFull = pinObj.valid_until || '';
