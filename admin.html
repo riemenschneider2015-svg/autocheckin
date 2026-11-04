@@ -303,6 +303,23 @@
       </div>
     </div>
 
+    <!-- Cleaning Turnover Banner -->
+    <div class="card" id="cleaningCard" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95)); border-left: 4px solid #38bdf8;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="font-size: 26px; background: rgba(56, 189, 248, 0.15); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🧹</div>
+          <div>
+            <div style="font-size: 11.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Nächste Reinigung / Wohnungswechsel</div>
+            <div id="cleaningHeadline" style="font-size: 16px; font-weight: 800; color: #f8fafc; margin-top: 3px;">
+              Wird berechnet...
+            </div>
+            <div id="cleaningDetails" style="font-size: 12.5px; color: var(--text-muted); margin-top: 3px;"></div>
+          </div>
+        </div>
+        <div id="cleaningBadgeContainer"></div>
+      </div>
+    </div>
+
     <!-- Active PINs Table -->
     <div class="card">
       <div class="card-title">
@@ -618,6 +635,98 @@
     }
   }
 
+  function updateCleaningPlan(pins) {
+    const card = document.getElementById('cleaningCard');
+    const headline = document.getElementById('cleaningHeadline');
+    const details = document.getElementById('cleaningDetails');
+    const badgeContainer = document.getElementById('cleaningBadgeContainer');
+    if (!card || !headline || !details || !badgeContainer) return;
+
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+
+    // Filter guest pins
+    const guestStays = [];
+    pins.forEach(p => {
+      if (p.role === 'admin') return;
+      const from = new Date(p.valid_from);
+      const until = new Date(p.valid_until);
+      if (!isNaN(from.getTime()) && !isNaN(until.getTime())) {
+        guestStays.push({
+          pin: p.pin,
+          name: p.name || 'Gast',
+          from: from,
+          until: until
+        });
+      }
+    });
+
+    guestStays.sort((a, b) => a.until - b.until);
+
+    // Find next cleaning: first stay where checkout (until) >= start of today
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const nextCheckoutStay = guestStays.find(s => s.until >= startOfToday);
+
+    if (!nextCheckoutStay) {
+      headline.textContent = "Keine anstehenden Abreisen";
+      details.textContent = "Aktuell sind keine weiteren Check-outs geplant.";
+      badgeContainer.innerHTML = '<span class="badge badge-future" style="padding:6px 12px; font-size:12px;">Alles sauber</span>';
+      return;
+    }
+
+    const co = nextCheckoutStay.until;
+    const coDateStr = `${pad(co.getDate())}.${pad(co.getMonth() + 1)}.${co.getFullYear()}`;
+    const coTimeStr = `${pad(co.getHours())}:${pad(co.getMinutes())} Uhr`;
+
+    // Calculate day diff
+    const coDay = new Date(co.getFullYear(), co.getMonth(), co.getDate());
+    const diffDays = Math.round((coDay - startOfToday) / (1000 * 60 * 60 * 24));
+
+    let whenText = '';
+    let badgeHtml = '';
+    if (diffDays === 0) {
+      whenText = `Heute, ${coDateStr} ab ${coTimeStr}`;
+      badgeHtml = '<span class="badge" style="background:rgba(239, 68, 68, 0.2); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.4); font-size:12px; padding:6px 12px;">🚨 Heute fällig!</span>';
+    } else if (diffDays === 1) {
+      whenText = `Morgen (${co.toLocaleDateString('de-DE', {weekday:'short'})}), ${coDateStr} ab ${coTimeStr}`;
+      badgeHtml = '<span class="badge" style="background:rgba(234, 179, 8, 0.2); color:#facc15; border:1px solid rgba(234, 179, 8, 0.4); font-size:12px; padding:6px 12px;">⏳ Morgen fällig</span>';
+    } else {
+      whenText = `${co.toLocaleDateString('de-DE', {weekday:'short'})}, ${coDateStr} ab ${coTimeStr}`;
+      badgeHtml = `<span class="badge" style="background:rgba(56, 189, 248, 0.15); color:#38bdf8; border:1px solid rgba(56, 189, 248, 0.35); font-size:12px; padding:6px 12px;">🗓️ In ${diffDays} Tagen</span>`;
+    }
+
+    headline.textContent = whenText;
+
+    // Find following checkin
+    const nextCheckinStay = guestStays
+      .filter(s => s.from >= co)
+      .sort((a, b) => a.from - b.from)[0];
+
+    if (nextCheckinStay) {
+      const ci = nextCheckinStay.from;
+      const ciDateStr = `${pad(ci.getDate())}.${pad(ci.getMonth() + 1)}.${ci.getFullYear()}`;
+      const ciTimeStr = `${pad(ci.getHours())}:${pad(ci.getMinutes())} Uhr`;
+
+      const gapHours = Math.round((ci - co) / (1000 * 60 * 60));
+      const gapDays = Math.floor(gapHours / 24);
+
+      let bufferText = '';
+      if (gapHours <= 6) {
+        bufferText = `⚠️ <b>Direktwechsel am selben Tag!</b> (Putzfenster: ${coTimeStr} – ${ciTimeStr})`;
+      } else if (gapDays === 0) {
+        bufferText = `Putzfenster: ${gapHours} Stunden`;
+      } else {
+        bufferText = `Wohnung frei bis ${ciDateStr} (${gapDays} Tage Puffer)`;
+      }
+
+      details.innerHTML = `Nach Abreise von <b>${nextCheckoutStay.name}</b> • Nächster Gast: <b>${nextCheckinStay.name}</b> (${ciDateStr} ab ${ciTimeStr}) • <span style="color:#4ade80;">${bufferText}</span>`;
+    } else {
+      details.innerHTML = `Nach Abreise von <b>${nextCheckoutStay.name}</b> • Noch keine Folge-Buchung eingetragen (ausreichend Zeit für Reinigung).`;
+    }
+
+    badgeContainer.innerHTML = badgeHtml;
+  }
+
   function renderPins(pins, logs = []) {
     const tb = document.getElementById('pinsTableBody');
     tb.innerHTML = '';
@@ -637,6 +746,7 @@
       });
     }
 
+    updateCleaningPlan(cachedPins);
     let statCheckedInCount = 0;
     let statFutureCount = 0;
     let statActiveCount = 0;
