@@ -360,6 +360,15 @@
     tb.innerHTML = '';
     const now = new Date();
 
+    // Sort pins: Guest PINs first, Master-Codes always at the very bottom
+    const sortedPins = [...pins].sort((a, b) => {
+      const aIsMaster = (a.role === 'admin' || a.pin === '04157');
+      const bIsMaster = (b.role === 'admin' || b.pin === '04157');
+      if (aIsMaster && !bIsMaster) return 1;
+      if (!aIsMaster && bIsMaster) return -1;
+      return new Date(a.valid_from) - new Date(b.valid_from);
+    });
+
     // Map earliest successful door opening from logs for cross-referencing
     const logCheckins = {};
     if (Array.isArray(logs)) {
@@ -376,7 +385,7 @@
     let statWaitingCount = 0;
     let statActiveCount = 0;
 
-    pins.forEach(p => {
+    sortedPins.forEach(p => {
       const from = new Date(p.valid_from);
       const until = new Date(p.valid_until);
       const isCurrentStay = (now >= from && now <= until);
