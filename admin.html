@@ -305,25 +305,39 @@
       </div>
     </div>
 
-    <!-- Cleaning Turnover Banner -->
-    <div class="card" id="cleaningCard" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95)); border-left: 4px solid #38bdf8;">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
-        <div style="display: flex; align-items: center; gap: 14px;">
-          <div style="font-size: 26px; background: rgba(56, 189, 248, 0.15); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🧹</div>
-          <div>
-            <div style="font-size: 11.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Nächste Reinigung / Wohnungswechsel</div>
-            <div id="cleaningHeadline" style="font-size: 16px; font-weight: 800; color: #f8fafc; margin-top: 3px;">
-              Wird berechnet...
-            </div>
-            <div id="cleaningDetails" style="font-size: 12.5px; color: var(--text-muted); margin-top: 3px;"></div>
-          </div>
+    <!-- Cleaning Turnover Card -->
+    <div class="card" id="cleaningCard" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98)); border: 1px solid rgba(56, 189, 248, 0.25); border-left: 5px solid #38bdf8; padding: 22px 24px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35);">
+      <!-- Header Row: Category Label + Live Status Badge -->
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="font-size: 20px; background: rgba(56, 189, 248, 0.15); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🧹</div>
+          <span style="font-size: 11.5px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.6px;">Nächste Reinigung / Wohnungswechsel</span>
         </div>
-        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
-          <div id="cleaningBadgeContainer"></div>
-          <div style="display:flex; gap:6px; flex-wrap:wrap;">
-            <button class="btn btn-sm" onclick="exportCleaningIcalFile()" title="Putzplan als .ics herunterladen" style="background:rgba(255,255,255,0.08); color:var(--text); font-size:11.5px; padding:4px 10px;">📅 Putzplan (.ics)</button>
-            <button class="btn btn-sm" onclick="copyCleaningIcalUrl()" title="Putzplan Kalenderlink für die Reinigungskraft per WhatsApp teilen" style="background:#0284c7; color:#fff; font-size:11.5px; padding:4px 10px;">🔗 Putzplan-Abo Link</button>
-          </div>
+        <div id="cleaningBadgeContainer"></div>
+      </div>
+
+      <!-- Main Headline: Large Date and Time -->
+      <div id="cleaningHeadline" style="font-size: 22px; font-weight: 800; color: #f8fafc; margin-bottom: 14px; letter-spacing: -0.2px; line-height: 1.25;">
+        Wird berechnet...
+      </div>
+
+      <!-- Detail Info Chips (Abreise, Folgegast, Zeitpuffer) -->
+      <div id="cleaningDetails" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+        <div style="font-size: 13px; color: #94a3b8;">Lade Buchungsdaten...</div>
+      </div>
+
+      <!-- Action Footer: Info text on left, Putzplan buttons on right -->
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+        <div style="font-size: 12.5px; color: #94a3b8; display: flex; align-items: center; gap: 7px;">
+          <span>📲</span> <span>Putzplan für die Reinigungskraft teilen oder als Live-Kalender abonnieren</span>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button class="btn btn-sm" onclick="exportCleaningIcalFile()" title="Putzplan als .ics Kalenderdatei herunterladen" style="background: rgba(255, 255, 255, 0.08); color: #f1f5f9; font-size: 12.5px; font-weight: 600; padding: 7px 14px; border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 8px; cursor: pointer;">
+            📅 Putzplan (.ics)
+          </button>
+          <button class="btn btn-sm" onclick="copyCleaningIcalUrl()" title="Putzplan Kalenderlink für die Reinigungskraft per WhatsApp teilen" style="background: #0284c7; color: #ffffff; font-size: 12.5px; font-weight: 700; padding: 7px 14px; border: none; border-radius: 8px; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35); cursor: pointer;">
+            🔗 Putzplan-Abo Link
+          </button>
         </div>
       </div>
     </div>
@@ -676,9 +690,9 @@
     const nextCheckoutStay = guestStays.find(s => s.until >= startOfToday);
 
     if (!nextCheckoutStay) {
-      headline.textContent = "Keine anstehenden Abreisen";
-      details.textContent = "Aktuell sind keine weiteren Check-outs geplant.";
-      badgeContainer.innerHTML = '<span class="badge badge-future" style="padding:6px 12px; font-size:12px;">Alles sauber</span>';
+      headline.innerHTML = "Keine anstehenden Abreisen";
+      details.innerHTML = '<div style="font-size:13px; color:#94a3b8;">Aktuell sind keine weiteren Check-outs geplant. Alle Einheiten sind sauber.</div>';
+      badgeContainer.innerHTML = '<span class="badge badge-future" style="padding:5px 12px; font-size:12px; font-weight:700;">🟢 Alles sauber</span>';
       return;
     }
 
@@ -690,25 +704,37 @@
     const coDay = new Date(co.getFullYear(), co.getMonth(), co.getDate());
     const diffDays = Math.round((coDay - startOfToday) / (1000 * 60 * 60 * 24));
 
-    let whenText = '';
+    const weekdayLong = co.toLocaleDateString('de-DE', { weekday: 'long' });
+    let whenHtml = '';
     let badgeHtml = '';
+
     if (diffDays === 0) {
-      whenText = `Heute, ${coDateStr} ab ${coTimeStr}`;
-      badgeHtml = '<span class="badge" style="background:rgba(239, 68, 68, 0.2); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.4); font-size:12px; padding:6px 12px;">🚨 Heute fällig!</span>';
+      whenHtml = `Heute (${weekdayLong}), ${coDateStr} <span style="color:#ef4444; font-size:18px; font-weight:700; margin-left:6px;">ab ${coTimeStr}</span>`;
+      badgeHtml = '<span class="badge" style="background:rgba(239, 68, 68, 0.2); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.4); font-size:12px; font-weight:700; padding:5px 12px; border-radius:999px;">🚨 Heute fällig!</span>';
     } else if (diffDays === 1) {
-      whenText = `Morgen (${co.toLocaleDateString('de-DE', {weekday:'short'})}), ${coDateStr} ab ${coTimeStr}`;
-      badgeHtml = '<span class="badge" style="background:rgba(234, 179, 8, 0.2); color:#facc15; border:1px solid rgba(234, 179, 8, 0.4); font-size:12px; padding:6px 12px;">⏳ Morgen fällig</span>';
+      whenHtml = `Morgen (${weekdayLong}), ${coDateStr} <span style="color:#facc15; font-size:18px; font-weight:700; margin-left:6px;">ab ${coTimeStr}</span>`;
+      badgeHtml = '<span class="badge" style="background:rgba(234, 179, 8, 0.2); color:#facc15; border:1px solid rgba(234, 179, 8, 0.4); font-size:12px; font-weight:700; padding:5px 12px; border-radius:999px;">⏳ Morgen fällig</span>';
     } else {
-      whenText = `${co.toLocaleDateString('de-DE', {weekday:'short'})}, ${coDateStr} ab ${coTimeStr}`;
-      badgeHtml = `<span class="badge" style="background:rgba(56, 189, 248, 0.15); color:#38bdf8; border:1px solid rgba(56, 189, 248, 0.35); font-size:12px; padding:6px 12px;">🗓️ In ${diffDays} Tagen</span>`;
+      whenHtml = `${weekdayLong}, ${coDateStr} <span style="color:#38bdf8; font-size:18px; font-weight:700; margin-left:6px;">ab ${coTimeStr}</span>`;
+      badgeHtml = `<span class="badge" style="background:rgba(56, 189, 248, 0.15); color:#38bdf8; border:1px solid rgba(56, 189, 248, 0.35); font-size:12px; font-weight:700; padding:5px 12px; border-radius:999px;">🗓️ In ${diffDays} Tagen</span>`;
     }
 
-    headline.textContent = whenText;
+    headline.innerHTML = whenHtml;
 
     // Find following checkin
     const nextCheckinStay = guestStays
       .filter(s => s.from >= co)
       .sort((a, b) => a.from - b.from)[0];
+
+    const chipStyleBase = "display:inline-flex; align-items:center; gap:7px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:7px 13px; border-radius:8px; font-size:12.5px; color:#cbd5e1;";
+
+    let chipsHtml = `
+      <div style="${chipStyleBase}">
+        <span>🚪 Abreisender Gast:</span>
+        <b style="color:#ffffff;">${nextCheckoutStay.name}</b>
+        <span style="color:#94a3b8;">(bis ${coTimeStr})</span>
+      </div>
+    `;
 
     if (nextCheckinStay) {
       const ci = nextCheckinStay.from;
@@ -718,20 +744,46 @@
       const gapHours = Math.round((ci - co) / (1000 * 60 * 60));
       const gapDays = Math.floor(gapHours / 24);
 
-      let bufferText = '';
-      if (gapHours <= 6) {
-        bufferText = `⚠️ <b>Direktwechsel am selben Tag!</b> (Putzfenster: ${coTimeStr} – ${ciTimeStr})`;
-      } else if (gapDays === 0) {
-        bufferText = `Putzfenster: ${gapHours} Stunden`;
-      } else {
-        bufferText = `Wohnung frei bis ${ciDateStr} (${gapDays} Tage Puffer)`;
-      }
+      chipsHtml += `
+        <div style="${chipStyleBase}">
+          <span>👤 Folgegast:</span>
+          <b style="color:#ffffff;">${nextCheckinStay.name}</b>
+          <span style="color:#94a3b8;">(${ciDateStr} ab ${ciTimeStr})</span>
+        </div>
+      `;
 
-      details.innerHTML = `Nach Abreise von <b>${nextCheckoutStay.name}</b> • Nächster Gast: <b>${nextCheckinStay.name}</b> (${ciDateStr} ab ${ciTimeStr}) • <span style="color:#4ade80;">${bufferText}</span>`;
+      if (gapHours <= 6) {
+        chipsHtml += `
+          <div style="${chipStyleBase} background:rgba(239, 68, 68, 0.15); border-color:rgba(239, 68, 68, 0.4); color:#fca5a5; font-weight:700;">
+            <span>🚨 Direktwechsel am selben Tag!</span>
+            <span>Putzfenster: ${coTimeStr} – ${ciTimeStr} (${gapHours}h)</span>
+          </div>
+        `;
+      } else if (gapDays === 0) {
+        chipsHtml += `
+          <div style="${chipStyleBase} background:rgba(234, 179, 8, 0.15); border-color:rgba(234, 179, 8, 0.4); color:#fde047; font-weight:600;">
+            <span>⏳ Putzfenster:</span>
+            <span>${gapHours} Stunden Puffer</span>
+          </div>
+        `;
+      } else {
+        chipsHtml += `
+          <div style="${chipStyleBase} background:rgba(34, 197, 94, 0.12); border-color:rgba(34, 197, 94, 0.35); color:#86efac; font-weight:600;">
+            <span>🟢 Zeitpuffer:</span>
+            <span>Wohnung frei bis ${ciDateStr} (${gapDays} Tage Puffer)</span>
+          </div>
+        `;
+      }
     } else {
-      details.innerHTML = `Nach Abreise von <b>${nextCheckoutStay.name}</b> • Noch keine Folge-Buchung eingetragen (ausreichend Zeit für Reinigung).`;
+      chipsHtml += `
+        <div style="${chipStyleBase} background:rgba(56, 189, 248, 0.1); border-color:rgba(56, 189, 248, 0.3); color:#7dd3fc;">
+          <span>✨ Keine Folgebuchung:</span>
+          <span>Ausreichend Zeit für gründliche Reinigung</span>
+        </div>
+      `;
     }
 
+    details.innerHTML = chipsHtml;
     badgeContainer.innerHTML = badgeHtml;
   }
 
