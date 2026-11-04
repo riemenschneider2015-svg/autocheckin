@@ -1,29 +1,61 @@
-BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//StayInLeipzig//Putzplan Mechlerstr 10//DE
-CALSCALE:GREGORIAN
-METHOD:PUBLISH
-X-WR-CALNAME:Putzplan - Mechlerstr. 10 Leipzig
-X-WR-TIMEZONE:Europe/Berlin
-X-WR-CALDESC:Reinigungsplan fuer die Ferienwohnung Mechlerstrasse 10
-BEGIN:VEVENT
-UID:CLEAN-BOOK-2026-001@stayinleipzig.de
-DTSTAMP:20261104T173041Z
-DTSTART:20261113T110000
-DTEND:20261113T140000
-SUMMARY:🧹 Reinigung Ferienwohnung (Wohnungswechsel)
-DESCRIPTION:🧹 REINIGUNG & WOHNUNGSWECHSEL\nAbreise Gast: 13.11.2026 um 11:00 Uhr\nStatus: Wohnung ist frei bis zum 27.11.2026 (14 Tage Puffer).\n\n📍 Wo: Mechlerstraße 10, Dachgeschoss Mitte (StayInLeipzig)\nWLAN: gigacube-EA6A (Passwort: Leipzig2025#)\n📞 Kontakt Falko: 0152 53453390\n\nAufgaben:\n- Bettwäsche abziehen & frisch beziehen\n- Handtücher austauschen\n- Bad & Dusche gründlich reinigen\n- Küche (Kühlschrank, Herd, Geschirr kontrollieren)\n- Böden saugen und feucht wischen\n- Müll entsorgen
-LOCATION:Mechlerstraße 10, Dachgeschoss Mitte, 04105 Leipzig
-STATUS:CONFIRMED
-END:VEVENT
-BEGIN:VEVENT
-UID:CLEAN-MANUAL-1793789066@stayinleipzig.de
-DTSTAMP:20261104T173041Z
-DTSTART:20261204T110000
-DTEND:20261204T140000
-SUMMARY:🧹 Reinigung Ferienwohnung (Wohnungswechsel)
-DESCRIPTION:🧹 REINIGUNG & WOHNUNGSWECHSEL\nAbreise Gast: 04.12.2026 um 11:00 Uhr\nStatus: Keine direkte Folge-Buchung eingetragen (ausreichend Zeit).\n\n📍 Wo: Mechlerstraße 10, Dachgeschoss Mitte (StayInLeipzig)\nWLAN: gigacube-EA6A (Passwort: Leipzig2025#)\n📞 Kontakt Falko: 0152 53453390\n\nAufgaben:\n- Bettwäsche abziehen & frisch beziehen\n- Handtücher austauschen\n- Bad & Dusche gründlich reinigen\n- Küche (Kühlschrank, Herd, Geschirr kontrollieren)\n- Böden saugen und feucht wischen\n- Müll entsorgen
-LOCATION:Mechlerstraße 10, Dachgeschoss Mitte, 04105 Leipzig
-STATUS:CONFIRMED
-END:VEVENT
-END:VCALENDAR
+BEGIN:VCALENDAR
+PRODID:-//StayInLeipzig//Putzplan Mechlerstr 10//DE
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Putzplan - Mechlerstr. 10 Leipzig
+X-WR-TIMEZONE:Europe/Berlin
+X-WR-CALDESC:Reinigungsplan fuer Ferienwohnung Mechlerstrasse 10
+BEGIN:VTIMEZONE
+TZID:Europe/Berlin
+X-LIC-LOCATION:Europe/Berlin
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:clean-BOOK-2026-001-20261113@stayinleipzig.de
+DTSTAMP:20261104T182740Z
+DTSTART;TZID=Europe/Berlin:20261113T110000
+DTEND;TZID=Europe/Berlin:20261113T140000
+SUMMARY:Reinigung Ferienwohnung (Wohnungswechsel)
+DESCRIPTION:REINIGUNG & WOHNUNGSWECHSEL\nAbreise Gast: 13.11.2026 um 11:00 
+ Uhr\nStatus: Wohnung ist frei bis zum 27.11.2026 (14 Tage Puffer).\n\nWo: 
+ Mechlerstraße 10\, Dachgeschoss Mitte (StayInLeipzig)\nWLAN: gigacube-EA6
+ A (Passwort: Leipzig2025#)\nKontakt Falko: 0152 53453390\n\nAufgaben:\n- B
+ ettwaesche abziehen & frisch beziehen\n- Handtuecher austauschen\n- Bad & 
+ Dusche gruendlich reinigen\n- Kueche (Kuehlschrank\, Herd\, Geschirr kontr
+ ollieren)\n- Boeden saugen und feucht wischen\n- Muell entsorgen
+LOCATION:Mechlerstraße 10\, Dachgeschoss Mitte\, 04105 Leipzig
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:clean-MANUAL-1793789066-20261204@stayinleipzig.de
+DTSTAMP:20261104T182740Z
+DTSTART;TZID=Europe/Berlin:20261204T110000
+DTEND;TZID=Europe/Berlin:20261204T140000
+SUMMARY:Reinigung Ferienwohnung (Wohnungswechsel)
+DESCRIPTION:REINIGUNG & WOHNUNGSWECHSEL\nAbreise Gast: 04.12.2026 um 11:00 
+ Uhr\nStatus: Keine direkte Folgebuchung (ausreichend Zeit).\n\nWo: Mechler
+ straße 10\, Dachgeschoss Mitte (StayInLeipzig)\nWLAN: gigacube-EA6A (Pass
+ wort: Leipzig2025#)\nKontakt Falko: 0152 53453390\n\nAufgaben:\n- Bettwaes
+ che abziehen & frisch beziehen\n- Handtuecher austauschen\n- Bad & Dusche 
+ gruendlich reinigen\n- Kueche (Kuehlschrank\, Herd\, Geschirr kontrolliere
+ n)\n- Boeden saugen und feucht wischen\n- Muell entsorgen
+LOCATION:Mechlerstraße 10\, Dachgeschoss Mitte\, 04105 Leipzig
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR

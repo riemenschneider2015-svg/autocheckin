@@ -403,6 +403,34 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
             log_access(ip, pin, entry.get("name", "Gast"), door, False, "Fehler Türsteuerung: " + res_msg)
             self.send_json({"success": False, "error": "Türsteuerung nicht erreichbar. Bitte Falko anrufen (015253453390).", "contact": "015253453390"})
 
+    @staticmethod
+    def fold_ical(line, max_len=75):
+        enc = line.encode("utf-8")
+        if len(enc) <= max_len:
+            return enc + b"\r\n"
+        parts = []
+        idx = 0
+        first = True
+        while idx < len(enc):
+            limit = max_len if first else (max_len - 1)
+            end = min(idx + limit, len(enc))
+            while end < len(enc) and (enc[end] & 0xC0) == 0x80:
+                end -= 1
+            chunk = enc[idx:end]
+            if first:
+                parts.append(chunk)
+                first = False
+            else:
+                parts.append(b" " + chunk)
+            idx = end
+        return b"\r\n".join(parts) + b"\r\n"
+
+    @staticmethod
+    def escape_ical(text):
+        if not text: return ""
+        t = str(text).replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,")
+        return t.replace("\r\n", "\\n").replace("\n", "\\n").replace("\r", "\\n")
+
     def handle_ical(self, parsed):
         qs = urllib.parse.parse_qs(parsed.query)
         admin_pin = qs.get("admin_pin", [""])[0].strip()
@@ -418,20 +446,38 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         now_stamp = datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
         lines = [
             "BEGIN:VCALENDAR",
-            "VERSION:2.0",
             "PRODID:-//StayInLeipzig//AutoCheckin Mechlerstr 10//DE",
+            "VERSION:2.0",
             "CALSCALE:GREGORIAN",
             "METHOD:PUBLISH",
             "X-WR-CALNAME:StayInLeipzig Mechlerstr. 10",
             "X-WR-TIMEZONE:Europe/Berlin",
-            "X-WR-CALDESC:Buchungen und Gaeste fuer Ferienwohnung Mechlerstr. 10 Leipzig"
+            "X-WR-CALDESC:Buchungen fuer Ferienwohnung Mechlerstr. 10 Leipzig",
+            "BEGIN:VTIMEZONE",
+            "TZID:Europe/Berlin",
+            "X-LIC-LOCATION:Europe/Berlin",
+            "BEGIN:DAYLIGHT",
+            "TZOFFSETFROM:+0100",
+            "TZOFFSETTO:+0200",
+            "TZNAME:CEST",
+            "DTSTART:19700329T020000",
+            "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU",
+            "END:DAYLIGHT",
+            "BEGIN:STANDARD",
+            "TZOFFSETFROM:+0200",
+            "TZOFFSETTO:+0100",
+            "TZNAME:CET",
+            "DTSTART:19701025T030000",
+            "RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU",
+            "END:STANDARD",
+            "END:VTIMEZONE"
         ]
 
-        def to_ical_dt(dt_str):
-            clean = dt_str.replace(" ", "T").replace("-", "").replace(":", "")
+        def to_dt(s):
+            clean = s.replace(" ", "T").replace("-", "").replace(":", "")
             if "T" not in clean: clean += "T000000"
-            parts = clean.split("T")
-            return parts[0][:8] + "T" + (parts[1] + "000000")[:6]
+            p = clean.split("T")
+            return p[0][:8] + "T" + (p[1] + "000000")[:6]
 
         for p in pins:
             if p.get("role") == "admin": continue
@@ -442,14 +488,14 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
             valid_until = p.get("valid_until", "")
             if not valid_from or not valid_until: continue
 
-            dtstart = to_ical_dt(valid_from)
-            dtend = to_ical_dt(valid_until)
+            dtstart = to_dt(valid_from)
+            dtend = to_dt(valid_until)
             uid = "{0}@stayinleipzig.de".format(booking_id)
 
             desc = (
                 "Gast: {0}\n"
                 "PIN: {1}\n"
-                "1-Klick Check-in Link: https://checkin.stayinleipzig.de/?code={1}\n"
+                "1-Klick Check-in: https://checkin.stayinleipzig.de/?code={1}\n"
                 "Buchungs-ID: {2}\n"
                 "Wohnung: Mechlerstraße 10, Dachgeschoss Mitte\n"
                 "WLAN: gigacube-EA6A (PW: Leipzig2025#)\n"
@@ -460,26 +506,30 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
                 "BEGIN:VEVENT",
                 "UID:{0}".format(uid),
                 "DTSTAMP:{0}".format(now_stamp),
-                "DTSTART:{0}".format(dtstart),
-                "DTEND:{0}".format(dtend),
-                "SUMMARY:{0} (PIN: {1})".format(name, pin),
-                "DESCRIPTION:{0}".format(desc),
-                "LOCATION:Mechlerstraße 10, 04105 Leipzig, Deutschland",
+                "DTSTART;TZID=Europe/Berlin:{0}".format(dtstart),
+                "DTEND;TZID=Europe/Berlin:{0}".format(dtend),
+                "SUMMARY:{0} (PIN: {1})".format(self.escape_ical(name), pin),
+                "DESCRIPTION:{0}".format(self.escape_ical(desc)),
+                "LOCATION:{0}".format(self.escape_ical("Mechlerstraße 10, 04105 Leipzig, Deutschland")),
                 "STATUS:CONFIRMED",
+                "TRANSP:OPAQUE",
                 "END:VEVENT"
             ])
 
         lines.append("END:VCALENDAR")
-        lines.append("")
 
-        body = "\r\n".join(lines).encode("utf-8")
+        out = bytearray()
+        for l in lines:
+            c = l.strip("\r\n")
+            if c: out.extend(self.fold_ical(c))
+
         self.send_response(200)
         self.send_header("Content-Type", "text/calendar; charset=utf-8")
         self.send_header("Content-Disposition", 'inline; filename="stayinleipzig_mechler.ics"')
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Content-Length", str(len(out)))
         self.end_headers()
-        self.wfile.write(body)
+        self.wfile.write(bytes(out))
 
     def handle_cleaning_ical(self, parsed):
         data = load_data()
@@ -508,13 +558,31 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
 
         lines = [
             "BEGIN:VCALENDAR",
-            "VERSION:2.0",
             "PRODID:-//StayInLeipzig//Putzplan Mechlerstr 10//DE",
+            "VERSION:2.0",
             "CALSCALE:GREGORIAN",
             "METHOD:PUBLISH",
             "X-WR-CALNAME:Putzplan - Mechlerstr. 10 Leipzig",
             "X-WR-TIMEZONE:Europe/Berlin",
-            "X-WR-CALDESC:Reinigungsplan fuer die Ferienwohnung Mechlerstrasse 10"
+            "X-WR-CALDESC:Reinigungsplan fuer Ferienwohnung Mechlerstrasse 10",
+            "BEGIN:VTIMEZONE",
+            "TZID:Europe/Berlin",
+            "X-LIC-LOCATION:Europe/Berlin",
+            "BEGIN:DAYLIGHT",
+            "TZOFFSETFROM:+0100",
+            "TZOFFSETTO:+0200",
+            "TZNAME:CEST",
+            "DTSTART:19700329T020000",
+            "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU",
+            "END:DAYLIGHT",
+            "BEGIN:STANDARD",
+            "TZOFFSETFROM:+0200",
+            "TZOFFSETTO:+0100",
+            "TZNAME:CET",
+            "DTSTART:19701025T030000",
+            "RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU",
+            "END:STANDARD",
+            "END:VTIMEZONE"
         ]
 
         def to_ical_dt(dt):
@@ -532,7 +600,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
                     if next_checkin is None or other["from"] < next_checkin["from"]:
                         next_checkin = other
 
-            summary = "🧹 Reinigung Ferienwohnung (Wohnungswechsel)"
+            summary = "Reinigung Ferienwohnung (Wohnungswechsel)"
             buffer_info = "Keine direkte Folge-Buchung eingetragen (ausreichend Zeit)."
 
             if next_checkin:
@@ -543,58 +611,62 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
 
                 if co.date() == ci.date():
                     clean_end = ci
-                    summary = "🚨 DRINGEND: Reinigung (Gäste-Wechsel HEUTE!)"
-                    buffer_info = "⚠️ ACHTUNG: Neuer Gast reist HEUTE um {0} Uhr an! Bitte bis dahin fertig sein.".format(ci.strftime('%H:%M'))
+                    summary = "DRINGEND: Reinigung (Gaeste-Wechsel HEUTE!)"
+                    buffer_info = "ACHTUNG: Neuer Gast reist HEUTE um {0} Uhr an! Bitte bis dahin fertig sein.".format(ci.strftime('%H:%M'))
                 elif gap_days == 0:
-                    summary = "🧹 Reinigung Ferienwohnung"
-                    buffer_info = "Nächster Gast kommt in {0} Stunden ({1}).".format(int(gap_hours), ci_str)
+                    summary = "Reinigung Ferienwohnung"
+                    buffer_info = "Naechster Gast kommt in {0} Stunden ({1}).".format(int(gap_hours), ci_str)
                 else:
                     buffer_info = "Wohnung ist frei bis zum {0} ({1} Tage Puffer).".format(ci.strftime('%d.%m.%Y'), gap_days)
 
             dtend = to_ical_dt(clean_end)
             bid = stay['booking_id'] if stay.get('booking_id') else stay['pin']
-            uid = "CLEAN-{0}@stayinleipzig.de".format(bid)
+            uid = "clean-{0}-{1}@stayinleipzig.de".format(bid, dtstart[:8])
 
             desc = (
-                "🧹 REINIGUNG & WOHNUNGSWECHSEL\n"
+                "REINIGUNG & WOHNUNGSWECHSEL\n"
                 "Abreise Gast: {0}\n"
                 "Status: {1}\n\n"
-                "📍 Wo: Mechlerstraße 10, Dachgeschoss Mitte (StayInLeipzig)\n"
+                "Wo: Mechlerstraße 10, Dachgeschoss Mitte (StayInLeipzig)\n"
                 "WLAN: gigacube-EA6A (Passwort: Leipzig2025#)\n"
-                "📞 Kontakt Falko: 0152 53453390\n\n"
+                "Kontakt Falko: 0152 53453390\n\n"
                 "Aufgaben:\n"
-                "- Bettwäsche abziehen & frisch beziehen\n"
-                "- Handtücher austauschen\n"
-                "- Bad & Dusche gründlich reinigen\n"
-                "- Küche (Kühlschrank, Herd, Geschirr kontrollieren)\n"
-                "- Böden saugen und feucht wischen\n"
-                "- Müll entsorgen"
+                "- Bettwaesche abziehen & frisch beziehen\n"
+                "- Handtuecher austauschen\n"
+                "- Bad & Dusche gruendlich reinigen\n"
+                "- Kueche (Kuehlschrank, Herd, Geschirr kontrollieren)\n"
+                "- Boeden saugen und feucht wischen\n"
+                "- Muell entsorgen"
             ).format(co_str, buffer_info)
 
             lines.extend([
                 "BEGIN:VEVENT",
                 "UID:{0}".format(uid),
                 "DTSTAMP:{0}".format(now_stamp),
-                "DTSTART:{0}".format(dtstart),
-                "DTEND:{0}".format(dtend),
-                "SUMMARY:{0}".format(summary),
-                "DESCRIPTION:{0}".format(desc),
-                "LOCATION:Mechlerstraße 10, Dachgeschoss Mitte, 04105 Leipzig",
+                "DTSTART;TZID=Europe/Berlin:{0}".format(dtstart),
+                "DTEND;TZID=Europe/Berlin:{0}".format(dtend),
+                "SUMMARY:{0}".format(self.escape_ical(summary)),
+                "DESCRIPTION:{0}".format(self.escape_ical(desc)),
+                "LOCATION:{0}".format(self.escape_ical("Mechlerstraße 10, Dachgeschoss Mitte, 04105 Leipzig")),
                 "STATUS:CONFIRMED",
+                "TRANSP:OPAQUE",
                 "END:VEVENT"
             ])
 
         lines.append("END:VCALENDAR")
-        lines.append("")
 
-        body = "\r\n".join(lines).encode("utf-8")
+        out = bytearray()
+        for l in lines:
+            c = l.strip("\r\n")
+            if c: out.extend(self.fold_ical(c))
+
         self.send_response(200)
         self.send_header("Content-Type", "text/calendar; charset=utf-8")
         self.send_header("Content-Disposition", 'inline; filename="putzplan_mechlerstr.ics"')
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Content-Length", str(len(out)))
         self.end_headers()
-        self.wfile.write(body)
+        self.wfile.write(bytes(out))
 
     def handle_admin_list(self, parsed):
         qs = urllib.parse.parse_qs(parsed.query)
