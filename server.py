@@ -368,7 +368,21 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         if ok:
             directions = ("Bitte immer kraeftig gegen die Haustuer druecken, wenn es summt! Danach bis ins Dachgeschoss laufen (Tuer in der Mitte mit dem grauen Willkommen-Schild)."
                           if door == "haustuer" else "Bitte immer kraeftig gegen die Wohnungstuer druecken, wenn es summt. Herzlich Willkommen!")
-            log_access(ip, pin, entry.get("name", "Gast"), door, True, "{0} geoeffnet".format(door_name))
+            
+            # Record check-in timestamp on first successful door open
+            now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            is_first = not entry.get("checked_in_at")
+            if is_first:
+                data = load_data()
+                for p in data.get("pins", []):
+                    if p.get("pin") == pin:
+                        p["checked_in_at"] = now_str
+                        p["first_door"] = door_name
+                        break
+                save_data(data)
+
+            log_msg = "{0} geoeffnet".format(door_name) + (" (Erster Check-in)" if is_first else "")
+            log_access(ip, pin, entry.get("name", "Gast"), door, True, log_msg)
             self.send_json({
                 "success": True,
                 "door": door,

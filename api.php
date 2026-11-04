@@ -265,7 +265,22 @@ if ($action === 'open') {
             ? 'Bitte immer kräftig gegen die Haustür drücken, wenn es summt! Danach die Treppe hoch bis ins Dachgeschoss laufen (Tür in der Mitte mit dem grauen Willkommen-Schild).'
             : 'Bitte immer kräftig gegen die Wohnungstür drücken, wenn es summt. Herzlich Willkommen!';
 
-        logAccess($pin, $entry['name'] ?? '', $door, true, "$doorName erfolgreich geöffnet");
+        // Record check-in timestamp on first successful door open
+        $nowStr = date('Y-m-d H:i:s');
+        $isFirstCheckin = empty($entry['checked_in_at']);
+        if ($isFirstCheckin) {
+            foreach ($pins as &$p) {
+                if ($p['pin'] === $pin) {
+                    $p['checked_in_at'] = $nowStr;
+                    $p['first_door'] = $doorName;
+                    break;
+                }
+            }
+            file_put_contents($dataFile, json_encode(['settings' => $settings, 'pins' => $pins], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        }
+
+        $logMsg = "$doorName erfolgreich geöffnet" . ($isFirstCheckin ? " (Erster Check-in)" : "");
+        logAccess($pin, $entry['name'] ?? '', $door, true, $logMsg);
 
         echo json_encode([
             'success' => true,
@@ -280,7 +295,7 @@ if ($action === 'open') {
         logAccess($pin, $entry['name'] ?? '', $door, false, "FHEM-Steuerungsfehler: " . ($fhemRes['error_code'] ?? 'timeout'));
         echo json_encode([
             'success' => false,
-            'error' => 'Die Türsteuerung konnte nicht erreicht werden. Bitte rufen Sie direkt Sophie an.',
+            'error' => 'Die Türsteuerung konnte nicht erreicht werden. Bitte rufen Sie direkt Falko an (015253453390).',
             'contact' => $settings['contact_phone'] ?? '015253453390'
         ]);
     }
