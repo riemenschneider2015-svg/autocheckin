@@ -173,6 +173,63 @@
       opacity: 1;
     }
 
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+    .toast {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 13.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+      animation: toastIn 0.25s ease-out;
+      max-width: 90vw;
+    }
+    @keyframes toastIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .btn-msg-en {
+      background: #0284c7;
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .btn-msg-en:hover {
+      background: #0369a1;
+      opacity: 1;
+    }
+    .btn-msg-de {
+      background: #334155;
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .btn-msg-de:hover {
+      background: #475569;
+      opacity: 1;
+    }
+    .btn-link-only {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+    }
+    .btn-link-only:hover {
+      background: rgba(255, 255, 255, 0.16);
+      opacity: 1;
+    }
+
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     @media(max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
   </style>
@@ -280,7 +337,7 @@
               <th id="th_valid_until" class="sortable-th" onclick="toggleSort('valid_until')" title="Klicken für Auf-/Absteigend">
                 Gültig bis <span id="sort_valid_until" class="sort-icon">↕️</span>
               </th>
-              <th>Check-in Link</th>
+              <th>Nachricht / Link kopieren</th>
               <th>Aktion</th>
             </tr>
           </thead>
@@ -639,7 +696,15 @@
         <td>${from.toLocaleDateString('de-DE')} ${from.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'})}</td>
         <td>${until.toLocaleDateString('de-DE')} ${until.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'})}</td>
         <td>
-          <button class="btn btn-sm" onclick="copyLink('${link}')">📋 Link kopieren</button>
+          ${p.role === 'admin' ? `
+            <button class="btn btn-sm btn-link-only" onclick="copyLink('${link}')" title="Admin Check-in Link kopieren">🔗 Link</button>
+          ` : `
+            <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+              <button class="btn btn-sm btn-msg-en" onclick="copyGuestMessage('${p.pin}', 'en')" title="Komplette englische Begrüßungsnachricht mit Daten kopieren">✉️ Text (EN)</button>
+              <button class="btn btn-sm btn-msg-de" onclick="copyGuestMessage('${p.pin}', 'de')" title="Komplette deutsche Begrüßungsnachricht mit Daten kopieren">🇩🇪 Text (DE)</button>
+              <button class="btn btn-sm btn-link-only" onclick="copyLink('${link}')" title="Nur den Check-in Link kopieren">🔗 Link</button>
+            </div>
+          `}
         </td>
         <td>
           ${p.role !== 'admin' ? `<button class="btn btn-sm btn-danger" onclick="deletePin('${p.pin}')">Löschen</button>` : '<em>Fest</em>'}
@@ -673,10 +738,223 @@
     });
   }
 
+  function showToast(message) {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toastContainer';
+      container.className = 'toast-container';
+      document.body.appendChild(container);
+    }
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `<span>${message}</span>`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.transition = 'opacity 0.3s, transform 0.3s';
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(10px)';
+      setTimeout(() => toast.remove(), 300);
+    }, 3200);
+  }
+
+  function copyTextToClipboard(text, successMsg) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(successMsg || "In die Zwischenablage kopiert!");
+      }).catch(() => {
+        fallbackCopyText(text, successMsg);
+      });
+    } else {
+      fallbackCopyText(text, successMsg);
+    }
+  }
+
+  function fallbackCopyText(text, successMsg) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    textArea.style.top = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      showToast(successMsg || "In die Zwischenablage kopiert!");
+    } catch (err) {
+      prompt("Bitte manuell kopieren (Strg+C / Kopieren):", text);
+    }
+    document.body.removeChild(textArea);
+  }
+
   function copyLink(link) {
-    navigator.clipboard.writeText(link).then(() => {
-      alert("Gast-Link in die Zwischenablage kopiert:\n" + link);
-    });
+    copyTextToClipboard(link, "✅ Check-in Link in die Zwischenablage kopiert!");
+  }
+
+  function copyGuestMessage(pinCode, lang = 'en') {
+    const pinObj = cachedPins.find(p => String(p.pin) === String(pinCode));
+    if (!pinObj) {
+      alert("PIN-Daten nicht gefunden.");
+      return;
+    }
+
+    const host = window.location.origin + window.location.pathname.replace('admin.html', '').replace('admin.php', '');
+    const link = `${host}?code=${pinObj.pin}`;
+
+    const dFrom = new Date(pinObj.valid_from);
+    const dUntil = new Date(pinObj.valid_until);
+
+    const pad = (n) => String(n).padStart(2, '0');
+    let fFromShort = '', fUntilShort = '', fFromFull = '', fUntilFull = '';
+    let fromTime = '15:00', untilTime = '11:00';
+
+    if (!isNaN(dFrom.getTime())) {
+      fFromShort = `${pad(dFrom.getDate())}.${pad(dFrom.getMonth() + 1)}.${String(dFrom.getFullYear()).slice(-2)}`;
+      fFromFull = `${pad(dFrom.getDate())}.${pad(dFrom.getMonth() + 1)}.${dFrom.getFullYear()}`;
+      fromTime = dFrom.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+    } else {
+      fFromShort = pinObj.valid_from || '';
+      fFromFull = pinObj.valid_from || '';
+    }
+
+    if (!isNaN(dUntil.getTime())) {
+      fUntilShort = `${pad(dUntil.getDate())}.${pad(dUntil.getMonth() + 1)}.${String(dUntil.getFullYear()).slice(-2)}`;
+      fUntilFull = `${pad(dUntil.getDate())}.${pad(dUntil.getMonth() + 1)}.${dUntil.getFullYear()}`;
+      untilTime = dUntil.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+    } else {
+      fUntilShort = pinObj.valid_until || '';
+      fUntilFull = pinObj.valid_until || '';
+    }
+
+    const guestName = (pinObj.name && pinObj.name.trim()) ? pinObj.name.trim() : (lang === 'de' ? 'Gast' : 'Guest');
+
+    let text = '';
+    if (lang === 'de') {
+      text = `Betreff: Willkommen in Leipzig! 🌸 Alles für Ihren Aufenthalt & bequemen Check-in 🔑✨ (${fFromShort} – ${fUntilShort})
+
+Hallo ${guestName},
+
+wir freuen uns riesig, dass Sie bei uns übernachten! Leipzig ist eine wundervolle Stadt mit viel Charme und Kultur – wir möchten, dass Sie sich bei uns rundum wie zu Hause fühlen. ❤️
+
+Für eine entspannte und reibungslose Anreise ist alles für Sie vorbereitet:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📍 ADRESSE & ANREISE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Ihre Ferienwohnung befindet sich hier:
+Mechlerstraße 10, 04105 Leipzig, Deutschland
+
+👉 Hier tippen für Google Maps:
+https://maps.google.com/?q=Mechlerstra%C3%9Fe+10,+04105+Leipzig
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔑 IHR SCHLÜSSELLOSER SMARTPHONE CHECK-IN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Keine Schlüsselübergabe, kein Stress bei Verspätungen! Sie öffnen die Türen einfach direkt mit Ihrem Smartphone:
+
+📱 Ihr 1-Klick Check-in Link:
+👉 ${link}
+(Ihr persönlicher 5-stelliger PIN-Code: ${pinObj.pin})
+
+✨ So einfach funktioniert es bei Ihrer Ankunft:
+1. Vor der Haustür den Link auf dem Smartphone öffnen.
+2. Auf „Haustür öffnen“ tippen – drücken Sie immer gegen die Haustür, wenn es summt, und treten Sie ein.
+3. Im Treppenhaus die Treppen ganz nach oben ins Dachgeschoss laufen.
+4. Genau in der Mitte ist Ihre Wohnungstür mit dem grauen „Willkommen“-Schild.
+5. Auf dem Smartphone auf „Wohnungstür öffnen“ tippen, gegen die Tür drücken wenn es summt – herzlich willkommen! 🛋️✨
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📶 KOSTENLOSES HIGHSPEED WLAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+* WLAN-Name (SSID): gigacube-EA6A
+* Passwort: Leipzig2025#
+(In der Wohnung steht auch ein praktischer QR-Code Aufsteller – einfach mit der Handykamera scannen!)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🌿 WICHTIGE HINWEISE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+* 🚭 Reine Frischeluft: Unsere Wohnung ist eine reine Nichtraucherwohnung.
+* 🤫 Schöne Träume: Bitte ab 22:00 Uhr die Nachtruhe für ein friedliches Miteinander im Haus beachten.
+* 🕒 Zeitraum: ${fFromFull} – ${fUntilFull}
+* 🕒 Check-in ist ab ${fromTime} Uhr | Check-out ist bis ${untilTime} Uhr.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💬 WIR SIND IMMER FÜR SIE DA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Ob Restaurant-Tipps, Ausflugsziele oder falls eine Tür mal zögern sollte: Rufen Sie mich gerne jederzeit an oder schreiben Sie mir per WhatsApp!
+
+📞 Host Falko: 0152 53453390 (Anrufe & WhatsApp)
+
+Wir wünschen Ihnen eine wunderbare Anreise und eine unvergessliche Zeit in Leipzig! 🌟
+
+Herzliche Grüße,
+Falko & Team StayInLeipzig 🏡✨`;
+    } else {
+      text = `Subject: Welcome to Leipzig! 🌸 Everything for your cozy stay & easy check-in 🔑✨ (${fFromShort} – ${fUntilShort})
+
+Dear ${guestName},
+
+We are so, so happy and excited that you chose to stay with us! Leipzig is a truly wonderful city with so much charm, culture, and life – and we cannot wait to be your home away from home during your time here. ❤️
+
+To make your arrival as relaxing, smooth, and effortless as possible, we have prepared everything for you:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📍 WHERE TO FIND US
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Your apartment is located at:
+Mechlerstraße 10, 04105 Leipzig, Germany
+
+👉 Tap here to open directly in Google Maps:
+https://maps.google.com/?q=Mechlerstra%C3%9Fe+10,+04105+Leipzig
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔑 YOUR EASY KEYLESS CHECK-IN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+No keys to pick up, no stress if your flight or train is delayed! You can unlock the doors straight from your phone with just one tap:
+
+📱 Your 1-Tap Check-in Link:
+👉 ${link}
+(Your personal 5-digit PIN: ${pinObj.pin})
+
+✨ How simple it works when you arrive:
+1. Stand in front of the building entrance and open the link on your phone.
+2. Tap "Open Building Entrance" – always push firmly against the street door while you hear the buzzer sound, then step inside.
+3. Walk up the stairs all the way to the top floor (attic).
+4. Look for the door right in the middle with the lovely grey "Willkommen" (Welcome) sign – that is your private apartment!
+5. Tap "Open Apartment Door" on your phone – push against the door while it buzzes, step inside and make yourself at home! 🛋️✨
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📶 FREE HIGH-SPEED WI-FI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Stay connected, stream, or plan your day in Leipzig:
+* Network (SSID): gigacube-EA6A
+* Password: Leipzig2025#
+(There is also a handy QR-code stand on the table – simply scan it with your phone's camera to connect in one second!)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🌿 A FEW LOVING NOTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+* 🚭 Pure Fresh Air: Our apartment is strictly non-smoking.
+* 🤫 Sweet Dreams: Please keep things calm after 10:00 PM (22:00) so everyone in the building gets a restful sleep.
+* 🕒 Stay Dates: ${fFromFull} – ${fUntilFull}
+* 🕒 Check-in is from 3:00 PM (15:00) | Check-out is by 11:00 AM (11:00).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💬 WE ARE ALWAYS HERE FOR YOU
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Whether you need restaurant tips, have a question, or if a door ever hesitates to open: please never hesitate to call or message me right away. Your comfort and happiness are our top priority!
+
+📞 Host Falko: +49 152 53453390 (Calls & WhatsApp)
+
+We wish you a safe and peaceful journey, wonderful weather, and unforgettable moments in Leipzig. We are genuinely thrilled to host you! 🌟
+
+With warmest regards,
+Falko & the StayInLeipzig Family 🏡✨`;
+    }
+
+    copyTextToClipboard(text, `✅ ${lang === 'de' ? 'Deutsche' : 'Englische'} Willkommensnachricht für "${guestName}" kopiert!`);
   }
 
   async function saveNewPin() {
