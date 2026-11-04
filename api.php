@@ -302,6 +302,112 @@ if ($action === 'open') {
     exit();
 }
 
+// ACTION: CLEANING ICAL - CALENDAR FEED FOR CLEANING STAFF
+if ($action === 'cleaning_ical') {
+    header('Content-Type: text/calendar; charset=utf-8');
+    header('Content-Disposition: inline; filename="putzplan_mechlerstr.ics"');
+
+    // Collect and sort guest stays
+    $guestStays = [];
+    foreach ($pins as $p) {
+        if (($p['role'] ?? '') === 'admin') continue;
+        $vFrom = $p['valid_from'] ?? '';
+        $vUntil = $p['valid_until'] ?? '';
+        if (!$vFrom || !$vUntil) continue;
+
+        $guestStays[] = [
+            'name' => $p['name'] ?? 'Gast',
+            'pin' => $p['pin'] ?? '',
+            'booking_id' => $p['booking_id'] ?? '',
+            'from' => strtotime($vFrom),
+            'until' => strtotime($vUntil)
+        ];
+    }
+
+    usort($guestStays, function($a, $b) {
+        return $a['until'] - $b['until'];
+    });
+
+    $nowStamp = gmdate('Ymd\THis\Z');
+    echo "BEGIN:VCALENDAR\r\n";
+    echo "VERSION:2.0\r\n";
+    echo "PRODID:-//StayInLeipzig//Putzplan Mechlerstr 10//DE\r\n";
+    echo "CALSCALE:GREGORIAN\r\n";
+    echo "METHOD:PUBLISH\r\n";
+    echo "X-WR-CALNAME:Putzplan - Mechlerstr. 10 Leipzig\r\n";
+    echo "X-WR-TIMEZONE:Europe/Berlin\r\n";
+    echo "X-WR-CALDESC:Reinigungsplan fuer die Ferienwohnung Mechlerstr. 10\r\n";
+
+    foreach ($guestStays as $stay) {
+        $co = $stay['until'];
+        $coStr = date('d.m.Y \u\m H:i \U\h\r', $co);
+        $dtStart = date('Ymd\THis', $co);
+        $cleanEnd = $co + (3 * 3600); // Standard 3h
+
+        // Find next checkin
+        $nextCheckin = null;
+        foreach ($guestStays as $other) {
+            if ($other['from'] >= $co) {
+                if ($nextCheckin === null || $other['from'] < $nextCheckin['from']) {
+                    $nextCheckin = $other;
+                }
+            }
+        }
+
+        $summary = "🧹 Reinigung Ferienwohnung (Wohnungswechsel)";
+        $bufferInfo = "Keine direkte Folge-Buchung eingetragen (ausreichend Zeit).";
+
+        if ($nextCheckin) {
+            $ci = $nextCheckin['from'];
+            $ciStr = date('d.m.Y \u\m H:i \U\h\r', $ci);
+            $gapHours = round(($ci - $co) / 3600);
+            $gapDays = floor($gapHours / 24);
+
+            if (date('Y-m-d', $co) === date('Y-m-d', $ci)) {
+                $cleanEnd = $ci;
+                $summary = "🚨 DRINGEND: Reinigung (Gäste-Wechsel HEUTE!)";
+                $bufferInfo = "⚠️ ACHTUNG: Neuer Gast reist HEUTE um " . date('H:i', $ci) . " Uhr an! Bitte bis dahin fertig sein.";
+            } elseif ($gapDays === 0) {
+                $summary = "🧹 Reinigung Ferienwohnung";
+                $bufferInfo = "Nächster Gast kommt in " . $gapHours . " Stunden (" . $ciStr . ").";
+            } else {
+                $bufferInfo = "Wohnung ist frei bis zum " . date('d.m.Y', $ci) . " (" . $gapDays . " Tage Puffer).";
+            }
+        }
+
+        $dtEnd = date('Ymd\THis', $cleanEnd);
+        $uid = "CLEAN-" . ($stay['booking_id'] ?: $stay['pin']) . "@stayinleipzig.de";
+
+        $desc = "🧹 REINIGUNG & WOHNUNGSWECHSEL\\n"
+              . "Abreise bisheriger Gast: " . $coStr . "\\n"
+              . "Status: " . $bufferInfo . "\\n\\n"
+              . "📍 Wo: Mechlerstraße 10, Dachgeschoss Mitte (StayInLeipzig)\\n"
+              . "WLAN: gigacube-EA6A (Passwort: Leipzig2025#)\\n"
+              . "📞 Kontakt Falko: 0152 53453390\\n\\n"
+              . "Aufgaben:\\n"
+              . "- Bettwäsche abziehen & frisch beziehen\\n"
+              . "- Handtücher austauschen\\n"
+              . "- Bad & Dusche gründlich reinigen\\n"
+              . "- Küche (Kühlschrank, Herd, Geschirr kontrollieren)\\n"
+              . "- Böden saugen und feucht wischen\\n"
+              . "- Müll entsorgen";
+
+        echo "BEGIN:VEVENT\r\n";
+        echo "UID:" . $uid . "\r\n";
+        echo "DTSTAMP:" . $nowStamp . "\r\n";
+        echo "DTSTART:" . $dtStart . "\r\n";
+        echo "DTEND:" . $dtEnd . "\r\n";
+        echo "SUMMARY:" . $summary . "\r\n";
+        echo "DESCRIPTION:" . $desc . "\r\n";
+        echo "LOCATION:Mechlerstraße 10, Dachgeschoss Mitte, 04105 Leipzig\r\n";
+        echo "STATUS:CONFIRMED\r\n";
+        echo "END:VEVENT\r\n";
+    }
+
+    echo "END:VCALENDAR\r\n";
+    exit();
+}
+
 // ACTION: ICAL - CALENDAR FEED
 if ($action === 'ical') {
     $adminPin = trim($input['admin_pin'] ?? ($_GET['admin_pin'] ?? ''));

@@ -316,7 +316,13 @@
             <div id="cleaningDetails" style="font-size: 12.5px; color: var(--text-muted); margin-top: 3px;"></div>
           </div>
         </div>
-        <div id="cleaningBadgeContainer"></div>
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
+          <div id="cleaningBadgeContainer"></div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button class="btn btn-sm" onclick="exportCleaningIcalFile()" title="Putzplan als .ics herunterladen" style="background:rgba(255,255,255,0.08); color:var(--text); font-size:11.5px; padding:4px 10px;">📅 Putzplan (.ics)</button>
+            <button class="btn btn-sm" onclick="copyCleaningIcalUrl()" title="Putzplan Kalenderlink für die Reinigungskraft per WhatsApp teilen" style="background:#0284c7; color:#fff; font-size:11.5px; padding:4px 10px;">🔗 Putzplan-Abo Link</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -954,6 +960,19 @@
       prompt("Bitte manuell kopieren (Strg+C / Kopieren):", text);
     }
     document.body.removeChild(textArea);
+  }
+
+  function copyCleaningIcalUrl() {
+    const isTunnelHost = (window.location.hostname === 'fhem-tuer-mechler-leipzig.stayinleipzig.de');
+    const base = isTunnelHost ? '' : 'https://fhem-tuer-mechler-leipzig.stayinleipzig.de';
+    const cleanUrl = `${base}/api.php?action=cleaning_ical&token=putzplan`;
+    copyTextToClipboard(cleanUrl, "✅ Putzplan-Kalenderlink für die Reinigungskraft kopiert! Kann direkt per WhatsApp geteilt werden.");
+  }
+
+  function exportCleaningIcalFile() {
+    const isTunnelHost = (window.location.hostname === 'fhem-tuer-mechler-leipzig.stayinleipzig.de');
+    const base = isTunnelHost ? '' : 'https://fhem-tuer-mechler-leipzig.stayinleipzig.de';
+    window.open(`${base}/api.php?action=cleaning_ical&token=putzplan`, '_blank');
   }
 
   function exportIcalFile() {

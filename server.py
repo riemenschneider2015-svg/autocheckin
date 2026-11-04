@@ -290,6 +290,9 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         if action == "ical":
             self.handle_ical(parsed)
             return
+        if action == "cleaning_ical":
+            self.handle_cleaning_ical(parsed)
+            return
         pin = qs.get("pin", [""])[0].strip()
         self.verify_pin_response(pin)
 
@@ -472,6 +475,120 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "text/calendar; charset=utf-8")
         self.send_header("Content-Disposition", 'inline; filename="stayinleipzig_mechler.ics"')
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def handle_cleaning_ical(self, parsed):
+        data = load_data()
+        pins = data.get("pins", [])
+
+        guest_stays = []
+        for p in pins:
+            if p.get("role") == "admin": continue
+            valid_from = p.get("valid_from", "")
+            valid_until = p.get("valid_until", "")
+            if not valid_from or not valid_until: continue
+            try:
+                d_from = datetime.fromisoformat(valid_from)
+                d_until = datetime.fromisoformat(valid_until)
+                guest_stays.append({
+                    "name": p.get("name", "Gast"),
+                    "pin": str(p.get("pin", "")),
+                    "booking_id": p.get("booking_id", ""),
+                    "from": d_from,
+                    "until": d_until
+                })
+            except Exception: pass
+
+        guest_stays.sort(key=lambda s: s["until"])
+        now_stamp = datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
+
+        lines = [
+            "BEGIN:VCALENDAR",
+            "VERSION:2.0",
+            "PRODID:-//StayInLeipzig//Putzplan Mechlerstr 10//DE",
+            "CALSCALE:GREGORIAN",
+            "METHOD:PUBLISH",
+            "X-WR-CALNAME:Putzplan - Mechlerstr. 10 Leipzig",
+            "X-WR-TIMEZONE:Europe/Berlin",
+            "X-WR-CALDESC:Reinigungsplan fuer die Ferienwohnung Mechlerstrasse 10"
+        ]
+
+        def to_ical_dt(dt):
+            return dt.strftime("%Y%m%dT%H%M%S")
+
+        for stay in guest_stays:
+            co = stay["until"]
+            co_str = co.strftime("%d.%m.%Y um %H:%M Uhr")
+            dtstart = to_ical_dt(co)
+            clean_end = co + timedelta(hours=3)
+
+            next_checkin = None
+            for other in guest_stays:
+                if other["from"] >= co:
+                    if next_checkin is None or other["from"] < next_checkin["from"]:
+                        next_checkin = other
+
+            summary = "🧹 Reinigung Ferienwohnung (Wohnungswechsel)"
+            buffer_info = "Keine direkte Folge-Buchung eingetragen (ausreichend Zeit)."
+
+            if next_checkin:
+                ci = next_checkin["from"]
+                ci_str = ci.strftime("%d.%m.%Y um %H:%M Uhr")
+                gap_hours = (ci - co).total_seconds() / 3600.0
+                gap_days = int(gap_hours // 24)
+
+                if co.date() == ci.date():
+                    clean_end = ci
+                    summary = "🚨 DRINGEND: Reinigung (Gäste-Wechsel HEUTE!)"
+                    buffer_info = f"⚠️ ACHTUNG: Neuer Gast reist HEUTE um {ci.strftime('%H:%M')} Uhr an! Bitte bis dahin fertig sein."
+                elif gap_days == 0:
+                    summary = "🧹 Reinigung Ferienwohnung"
+                    buffer_info = f"Nächster Gast kommt in {int(gap_hours)} Stunden ({ci_str})."
+                else:
+                    buffer_info = f"Wohnung ist frei bis zum {ci.strftime('%d.%m.%Y')} ({gap_days} Tage Puffer)."
+
+            dtend = to_ical_dt(clean_end)
+            uid = f"CLEAN-{stay['booking_id'] or stay['pin']}@stayinleipzig.de"
+
+            desc = (
+                f"🧹 REINIGUNG & WOHNUNGSWECHSEL\\n"
+                f"Abreise Gast: {co_str}\\n"
+                f"Status: {buffer_info}\\n\\n"
+                f"📍 Wo: Mechlerstraße 10, Dachgeschoss Mitte (StayInLeipzig)\\n"
+                f"WLAN: gigacube-EA6A (Passwort: Leipzig2025#)\\n"
+                f"📞 Kontakt Falko: 0152 53453390\\n\\n"
+                f"Aufgaben:\\n"
+                f"- Bettwäsche abziehen & frisch beziehen\\n"
+                f"- Handtücher austauschen\\n"
+                f"- Bad & Dusche gründlich reinigen\\n"
+                f"- Küche (Kühlschrank, Herd, Geschirr kontrollieren)\\n"
+                f"- Böden saugen und feucht wischen\\n"
+                f"- Müll entsorgen"
+            )
+
+            lines.extend([
+                "BEGIN:VEVENT",
+                f"UID:{uid}",
+                f"DTSTAMP:{now_stamp}",
+                f"DTSTART:{dtstart}",
+                f"DTEND:{dtend}",
+                f"SUMMARY:{summary}",
+                f"DESCRIPTION:{desc}",
+                "LOCATION:Mechlerstraße 10, Dachgeschoss Mitte, 04105 Leipzig",
+                "STATUS:CONFIRMED",
+                "END:VEVENT"
+            ])
+
+        lines.append("END:VCALENDAR")
+        lines.append("")
+
+        body = "\r\n".join(lines).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "text/calendar; charset=utf-8")
+        self.send_header("Content-Disposition", 'inline; filename="putzplan_mechlerstr.ics"')
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
