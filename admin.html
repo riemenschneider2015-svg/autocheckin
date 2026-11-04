@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard – AutoCheckin Mechlerstr. 10 Leipzig</title>
@@ -964,16 +965,129 @@
   }
 
   function copyCleaningIcalUrl() {
-    const isTunnelHost = (window.location.hostname === 'fhem-tuer-mechler-leipzig.stayinleipzig.de');
-    const base = isTunnelHost ? '' : 'https://fhem-tuer-mechler-leipzig.stayinleipzig.de';
-    const cleanUrl = `${base}/api.php?action=cleaning_ical&token=putzplan`;
-    copyTextToClipboard(cleanUrl, "✅ Putzplan-Kalenderlink für die Reinigungskraft kopiert! Kann direkt per WhatsApp geteilt werden.");
+    const feedUrl = 'https://checkin.stayinleipzig.de/putzplan_stayinleipzig.ics';
+    copyTextToClipboard(feedUrl, "✅ Putzplan-Abo Link kopiert (GitHub Pages)! Kann direkt per WhatsApp geteilt oder im Kalender abonniert werden.");
   }
 
   function exportCleaningIcalFile() {
-    const isTunnelHost = (window.location.hostname === 'fhem-tuer-mechler-leipzig.stayinleipzig.de');
-    const base = isTunnelHost ? '' : 'https://fhem-tuer-mechler-leipzig.stayinleipzig.de';
-    window.open(`${base}/api.php?action=cleaning_ical&token=putzplan`, '_blank');
+    if (!cachedPins || cachedPins.length === 0) {
+      window.location.href = 'https://checkin.stayinleipzig.de/putzplan_stayinleipzig.ics';
+      return;
+    }
+
+    const pad = (n) => String(n).padStart(2, '0');
+    const toIcalDt = (dateObj) => {
+      return `${dateObj.getFullYear()}${pad(dateObj.getMonth() + 1)}${pad(dateObj.getDate())}T${pad(dateObj.getHours())}${pad(dateObj.getMinutes())}${pad(dateObj.getSeconds())}`;
+    };
+
+    const now = new Date();
+    const nowStamp = `${now.getUTCFullYear()}${pad(now.getUTCMonth() + 1)}${pad(now.getUTCDate())}T${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}${pad(now.getUTCSeconds())}Z`;
+
+    const guestStays = [];
+    cachedPins.forEach(p => {
+      if (p.role === 'admin') return;
+      const from = new Date(p.valid_from);
+      const until = new Date(p.valid_until);
+      if (isNaN(from.getTime()) || isNaN(until.getTime())) return;
+      guestStays.push({
+        pin: p.pin,
+        name: p.name || 'Gast',
+        booking_id: p.booking_id || `PIN-${p.pin}`,
+        from: from,
+        until: until
+      });
+    });
+
+    guestStays.sort((a, b) => a.until - b.until);
+
+    let lines = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//StayInLeipzig//Putzplan Mechlerstr 10//DE",
+      "CALSCALE:GREGORIAN",
+      "METHOD:PUBLISH",
+      "X-WR-CALNAME:Putzplan - Mechlerstr. 10 Leipzig",
+      "X-WR-TIMEZONE:Europe/Berlin",
+      "X-WR-CALDESC:Reinigungsplan fuer die Ferienwohnung Mechlerstrasse 10"
+    ];
+
+    guestStays.forEach(stay => {
+      const co = stay.until;
+      const coStr = `${pad(co.getDate())}.${pad(co.getMonth() + 1)}.${co.getFullYear()} um ${pad(co.getHours())}:${pad(co.getMinutes())} Uhr`;
+      const dtStart = toIcalDt(co);
+      let cleanEnd = new Date(co.getTime() + 3 * 3600 * 1000);
+
+      let nextStay = null;
+      guestStays.forEach(other => {
+        if (other.from >= co) {
+          if (!nextStay || other.from < nextStay.from) {
+            nextStay = other;
+          }
+        }
+      });
+
+      let summary = "🧹 Reinigung Ferienwohnung (Wohnungswechsel)";
+      let bufferInfo = "Keine direkte Folge-Buchung eingetragen (ausreichend Zeit).";
+
+      if (nextStay) {
+        const ci = nextStay.from;
+        const ciStr = `${pad(ci.getDate())}.${pad(ci.getMonth() + 1)}.${ci.getFullYear()} um ${pad(ci.getHours())}:${pad(ci.getMinutes())} Uhr`;
+        const gapHours = (ci - co) / (3600 * 1000);
+        const gapDays = Math.floor(gapHours / 24);
+
+        if (co.toDateString() === ci.toDateString()) {
+          cleanEnd = ci;
+          summary = "🚨 DRINGEND: Reinigung (Gäste-Wechsel HEUTE!)";
+          bufferInfo = `⚠️ ACHTUNG: Neuer Gast reist HEUTE um ${pad(ci.getHours())}:${pad(ci.getMinutes())} Uhr an! Bitte bis dahin fertig sein.`;
+        } else if (gapDays === 0) {
+          summary = "🧹 Reinigung Ferienwohnung";
+          bufferInfo = `Nächster Gast kommt in ${Math.round(gapHours)} Stunden (${ciStr}).`;
+        } else {
+          bufferInfo = `Wohnung ist frei bis zum ${pad(ci.getDate())}.${pad(ci.getMonth() + 1)}.${ci.getFullYear()} (${gapDays} Tage Puffer).`;
+        }
+      }
+
+      const dtEnd = toIcalDt(cleanEnd);
+      const uid = `CLEAN-${stay.booking_id || stay.pin}@stayinleipzig.de`;
+
+      const desc = `🧹 REINIGUNG & WOHNUNGSWECHSEL\n` +
+        `Abreise Gast: ${coStr}\n` +
+        `Status: ${bufferInfo}\n\n` +
+        `📍 Wo: Mechlerstraße 10, Dachgeschoss Mitte (StayInLeipzig)\n` +
+        `WLAN: gigacube-EA6A (Passwort: Leipzig2025#)\n` +
+        `📞 Kontakt Falko: 0152 53453390\n\n` +
+        `Aufgaben:\n` +
+        `- Bettwäsche abziehen & frisch beziehen\n` +
+        `- Handtücher austauschen\n` +
+        `- Bad & Dusche gründlich reinigen\n` +
+        `- Küche (Kühlschrank, Herd, Geschirr kontrollieren)\n` +
+        `- Böden saugen und feucht wischen\n` +
+        `- Müll entsorgen`;
+
+      lines.push("BEGIN:VEVENT");
+      lines.push(`UID:${uid}`);
+      lines.push(`DTSTAMP:${nowStamp}`);
+      lines.push(`DTSTART:${dtStart}`);
+      lines.push(`DTEND:${dtEnd}`);
+      lines.push(`SUMMARY:${summary}`);
+      lines.push(`DESCRIPTION:${desc}`);
+      lines.push("LOCATION:Mechlerstraße 10, Dachgeschoss Mitte, 04105 Leipzig");
+      lines.push("STATUS:CONFIRMED");
+      lines.push("END:VEVENT");
+    });
+
+    lines.push("END:VCALENDAR");
+
+    const icsContent = lines.join("\r\n");
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'putzplan_stayinleipzig.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   }
 
   function exportIcalFile() {
@@ -1047,8 +1161,8 @@
   }
 
   function copyIcalFeedUrl() {
-    const feedUrl = `${getApiEndpoint('ical')}&admin_pin=${encodeURIComponent(adminPin)}`;
-    copyTextToClipboard(feedUrl, "✅ iCal Kalender-Abo Link kopiert! In Google Kalender oder iPhone einfügen.");
+    const feedUrl = 'https://checkin.stayinleipzig.de/buchungen_stayinleipzig.ics';
+    copyTextToClipboard(feedUrl, "✅ Buchungs-Kalender Link kopiert (GitHub Pages)! Kann in Google Kalender oder Apple Kalender abonniert werden.");
   }
 
   function copyLink(link) {

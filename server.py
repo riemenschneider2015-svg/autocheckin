@@ -437,33 +437,33 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
             if p.get("role") == "admin": continue
             name = p.get("name", "Gast")
             pin = str(p.get("pin", ""))
-            booking_id = p.get("booking_id", f"PIN-{pin}")
+            booking_id = p.get("booking_id", "PIN-" + pin)
             valid_from = p.get("valid_from", "")
             valid_until = p.get("valid_until", "")
             if not valid_from or not valid_until: continue
 
             dtstart = to_ical_dt(valid_from)
             dtend = to_ical_dt(valid_until)
-            uid = f"{booking_id}@stayinleipzig.de"
+            uid = "{0}@stayinleipzig.de".format(booking_id)
 
             desc = (
-                f"Gast: {name}\\n"
-                f"PIN: {pin}\\n"
-                f"1-Klick Check-in Link: https://checkin.stayinleipzig.de/?code={pin}\\n"
-                f"Buchungs-ID: {booking_id}\\n"
-                f"Wohnung: Mechlerstraße 10, Dachgeschoss Mitte\\n"
-                f"WLAN: gigacube-EA6A (PW: Leipzig2025#)\\n"
-                f"Host Falko: 0152 53453390"
-            )
+                "Gast: {0}\n"
+                "PIN: {1}\n"
+                "1-Klick Check-in Link: https://checkin.stayinleipzig.de/?code={1}\n"
+                "Buchungs-ID: {2}\n"
+                "Wohnung: Mechlerstraße 10, Dachgeschoss Mitte\n"
+                "WLAN: gigacube-EA6A (PW: Leipzig2025#)\n"
+                "Host Falko: 0152 53453390"
+            ).format(name, pin, booking_id)
 
             lines.extend([
                 "BEGIN:VEVENT",
-                f"UID:{uid}",
-                f"DTSTAMP:{now_stamp}",
-                f"DTSTART:{dtstart}",
-                f"DTEND:{dtend}",
-                f"SUMMARY:{name} (PIN: {pin})",
-                f"DESCRIPTION:{desc}",
+                "UID:{0}".format(uid),
+                "DTSTAMP:{0}".format(now_stamp),
+                "DTSTART:{0}".format(dtstart),
+                "DTEND:{0}".format(dtend),
+                "SUMMARY:{0} (PIN: {1})".format(name, pin),
+                "DESCRIPTION:{0}".format(desc),
                 "LOCATION:Mechlerstraße 10, 04105 Leipzig, Deutschland",
                 "STATUS:CONFIRMED",
                 "END:VEVENT"
@@ -492,8 +492,8 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
             valid_until = p.get("valid_until", "")
             if not valid_from or not valid_until: continue
             try:
-                d_from = datetime.fromisoformat(valid_from)
-                d_until = datetime.fromisoformat(valid_until)
+                d_from = parse_iso(valid_from)
+                d_until = parse_iso(valid_until)
                 guest_stays.append({
                     "name": p.get("name", "Gast"),
                     "pin": str(p.get("pin", "")),
@@ -544,40 +544,41 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
                 if co.date() == ci.date():
                     clean_end = ci
                     summary = "🚨 DRINGEND: Reinigung (Gäste-Wechsel HEUTE!)"
-                    buffer_info = f"⚠️ ACHTUNG: Neuer Gast reist HEUTE um {ci.strftime('%H:%M')} Uhr an! Bitte bis dahin fertig sein."
+                    buffer_info = "⚠️ ACHTUNG: Neuer Gast reist HEUTE um {0} Uhr an! Bitte bis dahin fertig sein.".format(ci.strftime('%H:%M'))
                 elif gap_days == 0:
                     summary = "🧹 Reinigung Ferienwohnung"
-                    buffer_info = f"Nächster Gast kommt in {int(gap_hours)} Stunden ({ci_str})."
+                    buffer_info = "Nächster Gast kommt in {0} Stunden ({1}).".format(int(gap_hours), ci_str)
                 else:
-                    buffer_info = f"Wohnung ist frei bis zum {ci.strftime('%d.%m.%Y')} ({gap_days} Tage Puffer)."
+                    buffer_info = "Wohnung ist frei bis zum {0} ({1} Tage Puffer).".format(ci.strftime('%d.%m.%Y'), gap_days)
 
             dtend = to_ical_dt(clean_end)
-            uid = f"CLEAN-{stay['booking_id'] or stay['pin']}@stayinleipzig.de"
+            bid = stay['booking_id'] if stay.get('booking_id') else stay['pin']
+            uid = "CLEAN-{0}@stayinleipzig.de".format(bid)
 
             desc = (
-                f"🧹 REINIGUNG & WOHNUNGSWECHSEL\\n"
-                f"Abreise Gast: {co_str}\\n"
-                f"Status: {buffer_info}\\n\\n"
-                f"📍 Wo: Mechlerstraße 10, Dachgeschoss Mitte (StayInLeipzig)\\n"
-                f"WLAN: gigacube-EA6A (Passwort: Leipzig2025#)\\n"
-                f"📞 Kontakt Falko: 0152 53453390\\n\\n"
-                f"Aufgaben:\\n"
-                f"- Bettwäsche abziehen & frisch beziehen\\n"
-                f"- Handtücher austauschen\\n"
-                f"- Bad & Dusche gründlich reinigen\\n"
-                f"- Küche (Kühlschrank, Herd, Geschirr kontrollieren)\\n"
-                f"- Böden saugen und feucht wischen\\n"
-                f"- Müll entsorgen"
-            )
+                "🧹 REINIGUNG & WOHNUNGSWECHSEL\n"
+                "Abreise Gast: {0}\n"
+                "Status: {1}\n\n"
+                "📍 Wo: Mechlerstraße 10, Dachgeschoss Mitte (StayInLeipzig)\n"
+                "WLAN: gigacube-EA6A (Passwort: Leipzig2025#)\n"
+                "📞 Kontakt Falko: 0152 53453390\n\n"
+                "Aufgaben:\n"
+                "- Bettwäsche abziehen & frisch beziehen\n"
+                "- Handtücher austauschen\n"
+                "- Bad & Dusche gründlich reinigen\n"
+                "- Küche (Kühlschrank, Herd, Geschirr kontrollieren)\n"
+                "- Böden saugen und feucht wischen\n"
+                "- Müll entsorgen"
+            ).format(co_str, buffer_info)
 
             lines.extend([
                 "BEGIN:VEVENT",
-                f"UID:{uid}",
-                f"DTSTAMP:{now_stamp}",
-                f"DTSTART:{dtstart}",
-                f"DTEND:{dtend}",
-                f"SUMMARY:{summary}",
-                f"DESCRIPTION:{desc}",
+                "UID:{0}".format(uid),
+                "DTSTAMP:{0}".format(now_stamp),
+                "DTSTART:{0}".format(dtstart),
+                "DTEND:{0}".format(dtend),
+                "SUMMARY:{0}".format(summary),
+                "DESCRIPTION:{0}".format(desc),
                 "LOCATION:Mechlerstraße 10, Dachgeschoss Mitte, 04105 Leipzig",
                 "STATUS:CONFIRMED",
                 "END:VEVENT"
