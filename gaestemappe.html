@@ -476,10 +476,17 @@
 
     .poi-header {
       display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .poi-tag-row {
+      display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
     }
 
     .poi-type-tag {
@@ -1069,11 +1076,11 @@
         <div class="poi-card">
           <div>
             <div class="poi-header">
-              <div>
+              <div class="poi-tag-row">
                 <span class="poi-type-tag tag-transit" data-i18n="chausseeTag">Haupt-Haltestelle</span>
-                <div class="poi-title" data-i18n="chausseeTitle">Haltestelle Chausseehaus</div>
+                <span class="poi-distance" data-i18n="chausseeDist">🚶 3 Min. (290 m)</span>
               </div>
-              <span class="poi-distance" data-i18n="chausseeDist">🚶 3 Min. (290 m)</span>
+              <div class="poi-title" data-i18n="chausseeTitle">Haltestelle Chausseehaus</div>
             </div>
             <div class="poi-body">
               <div data-i18n="chausseeDesc">Wichtigster Nahverkehrsknotenpunkt direkt an der Georg-Schumann-Straße.</div>
@@ -1137,8 +1144,8 @@
               <img src="qrcodes/qr_chausseehaus.svg" alt="QR-Code Haltestelle Chausseehaus" />
             </div>
             <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;">
-              <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Haltestelle+Chausseehaus,+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnWalkNav">
-                🚶 Fußweg navigieren
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Haltestelle+Chausseehaus,+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnGmapsWalk_3min">
+                🚶 Fußweg (3 Min.) in GMaps
               </a>
               <a href="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&showheader=1" target="_blank" rel="noopener" class="poi-action-btn" style="background:rgba(255,255,255,0.05);color:var(--text-muted);border-color:var(--card-border);" data-i18n="btnLvbLive">
                 ⏱️ LVB Live-Abfahrten
@@ -1154,11 +1161,11 @@
         <div class="poi-card">
           <div>
             <div class="poi-header">
-              <div>
+              <div class="poi-tag-row">
                 <span class="poi-type-tag tag-transit" data-i18n="segerTag">Haltestelle</span>
-                <div class="poi-title" data-i18n="segerTitle">Haltestelle Fritz-Seger-Straße</div>
+                <span class="poi-distance" data-i18n="segerDist">🚶 2 Min. (200 m)</span>
               </div>
-              <span class="poi-distance" data-i18n="segerDist">🚶 2 Min. (200 m)</span>
+              <div class="poi-title" data-i18n="segerTitle">Haltestelle Fritz-Seger-Straße</div>
             </div>
             <div class="poi-body">
               <div data-i18n="segerDesc">Sehr nah gelegen auf der Georg-Schumann-Straße Richtung Innenstadt und Wahren.</div>
@@ -1175,8 +1182,8 @@
               <img src="qrcodes/qr_fritz_seger.svg" alt="QR-Code Haltestelle Fritz-Seger-Straße" />
             </div>
             <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;">
-              <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Fritz-Seger-Stra%C3%9Fe,+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnWalkNav">
-                🚶 Fußweg navigieren
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Fritz-Seger-Stra%C3%9Fe,+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnGmapsWalk_2min">
+                🚶 Fußweg (2 Min.) in GMaps
               </a>
               <a href="https://stationboard.l.de/monitor/0012971?headertext=Fritz-Seger-Str.&showheader=1" target="_blank" rel="noopener" class="poi-action-btn" style="background:rgba(255,255,255,0.05);color:var(--text-muted);border-color:var(--card-border);" data-i18n="btnLvbLive">
                 ⏱️ LVB Live-Abfahrten
@@ -1201,11 +1208,11 @@
         <div class="poi-card" style="border-color: rgba(245, 158, 11, 0.45); background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(30, 41, 59, 0.75));">
           <div>
             <div class="poi-header">
-              <div>
-                <span class="poi-type-tag tag-bakery" style="background:#f59e0b;color:#000;" data-i18n="schladitzTag">Nächster Bäcker (2 Min.)</span>
-                <div class="poi-title" data-i18n="schladitzTitle">Bäckerei & Konditorei Schladitz</div>
+              <div class="poi-tag-row">
+                <span class="poi-type-tag tag-bakery" style="background:#f59e0b;color:#000;" data-i18n="schladitzTag">Nächster Bäcker</span>
+                <span class="poi-distance" style="background:rgba(245,158,11,0.2);color:#fef08a;" data-i18n="schladitzDist">🚶 2 Min. (150 m)</span>
               </div>
-              <span class="poi-distance" style="background:rgba(245,158,11,0.2);color:#fef08a;" data-i18n="schladitzDist">🚶 2 Min. (150 m)</span>
+              <div class="poi-title" data-i18n="schladitzTitle">Bäckerei & Konditorei Schladitz</div>
             </div>
             <div class="poi-body">
               <div>📍 <strong>Ehrensteinstraße 44, 04105 Leipzig</strong> (direkt um die Ecke)</div>
@@ -1221,8 +1228,8 @@
             <div class="poi-qr-thumb">
               <img src="qrcodes/qr_baecker_schladitz.svg" alt="QR-Code Bäckerei Schladitz" />
             </div>
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=B%C3%A4ckerei+Schladitz,+Ehrensteinstra%C3%9Fe+44,+04105+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" style="background:#f59e0b;color:#0f172a;font-weight:800;" data-i18n="btnGmapsWalk">
-              🚶 Fußweg in GMaps
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=B%C3%A4ckerei+Schladitz,+Ehrensteinstra%C3%9Fe+44,+04105+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" style="background:#f59e0b;color:#0f172a;font-weight:800;" data-i18n="btnGmapsWalk_2min">
+              🚶 Fußweg (2 Min.) in GMaps
             </a>
           </div>
         </div>
@@ -1231,11 +1238,11 @@
         <div class="poi-card">
           <div>
             <div class="poi-header">
-              <div>
+              <div class="poi-tag-row">
                 <span class="poi-type-tag tag-bakery" data-i18n="kleinertTag">Traditionshandwerk</span>
-                <div class="poi-title" data-i18n="kleinertTitle">Handwerksbäckerei Jürgen Kleinert</div>
+                <span class="poi-distance" data-i18n="kleinertDist">🚶 6 Min. (500 m)</span>
               </div>
-              <span class="poi-distance" data-i18n="kleinertDist">🚶 6 Min. (500 m)</span>
+              <div class="poi-title" data-i18n="kleinertTitle">Handwerksbäckerei Jürgen Kleinert</div>
             </div>
             <div class="poi-body">
               <div>📍 <strong>Gohliser Straße 23, 04155 Leipzig</strong></div>
@@ -1251,8 +1258,8 @@
             <div class="poi-qr-thumb">
               <img src="qrcodes/qr_baecker_kleinert.svg" alt="QR-Code Bäckerei Kleinert" />
             </div>
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=B%C3%A4ckerei+Kleinert,+Gohliser+Str.+23,+04155+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnGmapsWalk">
-              🚶 Fußweg in GMaps
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=B%C3%A4ckerei+Kleinert,+Gohliser+Str.+23,+04155+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnGmapsWalk_6min">
+              🚶 Fußweg (6 Min.) in GMaps
             </a>
           </div>
         </div>
@@ -1261,11 +1268,11 @@
         <div class="poi-card">
           <div>
             <div class="poi-header">
-              <div>
+              <div class="poi-tag-row">
                 <span class="poi-type-tag tag-bakery" data-i18n="wendlTag">Bäckerei & Café</span>
-                <div class="poi-title" data-i18n="wendlTitle">Bäckerei & Café Wendl</div>
+                <span class="poi-distance" data-i18n="wendlDist">🚶 5 Min. (450 m)</span>
               </div>
-              <span class="poi-distance" data-i18n="wendlDist">🚶 5 Min. (450 m)</span>
+              <div class="poi-title" data-i18n="wendlTitle">Bäckerei & Café Wendl</div>
             </div>
             <div class="poi-body">
               <div>📍 <strong>Gohliser Straße 43 (Ecke Fritz-Seger-Str.)</strong></div>
@@ -1281,8 +1288,8 @@
             <div class="poi-qr-thumb">
               <img src="qrcodes/qr_baecker_wendl.svg" alt="QR-Code Bäckerei Wendl" />
             </div>
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=B%C3%A4ckerei+Wendl,+Gohliser+Str.+43,+04155+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnGmapsWalk">
-              🚶 Fußweg in GMaps
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=B%C3%A4ckerei+Wendl,+Gohliser+Str.+43,+04155+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnGmapsWalk_5min">
+              🚶 Fußweg (5 Min.) in GMaps
             </a>
           </div>
         </div>
@@ -1303,11 +1310,11 @@
         <div class="poi-card">
           <div>
             <div class="poi-header">
-              <div>
+              <div class="poi-tag-row">
                 <span class="poi-type-tag tag-market" data-i18n="pennyTag">Discounter</span>
-                <div class="poi-title" data-i18n="pennyTitle">PENNY Markt (Gohlis Arkaden)</div>
+                <span class="poi-distance" data-i18n="pennyDist">🚶 6 Min. (500 m)</span>
               </div>
-              <span class="poi-distance" data-i18n="pennyDist">🚶 6 Min. (500 m)</span>
+              <div class="poi-title" data-i18n="pennyTitle">PENNY Markt (Gohlis Arkaden)</div>
             </div>
             <div class="poi-body">
               <div>📍 <strong>Georg-Schumann-Straße 50, 04155 Leipzig</strong></div>
@@ -1323,8 +1330,8 @@
             <div class="poi-qr-thumb">
               <img src="qrcodes/qr_penny.svg" alt="QR-Code PENNY Markt" />
             </div>
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=PENNY,+Georg-Schumann-Stra%C3%9Fe+50,+04155+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnGmapsWalk">
-              🚶 Fußweg in GMaps
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=PENNY,+Georg-Schumann-Stra%C3%9Fe+50,+04155+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnGmapsWalk_6min">
+              🚶 Fußweg (6 Min.) in GMaps
             </a>
           </div>
         </div>
@@ -1333,11 +1340,11 @@
         <div class="poi-card">
           <div>
             <div class="poi-header">
-              <div>
+              <div class="poi-tag-row">
                 <span class="poi-type-tag tag-market" data-i18n="kauflandTag">Großer Supermarkt</span>
-                <div class="poi-title" data-i18n="kauflandTitle">KAUFLAND Gohlis</div>
+                <span class="poi-distance" data-i18n="kauflandDist">🚶 11 Min. (850 m)</span>
               </div>
-              <span class="poi-distance" data-i18n="kauflandDist">🚶 11 Min. (850 m)</span>
+              <div class="poi-title" data-i18n="kauflandTitle">KAUFLAND Gohlis</div>
             </div>
             <div class="poi-body">
               <div>📍 <strong>Georg-Schumann-Straße 105, 04155 Leipzig</strong></div>
@@ -1353,8 +1360,8 @@
             <div class="poi-qr-thumb">
               <img src="qrcodes/qr_kaufland.svg" alt="QR-Code Kaufland" />
             </div>
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Kaufland,+Georg-Schumann-Stra%C3%9Fe+105,+04155+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnGmapsWalk">
-              🚶 Fußweg in GMaps
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Kaufland,+Georg-Schumann-Stra%C3%9Fe+105,+04155+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnGmapsWalk_11min">
+              🚶 Fußweg (11 Min.) in GMaps
             </a>
           </div>
         </div>
@@ -1363,11 +1370,11 @@
         <div class="poi-card">
           <div>
             <div class="poi-header">
-              <div>
+              <div class="poi-tag-row">
                 <span class="poi-type-tag tag-market" data-i18n="lidlTag">Supermarkt</span>
-                <div class="poi-title" data-i18n="lidlTitle">LIDL Theresienstraße</div>
+                <span class="poi-distance" data-i18n="lidlDist">🚶 8 Min. (700 m)</span>
               </div>
-              <span class="poi-distance" data-i18n="lidlDist">🚶 8 Min. (700 m)</span>
+              <div class="poi-title" data-i18n="lidlTitle">LIDL Theresienstraße</div>
             </div>
             <div class="poi-body">
               <div>📍 <strong>Theresienstraße 35 (Ecke Delitzscher Str.)</strong></div>
@@ -1383,8 +1390,8 @@
             <div class="poi-qr-thumb">
               <img src="qrcodes/qr_lidl.svg" alt="QR-Code Lidl" />
             </div>
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Lidl,+Theresienstra%C3%9Fe+35,+04105+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnGmapsWalk">
-              🚶 Fußweg in GMaps
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Lidl,+Theresienstra%C3%9Fe+35,+04105+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnGmapsWalk_8min">
+              🚶 Fußweg (8 Min.) in GMaps
             </a>
           </div>
         </div>
@@ -1596,7 +1603,13 @@
         "footerBrand": "StayInLeipzig • Mechlerstraße 10, 04105 Leipzig",
         "footerContact": "Bei Fragen oder Notfällen: Gastgeber Falko • Tel: +49 152 53453390",
         "toastCopied": "WLAN-Passwort kopiert!",
-        "schladitzTag": "Nächster Bäcker (2 Min.)",
+        "schladitzTag": "Nächster Bäcker",
+        "btnGmapsWalk_2min": "🚶 Fußweg (2 Min.) in GMaps",
+        "btnGmapsWalk_3min": "🚶 Fußweg (3 Min.) in GMaps",
+        "btnGmapsWalk_5min": "🚶 Fußweg (5 Min.) in GMaps",
+        "btnGmapsWalk_6min": "🚶 Fußweg (6 Min.) in GMaps",
+        "btnGmapsWalk_8min": "🚶 Fußweg (8 Min.) in GMaps",
+        "btnGmapsWalk_11min": "🚶 Fußweg (11 Min.) in GMaps",
         "schladitzTitle": "Bäckerei & Konditorei Schladitz",
         "schladitzDist": "🚶 2 Min. (150 m)",
         "schladitzDesc": "Direkt um die Ecke! Frische knusprige Brötchen ab 06:30 Uhr morgens, traditionelles Natursauerteigbrot, feine Kuchen und Kaffeespezialitäten.",
@@ -1722,7 +1735,13 @@
         "footerBrand": "StayInLeipzig • Mechlerstraße 10, 04105 Leipzig",
         "footerContact": "Questions or emergencies: Host Falko • Tel: +49 152 53453390",
         "toastCopied": "Wi-Fi password copied!",
-        "schladitzTag": "Nearest Bakery (2 min)",
+        "schladitzTag": "Nearest Bakery",
+        "btnGmapsWalk_2min": "🚶 Walking Route (2 min) in Maps",
+        "btnGmapsWalk_3min": "🚶 Walking Route (3 min) in Maps",
+        "btnGmapsWalk_5min": "🚶 Walking Route (5 min) in Maps",
+        "btnGmapsWalk_6min": "🚶 Walking Route (6 min) in Maps",
+        "btnGmapsWalk_8min": "🚶 Walking Route (8 min) in Maps",
+        "btnGmapsWalk_11min": "🚶 Walking Route (11 min) in Maps",
         "schladitzTitle": "Schladitz Bakery & Confectionery",
         "schladitzDist": "🚶 2 min (150 m)",
         "schladitzDesc": "Right around the corner! Crispy fresh morning bread rolls from 6:30 AM, natural sourdough bread, fine cakes, and pastries.",
@@ -1848,7 +1867,13 @@
         "footerBrand": "StayInLeipzig • Mechlerstraße 10, 04105 Leipzig",
         "footerContact": "Preguntas o urgencias: Anfitrión Falko • Tel: +49 152 53453390",
         "toastCopied": "¡Contraseña Wi-Fi copiada!",
-        "schladitzTag": "Panadería más cercana (2 min)",
+        "schladitzTag": "Panadería más cercana",
+        "btnGmapsWalk_2min": "🚶 Ruta a pie (2 min) en Maps",
+        "btnGmapsWalk_3min": "🚶 Ruta a pie (3 min) en Maps",
+        "btnGmapsWalk_5min": "🚶 Ruta a pie (5 min) en Maps",
+        "btnGmapsWalk_6min": "🚶 Ruta a pie (6 min) en Maps",
+        "btnGmapsWalk_8min": "🚶 Ruta a pie (8 min) en Maps",
+        "btnGmapsWalk_11min": "🚶 Ruta a pie (11 min) en Maps",
         "schladitzTitle": "Panadería y Pastelería Schladitz",
         "schladitzDist": "🚶 2 min. (150 m)",
         "schladitzDesc": "¡A la vuelta de la esquina! Panecillos crujientes recién horneados desde las 06:30 h, pan artesanal de masa madre y deliciosas tartas.",
@@ -1974,7 +1999,13 @@
         "footerBrand": "StayInLeipzig • Mechlerstraße 10, 04105 Lipsk",
         "footerContact": "W razie pytań: Gospodarz Falko • Tel: +49 152 53453390",
         "toastCopied": "Hasło Wi-Fi skopiowane!",
-        "schladitzTag": "Najbliższa piekarnia (2 min)",
+        "schladitzTag": "Najbliższa piekarnia",
+        "btnGmapsWalk_2min": "🚶 Trasa pieszo (2 min) w Maps",
+        "btnGmapsWalk_3min": "🚶 Trasa pieszo (3 min) w Maps",
+        "btnGmapsWalk_5min": "🚶 Trasa pieszo (5 min) w Maps",
+        "btnGmapsWalk_6min": "🚶 Trasa pieszo (6 min) w Maps",
+        "btnGmapsWalk_8min": "🚶 Trasa pieszo (8 min) w Maps",
+        "btnGmapsWalk_11min": "🚶 Trasa pieszo (11 min) w Maps",
         "schladitzTitle": "Piekarnia i Cukiernia Schladitz",
         "schladitzDist": "🚶 2 min. (150 m)",
         "schladitzDesc": "Tuż za rogiem! Chrupiące świeże bułki od 06:30 rano, tradycyjny chleb na naturalnym zakwasie, wyśmienite ciasta i kawa.",
@@ -2100,7 +2131,13 @@
         "footerBrand": "StayInLeipzig • Mechlerstraße 10, 04105 Leipzig",
         "footerContact": "Питання або екстрені випадки: Господар Фалько • Тел: +49 152 53453390",
         "toastCopied": "Пароль Wi-Fi скопійовано!",
-        "schladitzTag": "Найближча пекарня (2 хв)",
+        "schladitzTag": "Найближча пекарня",
+        "btnGmapsWalk_2min": "🚶 Маршрут пішки (2 хв) у Maps",
+        "btnGmapsWalk_3min": "🚶 Маршрут пішки (3 хв) у Maps",
+        "btnGmapsWalk_5min": "🚶 Маршрут пішки (5 хв) у Maps",
+        "btnGmapsWalk_6min": "🚶 Маршрут пішки (6 хв) у Maps",
+        "btnGmapsWalk_8min": "🚶 Маршрут пішки (8 хв) у Maps",
+        "btnGmapsWalk_11min": "🚶 Маршрут пішки (11 хв) у Maps",
         "schladitzTitle": "Пекарня та Кондитерська Schladitz",
         "schladitzDist": "🚶 2 хв. (150 м)",
         "schladitzDesc": "Прямо за рогом! Свіжі хрусткі булочки з 06:30 ранку, традиційний хліб на заквасці, смачні тістечка та кава.",
@@ -2226,7 +2263,13 @@
         "footerBrand": "StayInLeipzig • Mechlerstraße 10, 04105 Leipzig",
         "footerContact": "Вопросы или экстренные ситуации: Хозяин Фалько • Тел: +49 152 53453390",
         "toastCopied": "Пароль Wi-Fi скопирован!",
-        "schladitzTag": "Ближайшая пекарня (2 мин)",
+        "schladitzTag": "Ближайшая пекарня",
+        "btnGmapsWalk_2min": "🚶 Маршрут пешком (2 мин) в Maps",
+        "btnGmapsWalk_3min": "🚶 Маршрут пешком (3 мин) в Maps",
+        "btnGmapsWalk_5min": "🚶 Маршрут пешком (5 мин) в Maps",
+        "btnGmapsWalk_6min": "🚶 Маршрут пешком (6 мин) в Maps",
+        "btnGmapsWalk_8min": "🚶 Маршрут пешком (8 мин) в Maps",
+        "btnGmapsWalk_11min": "🚶 Маршрут пешком (11 мин) в Maps",
         "schladitzTitle": "Пекарня и Кондитерская Schladitz",
         "schladitzDist": "🚶 2 мин. (150 м)",
         "schladitzDesc": "Прямо за углом! Свежие хрустящие булочки с 06:30 утра, натуральный подовый хлеб на закваске, домашние пирожные и кофе.",
