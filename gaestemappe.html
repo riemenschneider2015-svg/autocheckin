@@ -354,6 +354,88 @@
       line-height: 1.35;
     }
 
+    
+    /* Live Opening Status & Live Clock */
+    .live-clock-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .live-clock-chip strong {
+      color: #38bdf8;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px #22c55e;
+      display: inline-block;
+      animation: livePulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes livePulse {
+      0% { transform: scale(0.9); opacity: 0.7; box-shadow: 0 0 3px #22c55e; }
+      50% { transform: scale(1.25); opacity: 1; box-shadow: 0 0 10px #22c55e; }
+      100% { transform: scale(0.9); opacity: 0.7; box-shadow: 0 0 3px #22c55e; }
+    }
+
+    .poi-status-row {
+      margin: 6px 0 3px;
+    }
+
+    .poi-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      line-height: 1.25;
+      width: fit-content;
+    }
+
+    .poi-live-badge.is-open {
+      background: rgba(34, 197, 94, 0.16);
+      border: 1px solid rgba(34, 197, 94, 0.45);
+      color: #4ade80;
+    }
+
+    .poi-live-badge.is-closed {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #f87171;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .status-dot.green {
+      background: #22c55e;
+      box-shadow: 0 0 6px #22c55e;
+    }
+
+    .status-dot.red {
+      background: #ef4444;
+    }
+
     /* WiFi Hero Highlight Card */
     .wifi-card {
       background: linear-gradient(135deg, rgba(14, 116, 144, 0.25), rgba(15, 23, 42, 0.88));
@@ -1201,6 +1283,11 @@
           <h2 class="section-title" data-i18n="bakeriesTitle">🥐 Bäcker & Frühstück</h2>
           <p class="section-subtitle" data-i18n="bakeriesSubtitle">Frische Brötchen, Kaffee, traditionelle Leipziger Lerchen & Handwerksbrote</p>
         </div>
+        <div class="live-clock-chip">
+          <span class="pulse-dot"></span>
+          <span class="live-clock-label" data-i18n="liveTimeLabel">Leipzig:</span>
+          <strong class="live-clock-val" id="liveTimeBake">--:--</strong>
+        </div>
       </div>
 
       <div class="cards-grid">
@@ -1219,7 +1306,8 @@
               <p data-i18n="schladitzDesc">
                 Direkt um die Ecke! Frische knusprige Brötchen ab 06:30 Uhr morgens, traditionelles Natursauerteigbrot, feine Kuchen und Kaffeespezialitäten.
               </p>
-              <div style="font-size:12px;color:var(--accent-green);font-weight:600;" data-i18n="schladitzHours">
+              <div class="poi-status-row" id="liveStatus-schladitz"></div>
+              <div style="font-size:12px;color:var(--text-muted);font-weight:600;" data-i18n="schladitzHours">
                 🕒 Mo–Fr 06:30–18:00 | Sa 07:00–12:00 | So 08:00–11:00 Uhr
               </div>
             </div>
@@ -1249,7 +1337,11 @@
               <p data-i18n="kleinertDesc">
                 Echte Traditionsbäckerei mit Meisterhandwerk! Berühmt für ihre original handgemachten Leipziger Lerchen, knusprige Sauerteigbrote und feine Kuchen.
               </p>
-              <div style="font-size:12px;color:var(--accent-orange);" data-i18n="kleinertTip">
+              <div class="poi-status-row" id="liveStatus-kleinert"></div>
+              <div style="font-size:12px;color:var(--text-muted);font-weight:600;" data-i18n="kleinertHours">
+                🕒 Mo–Fr 06:30–18:00 | Sa 06:30–11:30 Uhr | So geschlossen
+              </div>
+              <div style="font-size:12px;color:var(--accent-orange);margin-top:2px;" data-i18n="kleinertTip">
                 ⭐ Empfehlung: Probieren Sie hier unbedingt eine echte Leipziger Lerche!
               </div>
             </div>
@@ -1279,8 +1371,9 @@
               <p data-i18n="wendlDesc">
                 Moderne Bäckereifiliale mit Café-Sitzplätzen. Ideal für schnelle frische Sonntagsbrötchen, belegte Baguettes, Kaffeespezialitäten und Snacks.
               </p>
-              <div style="font-size:12px;color:var(--text-muted);" data-i18n="wendlSunday">
-                🕒 Auch sonntags morgens für frische Brötchen geöffnet!
+              <div class="poi-status-row" id="liveStatus-wendl"></div>
+              <div style="font-size:12px;color:var(--text-muted);font-weight:600;" data-i18n="wendlHours">
+                🕒 Mo–Fr 06:30–18:00 | Sa 06:30–13:00 | So 07:00–12:00 Uhr
               </div>
             </div>
           </div>
@@ -1303,6 +1396,11 @@
           <h2 class="section-title" data-i18n="marketsTitle">🛒 Supermärkte</h2>
           <p class="section-subtitle" data-i18n="marketsSubtitle">Alles für den täglichen Bedarf in entspannter Gehweite</p>
         </div>
+        <div class="live-clock-chip">
+          <span class="pulse-dot"></span>
+          <span class="live-clock-label" data-i18n="liveTimeLabel">Leipzig:</span>
+          <strong class="live-clock-val" id="liveTimeMarket">--:--</strong>
+        </div>
       </div>
 
       <div class="cards-grid">
@@ -1321,8 +1419,9 @@
               <p data-i18n="pennyDesc">
                 Der nächste Discounter für den täglichen Einkauf direkt in den Gohlis Arkaden. Frisches Obst, Getränke, Snacks und Haushaltsartikel zu fairen Preisen.
               </p>
-              <div style="font-size:12px;color:var(--accent-green);font-weight:600;" data-i18n="pennyHours">
-                🕒 Mo – Sa: 07:00 – 21:00 Uhr
+              <div class="poi-status-row" id="liveStatus-penny"></div>
+              <div style="font-size:12px;color:var(--text-muted);font-weight:600;" data-i18n="pennyHours">
+                🕒 Mo – Sa: 07:00 – 21:00 Uhr (So geschlossen)
               </div>
             </div>
           </div>
@@ -1351,8 +1450,9 @@
               <p data-i18n="kauflandDesc">
                 Riesiger Vollsortimenter mit allem, was das Herz begehrt: Große Frische- und Käsetheke, Bäckerei, riesige Getränkeauswahl, Drogerieartikel und internationale Spezialitäten.
               </p>
-              <div style="font-size:12px;color:var(--accent-green);font-weight:600;" data-i18n="kauflandHours">
-                🕒 Mo – Sa: 07:00 – 22:00 Uhr
+              <div class="poi-status-row" id="liveStatus-kaufland"></div>
+              <div style="font-size:12px;color:var(--text-muted);font-weight:600;" data-i18n="kauflandHours">
+                🕒 Mo – Sa: 07:00 – 22:00 Uhr (So geschlossen)
               </div>
             </div>
           </div>
@@ -1381,8 +1481,9 @@
               <p data-i18n="lidlDesc">
                 Moderner Lidl-Markt mit eigener Backstation, frischem Bio-Sortiment, Obst & Gemüse. Schneller Fußweg Richtung Osten.
               </p>
-              <div style="font-size:12px;color:var(--accent-green);font-weight:600;" data-i18n="lidlHours">
-                🕒 Mo – Sa: 07:00 – 21:00 Uhr
+              <div class="poi-status-row" id="liveStatus-lidl"></div>
+              <div style="font-size:12px;color:var(--text-muted);font-weight:600;" data-i18n="lidlHours">
+                🕒 Mo – Sa: 07:00 – 21:00 Uhr (So geschlossen)
               </div>
             </div>
           </div>
@@ -2355,6 +2456,176 @@
     let currentLang = 'de';
 
     // Set Language Function
+    
+    // ==========================================
+    // Live Opening Hours & Real-Time Status Engine
+    // ==========================================
+    const statusI18n = {
+      de: {
+        openNow: "Jetzt geöffnet",
+        closesAt: "schließt um {time} Uhr",
+        closedNow: "Aktuell geschlossen",
+        opensToday: "öffnet heute um {time} Uhr",
+        opensTomorrow: "öffnet morgen um {time} Uhr",
+        opensDay: "öffnet {day} um {time} Uhr",
+        days: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
+      },
+      en: {
+        openNow: "Open now",
+        closesAt: "closes at {time}",
+        closedNow: "Currently closed",
+        opensToday: "opens today at {time}",
+        opensTomorrow: "opens tomorrow at {time}",
+        opensDay: "opens {day} at {time}",
+        days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+      },
+      es: {
+        openNow: "Abierto ahora",
+        closesAt: "cierra a las {time}",
+        closedNow: "Cerrado ahora",
+        opensToday: "abre hoy a las {time}",
+        opensTomorrow: "abre mañana a las {time}",
+        opensDay: "abre el {day} a las {time}",
+        days: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"]
+      },
+      pl: {
+        openNow: "Teraz otwarte",
+        closesAt: "zamyka o {time}",
+        closedNow: "Teraz zamknięte",
+        opensToday: "otwiera dzisiaj o {time}",
+        opensTomorrow: "otwiera jutro o {time}",
+        opensDay: "otwiera w {day} o {time}",
+        days: ["ndz", "pon", "wt", "śr", "czw", "pt", "sob"]
+      },
+      uk: {
+        openNow: "Зараз відчинено",
+        closesAt: "зачиняється о {time}",
+        closedNow: "Зараз зачинено",
+        opensToday: "відчиняється сьогодні о {time}",
+        opensTomorrow: "відчиняється завтра о {time}",
+        opensDay: "відчиняється у {day} о {time}",
+        days: ["нд", "пн", "вт", "ср", "чт", "пт", "сб"]
+      },
+      ru: {
+        openNow: "Сейчас открыто",
+        closesAt: "закрывается в {time}",
+        closedNow: "Сейчас закрыто",
+        opensToday: "открывается сегодня в {time}",
+        opensTomorrow: "открывается завтра в {time}",
+        opensDay: "открывается в {day} в {time}",
+        days: ["вс", "пн", "вт", "ср", "чт", "пт", "сб"]
+      }
+    };
+
+    const poiSchedules = {
+      schladitz: { 1: [[390, 1080]], 2: [[390, 1080]], 3: [[390, 1080]], 4: [[390, 1080]], 5: [[390, 1080]], 6: [[420, 720]], 0: [[480, 660]] },
+      kleinert:  { 1: [[390, 1080]], 2: [[390, 1080]], 3: [[390, 1080]], 4: [[390, 1080]], 5: [[390, 1080]], 6: [[390, 690]], 0: [] },
+      wendl:     { 1: [[390, 1080]], 2: [[390, 1080]], 3: [[390, 1080]], 4: [[390, 1080]], 5: [[390, 1080]], 6: [[390, 780]], 0: [[420, 720]] },
+      penny:     { 1: [[420, 1260]], 2: [[420, 1260]], 3: [[420, 1260]], 4: [[420, 1260]], 5: [[420, 1260]], 6: [[420, 1260]], 0: [] },
+      kaufland:  { 1: [[420, 1320]], 2: [[420, 1320]], 3: [[420, 1320]], 4: [[420, 1320]], 5: [[420, 1320]], 6: [[420, 1320]], 0: [] },
+      lidl:      { 1: [[420, 1260]], 2: [[420, 1260]], 3: [[420, 1260]], 4: [[420, 1260]], 5: [[420, 1260]], 6: [[420, 1260]], 0: [] }
+    };
+
+    function formatTime(min) {
+      const h = Math.floor(min / 60);
+      const m = min % 60;
+      return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+    }
+
+    function getLeipzigDate() {
+      const now = new Date();
+      const str = now.toLocaleString("en-US", { timeZone: "Europe/Berlin" });
+      return new Date(str);
+    }
+
+    function getLiveStatus(poiId, lang) {
+      const sched = poiSchedules[poiId];
+      if (!sched) return null;
+      const t = statusI18n[lang] || statusI18n.de;
+
+      const nowLeipzig = getLeipzigDate();
+      const day = nowLeipzig.getDay();
+      const curMin = nowLeipzig.getHours() * 60 + nowLeipzig.getMinutes();
+
+      const todaySlots = sched[day] || [];
+
+      // 1. Is open right now?
+      for (let i = 0; i < todaySlots.length; i++) {
+        const [start, end] = todaySlots[i];
+        if (curMin >= start && curMin < end) {
+          return {
+            isOpen: true,
+            text: `${t.openNow} • ${t.closesAt.replace('{time}', formatTime(end))}`
+          };
+        }
+      }
+
+      // 2. Closed - check if opens later today
+      for (let i = 0; i < todaySlots.length; i++) {
+        const [start, end] = todaySlots[i];
+        if (curMin < start) {
+          return {
+            isOpen: false,
+            text: `${t.closedNow} • ${t.opensToday.replace('{time}', formatTime(start))}`
+          };
+        }
+      }
+
+      // 3. Closed - find next day
+      for (let offset = 1; offset <= 7; offset++) {
+        const nextDay = (day + offset) % 7;
+        const nextSlots = sched[nextDay] || [];
+        if (nextSlots.length > 0) {
+          const [firstStart] = nextSlots[0];
+          const timeStr = formatTime(firstStart);
+          let sub;
+          if (offset === 1) {
+            sub = t.opensTomorrow.replace('{time}', timeStr);
+          } else {
+            const dayName = t.days[nextDay];
+            sub = t.opensDay.replace('{day}', dayName).replace('{time}', timeStr);
+          }
+          return {
+            isOpen: false,
+            text: `${t.closedNow} • ${sub}`
+          };
+        }
+      }
+
+      return { isOpen: false, text: t.closedNow };
+    }
+
+    function updateAllLiveStatuses() {
+      const nowLeipzig = getLeipzigDate();
+      const h = String(nowLeipzig.getHours()).padStart(2, '0');
+      const m = String(nowLeipzig.getMinutes()).padStart(2, '0');
+      const timeStr = `${h}:${m} Uhr`;
+
+      const bakeEl = document.getElementById('liveTimeBake');
+      if (bakeEl) bakeEl.textContent = timeStr;
+      const mktEl = document.getElementById('liveTimeMarket');
+      if (mktEl) mktEl.textContent = timeStr;
+
+      const poiIds = ['schladitz', 'kleinert', 'wendl', 'penny', 'kaufland', 'lidl'];
+      poiIds.forEach(id => {
+        const el = document.getElementById(`liveStatus-${id}`);
+        if (el) {
+          const st = getLiveStatus(id, currentLang);
+          if (st) {
+            const dotCol = st.isOpen ? 'green' : 'red';
+            const badgeClass = st.isOpen ? 'is-open' : 'is-closed';
+            el.innerHTML = `
+              <div class="poi-live-badge ${badgeClass}">
+                <span class="status-dot ${dotCol}"></span>
+                <span>${st.text}</span>
+              </div>
+            `;
+          }
+        }
+      });
+    }
+
+
     function setLang(lang) {
       if (!translations[lang]) lang = 'de';
       currentLang = lang;
@@ -2388,6 +2659,8 @@
 
       // Rebind Map Popups
       updateMapPopups(lang);
+      // Update Live Opening Statuses with current language
+      updateAllLiveStatuses();
     }
 
     // Toggle Live Monitor Iframe
@@ -2580,9 +2853,24 @@
       markers.forEach(item => {
         const info = langPoi[item.id] || poiTranslations.de[item.id];
         if (info) {
+          const live = getLiveStatus(item.id, lang);
+          let liveHtml = '';
+          if (live) {
+            const bgCol = live.isOpen ? 'rgba(34,197,94,0.18)' : 'rgba(239,68,68,0.14)';
+            const borderCol = live.isOpen ? 'rgba(34,197,94,0.45)' : 'rgba(239,68,68,0.35)';
+            const textCol = live.isOpen ? '#15803d' : '#b91c1c';
+            const dotCol = live.isOpen ? '#22c55e' : '#ef4444';
+            liveHtml = `
+              <div style="display:inline-flex;align-items:center;gap:5px;background:${bgCol};border:1px solid ${borderCol};color:${textCol};padding:3px 7px;border-radius:6px;font-size:11px;font-weight:700;margin-bottom:6px;">
+                <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${dotCol};"></span>
+                <span>${live.text}</span>
+              </div>
+            `;
+          }
           const popupContent = `
             <div style="font-family:'Inter',sans-serif;padding:4px;color:#0f172a;">
               <div style="font-weight:700;font-size:13.5px;margin-bottom:2px;">${info.name}</div>
+              ${liveHtml}
               <div style="font-size:12px;color:#475569;margin-bottom:8px;line-height:1.35;">${info.desc}</div>
               <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-block;background:#0284c7;color:white;font-size:11.5px;font-weight:700;padding:6px 10px;border-radius:6px;text-decoration:none;">
                 ${info.btn}
@@ -2590,7 +2878,6 @@
             </div>
           `;
           item.marker.unbindPopup().bindPopup(popupContent);
-          // Do NOT auto-open popup on load so all highlights remain unobstructed and clearly visible!
         }
       });
     }
@@ -2634,6 +2921,9 @@
 
       setLang(detectedLang);
       initMap();
+      updateAllLiveStatuses();
+      // Auto-refresh opening statuses & live clock every 30 seconds
+      setInterval(updateAllLiveStatuses, 30000);
     });
   </script>
 </body>
