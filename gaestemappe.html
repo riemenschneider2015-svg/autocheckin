@@ -534,11 +534,17 @@
     /* Grid Layout for Cards */
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
     }
 
-    /* POI Card */
+    @media (min-width: 860px) {
+      .cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* POI Card - Laser-Aligned Row Layout */
     .poi-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -546,10 +552,104 @@
       padding: 16px 14px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
       transition: all 0.2s ease;
       position: relative;
+    }
+
+    .poi-tag-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 26px;
+    }
+
+    .poi-title {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      min-height: 24px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .poi-address {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      min-height: 20px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .poi-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      min-height: 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .poi-desc p {
+      margin: 0;
+    }
+
+    .poi-status-row {
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      margin: 0;
+    }
+
+    .poi-hours {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      line-height: 1.35;
+    }
+
+    .poi-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      margin-top: auto;
+    }
+
+    @supports (grid-template-rows: subgrid) {
+      @media (min-width: 860px) {
+        .cards-grid {
+          grid-template-rows: auto auto auto 1fr auto auto auto;
+        }
+        .poi-card {
+          display: grid !important;
+          grid-template-rows: subgrid;
+          grid-row: span 7;
+          gap: 8px;
+        }
+        .poi-tag-row { grid-row: 1; }
+        .poi-title { grid-row: 2; }
+        .poi-address { grid-row: 3; }
+        .poi-desc { grid-row: 4; }
+        .poi-status-row { grid-row: 5; }
+        .poi-hours { grid-row: 6; }
+        .poi-bottom { grid-row: 7; }
+      }
     }
     .poi-card:hover {
       background: var(--card-hover);
@@ -1280,8 +1380,8 @@
     <section id="bakeries">
       <div class="section-header">
         <div>
-          <h2 class="section-title" data-i18n="bakeriesTitle">🥐 Bäcker & Frühstück</h2>
-          <p class="section-subtitle" data-i18n="bakeriesSubtitle">Frische Brötchen, Kaffee, traditionelle Leipziger Lerchen & Handwerksbrote</p>
+          <h2 class="section-title" data-i18n="bakeriesTitle">🥐 Bäcker &amp; Frühstück</h2>
+          <p class="section-subtitle" data-i18n="bakeriesSubtitle">Frische Brötchen, Kaffee, traditionelle Leipziger Lerchen &amp; Handwerksbrote</p>
         </div>
         <div class="live-clock-chip">
           <span class="pulse-dot"></span>
@@ -1291,26 +1391,22 @@
       </div>
 
       <div class="cards-grid">
-        <!-- 1. Bäckerei & Konditorei Schladitz (NÄCHSTER BÄCKER! Nur 150m) -->
+        <!-- 1. Bäckerei & Konditorei Schladitz -->
         <div class="poi-card" style="border-color: rgba(245, 158, 11, 0.45); background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(30, 41, 59, 0.75));">
-          <div>
-            <div class="poi-header">
-              <div class="poi-tag-row">
-                <span class="poi-type-tag tag-bakery" style="background:#f59e0b;color:#000;" data-i18n="schladitzTag">Nächster Bäcker</span>
-                <span class="poi-distance" style="background:rgba(245,158,11,0.2);color:#fef08a;" data-i18n="schladitzDist">🚶 2 Min. (150 m)</span>
-              </div>
-              <div class="poi-title" data-i18n="schladitzTitle">Bäckerei & Konditorei Schladitz</div>
-            </div>
-            <div class="poi-body">
-              <div>📍 <strong>Ehrensteinstraße 44, 04105 Leipzig</strong> (direkt um die Ecke)</div>
-              <p data-i18n="schladitzDesc">
-                Direkt um die Ecke! Frische knusprige Brötchen ab 06:30 Uhr morgens, traditionelles Natursauerteigbrot, feine Kuchen und Kaffeespezialitäten.
-              </p>
-              <div class="poi-status-row" id="liveStatus-schladitz"></div>
-              <div style="font-size:12px;color:var(--text-muted);font-weight:600;" data-i18n="schladitzHours">
-                🕒 Mo–Fr 06:30–18:00 | Sa 07:00–12:00 | So 08:00–11:00 Uhr
-              </div>
-            </div>
+          <div class="poi-tag-row">
+            <span class="poi-type-tag tag-bakery" style="background:#f59e0b;color:#000;" data-i18n="schladitzTag">Nächster Bäcker</span>
+            <span class="poi-distance" style="background:rgba(245,158,11,0.2);color:#fef08a;" data-i18n="schladitzDist">🚶 2 Min. (150 m)</span>
+          </div>
+          <div class="poi-title" data-i18n="schladitzTitle">Bäckerei &amp; Konditorei Schladitz</div>
+          <div class="poi-address">📍 <strong>Ehrensteinstraße 44, 04105 Leipzig</strong></div>
+          <div class="poi-desc">
+            <p data-i18n="schladitzDesc">
+              Direkt um die Ecke! Frische knusprige Brötchen ab 06:30 Uhr morgens, traditionelles Natursauerteigbrot, feine Kuchen und Kaffeespezialitäten.
+            </p>
+          </div>
+          <div class="poi-status-row" id="liveStatus-schladitz"></div>
+          <div class="poi-hours" data-i18n="schladitzHours">
+            🕒 Mo–Fr 06:30–18:00 | Sa 07:00–12:00 | So 08:00–11:00 Uhr
           </div>
           <div class="poi-bottom">
             <div class="poi-qr-thumb">
@@ -1324,27 +1420,20 @@
 
         <!-- 2. Bäckerei Jürgen Kleinert -->
         <div class="poi-card">
-          <div>
-            <div class="poi-header">
-              <div class="poi-tag-row">
-                <span class="poi-type-tag tag-bakery" data-i18n="kleinertTag">Traditionshandwerk</span>
-                <span class="poi-distance" data-i18n="kleinertDist">🚶 6 Min. (500 m)</span>
-              </div>
-              <div class="poi-title" data-i18n="kleinertTitle">Handwerksbäckerei Jürgen Kleinert</div>
-            </div>
-            <div class="poi-body">
-              <div>📍 <strong>Gohliser Straße 23, 04155 Leipzig</strong></div>
-              <p data-i18n="kleinertDesc">
-                Echte Traditionsbäckerei mit Meisterhandwerk! Berühmt für ihre original handgemachten Leipziger Lerchen, knusprige Sauerteigbrote und feine Kuchen.
-              </p>
-              <div class="poi-status-row" id="liveStatus-kleinert"></div>
-              <div style="font-size:12px;color:var(--text-muted);font-weight:600;" data-i18n="kleinertHours">
-                🕒 Mo–Fr 06:30–18:00 | Sa 06:30–11:30 Uhr | So geschlossen
-              </div>
-              <div style="font-size:12px;color:var(--accent-orange);margin-top:2px;" data-i18n="kleinertTip">
-                ⭐ Empfehlung: Probieren Sie hier unbedingt eine echte Leipziger Lerche!
-              </div>
-            </div>
+          <div class="poi-tag-row">
+            <span class="poi-type-tag tag-bakery" data-i18n="kleinertTag">Traditionshandwerk</span>
+            <span class="poi-distance" data-i18n="kleinertDist">🚶 6 Min. (500 m)</span>
+          </div>
+          <div class="poi-title" data-i18n="kleinertTitle">Handwerksbäckerei Jürgen Kleinert</div>
+          <div class="poi-address">📍 <strong>Gohliser Straße 23, 04155 Leipzig</strong></div>
+          <div class="poi-desc">
+            <p data-i18n="kleinertDesc">
+              Echte Traditionsbäckerei mit Meisterhandwerk! Berühmt für original handgemachte Leipziger Lerchen ⭐, feine Kuchen und knusprige Sauerteigbrote.
+            </p>
+          </div>
+          <div class="poi-status-row" id="liveStatus-kleinert"></div>
+          <div class="poi-hours" data-i18n="kleinertHours">
+            🕒 Mo–Fr 06:30–18:00 | Sa 06:30–11:30 Uhr | So geschlossen
           </div>
           <div class="poi-bottom">
             <div class="poi-qr-thumb">
@@ -1358,24 +1447,20 @@
 
         <!-- 3. Bäckerei Wendl -->
         <div class="poi-card">
-          <div>
-            <div class="poi-header">
-              <div class="poi-tag-row">
-                <span class="poi-type-tag tag-bakery" data-i18n="wendlTag">Bäckerei & Café</span>
-                <span class="poi-distance" data-i18n="wendlDist">🚶 5 Min. (450 m)</span>
-              </div>
-              <div class="poi-title" data-i18n="wendlTitle">Bäckerei & Café Wendl</div>
-            </div>
-            <div class="poi-body">
-              <div>📍 <strong>Gohliser Straße 43 (Ecke Fritz-Seger-Str.)</strong></div>
-              <p data-i18n="wendlDesc">
-                Moderne Bäckereifiliale mit Café-Sitzplätzen. Ideal für schnelle frische Sonntagsbrötchen, belegte Baguettes, Kaffeespezialitäten und Snacks.
-              </p>
-              <div class="poi-status-row" id="liveStatus-wendl"></div>
-              <div style="font-size:12px;color:var(--text-muted);font-weight:600;" data-i18n="wendlHours">
-                🕒 Mo–Fr 06:30–18:00 | Sa 06:30–13:00 | So 07:00–12:00 Uhr
-              </div>
-            </div>
+          <div class="poi-tag-row">
+            <span class="poi-type-tag tag-bakery" data-i18n="wendlTag">Bäckerei &amp; Café</span>
+            <span class="poi-distance" data-i18n="wendlDist">🚶 5 Min. (450 m)</span>
+          </div>
+          <div class="poi-title" data-i18n="wendlTitle">Bäckerei &amp; Café Wendl</div>
+          <div class="poi-address">📍 <strong>Gohliser Straße 43, 04155 Leipzig</strong></div>
+          <div class="poi-desc">
+            <p data-i18n="wendlDesc">
+              Moderne Bäckereifiliale mit Café-Sitzplätzen. Ideal für schnelle frische Sonntagsbrötchen, belegte Baguettes, Kaffeespezialitäten und Snacks.
+            </p>
+          </div>
+          <div class="poi-status-row" id="liveStatus-wendl"></div>
+          <div class="poi-hours" data-i18n="wendlHours">
+            🕒 Mo–Fr 06:30–18:00 | Sa 06:30–13:00 | So 07:00–12:00 Uhr
           </div>
           <div class="poi-bottom">
             <div class="poi-qr-thumb">
@@ -1406,24 +1491,20 @@
       <div class="cards-grid">
         <!-- PENNY Markt -->
         <div class="poi-card">
-          <div>
-            <div class="poi-header">
-              <div class="poi-tag-row">
-                <span class="poi-type-tag tag-market" data-i18n="pennyTag">Discounter</span>
-                <span class="poi-distance" data-i18n="pennyDist">🚶 6 Min. (500 m)</span>
-              </div>
-              <div class="poi-title" data-i18n="pennyTitle">PENNY Markt (Gohlis Arkaden)</div>
-            </div>
-            <div class="poi-body">
-              <div>📍 <strong>Georg-Schumann-Straße 50, 04155 Leipzig</strong></div>
-              <p data-i18n="pennyDesc">
-                Der nächste Discounter für den täglichen Einkauf direkt in den Gohlis Arkaden. Frisches Obst, Getränke, Snacks und Haushaltsartikel zu fairen Preisen.
-              </p>
-              <div class="poi-status-row" id="liveStatus-penny"></div>
-              <div style="font-size:12px;color:var(--text-muted);font-weight:600;" data-i18n="pennyHours">
-                🕒 Mo – Sa: 07:00 – 21:00 Uhr (So geschlossen)
-              </div>
-            </div>
+          <div class="poi-tag-row">
+            <span class="poi-type-tag tag-market" data-i18n="pennyTag">Discounter</span>
+            <span class="poi-distance" data-i18n="pennyDist">🚶 6 Min. (500 m)</span>
+          </div>
+          <div class="poi-title" data-i18n="pennyTitle">PENNY Markt (Gohlis Arkaden)</div>
+          <div class="poi-address">📍 <strong>Georg-Schumann-Straße 50, 04155 Leipzig</strong></div>
+          <div class="poi-desc">
+            <p data-i18n="pennyDesc">
+              Der nächste Discounter für den täglichen Einkauf direkt in den Gohlis Arkaden. Frisches Obst, Getränke, Snacks und Haushaltsartikel zu fairen Preisen.
+            </p>
+          </div>
+          <div class="poi-status-row" id="liveStatus-penny"></div>
+          <div class="poi-hours" data-i18n="pennyHours">
+            🕒 Mo–Sa 07:00–21:00 Uhr | So geschlossen
           </div>
           <div class="poi-bottom">
             <div class="poi-qr-thumb">
@@ -1437,24 +1518,20 @@
 
         <!-- KAUFLAND -->
         <div class="poi-card">
-          <div>
-            <div class="poi-header">
-              <div class="poi-tag-row">
-                <span class="poi-type-tag tag-market" data-i18n="kauflandTag">Großer Supermarkt</span>
-                <span class="poi-distance" data-i18n="kauflandDist">🚶 11 Min. (850 m)</span>
-              </div>
-              <div class="poi-title" data-i18n="kauflandTitle">KAUFLAND Gohlis</div>
-            </div>
-            <div class="poi-body">
-              <div>📍 <strong>Georg-Schumann-Straße 105, 04155 Leipzig</strong></div>
-              <p data-i18n="kauflandDesc">
-                Riesiger Vollsortimenter mit allem, was das Herz begehrt: Große Frische- und Käsetheke, Bäckerei, riesige Getränkeauswahl, Drogerieartikel und internationale Spezialitäten.
-              </p>
-              <div class="poi-status-row" id="liveStatus-kaufland"></div>
-              <div style="font-size:12px;color:var(--text-muted);font-weight:600;" data-i18n="kauflandHours">
-                🕒 Mo – Sa: 07:00 – 22:00 Uhr (So geschlossen)
-              </div>
-            </div>
+          <div class="poi-tag-row">
+            <span class="poi-type-tag tag-market" data-i18n="kauflandTag">Großer Supermarkt</span>
+            <span class="poi-distance" data-i18n="kauflandDist">🚶 11 Min. (850 m)</span>
+          </div>
+          <div class="poi-title" data-i18n="kauflandTitle">KAUFLAND Gohlis</div>
+          <div class="poi-address">📍 <strong>Georg-Schumann-Straße 105, 04155 Leipzig</strong></div>
+          <div class="poi-desc">
+            <p data-i18n="kauflandDesc">
+              Riesiger Vollsortimenter mit allem, was das Herz begehrt: Große Frische- und Käsetheke, Bäckerei, riesige Getränkeauswahl, Drogerieartikel und Spezialitäten.
+            </p>
+          </div>
+          <div class="poi-status-row" id="liveStatus-kaufland"></div>
+          <div class="poi-hours" data-i18n="kauflandHours">
+            🕒 Mo–Sa 07:00–22:00 Uhr | So geschlossen
           </div>
           <div class="poi-bottom">
             <div class="poi-qr-thumb">
@@ -1468,24 +1545,20 @@
 
         <!-- LIDL -->
         <div class="poi-card">
-          <div>
-            <div class="poi-header">
-              <div class="poi-tag-row">
-                <span class="poi-type-tag tag-market" data-i18n="lidlTag">Supermarkt</span>
-                <span class="poi-distance" data-i18n="lidlDist">🚶 8 Min. (700 m)</span>
-              </div>
-              <div class="poi-title" data-i18n="lidlTitle">LIDL Theresienstraße</div>
-            </div>
-            <div class="poi-body">
-              <div>📍 <strong>Theresienstraße 35 (Ecke Delitzscher Str.)</strong></div>
-              <p data-i18n="lidlDesc">
-                Moderner Lidl-Markt mit eigener Backstation, frischem Bio-Sortiment, Obst & Gemüse. Schneller Fußweg Richtung Osten.
-              </p>
-              <div class="poi-status-row" id="liveStatus-lidl"></div>
-              <div style="font-size:12px;color:var(--text-muted);font-weight:600;" data-i18n="lidlHours">
-                🕒 Mo – Sa: 07:00 – 21:00 Uhr (So geschlossen)
-              </div>
-            </div>
+          <div class="poi-tag-row">
+            <span class="poi-type-tag tag-market" data-i18n="lidlTag">Supermarkt</span>
+            <span class="poi-distance" data-i18n="lidlDist">🚶 8 Min. (700 m)</span>
+          </div>
+          <div class="poi-title" data-i18n="lidlTitle">LIDL Theresienstraße</div>
+          <div class="poi-address">📍 <strong>Theresienstraße 35, 04105 Leipzig</strong></div>
+          <div class="poi-desc">
+            <p data-i18n="lidlDesc">
+              Moderner Lidl-Markt mit eigener Backstation, frischem Bio-Sortiment, Obst &amp; Gemüse. Schneller Fußweg Richtung Osten.
+            </p>
+          </div>
+          <div class="poi-status-row" id="liveStatus-lidl"></div>
+          <div class="poi-hours" data-i18n="lidlHours">
+            🕒 Mo–Sa 07:00–21:00 Uhr | So geschlossen
           </div>
           <div class="poi-bottom">
             <div class="poi-qr-thumb">
@@ -1689,7 +1762,7 @@
         "filterMarket": "🛒 Supermärkte",
         "legendStart": "🔴 Start: Ferienwohnung Mechlerstr. 10",
         "legendTransit": "🔵 Blau: Haltestellen (Chausseehaus & Fritz-Seger-Str.)",
-        "legendBakery": "🟠 Orange: Bäckereien (Kleinert & Wendl)",
+        "legendBakery": "🟠 Orange: Bäckereien (Schladitz, Kleinert, Wendl)",
         "legendMarket": "🟢 Grün: Supermärkte (Penny, Kaufland, Lidl)",
         "rulesTitle": "📋 Wichtige Hinweise für Ihren Aufenthalt",
         "rulesSubtitle": "Für ein angenehmes Miteinander im Haus",
@@ -1821,7 +1894,7 @@
         "filterMarket": "🛒 Supermarkets",
         "legendStart": "🔴 Start: Apartment Mechlerstr. 10",
         "legendTransit": "🔵 Blue: Tram Stops (Chausseehaus & Fritz-Seger-Str.)",
-        "legendBakery": "🟠 Orange: Bakeries (Kleinert & Wendl)",
+        "legendBakery": "🟠 Orange: Bakeries (Schladitz, Kleinert, Wendl)",
         "legendMarket": "🟢 Green: Supermarkets (Penny, Kaufland, Lidl)",
         "rulesTitle": "📋 Important Information & House Rules",
         "rulesSubtitle": "For a pleasant stay for everyone in the building",
@@ -1953,7 +2026,7 @@
         "filterMarket": "🛒 Supermercados",
         "legendStart": "🔴 Inicio: Apartamento Mechlerstr. 10",
         "legendTransit": "🔵 Azul: Paradas (Chausseehaus y Fritz-Seger-Str.)",
-        "legendBakery": "🟠 Naranja: Panaderías (Kleinert y Wendl)",
+        "legendBakery": "🟠 Naranja: Panaderías (Schladitz, Kleinert y Wendl)",
         "legendMarket": "🟢 Verde: Supermercados (Penny, Kaufland, Lidl)",
         "rulesTitle": "📋 Información importante y normas",
         "rulesSubtitle": "Para una convivencia tranquila y agradable en el edificio",
