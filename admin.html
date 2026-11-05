@@ -392,6 +392,7 @@
       <div class="card-title">
         <span>📋 Alle PIN-Codes & Check-in-Status</span>
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <a href="gaestemappe.html" target="_blank" class="btn btn-sm" title="Digitale Gästemappe mit WLAN, Bahnen (10/11/16), Bäckern & Karte" style="background:#8b5cf6; color:#fff; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">📖 Gästemappe</a>
           <button class="btn btn-sm" onclick="exportIcalFile()" title="Alle Buchungen als .ics Kalenderdatei herunterladen" style="background:#0284c7; color:#fff;">📅 iCal (.ics)</button>
           <button class="btn btn-sm" onclick="copyIcalFeedUrl()" title="Live Kalender-Abo Link für Google Kalender / Apple Kalender / Outlook kopieren" style="background:#334155; color:#fff;">🔗 Kalender-Abo</button>
           <select id="sortSelect" onchange="onSortSelectChange(this.value)" class="sort-select" title="Sortierung auswählen">
@@ -1244,6 +1245,12 @@
     document.body.removeChild(textArea);
   }
 
+  
+  function copyGuestMapUrl() {
+    const mapUrl = 'https://checkin.stayinleipzig.de/gaestemappe.html';
+    copyTextToClipboard(mapUrl, "📖 Link zur Gästemappe kopiert! Kann direkt an Gäste gesendet werden.");
+  }
+
   function copyCleaningIcalUrl() {
     const feedUrl = 'https://checkin.stayinleipzig.de/putzplan_stayinleipzig.ics';
     copyTextToClipboard(feedUrl, "✅ Putzplan-Abo Link kopiert (GitHub Pages)! Kann direkt per WhatsApp geteilt oder im Kalender abonniert werden.");
@@ -1378,6 +1385,12 @@ Keine Schlüsselübergabe, kein Stress bei Verspätungen! Sie öffnen die Türen
 (In der Wohnung steht auch ein praktischer QR-Code Aufsteller – einfach mit der Handykamera scannen!)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📖 DIGITALE GÄSTEMAPPE & UMGEBUNGS-GUIDE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WLAN-QR-Code, Bäckereien (frische Brötchen & Leipziger Lerchen), Supermärkte (Penny, Kaufland) und die besten Bahnverbindungen (Linien 10, 11, 16 direkt zur Messe & zum Hbf):
+👉 https://checkin.stayinleipzig.de/gaestemappe.html
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🌿 WICHTIGE HINWEISE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 * 🚭 Reine Frischeluft: Unsere Wohnung ist eine reine Nichtraucherwohnung.
@@ -1437,6 +1450,12 @@ Stay connected, stream, or plan your day in Leipzig:
 * Network (SSID): gigacube-EA6A
 * Password: Leipzig2025#
 (There is also a handy QR-code stand on the table – simply scan it with your phone's camera to connect in one second!)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📖 DIGITAL GUEST GUIDE & AREA MAP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Wi-Fi QR scan code, nearby bakeries, grocery stores (Penny, Kaufland), and direct tram lines (10, 11, 16 directly to Leipzig Fair/Messe & Central Station):
+👉 https://checkin.stayinleipzig.de/gaestemappe.html
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🌿 A FEW LOVING NOTES

@@ -40,6 +40,12 @@ https://checkin.stayinleipzig.de/?code=[PIN]
 - **WLAN-Name (SSID):** `gigacube-EA6A` (bzw. `gigacube_5G-EA6A`)
 - **Passwort:** `Leipzig2025#`
 *(In der Wohnung liegt zusätzlich ein QR-Code aus – einfach mit der Handykamera scannen, um sich sofort zu verbinden!)*
+---
+
+### 📖 Digitale Gästemappe & Umgebungs-Guide
+WLAN-QR-Code, Bäckereien (frische Brötchen & Leipziger Lerchen), Supermärkte (Penny, Kaufland) und die besten Bahnverbindungen (Linien 10, 11, 16 direkt zur Messe & zum Hbf):  
+👉 [Digitale Gästemappe öffnen](https://checkin.stayinleipzig.de/gaestemappe.html)
+
 
 ---
 

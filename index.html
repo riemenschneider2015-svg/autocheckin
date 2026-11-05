@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>AutoCheckin – Mechlerstr. 10 Leipzig | StayInLeipzig</title>
@@ -475,6 +476,54 @@
       line-height: 1.35;
     }
 
+    
+    /* Guest Guide & Area Card Link */
+    .guide-link-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.14), rgba(168, 85, 247, 0.14));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 12px;
+      padding: 7px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      margin-top: 2px;
+    }
+    .guide-link-card:active {
+      transform: scale(0.98);
+      background: rgba(56, 189, 248, 0.25);
+    }
+    .guide-link-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .guide-icon {
+      font-size: 18px;
+    }
+    .guide-text-wrap {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    .guide-link-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .guide-link-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .guide-arrow {
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
     /* Falko Emergency Footer */
     .footer-area {
       flex-shrink: 0;
@@ -714,6 +763,18 @@
           <p data-i18n="directionsDesc">Dachgeschoss hochlaufen, dann die Tür in der Mitte mit dem grauen Willkommen-Schild.</p>
         </div>
       </div>
+      <!-- Digital Guest Guide & Map Link -->
+      <a href="gaestemappe.html" class="guide-link-card">
+        <div class="guide-link-left">
+          <span class="guide-icon">📖</span>
+          <div class="guide-text-wrap">
+            <span class="guide-link-title" data-i18n="guideTitle">Gästemappe & Umgebung</span>
+            <span class="guide-link-sub" data-i18n="guideSub">WLAN-Code • 🚊 Bahnen (10/11/16) • Bäcker & Märkte</span>
+          </div>
+        </div>
+        <span class="guide-arrow">➔</span>
+      </a>
+
           <!-- Gateway Error & Retry / Call Falko Modal -->
       <div id="errorModal" class="error-modal">
         <div class="error-modal-card">
@@ -776,7 +837,9 @@
         gatewayErrorTitle: "Verbindung zum Schloss nicht möglich",
         gatewayErrorDesc: "Das Tür-Gateway antwortet gerade nicht. Bitte noch einmal probieren oder Host Falko direkt anrufen.",
         retryBtn: "Noch einmal probieren",
-        callHostBtn: "Host Falko anrufen (0152 53453390)"
+        callHostBtn: "Host Falko anrufen (0152 53453390)",
+        guideTitle: "Gästemappe & Umgebung",
+        guideSub: "WLAN-Code • 🚊 Bahnen (10/11/16) • Bäcker & Märkte"
       },
       en: {
         title: "AutoCheckin Mechlerstr. 10",
@@ -804,7 +867,9 @@
         gatewayErrorTitle: "Cannot reach door gateway",
         gatewayErrorDesc: "The door gateway is currently not responding. Please retry or call host Falko directly.",
         retryBtn: "Try again",
-        callHostBtn: "Call host Falko (+49 152 53453390)"
+        callHostBtn: "Call host Falko (+49 152 53453390)",
+        guideTitle: "Guest Guide & Area Map",
+        guideSub: "Wi-Fi Code • 🚊 Trams (10/11/16) • Bakeries & Shops"
       },
       es: {
         title: "AutoCheckin Mechlerstr. 10",
@@ -832,7 +897,9 @@
         gatewayErrorTitle: "No se puede conectar con la puerta",
         gatewayErrorDesc: "La puerta no responde en este momento. Por favor, inténtalo de nuevo o llama al anfitrión Falko.",
         retryBtn: "Intentar de nuevo",
-        callHostBtn: "Llamar al anfitrión Falko (+49 152 53453390)"
+        callHostBtn: "Llamar al anfitrión Falko (+49 152 53453390)",
+        guideTitle: "Guía del huésped y mapa",
+        guideSub: "Código Wi-Fi • 🚊 Tranvías (10/11/16) • Panaderías y tiendas"
       },
       pl: {
         title: "AutoCheckin Mechlerstr. 10",

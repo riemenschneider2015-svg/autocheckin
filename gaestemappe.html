@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Gästemappe & Umgebungs-Guide – Mechlerstr. 10 Leipzig | StayInLeipzig</title>
+  <meta name="theme-color" content="#0f172a">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet CSS for Interactive Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --card-hover: rgba(51, 65, 85, 0.6);
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --accent-green: #22c55e;
+      --accent-orange: #f59e0b;
+      --accent-purple: #a855f7;
+      --accent-red: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --radius: 16px;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 15% 10%, rgba(56, 189, 248, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(168, 85, 247, 0.12) 0%, transparent 40%);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 60px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Sticky Navigation */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(11, 17, 32, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 12px 16px;
+    }
+
+    .nav-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-logo-badge {
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      color: white;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .nav-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: white;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0369a1, #1d4ed8);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(51, 65, 85, 0.7);
+      color: var(--text);
+      border-color: var(--card-border);
+    }
+    .btn-secondary:hover {
+      background: rgba(71, 85, 105, 0.9);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Hero Banner */
+    .hero-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 8px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 700px;
+      margin-bottom: 16px;
+    }
+
+    .hero-quick-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .meta-chip {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Jump Bar */
+    .jump-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .jump-bar::-webkit-scrollbar {
+      display: none;
+    }
+    .jump-link {
+      white-space: nowrap;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .jump-link:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 10px;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* WiFi Hero Highlight Card */
+    .wifi-card {
+      background: linear-gradient(135deg, rgba(14, 116, 144, 0.25), rgba(15, 23, 42, 0.85));
+      border: 2px solid rgba(56, 189, 248, 0.4);
+      border-radius: 20px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      box-shadow: 0 10px 30px -5px rgba(2, 132, 199, 0.2);
+    }
+
+    .wifi-info {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .wifi-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #0284c7;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+      width: fit-content;
+    }
+
+    .wifi-cred-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cred-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .cred-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+    .cred-value {
+      font-family: monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .qr-box-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qr-box {
+      background: #ffffff;
+      padding: 10px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 140px;
+      height: 140px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .qr-box img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .qr-caption {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Grid Layout for Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    /* POI Card */
+    .poi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .poi-card:hover {
+      background: var(--card-hover);
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .poi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .poi-type-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      width: fit-content;
+      margin-bottom: 4px;
+    }
+    .tag-transit { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .tag-bakery { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .tag-market { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+
+    .poi-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .poi-distance {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.6);
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .poi-body {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .poi-lines-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .line-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .line-16 { background: #e11d48; color: white; }
+    .line-10 { background: #0284c7; color: white; }
+    .line-11 { background: #f59e0b; color: black; }
+
+    .poi-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .poi-qr-thumb {
+      background: white;
+      padding: 6px;
+      border-radius: 8px;
+      width: 72px;
+      height: 72px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .poi-qr-thumb img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .poi-action-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .poi-action-btn:hover {
+      background: var(--primary);
+      color: #0f172a;
+    }
+
+    /* Interactive Map Card */
+    .map-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .map-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .map-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-btn {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    #interactive-map {
+      width: 100%;
+      height: 420px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+
+    /* Custom Leaflet Dark/Vibrant Markers */
+    .custom-marker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      border: 2px solid white;
+    }
+    .marker-home {
+      background: #ef4444;
+      animation: pulse 2s infinite;
+    }
+    .marker-transit { background: #0284c7; }
+    .marker-bakery { background: #f59e0b; }
+    .marker-market { background: #22c55e; }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    /* Transit Route Highlights Box */
+    .transit-highlight-box {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(225, 29, 72, 0.3);
+      border-radius: 16px;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .transit-col {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .transit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 8px;
+      width: fit-content;
+    }
+
+    /* Rules / FAQ Box */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .rule-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+    }
+    .rule-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #22c55e;
+      color: #0f172a;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      z-index: 2000;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .wifi-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .wifi-info {
+        align-items: center;
+      }
+      .cred-row {
+        flex-direction: column;
+        gap: 2px;
+      }
+      .transit-highlight-box {
+        grid-template-columns: 1fr;
+      }
+      .hero-title {
+        font-size: 22px;
+      }
+      #interactive-map {
+        height: 320px;
+      }
+    }
+
+    /* PRINT STYLESHEET (Druckversion für Mappe in der Wohnung) */
+    @media print {
+      body {
+        background: white !important;
+        color: #1e293b !important;
+        padding-bottom: 0 !important;
+      }
+      .top-nav, .jump-bar, .btn, .map-controls, #interactive-map, #toast {
+        display: none !important;
+      }
+      .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        gap: 16px !important;
+      }
+      .hero-card, .wifi-card, .poi-card, .transit-highlight-box, .rule-item {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+      }
+      .hero-title {
+        background: none !important;
+        -webkit-text-fill-color: #0f172a !important;
+        color: #0f172a !important;
+      }
+      .cred-value, .poi-title, .section-title {
+        color: #0f172a !important;
+      }
+      .qr-box, .poi-qr-thumb {
+        border: 1px solid #94a3b8 !important;
+        box-shadow: none !important;
+      }
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-logo-badge">STAY IN LEIPZIG</span>
+        <div>
+          <div class="nav-title">Gästemappe & Guide</div>
+          <div class="nav-subtitle">Mechlerstr. 10, Leipzig</div>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <button onclick="window.print()" class="btn btn-secondary" title="Drucken oder als PDF speichern">
+          🖨️ <span class="hide-sm">Drucken / PDF</span>
+        </button>
+        <a href="index.html" class="btn btn-primary">
+          🔑 <span class="hide-sm">Check-in Türöffnung</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Hero Card -->
+    <header class="hero-card">
+      <div class="hero-badge">✨ HERZLICH WILLKOMMEN</div>
+      <h1 class="hero-title">Ihre Gästemappe & Umgebung</h1>
+      <p class="hero-desc">
+        Hier finden Sie alle wichtigen Informationen für Ihren Aufenthalt: Schnelles WLAN zum Scannen, 
+        die besten Bäckereien, Supermärkte und die Straßenbahn-Verbindungen (Linien 10, 11 & 16 zur Messe und zum Hauptbahnhof).
+      </p>
+      <div class="hero-quick-meta">
+        <div class="meta-chip">📍 <strong>Mechlerstr. 10, 04105 Leipzig</strong> (Dachgeschoss Mitte)</div>
+        <div class="meta-chip">📞 Gastgeber Falko: <a href="tel:015253453390" style="color:var(--primary);text-decoration:none;font-weight:700;">0152 53453390</a></div>
+        <div class="meta-chip">🕒 Check-out bis 11:00 Uhr</div>
+      </div>
+    </header>
+
+    <!-- Quick Jump Bar -->
+    <div class="jump-bar">
+      <a href="#wifi" class="jump-link">📶 Highspeed WLAN</a>
+      <a href="#transit" class="jump-link">🚊 Straßenbahn (10, 11, 16)</a>
+      <a href="#bakeries" class="jump-link">🥐 Bäcker & Frühstück</a>
+      <a href="#markets" class="jump-link">🛒 Supermärkte (Penny/Kaufland)</a>
+      <a href="#map" class="jump-link">🗺️ Interaktive Karte</a>
+      <a href="#rules" class="jump-link">📋 Wichtige Hinweise</a>
+    </div>
+
+    <!-- 1. WLAN / Wi-Fi Card -->
+    <section id="wifi">
+      <div class="wifi-card">
+        <div class="wifi-info">
+          <div class="wifi-badge">📶 KOSTENLOSES HIGHSPEED WLAN</div>
+          <h2 style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:700;">Sofort mit dem Internet verbinden</h2>
+          <p style="font-size:13px;color:var(--text-muted);max-width:480px;">
+            Richten Sie einfach die Handykamera auf den QR-Code, tippen Sie auf <em>„Mit Netzwerk verbinden“</em> und Sie sind sofort online!
+          </p>
+
+          <div class="wifi-cred-box">
+            <div class="cred-row">
+              <span class="cred-label">WLAN Name (SSID)</span>
+              <span class="cred-value">gigacube-EA6A</span>
+            </div>
+            <div class="cred-row">
+              <span class="cred-label">WLAN Passwort</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="cred-value" id="wifi-pass">Leipzig2025#</span>
+                <button onclick="copyToClipboard('Leipzig2025#', 'WLAN-Passwort kopiert!')" class="btn btn-secondary" style="padding:4px 8px;font-size:11px;">
+                  📋 Kopieren
+                </button>
+              </div>
+            </div>
+            <div class="cred-row" style="border-top:1px dashed var(--card-border);padding-top:6px;margin-top:2px;">
+              <span class="cred-label" style="font-size:11px;">Alternativ 5G</span>
+              <span style="font-family:monospace;font-size:12px;color:var(--text-muted);">gigacube_5G-EA6A (PW: EJ7FYBMQTLHEAJ66)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="qr-box-wrapper">
+          <div class="qr-box">
+            <img src="qrcodes/qr_wifi.svg" alt="WLAN QR-Code zum Scannen" />
+          </div>
+          <span class="qr-caption">📷 Mit Kamera scannen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ÖPNV, Straßenbahn & Haltestellen (10, 11, 16) -->
+    <section id="transit">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🚊 Straßenbahn & ÖPNV</h2>
+          <p class="section-subtitle">Direkte Verbindungen zu Hauptbahnhof, Messe Leipzig & Innenstadt</p>
+        </div>
+      </div>
+
+      <!-- Messe & Hauptbahnhof Highlights -->
+      <div class="transit-highlight-box" style="margin-bottom:16px;">
+        <!-- Zur Messe Leipzig -->
+        <div class="transit-col">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <span class="transit-badge" style="background:#e11d48;">
+              <span style="background:white;color:#e11d48;padding:1px 6px;border-radius:4px;font-weight:900;">16</span>
+              Zur Leipziger Messe
+            </span>
+            <span class="poi-distance">⏱️ ca. 14 Min.</span>
+          </div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-top:4px;">
+            Direktverbindung ohne Umsteigen!
+          </div>
+          <p style="font-size:12px;color:var(--text-muted);">
+            Ab Haltestelle <strong>Chausseehaus</strong> mit Linie 16 (Richtung <em>Messegelände</em>) direkt vor die Messehallen fahren. Takt: alle 10 Minuten.
+          </p>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:8px;">
+            <div class="poi-qr-thumb">
+              <img src="qrcodes/qr_tram16_messe.svg" alt="QR-Code Messe Leipzig Route" />
+            </div>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Haltestelle+Chausseehaus,+Leipzig&destination=Leipziger+Messe&travelmode=transit" target="_blank" rel="noopener" class="poi-action-btn">
+              🗺️ Route zur Messe
+            </a>
+          </div>
+        </div>
+
+        <!-- Zum Hauptbahnhof -->
+        <div class="transit-col">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div style="display:flex;gap:4px;">
+              <span class="line-badge line-10">10</span>
+              <span class="line-badge line-11">11</span>
+              <span class="line-badge line-16">16</span>
+            </div>
+            <span class="poi-distance">⏱️ nur 4–5 Min.</span>
+          </div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-top:4px;">
+            Zum Leipzig Hauptbahnhof & City
+          </div>
+          <p style="font-size:12px;color:var(--text-muted);">
+            Ab Haltestelle <strong>Chausseehaus</strong> fahren die Linien 10, 11 und 16 im Minutentakt direkt zum Hauptbahnhof und weiter in die Innenstadt (Augustusplatz / Markt).
+          </p>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:8px;">
+            <div class="poi-qr-thumb">
+              <img src="qrcodes/qr_tram_hbf.svg" alt="QR-Code Hauptbahnhof Route" />
+            </div>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Haltestelle+Chausseehaus,+Leipzig&destination=Leipzig+Hauptbahnhof&travelmode=transit" target="_blank" rel="noopener" class="poi-action-btn">
+              🗺️ Route zum Hbf
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Haltestellen Cards -->
+      <div class="cards-grid">
+        <!-- Haltestelle Chausseehaus -->
+        <div class="poi-card">
+          <div>
+            <div class="poi-header">
+              <div>
+                <span class="poi-type-tag tag-transit">Haupt-Haltestelle</span>
+                <div class="poi-title">Haltestelle Chausseehaus</div>
+              </div>
+              <span class="poi-distance">🚶 3 Min. (290 m)</span>
+            </div>
+            <div class="poi-body">
+              <div>Wichtigster Nahverkehrsknotenpunkt direkt an der Georg-Schumann-Straße.</div>
+              <div class="poi-lines-list">
+                <span class="line-badge line-16">Linie 16</span> <span>Messe &larr;&rarr; Hauptbahnhof &larr;&rarr; Lößnig</span>
+              </div>
+              <div class="poi-lines-list">
+                <span class="line-badge line-10">Linie 10</span> <span>Wahren &larr;&rarr; Hbf &larr;&rarr; Connewitz</span>
+              </div>
+              <div class="poi-lines-list">
+                <span class="line-badge line-11">Linie 11</span> <span>Schkeuditz &larr;&rarr; Hbf &larr;&rarr; Markkleeberg</span>
+              </div>
+            </div>
+          </div>
+          <div class="poi-bottom">
+            <div class="poi-qr-thumb">
+              <img src="qrcodes/qr_chausseehaus.svg" alt="QR-Code Haltestelle Chausseehaus" />
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex:1;">
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Haltestelle+Chausseehaus,+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn">
+                🚶 Fußweg navigieren
+              </a>
+              <a href="https://www.l.de/verkehrsbetriebe/fahrplan/haltestellen/chausseehaus/" target="_blank" rel="noopener" class="poi-action-btn" style="background:rgba(255,255,255,0.05);color:var(--text-muted);border-color:var(--card-border);">
+                ⏱️ LVB Live-Abfahrten
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Haltestelle Fritz-Seger-Straße -->
+        <div class="poi-card">
+          <div>
+            <div class="poi-header">
+              <div>
+                <span class="poi-type-tag tag-transit">Haltestelle</span>
+                <div class="poi-title">Haltestelle Fritz-Seger-Straße</div>
+              </div>
+              <span class="poi-distance">🚶 2 Min. (200 m)</span>
+            </div>
+            <div class="poi-body">
+              <div>Sehr nah gelegen auf der Georg-Schumann-Straße Richtung Innenstadt und Wahren.</div>
+              <div class="poi-lines-list">
+                <span class="line-badge line-10">Linie 10</span> <span>Direkt zum Hauptbahnhof</span>
+              </div>
+              <div class="poi-lines-list">
+                <span class="line-badge line-11">Linie 11</span> <span>Direkt zum Hauptbahnhof & Augustusplatz</span>
+              </div>
+            </div>
+          </div>
+          <div class="poi-bottom">
+            <div class="poi-qr-thumb">
+              <img src="qrcodes/qr_fritz_seger.svg" alt="QR-Code Haltestelle Fritz-Seger-Straße" />
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex:1;">
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Fritz-Seger-Stra%C3%9Fe,+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn">
+                🚶 Fußweg navigieren
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Bäcker in der Nähe -->
+    <section id="bakeries">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🥐 Bäcker & Frühstück</h2>
+          <p class="section-subtitle">Frische Brötchen, Kaffee, traditionelle Leipziger Lerchen & Handwerksbrote</p>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <!-- Bäckerei Jürgen Kleinert -->
+        <div class="poi-card">
+          <div>
+            <div class="poi-header">
+              <div>
+                <span class="poi-type-tag tag-bakery">Traditionshandwerk</span>
+                <div class="poi-title">Handwerksbäckerei Jürgen Kleinert</div>
+              </div>
+              <span class="poi-distance">🚶 6 Min. (500 m)</span>
+            </div>
+            <div class="poi-body">
+              <div>📍 <strong>Gohliser Straße 23, 04155 Leipzig</strong></div>
+              <p>
+                Echte Traditionsbäckerei mit Meisterhandwerk! Berühmt für ihre original handgemachten <strong>Leipziger Lerchen</strong>, knusprige Sauerteigbrote und feine Kuchen.
+              </p>
+              <div style="font-size:12px;color:var(--accent-orange);">
+                ⭐ Empfehlung: Probieren Sie hier unbedingt eine echte Leipziger Lerche!
+              </div>
+            </div>
+          </div>
+          <div class="poi-bottom">
+            <div class="poi-qr-thumb">
+              <img src="qrcodes/qr_baecker_kleinert.svg" alt="QR-Code Bäckerei Kleinert" />
+            </div>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=B%C3%A4ckerei+Kleinert,+Gohliser+Str.+23,+04155+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn">
+              🚶 Fußweg in GMaps
+            </a>
+          </div>
+        </div>
+
+        <!-- Bäckerei Wendl -->
+        <div class="poi-card">
+          <div>
+            <div class="poi-header">
+              <div>
+                <span class="poi-type-tag tag-bakery">Bäckerei & Café</span>
+                <div class="poi-title">Bäckerei & Café Wendl</div>
+              </div>
+              <span class="poi-distance">🚶 5 Min. (450 m)</span>
+            </div>
+            <div class="poi-body">
+              <div>📍 <strong>Gohliser Straße 43 (Ecke Fritz-Seger-Str.)</strong></div>
+              <p>
+                Moderne Bäckereifiliale mit Café-Sitzplätzen. Ideal für schnelle frische Sonntagsbrötchen, belegte Baguettes, Kaffeespezialitäten und Snacks.
+              </p>
+              <div style="font-size:12px;color:var(--text-muted);">
+                🕒 Auch sonntags morgens für frische Brötchen geöffnet!
+              </div>
+            </div>
+          </div>
+          <div class="poi-bottom">
+            <div class="poi-qr-thumb">
+              <img src="qrcodes/qr_baecker_wendl.svg" alt="QR-Code Bäckerei Wendl" />
+            </div>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=B%C3%A4ckerei+Wendl,+Gohliser+Str.+43,+04155+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn">
+              🚶 Fußweg in GMaps
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Einkaufsmärkte (Penny, Kaufland, Lidl) -->
+    <section id="markets">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🛒 Einkaufsmärkte & Supermärkte</h2>
+          <p class="section-subtitle">Alles für den täglichen Bedarf in entspannter Gehweite</p>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <!-- PENNY Markt -->
+        <div class="poi-card">
+          <div>
+            <div class="poi-header">
+              <div>
+                <span class="poi-type-tag tag-market">Discounter</span>
+                <div class="poi-title">PENNY Markt (Gohlis Arkaden)</div>
+              </div>
+              <span class="poi-distance">🚶 6 Min. (500 m)</span>
+            </div>
+            <div class="poi-body">
+              <div>📍 <strong>Georg-Schumann-Straße 50, 04155 Leipzig</strong></div>
+              <p>
+                Der nächste Discounter für den täglichen Einkauf direkt in den Gohlis Arkaden. Frisches Obst, Getränke, Snacks und Haushaltsartikel zu fairen Preisen.
+              </p>
+              <div style="font-size:12px;color:var(--accent-green);font-weight:600;">
+                🕒 Mo – Sa: 07:00 – 21:00 Uhr
+              </div>
+            </div>
+          </div>
+          <div class="poi-bottom">
+            <div class="poi-qr-thumb">
+              <img src="qrcodes/qr_penny.svg" alt="QR-Code PENNY Markt" />
+            </div>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=PENNY,+Georg-Schumann-Stra%C3%9Fe+50,+04155+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn">
+              🚶 Fußweg in GMaps
+            </a>
+          </div>
+        </div>
+
+        <!-- KAUFLAND -->
+        <div class="poi-card">
+          <div>
+            <div class="poi-header">
+              <div>
+                <span class="poi-type-tag tag-market">Großer Supermarkt</span>
+                <div class="poi-title">KAUFLAND Gohlis</div>
+              </div>
+              <span class="poi-distance">🚶 11 Min. (850 m)</span>
+            </div>
+            <div class="poi-body">
+              <div>📍 <strong>Georg-Schumann-Straße 105, 04155 Leipzig</strong></div>
+              <p>
+                Riesiger Vollsortimenter mit allem, was das Herz begehrt: Große Frische- und Käsetheke, Bäckerei, riesige Getränkeauswahl, Drogerieartikel und internationale Spezialitäten.
+              </p>
+              <div style="font-size:12px;color:var(--accent-green);font-weight:600;">
+                🕒 Mo – Sa: 07:00 – 22:00 Uhr
+              </div>
+            </div>
+          </div>
+          <div class="poi-bottom">
+            <div class="poi-qr-thumb">
+              <img src="qrcodes/qr_kaufland.svg" alt="QR-Code Kaufland" />
+            </div>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Kaufland,+Georg-Schumann-Stra%C3%9Fe+105,+04155+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn">
+              🚶 Fußweg in GMaps
+            </a>
+          </div>
+        </div>
+
+        <!-- LIDL -->
+        <div class="poi-card">
+          <div>
+            <div class="poi-header">
+              <div>
+                <span class="poi-type-tag tag-market">Supermarkt</span>
+                <div class="poi-title">LIDL Theresienstraße</div>
+              </div>
+              <span class="poi-distance">🚶 8 Min. (700 m)</span>
+            </div>
+            <div class="poi-body">
+              <div>📍 <strong>Theresienstraße 35 (Ecke Delitzscher Str.)</strong></div>
+              <p>
+                Moderner Lidl-Markt mit eigener Backstation, frischem Bio-Sortiment, Obst & Gemüse. Schneller Fußweg Richtung Osten.
+              </p>
+              <div style="font-size:12px;color:var(--accent-green);font-weight:600;">
+                🕒 Mo – Sa: 07:00 – 21:00 Uhr
+              </div>
+            </div>
+          </div>
+          <div class="poi-bottom">
+            <div class="poi-qr-thumb">
+              <img src="qrcodes/qr_lidl.svg" alt="QR-Code Lidl" />
+            </div>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Lidl,+Theresienstra%C3%9Fe+35,+04105+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn">
+              🚶 Fußweg in GMaps
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Interaktive Umgebungskarte -->
+    <section id="map">
+      <div class="map-card">
+        <div class="map-controls">
+          <div>
+            <h2 class="section-title" style="margin:0;">🗺️ Umgebungskarte</h2>
+            <p class="section-subtitle">Alle Orte auf einen Blick mit Fußweg und Haltestellen</p>
+          </div>
+          <div class="map-filters">
+            <button class="filter-btn active" onclick="filterMap('all')">Alle Orte</button>
+            <button class="filter-btn" onclick="filterMap('transit')">🚊 ÖPNV (10/11/16)</button>
+            <button class="filter-btn" onclick="filterMap('bakery')">🥐 Bäcker</button>
+            <button class="filter-btn" onclick="filterMap('market')">🛒 Supermärkte</button>
+          </div>
+        </div>
+
+        <div id="interactive-map"></div>
+
+        <div style="font-size:12px;color:var(--text-muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding-top:4px;">
+          <span>🔴 <strong>Start:</strong> Ferienwohnung Mechlerstr. 10</span>
+          <span>🔵 <strong>Blau:</strong> Haltestellen (Chausseehaus & Fritz-Seger-Str.)</span>
+          <span>🟠 <strong>Orange:</strong> Bäckereien (Kleinert & Wendl)</span>
+          <span>🟢 <strong>Grün:</strong> Märkte (Penny, Kaufland, Lidl)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Wichtige Hinweise & Hausregeln -->
+    <section id="rules">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">📋 Wichtige Hinweise für Ihren Aufenthalt</h2>
+          <p class="section-subtitle">Für ein angenehmes Miteinander im Haus</p>
+        </div>
+      </div>
+
+      <div class="rules-grid">
+        <div class="rule-item">
+          <span class="rule-icon">🚭</span>
+          <div>
+            <strong>Nichtraucherwohnung</strong>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">Das Rauchen ist in der gesamten Wohnung und im Treppenhaus streng untersagt.</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <span class="rule-icon">🤫</span>
+          <div>
+            <strong>Nachtruhe ab 22:00 Uhr</strong>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">Bitte nehmen Sie Rücksicht auf die Nachbarn im Haus (22:00 bis 07:00 Uhr).</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <span class="rule-icon">🕒</span>
+          <div>
+            <strong>Check-in & Check-out</strong>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">Check-in ab 15:00 Uhr schlüssellos per Handy. Check-out bis spätestens 11:00 Uhr.</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <span class="rule-icon">🗑️</span>
+          <div>
+            <strong>Müllentsorgung</strong>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">Mülltonnen (Restmüll, Gelbe Tonne, Papier) befinden sich im Innenhof des Gebäudes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="text-align:center;padding:24px 0;border-top:1px solid var(--card-border);margin-top:20px;font-size:13px;color:var(--text-muted);">
+      <div>StayInLeipzig &bull; Mechlerstraße 10, 04105 Leipzig</div>
+      <div style="margin-top:4px;">Bei Fragen oder Notfällen: Gastgeber Falko &bull; Tel: <a href="tel:015253453390" style="color:var(--primary);text-decoration:none;">0152 53453390</a></div>
+    </footer>
+
+  </div>
+
+  <!-- Toast Notification Popup -->
+  <div id="toast">✅ Text kopiert!</div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <script>
+    // Copy Helper with Toast
+    function copyToClipboard(text, msg) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(msg));
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast(msg);
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = '✅ ' + msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // Leaflet Interactive Map Setup
+    let map;
+    let markers = [];
+
+    const poiData = [
+      {
+        id: 'apartment',
+        type: 'home',
+        name: 'Ferienwohnung StayInLeipzig',
+        desc: 'Mechlerstraße 10, 04105 Leipzig (Dachgeschoss)',
+        lat: 51.35881,
+        lon: 12.37711,
+        icon: '🏠',
+        color: '#ef4444',
+        link: 'https://maps.google.com/?q=Mechlerstra%C3%9Fe+10,+04105+Leipzig'
+      },
+      {
+        id: 'chausseehaus',
+        type: 'transit',
+        name: 'Haltestelle Chausseehaus',
+        desc: 'Linien 10, 11 & 16 &bull; Direkt zur Messe & Hbf (290 m, 3 Min.)',
+        lat: 51.35616,
+        lon: 12.37684,
+        icon: '🚊',
+        color: '#0284c7',
+        link: 'https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Haltestelle+Chausseehaus,+Leipzig&travelmode=walking'
+      },
+      {
+        id: 'fritz_seger',
+        type: 'transit',
+        name: 'Haltestelle Fritz-Seger-Straße',
+        desc: 'Linien 10 & 11 zum Hauptbahnhof (200 m, 2 Min.)',
+        lat: 51.35851,
+        lon: 12.37107,
+        icon: '🚊',
+        color: '#0284c7',
+        link: 'https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Fritz-Seger-Stra%C3%9Fe,+Leipzig&travelmode=walking'
+      },
+      {
+        id: 'penny',
+        type: 'market',
+        name: 'PENNY Markt (Gohlis Arkaden)',
+        desc: 'Georg-Schumann-Str. 50 &bull; Mo-Sa 07:00-21:00 Uhr (500 m, 6 Min.)',
+        lat: 51.36159,
+        lon: 12.37025,
+        icon: '🛒',
+        color: '#22c55e',
+        link: 'https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=PENNY,+Georg-Schumann-Stra%C3%9Fe+50,+04155+Leipzig&travelmode=walking'
+      },
+      {
+        id: 'kaufland',
+        type: 'market',
+        name: 'KAUFLAND Gohlis',
+        desc: 'Georg-Schumann-Str. 105 &bull; Großer Markt, Mo-Sa 07:00-22:00 Uhr (850 m)',
+        lat: 51.36256,
+        lon: 12.36241,
+        icon: '🛒',
+        color: '#22c55e',
+        link: 'https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Kaufland,+Georg-Schumann-Stra%C3%9Fe+105,+04155+Leipzig&travelmode=walking'
+      },
+      {
+        id: 'lidl',
+        type: 'market',
+        name: 'LIDL Theresienstraße',
+        desc: 'Theresienstr. 35 &bull; Mo-Sa 07:00-21:00 Uhr (700 m, 8 Min.)',
+        lat: 51.36084,
+        lon: 12.38674,
+        icon: '🛒',
+        color: '#22c55e',
+        link: 'https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Lidl,+Theresienstra%C3%9Fe+35,+04105+Leipzig&travelmode=walking'
+      },
+      {
+        id: 'kleinert',
+        type: 'bakery',
+        name: 'Handwerksbäckerei Jürgen Kleinert',
+        desc: 'Gohliser Str. 23 &bull; Original Leipziger Lerchen (500 m, 6 Min.)',
+        lat: 51.35621,
+        lon: 12.36936,
+        icon: '🥐',
+        color: '#f59e0b',
+        link: 'https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=B%C3%A4ckerei+Kleinert,+Gohliser+Str.+23,+04155+Leipzig&travelmode=walking'
+      },
+      {
+        id: 'wendl',
+        type: 'bakery',
+        name: 'Bäckerei & Café Wendl',
+        desc: 'Gohliser Str. 43 &bull; Frische Brötchen auch sonntags (450 m, 5 Min.)',
+        lat: 51.35811,
+        lon: 12.36774,
+        icon: '🥐',
+        color: '#f59e0b',
+        link: 'https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=B%C3%A4ckerei+Wendl,+Gohliser+Str.+43,+04155+Leipzig&travelmode=walking'
+      }
+    ];
+
+    function initMap() {
+      // Center near Mechlerstraße 10
+      map = L.map('interactive-map', {
+        scrollWheelZoom: false
+      }).setView([51.3588, 12.3735], 15);
+
+      // OpenStreetMap Tiles with nice clean rendering
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19
+      }).addTo(map);
+
+      // Add Markers
+      poiData.forEach(poi => {
+        const isHome = poi.type === 'home';
+        const customIcon = L.divIcon({
+          className: 'custom-leaflet-marker',
+          html: `<div class="custom-marker ${isHome ? 'marker-home' : ''}" style="background-color:${poi.color};width:${isHome ? '36px' : '30px'};height:${isHome ? '36px' : '30px'};">${poi.icon}</div>`,
+          iconSize: [isHome ? 36 : 30, isHome ? 36 : 30],
+          iconAnchor: [isHome ? 18 : 15, isHome ? 18 : 15]
+        });
+
+        const popupContent = `
+          <div style="font-family:'Inter',sans-serif;padding:4px;color:#0f172a;">
+            <div style="font-weight:700;font-size:14px;margin-bottom:2px;">${poi.name}</div>
+            <div style="font-size:12px;color:#475569;margin-bottom:8px;">${poi.desc}</div>
+            <a href="${poi.link}" target="_blank" rel="noopener" style="display:inline-block;background:#0284c7;color:white;font-size:11px;font-weight:600;padding:5px 10px;border-radius:6px;text-decoration:none;">
+              🗺️ In Google Maps öffnen
+            </a>
+          </div>
+        `;
+
+        const marker = L.marker([poi.lat, poi.lon], { icon: customIcon })
+          .bindPopup(popupContent)
+          .addTo(map);
+
+        if (isHome) {
+          marker.openPopup();
+        }
+
+        markers.push({ type: poi.type, marker: marker });
+      });
+    }
+
+    function filterMap(type) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      markers.forEach(item => {
+        if (type === 'all' || item.type === 'home' || item.type === type) {
+          map.addLayer(item.marker);
+        } else {
+          map.removeLayer(item.marker);
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', initMap);
+  </script>
+</body>
+</html>
