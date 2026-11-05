@@ -157,7 +157,7 @@
       color: var(--accent-green);
     }
 
-    /* PIN Display */
+    /* PIN Display & Input */
     .pin-display {
       background: rgba(15, 23, 42, 0.85);
       border: 1.5px solid var(--card-border);
@@ -166,25 +166,45 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: border-color 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      cursor: text;
     }
 
+    .pin-display:focus-within,
     .pin-display.focus {
       border-color: var(--primary);
       box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
     }
 
-    .pin-digit {
+    .pin-input {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: inherit;
       font-size: 21px;
       font-weight: 800;
       letter-spacing: 4px;
-      color: var(--text);
+      text-align: center;
+      caret-color: var(--primary);
+      box-sizing: border-box;
+      padding: 0 12px;
+      -webkit-appearance: none;
+      -moz-appearance: textfield;
     }
 
-    .pin-placeholder {
+    .pin-input::-webkit-outer-spin-button,
+    .pin-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .pin-input::placeholder {
       font-size: 13px;
+      letter-spacing: normal;
       color: #64748b;
       font-weight: 500;
     }
@@ -577,6 +597,12 @@
       .pin-display {
         height: 46px;
       }
+      .pin-input {
+        font-size: 22px;
+      }
+      .pin-input::placeholder {
+        font-size: 14px;
+      }
       .btn-door {
         min-height: 50px;
         padding: 11px 16px;
@@ -746,8 +772,21 @@
       </div>
 
       <!-- PIN Input Display -->
-      <div class="pin-display focus" id="pinDisplay">
-        <span id="pinText" class="pin-placeholder" data-i18n="pinPlaceholder">PIN eingeben...</span>
+      <div class="pin-display focus" id="pinDisplay" onclick="document.getElementById('pinInput').focus()">
+        <input 
+          type="tel" 
+          id="pinInput" 
+          class="pin-input" 
+          inputmode="numeric" 
+          pattern="[0-9]*" 
+          maxlength="8" 
+          placeholder="PIN eingeben..." 
+          data-i18n-placeholder="pinPlaceholder"
+          autocomplete="one-time-code"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+        />
       </div>
 
       <!-- Door Buttons (Centered & Premium) -->
@@ -1092,11 +1131,13 @@
           el.textContent = translations[lang][key];
         }
       });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang][key]) {
+          el.placeholder = translations[lang][key];
+        }
+      });
       updatePinDisplay();
-      const guideLink = document.getElementById('guideLinkCard');
-      if (guideLink) {
-        guideLink.href = 'gaestemappe.html?lang=' + lang;
-      }
     }
 
     function pressKey(num) {
@@ -1104,39 +1145,95 @@
       currentPin += num;
       if (navigator.vibrate) navigator.vibrate(20);
       updatePinDisplay();
-      const guideLink = document.getElementById('guideLinkCard');
-      if (guideLink) {
-        guideLink.href = 'gaestemappe.html?lang=' + lang;
-      }
     }
 
     function clearPin() {
       currentPin = '';
       updatePinDisplay();
-      const guideLink = document.getElementById('guideLinkCard');
-      if (guideLink) {
-        guideLink.href = 'gaestemappe.html?lang=' + lang;
-      }
     }
 
     function backspacePin() {
       currentPin = currentPin.slice(0, -1);
       updatePinDisplay();
-      const guideLink = document.getElementById('guideLinkCard');
-      if (guideLink) {
-        guideLink.href = 'gaestemappe.html?lang=' + lang;
-      }
     }
 
     function updatePinDisplay() {
-      const pinText = document.getElementById('pinText');
-      if (currentPin.length === 0) {
-        pinText.className = 'pin-placeholder';
-        pinText.textContent = translations[currentLang].pinPlaceholder;
-      } else {
-        pinText.className = 'pin-digit';
-        pinText.textContent = currentPin;
+      const pinInput = document.getElementById('pinInput');
+      if (pinInput) {
+        if (pinInput.value !== currentPin) {
+          pinInput.value = currentPin;
+        }
+        pinInput.placeholder = translations[currentLang]?.pinPlaceholder || 'PIN eingeben...';
       }
+      const guideLink = document.getElementById('guideLinkCard');
+      if (guideLink) {
+        guideLink.href = 'gaestemappe.html?lang=' + currentLang;
+      }
+    }
+
+    function initPinInput() {
+      const pinInput = document.getElementById('pinInput');
+      if (!pinInput) return;
+
+      // Allow only digits (0-9) and navigation/editing keys
+      pinInput.addEventListener('keydown', (e) => {
+        const allowedKeys = [
+          'Backspace', 'Delete', 'Tab', 'Escape', 'Enter',
+          'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',
+          'Home', 'End'
+        ];
+        if (allowedKeys.includes(e.key)) {
+          if (e.key === 'Enter') {
+            pinInput.blur();
+          }
+          return;
+        }
+        // Allow copy, paste, select all (Ctrl/Cmd)
+        if (e.ctrlKey || e.metaKey) {
+          return;
+        }
+        // Disallow everything that is NOT a digit 0-9
+        if (!/^[0-9]$/.test(e.key)) {
+          e.preventDefault();
+        }
+      });
+
+      // Filter and clean input (handles typing, virtual keyboards, drag/drop, auto-complete)
+      pinInput.addEventListener('input', () => {
+        const cleaned = pinInput.value.replace(/\D/g, '').slice(0, 8);
+        if (pinInput.value !== cleaned) {
+          pinInput.value = cleaned;
+        }
+        currentPin = cleaned;
+        const guideLink = document.getElementById('guideLinkCard');
+        if (guideLink) {
+          guideLink.href = 'gaestemappe.html?lang=' + currentLang;
+        }
+      });
+
+      // Handle paste: only allow numbers
+      pinInput.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const pasteData = (e.clipboardData || window.clipboardData)?.getData('text') || '';
+        const numbersOnly = pasteData.replace(/\D/g, '');
+        if (!numbersOnly) return;
+
+        const start = pinInput.selectionStart || 0;
+        const end = pinInput.selectionEnd || 0;
+        const before = pinInput.value.slice(0, start);
+        const after = pinInput.value.slice(end);
+        const nextVal = (before + numbersOnly + after).replace(/\D/g, '').slice(0, 8);
+
+        currentPin = nextVal;
+        pinInput.value = nextVal;
+        const newPos = Math.min(start + numbersOnly.length, nextVal.length);
+        pinInput.setSelectionRange(newPos, newPos);
+
+        const guideLink = document.getElementById('guideLinkCard');
+        if (guideLink) {
+          guideLink.href = 'gaestemappe.html?lang=' + currentLang;
+        }
+      });
     }
 
     function getApiEndpoint(action) {
@@ -1146,13 +1243,14 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      initPinInput();
       setLang(detectLanguage());
 
       const urlParams = new URLSearchParams(window.location.search);
       const codeParam = urlParams.get('code') || urlParams.get('pin');
 
       if (codeParam) {
-        currentPin = codeParam.trim();
+        currentPin = codeParam.trim().replace(/\D/g, '').slice(0, 8);
         updatePinDisplay();
         verifyPinSilently(currentPin);
       }
