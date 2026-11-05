@@ -53,11 +53,11 @@
       height: auto;
       max-width: 430px;
       margin: 0 auto;
-      padding: 6px 10px calc(6px + env(safe-area-inset-bottom, 0px));
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      gap: 5px;
+      justify-content: flex-start;
+      gap: 8px;
     }
 
     /* Top Bar: Logo & Language Pills */
@@ -134,12 +134,11 @@
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
-      padding: 8px 10px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      flex-grow: 1;
-      justify-content: space-between;
+      gap: 8px;
+      flex-grow: 0;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     }
 
@@ -187,7 +186,7 @@
       background: rgba(15, 23, 42, 0.8);
       border: 1.5px solid var(--card-border);
       border-radius: 10px;
-      height: 35px;
+      height: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -216,7 +215,7 @@
     .doors-grid {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
       width: 100%;
     }
 
@@ -229,8 +228,8 @@
       justify-content: center;
       text-align: center;
       gap: 10px;
-      padding: 7px 12px;
-      min-height: 40px;
+      padding: 8px 12px;
+      min-height: 44px;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.15);
       font-family: inherit;
@@ -314,14 +313,14 @@
     .keypad-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 3.5px;
+      gap: 5px;
     }
 
     .key-btn {
       background: var(--key-bg);
       border: 1px solid rgba(255, 255, 255, 0.05);
       border-radius: 7px;
-      height: 32px;
+      height: 36px;
       font-size: 15px;
       font-weight: 600;
       color: var(--text);
@@ -533,6 +532,8 @@
     .footer-area {
       flex-shrink: 0;
       text-align: center;
+      margin-top: auto;
+      padding-top: 4px;
       padding-bottom: 2px;
     }
 
