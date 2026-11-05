@@ -812,10 +812,14 @@
       const gapHours = Math.round((ci - co) / (1000 * 60 * 60));
       const gapDays = Math.floor(gapHours / 24);
 
+      const isSameGuest = nextCheckinStay.name && nextCheckoutStay.name && 
+                          nextCheckinStay.name.trim().toLowerCase() === nextCheckoutStay.name.trim().toLowerCase();
+
       chipsHtml += `
         <div style="${chipStyleBase}">
           <span>👤 Folgegast:</span>
           <b style="color:#ffffff;">${nextCheckinStay.name}</b>
+          ${isSameGuest ? '<span style="color:#38bdf8; font-weight:700;">(Wiederkehrender Gast)</span>' : ''}
           <span style="color:#94a3b8;">(${ciDateStr} ab ${ciTimeStr})</span>
         </div>
       `;
@@ -837,8 +841,8 @@
       } else {
         chipsHtml += `
           <div style="${chipStyleBase} background:rgba(34, 197, 94, 0.12); border-color:rgba(34, 197, 94, 0.35); color:#86efac; font-weight:600;">
-            <span>🟢 Zeitpuffer:</span>
-            <span>Wohnung frei bis ${ciDateStr} (${gapDays} Tage Puffer)</span>
+            <span>🟢 ${isSameGuest ? 'Pause zwischen den Aufenthalten:' : 'Zeitpuffer:'}</span>
+            <span>Wohnung frei bis ${ciDateStr} (${gapDays} Tage ${isSameGuest ? 'Pause' : 'Puffer'})</span>
           </div>
         `;
       }
@@ -886,12 +890,23 @@
       const until = new Date(p.valid_until);
       const isCurrentStay = (now >= from && now <= until);
 
-      // Determine check-in timestamp
+      // Determine check-in timestamp (strictly within this booking window)
       let checkinTime = p.checked_in_at || null;
       let checkinDoor = p.first_door || '';
-      if (!checkinTime && logCheckins[p.name]) {
-        checkinTime = logCheckins[p.name].timestamp;
-        checkinDoor = logCheckins[p.name].door === 'haustuer' ? 'Haustür' : 'Wohnungstür';
+      if (!checkinTime && Array.isArray(logs)) {
+        const allowedEarly = new Date(from.getTime() - 6 * 3600 * 1000);
+        const matchingLog = logs
+          .filter(l => l.success && l.guest && l.guest.trim().toLowerCase() === (p.name || '').trim().toLowerCase())
+          .filter(l => {
+            const lt = new Date(l.timestamp);
+            return !isNaN(lt.getTime()) && lt >= allowedEarly && lt <= until;
+          })
+          .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0];
+
+        if (matchingLog) {
+          checkinTime = matchingLog.timestamp;
+          checkinDoor = matchingLog.door === 'haustuer' ? 'Haustür' : 'Wohnungstür';
+        }
       }
 
       const pad = (n) => String(n).padStart(2, '0');
@@ -1467,7 +1482,8 @@ Falko & the StayInLeipzig Family 🏡✨`;
           name: name || 'Gast',
           pin: pin,
           valid_from: valid_from,
-          valid_until: valid_until
+          valid_until: valid_until,
+          booking_id: 'MANUAL-' + Date.now() + '-' + Math.floor(Math.random() * 900 + 100)
         })
       });
       const data = await res.json();
