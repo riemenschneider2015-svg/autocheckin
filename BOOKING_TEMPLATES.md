@@ -43,7 +43,7 @@ https://checkin.stayinleipzig.de/?code=[PIN]
 ---
 
 ### 📖 Digitale Gästemappe & Umgebungs-Guide
-WLAN-QR-Code, Bäckereien (frische Brötchen & Leipziger Lerchen), Supermärkte (Penny, Kaufland) und die besten Bahnverbindungen (Linien 10, 11, 16 direkt zur Messe & zum Hbf):  
+WLAN-QR-Code, Bäckereien (frische Brötchen & Leipziger Lerchen), Supermärkte (Penny, Kaufland) und die besten Bahnverbindungen (Linien 10, 11, 16 direkt zur Messe & zum Leipzig Hauptbahnhof):  
 👉 [Digitale Gästemappe öffnen](https://checkin.stayinleipzig.de/gaestemappe.html)
 
 

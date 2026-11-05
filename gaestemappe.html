@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>Gästemappe & Umgebungs-Guide – Mechlerstr. 10 Leipzig | StayInLeipzig</title>
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#0b1120">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,6 +42,11 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg);
@@ -57,11 +64,11 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(11, 17, 32, 0.88);
+      background: rgba(11, 17, 32, 0.92);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--card-border);
-      padding: 10px 16px;
+      padding: 10px 14px;
     }
 
     .nav-container {
@@ -76,15 +83,16 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .nav-brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       text-decoration: none;
       color: var(--text);
+      min-width: 0;
     }
 
     .nav-logo-badge {
@@ -92,46 +100,70 @@
       color: white;
       font-family: 'Outfit', sans-serif;
       font-weight: 800;
-      font-size: 13px;
-      padding: 5px 10px;
+      font-size: 12px;
+      padding: 5px 8px;
       border-radius: 8px;
       letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+
+    .nav-brand-text {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
     }
 
     .nav-title {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
       color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .nav-subtitle {
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--text-muted);
+      white-space: nowrap;
     }
 
     .nav-actions {
       display: flex;
-      gap: 8px;
+      gap: 6px;
+      flex-shrink: 0;
     }
 
-    /* 6-Language Selector Bar */
+    /* 6-Language Selector Bar (Mobile Optimized with Horizontal Scroll) */
+    .lang-bar-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 2px;
+    }
+    .lang-bar-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
     .lang-bar {
       display: flex;
       gap: 4px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.06);
       border-radius: 999px;
       padding: 3px;
       border: 1px solid var(--card-border);
-      max-width: 500px;
+      min-width: 320px;
       width: 100%;
     }
 
     .lang-btn {
       flex: 1;
+      min-width: 46px;
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 5px 2px;
-      font-size: 11px;
+      padding: 6px 3px;
+      font-size: 11.5px;
       font-weight: 700;
       border-radius: 999px;
       cursor: pointer;
@@ -143,23 +175,24 @@
     .lang-btn.active {
       background: var(--primary);
       color: #0f172a;
-      box-shadow: 0 2px 6px rgba(56, 189, 248, 0.35);
+      box-shadow: 0 2px 6px rgba(56, 189, 248, 0.4);
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      padding: 7px 12px;
-      font-size: 12.5px;
-      font-weight: 600;
+      gap: 5px;
+      padding: 7px 11px;
+      font-size: 12px;
+      font-weight: 700;
       border-radius: 9px;
       border: 1px solid transparent;
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
       white-space: nowrap;
+      min-height: 34px;
     }
 
     .btn-primary {
@@ -167,9 +200,8 @@
       color: white;
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     }
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #0369a1, #1d4ed8);
-      transform: translateY(-1px);
+    .btn-primary:active {
+      transform: scale(0.97);
     }
 
     .btn-secondary {
@@ -177,26 +209,26 @@
       color: var(--text);
       border-color: var(--card-border);
     }
-    .btn-secondary:hover {
-      background: rgba(71, 85, 105, 0.9);
+    .btn-secondary:active {
+      transform: scale(0.97);
     }
 
     /* Main Container */
     .container {
       max-width: 1000px;
       margin: 0 auto;
-      padding: 20px 16px;
+      padding: 16px 14px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 20px;
     }
 
     /* Hero Banner */
     .hero-card {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
       border: 1px solid rgba(56, 189, 248, 0.3);
-      border-radius: 20px;
-      padding: 24px;
+      border-radius: 18px;
+      padding: 20px 16px;
       position: relative;
       overflow: hidden;
       box-shadow: var(--shadow);
@@ -205,11 +237,11 @@
     .hero-card::before {
       content: '';
       position: absolute;
-      top: -50px;
-      right: -50px;
-      width: 150px;
-      height: 150px;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%);
+      top: -40px;
+      right: -40px;
+      width: 130px;
+      height: 130px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
     }
@@ -223,14 +255,14 @@
       border: 1px solid rgba(56, 189, 248, 0.3);
       padding: 4px 10px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .hero-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 800;
       line-height: 1.25;
       margin-bottom: 8px;
@@ -241,55 +273,59 @@
 
     .hero-desc {
       color: var(--text-muted);
-      font-size: 14px;
+      font-size: 13.5px;
       max-width: 720px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+      line-height: 1.45;
     }
 
     .hero-quick-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      font-size: 13px;
+      gap: 8px;
+      font-size: 12.5px;
     }
 
     .meta-chip {
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.7);
       border: 1px solid var(--card-border);
-      padding: 6px 12px;
+      padding: 6px 10px;
       border-radius: 8px;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    /* Jump Bar */
+    /* Jump Bar (Touch swipeable) */
     .jump-bar {
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding-bottom: 6px;
+      padding-bottom: 4px;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
     }
     .jump-bar::-webkit-scrollbar {
       display: none;
     }
     .jump-link {
       white-space: nowrap;
+      scroll-snap-align: start;
       background: rgba(30, 41, 59, 0.6);
       border: 1px solid var(--card-border);
       color: var(--text);
       text-decoration: none;
-      padding: 8px 14px;
+      padding: 7px 13px;
       border-radius: 30px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
     }
-    .jump-link:hover {
+    .jump-link:hover, .jump-link:active {
       background: rgba(56, 189, 248, 0.2);
       border-color: var(--primary);
       color: var(--primary);
@@ -300,32 +336,33 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      margin-top: 10px;
-      margin-bottom: 14px;
+      margin-top: 8px;
+      margin-bottom: 12px;
     }
     .section-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 700;
       display: flex;
       align-items: center;
       gap: 8px;
     }
     .section-subtitle {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--text-muted);
       margin-top: 2px;
+      line-height: 1.35;
     }
 
     /* WiFi Hero Highlight Card */
     .wifi-card {
-      background: linear-gradient(135deg, rgba(14, 116, 144, 0.25), rgba(15, 23, 42, 0.85));
+      background: linear-gradient(135deg, rgba(14, 116, 144, 0.25), rgba(15, 23, 42, 0.88));
       border: 2px solid rgba(56, 189, 248, 0.4);
-      border-radius: 20px;
-      padding: 24px;
+      border-radius: 18px;
+      padding: 20px 16px;
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 20px;
+      gap: 18px;
       align-items: center;
       box-shadow: 0 10px 30px -5px rgba(2, 132, 199, 0.2);
     }
@@ -333,7 +370,7 @@
     .wifi-info {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .wifi-badge {
@@ -342,18 +379,18 @@
       gap: 6px;
       background: #0284c7;
       color: white;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 12px;
+      padding: 4px 9px;
+      border-radius: 10px;
       width: fit-content;
     }
 
     .wifi-cred-box {
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(15, 23, 42, 0.85);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 12px 16px;
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -363,10 +400,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .cred-label {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -374,9 +411,10 @@
     }
     .cred-value {
       font-family: monospace;
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 700;
       color: var(--primary);
+      word-break: break-all;
     }
 
     .qr-box-wrapper {
@@ -414,8 +452,8 @@
     /* Grid Layout for Cards */
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 14px;
     }
 
     /* POI Card */
@@ -423,43 +461,43 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
-      padding: 16px;
+      padding: 16px 14px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
       transition: all 0.2s ease;
       position: relative;
     }
     .poi-card:hover {
       background: var(--card-hover);
       border-color: rgba(56, 189, 248, 0.4);
-      transform: translateY(-2px);
     }
 
     .poi-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 12px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .poi-type-tag {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      padding: 3px 8px;
+      padding: 3px 7px;
       border-radius: 6px;
       width: fit-content;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     .tag-transit { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
     .tag-bakery { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
     .tag-market { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
 
     .poi-title {
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 700;
       color: var(--text);
       line-height: 1.3;
@@ -469,38 +507,42 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
       color: var(--text-muted);
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.7);
       padding: 3px 8px;
       border-radius: 6px;
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .poi-body {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--text-muted);
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
+      line-height: 1.4;
     }
 
     .poi-lines-list {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-top: 4px;
+      margin-top: 2px;
+      align-items: center;
     }
 
     .line-badge {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 6px;
       font-weight: 800;
-      font-size: 12px;
+      font-size: 11.5px;
+      flex-shrink: 0;
     }
     .line-16 { background: #e11d48; color: white; }
     .line-10 { background: #0284c7; color: white; }
@@ -510,17 +552,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      padding-top: 12px;
+      gap: 10px;
+      padding-top: 10px;
       border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .poi-qr-thumb {
       background: white;
-      padding: 6px;
+      padding: 5px;
       border-radius: 8px;
-      width: 72px;
-      height: 72px;
+      width: 64px;
+      height: 64px;
       flex-shrink: 0;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
@@ -532,6 +574,7 @@
 
     .poi-action-btn {
       flex: 1;
+      min-width: 0;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -539,14 +582,19 @@
       background: rgba(56, 189, 248, 0.1);
       border: 1px solid rgba(56, 189, 248, 0.3);
       color: var(--primary);
-      padding: 8px 12px;
+      padding: 9px 12px;
       border-radius: 8px;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       text-decoration: none;
       transition: all 0.2s;
+      white-space: normal;
+      text-align: center;
+      line-height: 1.25;
+      min-height: 42px;
     }
-    .poi-action-btn:hover {
+    .poi-action-btn:active {
+      transform: scale(0.97);
       background: var(--primary);
       color: #0f172a;
     }
@@ -555,8 +603,8 @@
     .map-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 18px;
+      border-radius: 18px;
+      padding: 16px 14px;
       box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
@@ -571,10 +619,21 @@
       gap: 8px;
     }
 
+    .map-filters-wrap {
+      width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 2px;
+    }
+    .map-filters-wrap::-webkit-scrollbar {
+      display: none;
+    }
+
     .map-filters {
       display: flex;
-      flex-wrap: wrap;
       gap: 6px;
+      width: max-content;
     }
 
     .filter-btn {
@@ -583,10 +642,12 @@
       color: var(--text-muted);
       padding: 6px 12px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s;
+      white-space: nowrap;
+      min-height: 34px;
     }
     .filter-btn.active, .filter-btn:hover {
       background: rgba(56, 189, 248, 0.2);
@@ -597,7 +658,7 @@
     #interactive-map {
       width: 100%;
       height: 420px;
-      border-radius: 14px;
+      border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--card-border);
     }
@@ -630,17 +691,17 @@
       background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
       border: 1px solid rgba(225, 29, 72, 0.3);
       border-radius: 16px;
-      padding: 18px;
+      padding: 14px 12px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 12px;
     }
 
     .transit-col {
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.65);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 14px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -650,10 +711,10 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       color: white;
-      padding: 4px 10px;
+      padding: 4px 8px;
       border-radius: 8px;
       width: fit-content;
     }
@@ -662,20 +723,20 @@
     .rules-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
+      gap: 10px;
     }
     .rule-item {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 12px 14px;
+      padding: 12px;
       display: flex;
       gap: 10px;
       align-items: flex-start;
-      font-size: 13px;
+      font-size: 12.5px;
     }
     .rule-icon {
-      font-size: 20px;
+      font-size: 18px;
       flex-shrink: 0;
     }
 
@@ -697,44 +758,88 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      max-width: 90vw;
+      text-align: center;
     }
     #toast.show {
       transform: translateX(-50%) translateY(0);
     }
 
-    /* Responsive adjustments */
+    /* RESPONSIVE MOBILE OPTIMIZATION (< 640px) */
     @media (max-width: 640px) {
       .top-nav {
-        padding: 8px 12px;
+        padding: 8px 10px;
       }
       .nav-top-row {
-        flex-direction: row;
+        gap: 6px;
       }
-      .lang-bar {
-        max-width: 100%;
+      .nav-title {
+        font-size: 12.5px;
+      }
+      .nav-subtitle {
+        display: none;
+      }
+      .btn {
+        padding: 6px 9px;
+        font-size: 11.5px;
+      }
+      .container {
+        padding: 12px 10px;
+        gap: 16px;
+      }
+      .hero-card {
+        padding: 16px 12px;
+        border-radius: 16px;
+      }
+      .hero-title {
+        font-size: 21px;
+      }
+      .hero-desc {
+        font-size: 12.5px;
       }
       .wifi-card {
         grid-template-columns: 1fr;
         text-align: center;
+        padding: 16px 12px;
       }
       .wifi-info {
         align-items: center;
       }
       .cred-row {
         flex-direction: column;
-        gap: 2px;
+        align-items: center;
+        gap: 3px;
+      }
+      .qr-box {
+        width: 140px;
+        height: 140px;
       }
       .transit-highlight-box {
         grid-template-columns: 1fr;
+        padding: 10px;
       }
-      .hero-title {
-        font-size: 22px;
+      .cards-grid {
+        grid-template-columns: 1fr;
       }
       #interactive-map {
-        height: 320px;
+        height: 330px;
+      }
+      .rules-grid {
+        grid-template-columns: 1fr;
       }
       .hide-sm {
         display: none;
+      }
+    }
+
+    /* Extra Small Devices (< 380px) */
+    @media (max-width: 380px) {
+      .nav-logo-badge {
+        font-size: 11px;
+        padding: 4px 6px;
+      }
+      .hero-title {
+        font-size: 19px;
       }
     }
 
@@ -751,7 +856,7 @@
       .container {
         max-width: 100% !important;
         padding: 0 !important;
-        gap: 16px !important;
+        gap: 14px !important;
       }
       .hero-card, .wifi-card, .poi-card, .transit-highlight-box, .rule-item {
         background: #ffffff !important;
@@ -774,7 +879,7 @@
       }
       .cards-grid {
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px !important;
+        gap: 10px !important;
       }
     }
   </style>
@@ -787,7 +892,7 @@
       <div class="nav-top-row">
         <a href="index.html" class="nav-brand" id="brandLink">
           <span class="nav-logo-badge">STAY IN LEIPZIG</span>
-          <div>
+          <div class="nav-brand-text">
             <div class="nav-title" data-i18n="navTitle">Gästemappe & Guide</div>
             <div class="nav-subtitle" data-i18n="navSubtitle">Mechlerstr. 10, Leipzig</div>
           </div>
@@ -803,14 +908,16 @@
       </div>
 
       <!-- 6-Language Selector Bar (DE, EN, ES, PL, UK, RU) -->
-      <nav class="lang-bar" aria-label="Language selection">
-        <button class="lang-btn active" data-lang="de" onclick="setLang('de')">🇩🇪 DE</button>
-        <button class="lang-btn" data-lang="en" onclick="setLang('en')">🇬🇧 EN</button>
-        <button class="lang-btn" data-lang="es" onclick="setLang('es')">🇪🇸 ES</button>
-        <button class="lang-btn" data-lang="pl" onclick="setLang('pl')">🇵🇱 PL</button>
-        <button class="lang-btn" data-lang="uk" onclick="setLang('uk')">🇺🇦 UK</button>
-        <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">🇷🇺 RU</button>
-      </nav>
+      <div class="lang-bar-wrapper">
+        <nav class="lang-bar" aria-label="Language selection">
+          <button class="lang-btn active" data-lang="de" onclick="setLang('de')">🇩🇪 DE</button>
+          <button class="lang-btn" data-lang="en" onclick="setLang('en')">🇬🇧 EN</button>
+          <button class="lang-btn" data-lang="es" onclick="setLang('es')">🇪🇸 ES</button>
+          <button class="lang-btn" data-lang="pl" onclick="setLang('pl')">🇵🇱 PL</button>
+          <button class="lang-btn" data-lang="uk" onclick="setLang('uk')">🇺🇦 UK</button>
+          <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">🇷🇺 RU</button>
+        </nav>
+      </div>
     </div>
   </nav>
 
@@ -822,7 +929,7 @@
       <h1 class="hero-title" data-i18n="heroTitle">Ihre Gästemappe & Umgebung</h1>
       <p class="hero-desc" data-i18n="heroDesc">
         Hier finden Sie alle wichtigen Informationen für Ihren Aufenthalt: Schnelles WLAN zum Scannen, 
-        die besten Bäckereien, Supermärkte und die Straßenbahn-Verbindungen (Linien 10, 11 & 16 zur Messe und zum Hauptbahnhof).
+        die besten Bäckereien, Supermärkte und die Straßenbahn-Verbindungen (Linien 10, 11 & 16 zur Leipziger Messe und zum Leipzig Hauptbahnhof).
       </p>
       <div class="hero-quick-meta">
         <div class="meta-chip" data-i18n="metaAddress">📍 Mechlerstr. 10, 04105 Leipzig (Dachgeschoss Mitte)</div>
@@ -858,13 +965,12 @@
             </div>
             <div class="cred-row">
               <span class="cred-label" data-i18n="wifiPassLabel">WLAN Passwort</span>
-              <div style="display:flex;align-items:center;gap:8px;">
-                <span class="cred-value" id="wifi-pass">Leipzig2025#</span>
-                <button onclick="copyWifiPassword()" class="btn btn-secondary" style="padding:4px 8px;font-size:11px;" data-i18n="btnCopy">
-                  📋 Kopieren
-                </button>
-              </div>
+              <span class="cred-value" id="wifi-pass">Leipzig2025#</span>
             </div>
+            <!-- Full touch copy button for mobile -->
+            <button onclick="copyWifiPassword()" class="btn btn-primary" style="width:100%;padding:9px 12px;font-size:12.5px;margin-top:4px;" data-i18n="btnCopyFull">
+              📋 WLAN-Passwort kopieren
+            </button>
             <div class="cred-row" style="border-top:1px dashed var(--card-border);padding-top:6px;margin-top:2px;">
               <span class="cred-label" style="font-size:11px;" data-i18n="wifiAlt5g">Alternativ 5G: gigacube_5G-EA6A (PW: EJ7FYBMQTLHEAJ66)</span>
             </div>
@@ -875,7 +981,7 @@
           <div class="qr-box">
             <img src="qrcodes/qr_wifi.svg" alt="WLAN QR-Code zum Scannen" />
           </div>
-          <span class="qr-caption" data-i18n="qrScanHint">📷 Mit Kamera scannen</span>
+          <span class="qr-caption" data-i18n="qrScanHint">📷 Mit Handykamera scannen</span>
         </div>
       </div>
     </section>
@@ -885,12 +991,12 @@
       <div class="section-header">
         <div>
           <h2 class="section-title" data-i18n="transitTitle">🚊 Straßenbahn & ÖPNV</h2>
-          <p class="section-subtitle" data-i18n="transitSubtitle">Direkte Verbindungen zu Hauptbahnhof, Messe Leipzig & Innenstadt</p>
+          <p class="section-subtitle" data-i18n="transitSubtitle">Direkte Verbindungen zum Leipzig Hauptbahnhof, zur Leipziger Messe & Innenstadt</p>
         </div>
       </div>
 
       <!-- Messe & Hauptbahnhof Highlights -->
-      <div class="transit-highlight-box" style="margin-bottom:16px;">
+      <div class="transit-highlight-box" style="margin-bottom:14px;">
         <!-- Zur Messe Leipzig -->
         <div class="transit-col">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;">
@@ -911,12 +1017,12 @@
               <img src="qrcodes/qr_tram16_messe.svg" alt="QR-Code Messe Leipzig Route" />
             </div>
             <a href="https://www.google.com/maps/dir/?api=1&origin=Haltestelle+Chausseehaus,+Leipzig&destination=Leipziger+Messe&travelmode=transit" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnMesseRoute">
-              🗺️ Route zur Messe
+              🗺️ Route zur Leipziger Messe
             </a>
           </div>
         </div>
 
-        <!-- Zum Hauptbahnhof -->
+        <!-- Zum Leipzig Hauptbahnhof -->
         <div class="transit-col">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;">
             <div style="display:flex;gap:4px;">
@@ -927,17 +1033,17 @@
             <span class="poi-distance" data-i18n="hbfTime">⏱️ nur 4–5 Min.</span>
           </div>
           <div style="font-size:13px;font-weight:600;color:var(--text);margin-top:4px;" data-i18n="hbfDirectTitle">
-            Zum Leipzig Hauptbahnhof & City
+            Zum Leipzig Hauptbahnhof & Innenstadt
           </div>
           <p style="font-size:12px;color:var(--text-muted);" data-i18n="hbfDirectDesc">
-            Ab Haltestelle Chausseehaus fahren die Linien 10, 11 und 16 im Minutentakt direkt zum Hauptbahnhof und weiter in die Innenstadt (Augustusplatz / Markt).
+            Ab Haltestelle Chausseehaus fahren die Linien 10, 11 und 16 im Minutentakt direkt zum Leipzig Hauptbahnhof und weiter in die Innenstadt (Augustusplatz / Markt).
           </p>
           <div style="display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:8px;">
             <div class="poi-qr-thumb">
-              <img src="qrcodes/qr_tram_hbf.svg" alt="QR-Code Hauptbahnhof Route" />
+              <img src="qrcodes/qr_tram_hbf.svg" alt="QR-Code Leipzig Hauptbahnhof Route" />
             </div>
             <a href="https://www.google.com/maps/dir/?api=1&origin=Haltestelle+Chausseehaus,+Leipzig&destination=Leipzig+Hauptbahnhof&travelmode=transit" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnHbfRoute">
-              🗺️ Route zum Hbf
+              🗺️ Route zum Leipzig Hauptbahnhof
             </a>
           </div>
         </div>
@@ -958,13 +1064,13 @@
             <div class="poi-body">
               <div data-i18n="chausseeDesc">Wichtigster Nahverkehrsknotenpunkt direkt an der Georg-Schumann-Straße.</div>
               <div class="poi-lines-list">
-                <span class="line-badge line-16">Linie 16</span> <span data-i18n="line16Desc">Messe &larr;&rarr; Hauptbahnhof &larr;&rarr; Lößnig</span>
+                <span class="line-badge line-16">Linie 16</span> <span data-i18n="line16Desc">Messe &larr;&rarr; Leipzig Hauptbahnhof &larr;&rarr; Lößnig</span>
               </div>
               <div class="poi-lines-list">
-                <span class="line-badge line-10">Linie 10</span> <span data-i18n="line10Desc">Wahren &larr;&rarr; Hbf &larr;&rarr; Connewitz</span>
+                <span class="line-badge line-10">Linie 10</span> <span data-i18n="line10Desc">Wahren &larr;&rarr; Leipzig Hauptbahnhof &larr;&rarr; Connewitz</span>
               </div>
               <div class="poi-lines-list">
-                <span class="line-badge line-11">Linie 11</span> <span data-i18n="line11Desc">Schkeuditz &larr;&rarr; Hbf &larr;&rarr; Markkleeberg</span>
+                <span class="line-badge line-11">Linie 11</span> <span data-i18n="line11Desc">Schkeuditz &larr;&rarr; Leipzig Hauptbahnhof &larr;&rarr; Markkleeberg</span>
               </div>
             </div>
           </div>
@@ -972,7 +1078,7 @@
             <div class="poi-qr-thumb">
               <img src="qrcodes/qr_chausseehaus.svg" alt="QR-Code Haltestelle Chausseehaus" />
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px;flex:1;">
+            <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;">
               <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Haltestelle+Chausseehaus,+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnWalkNav">
                 🚶 Fußweg navigieren
               </a>
@@ -996,10 +1102,10 @@
             <div class="poi-body">
               <div data-i18n="segerDesc">Sehr nah gelegen auf der Georg-Schumann-Straße Richtung Innenstadt und Wahren.</div>
               <div class="poi-lines-list">
-                <span class="line-badge line-10">Linie 10</span> <span data-i18n="segerLine10">Direkt zum Hauptbahnhof</span>
+                <span class="line-badge line-10">Linie 10</span> <span data-i18n="segerLine10">Direkt zum Leipzig Hauptbahnhof</span>
               </div>
               <div class="poi-lines-list">
-                <span class="line-badge line-11">Linie 11</span> <span data-i18n="segerLine11">Direkt zum Hauptbahnhof & Augustusplatz</span>
+                <span class="line-badge line-11">Linie 11</span> <span data-i18n="segerLine11">Direkt zum Leipzig Hauptbahnhof & Augustusplatz</span>
               </div>
             </div>
           </div>
@@ -1007,7 +1113,7 @@
             <div class="poi-qr-thumb">
               <img src="qrcodes/qr_fritz_seger.svg" alt="QR-Code Haltestelle Fritz-Seger-Straße" />
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px;flex:1;">
+            <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;">
               <a href="https://www.google.com/maps/dir/?api=1&origin=Mechlerstra%C3%9Fe+10,+Leipzig&destination=Fritz-Seger-Stra%C3%9Fe,+Leipzig&travelmode=walking" target="_blank" rel="noopener" class="poi-action-btn" data-i18n="btnWalkNav">
                 🚶 Fußweg navigieren
               </a>
@@ -1199,17 +1305,19 @@
             <h2 class="section-title" style="margin:0;" data-i18n="mapTitle">🗺️ Umgebungskarte</h2>
             <p class="section-subtitle" data-i18n="mapSubtitle">Alle Orte auf einen Blick mit Fußweg und Haltestellen</p>
           </div>
-          <div class="map-filters">
-            <button class="filter-btn active" onclick="filterMap('all')" data-i18n="filterAll">Alle Orte</button>
-            <button class="filter-btn" onclick="filterMap('transit')" data-i18n="filterTransit">🚊 ÖPNV (10/11/16)</button>
-            <button class="filter-btn" onclick="filterMap('bakery')" data-i18n="filterBakery">🥐 Bäcker</button>
-            <button class="filter-btn" onclick="filterMap('market')" data-i18n="filterMarket">🛒 Supermärkte</button>
+          <div class="map-filters-wrap">
+            <div class="map-filters">
+              <button class="filter-btn active" onclick="filterMap('all')" data-i18n="filterAll">Alle Orte</button>
+              <button class="filter-btn" onclick="filterMap('transit')" data-i18n="filterTransit">🚊 ÖPNV (10/11/16)</button>
+              <button class="filter-btn" onclick="filterMap('bakery')" data-i18n="filterBakery">🥐 Bäcker</button>
+              <button class="filter-btn" onclick="filterMap('market')" data-i18n="filterMarket">🛒 Supermärkte</button>
+            </div>
           </div>
         </div>
 
         <div id="interactive-map"></div>
 
-        <div style="font-size:12px;color:var(--text-muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding-top:4px;">
+        <div style="font-size:11.5px;color:var(--text-muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;padding-top:4px;line-height:1.4;">
           <span data-i18n="legendStart">🔴 Start: Ferienwohnung Mechlerstr. 10</span>
           <span data-i18n="legendTransit">🔵 Blau: Haltestellen (Chausseehaus & Fritz-Seger-Str.)</span>
           <span data-i18n="legendBakery">🟠 Orange: Bäckereien (Kleinert & Wendl)</span>
@@ -1263,7 +1371,7 @@
     </section>
 
     <!-- Footer -->
-    <footer style="text-align:center;padding:24px 0;border-top:1px solid var(--card-border);margin-top:20px;font-size:13px;color:var(--text-muted);">
+    <footer style="text-align:center;padding:20px 0;border-top:1px solid var(--card-border);margin-top:16px;font-size:12.5px;color:var(--text-muted);">
       <div data-i18n="footerBrand">StayInLeipzig &bull; Mechlerstraße 10, 04105 Leipzig</div>
       <div style="margin-top:4px;" data-i18n="footerContact">Bei Fragen oder Notfällen: Gastgeber Falko &bull; Tel: 0152 53453390</div>
     </footer>
@@ -1286,7 +1394,7 @@
         "btnCheckin": "🔑 Check-in Türöffnung",
         "heroBadge": "✨ HERZLICH WILLKOMMEN",
         "heroTitle": "Ihre Gästemappe & Umgebung",
-        "heroDesc": "Hier finden Sie alle wichtigen Informationen für Ihren Aufenthalt: Schnelles WLAN zum Scannen, die besten Bäckereien, Supermärkte und die Straßenbahn-Verbindungen (Linien 10, 11 & 16 zur Messe und zum Hauptbahnhof).",
+        "heroDesc": "Hier finden Sie alle wichtigen Informationen für Ihren Aufenthalt: Schnelles WLAN zum Scannen, die besten Bäckereien, Supermärkte und die Straßenbahn-Verbindungen (Linien 10, 11 & 16 zur Leipziger Messe und zum Leipzig Hauptbahnhof).",
         "metaAddress": "📍 Mechlerstr. 10, 04105 Leipzig (Dachgeschoss Mitte)",
         "metaHost": "📞 Gastgeber Falko: 0152 53453390",
         "metaCheckout": "🕒 Check-out bis 11:00 Uhr",
@@ -1302,35 +1410,36 @@
         "wifiSsidLabel": "WLAN Name (SSID)",
         "wifiPassLabel": "WLAN Passwort",
         "btnCopy": "📋 Kopieren",
+        "btnCopyFull": "📋 WLAN-Passwort kopieren",
         "wifiAlt5g": "Alternativ 5G: gigacube_5G-EA6A (PW: EJ7FYBMQTLHEAJ66)",
-        "qrScanHint": "📷 Mit Kamera scannen",
+        "qrScanHint": "📷 Mit Handykamera scannen",
         "transitTitle": "🚊 Straßenbahn & ÖPNV",
-        "transitSubtitle": "Direkte Verbindungen zu Hauptbahnhof, Messe Leipzig & Innenstadt",
+        "transitSubtitle": "Direkte Verbindungen zum Leipzig Hauptbahnhof, zur Leipziger Messe & Innenstadt",
         "messeBadge": "Linie 16 zur Messe",
         "messeTime": "⏱️ ca. 14 Min.",
         "messeDirectTitle": "Direktverbindung ohne Umsteigen!",
         "messeDirectDesc": "Ab Haltestelle Chausseehaus mit Linie 16 (Richtung Messegelände) direkt vor die Messehallen fahren. Takt: alle 10 Minuten.",
-        "btnMesseRoute": "🗺️ Route zur Messe",
-        "hbfBadge": "Zum Hauptbahnhof & City",
+        "btnMesseRoute": "🗺️ Route zur Leipziger Messe",
+        "hbfBadge": "Zum Leipzig Hauptbahnhof & City",
         "hbfTime": "⏱️ nur 4–5 Min.",
-        "hbfDirectTitle": "Zum Leipzig Hauptbahnhof & City",
-        "hbfDirectDesc": "Ab Haltestelle Chausseehaus fahren die Linien 10, 11 und 16 im Minutentakt direkt zum Hauptbahnhof und weiter in die Innenstadt (Augustusplatz / Markt).",
-        "btnHbfRoute": "🗺️ Route zum Hbf",
+        "hbfDirectTitle": "Zum Leipzig Hauptbahnhof & Innenstadt",
+        "hbfDirectDesc": "Ab Haltestelle Chausseehaus fahren die Linien 10, 11 und 16 im Minutentakt direkt zum Leipzig Hauptbahnhof und weiter in die Innenstadt (Augustusplatz / Markt).",
+        "btnHbfRoute": "🗺️ Route zum Leipzig Hauptbahnhof",
         "chausseeTag": "Haupt-Haltestelle",
         "chausseeTitle": "Haltestelle Chausseehaus",
         "chausseeDist": "🚶 3 Min. (290 m)",
         "chausseeDesc": "Wichtigster Nahverkehrsknotenpunkt direkt an der Georg-Schumann-Straße.",
-        "line16Desc": "Messe &larr;&rarr; Hauptbahnhof &larr;&rarr; Lößnig",
-        "line10Desc": "Wahren &larr;&rarr; Hbf &larr;&rarr; Connewitz",
-        "line11Desc": "Schkeuditz &larr;&rarr; Hbf &larr;&rarr; Markkleeberg",
+        "line16Desc": "Messe &larr;&rarr; Leipzig Hauptbahnhof &larr;&rarr; Lößnig",
+        "line10Desc": "Wahren &larr;&rarr; Leipzig Hauptbahnhof &larr;&rarr; Connewitz",
+        "line11Desc": "Schkeuditz &larr;&rarr; Leipzig Hauptbahnhof &larr;&rarr; Markkleeberg",
         "btnWalkNav": "🚶 Fußweg navigieren",
         "btnLvbLive": "⏱️ LVB Live-Abfahrten",
         "segerTag": "Haltestelle",
         "segerTitle": "Haltestelle Fritz-Seger-Straße",
         "segerDist": "🚶 2 Min. (200 m)",
         "segerDesc": "Sehr nah gelegen auf der Georg-Schumann-Straße Richtung Innenstadt und Wahren.",
-        "segerLine10": "Direkt zum Hauptbahnhof",
-        "segerLine11": "Direkt zum Hauptbahnhof & Augustusplatz",
+        "segerLine10": "Direkt zum Leipzig Hauptbahnhof",
+        "segerLine11": "Direkt zum Leipzig Hauptbahnhof & Augustusplatz",
         "bakeriesTitle": "🥐 Bäcker & Frühstück",
         "bakeriesSubtitle": "Frische Brötchen, Kaffee, traditionelle Leipziger Lerchen & Handwerksbrote",
         "kleinertTag": "Traditionshandwerk",
@@ -1392,7 +1501,7 @@
         "btnCheckin": "🔑 Check-in Door Unlock",
         "heroBadge": "✨ WELCOME TO LEIPZIG",
         "heroTitle": "Your Guest Guide & Local Area",
-        "heroDesc": "Everything you need for a comfortable stay: Fast Wi-Fi QR code to scan, the best local bakeries, supermarkets, and direct tram lines (10, 11 & 16 to the Fair / Messe and Central Station).",
+        "heroDesc": "Everything you need for a comfortable stay: Fast Wi-Fi QR code to scan, the best local bakeries, supermarkets, and direct tram lines (10, 11 & 16 to the Leipzig Fair / Messe and Leipzig Central Station).",
         "metaAddress": "📍 Mechlerstr. 10, 04105 Leipzig (Top floor middle door)",
         "metaHost": "📞 Host Falko: 0152 53453390",
         "metaCheckout": "🕒 Check-out by 11:00 AM",
@@ -1408,35 +1517,36 @@
         "wifiSsidLabel": "Wi-Fi Name (SSID)",
         "wifiPassLabel": "Wi-Fi Password",
         "btnCopy": "📋 Copy",
+        "btnCopyFull": "📋 Copy Wi-Fi Password",
         "wifiAlt5g": "5G Alternative: gigacube_5G-EA6A (PW: EJ7FYBMQTLHEAJ66)",
-        "qrScanHint": "📷 Scan with your camera",
+        "qrScanHint": "📷 Scan with phone camera",
         "transitTitle": "🚊 Trams & Public Transit",
-        "transitSubtitle": "Direct connections to Central Station, Leipzig Fair (Messe) & City Center",
+        "transitSubtitle": "Direct connections to Leipzig Central Station, Leipzig Fair (Messe) & City Center",
         "messeBadge": "Line 16 to Leipzig Fair (Messe)",
         "messeTime": "⏱️ approx. 14 min.",
         "messeDirectTitle": "Direct line with zero transfers!",
         "messeDirectDesc": "Take Tram Line 16 (direction 'Messegelände') directly from Chausseehaus to the exhibition halls. Runs every 10 minutes.",
         "btnMesseRoute": "🗺️ Route to Leipzig Fair",
-        "hbfBadge": "To Central Station & City",
+        "hbfBadge": "To Leipzig Central Station & City",
         "hbfTime": "⏱️ only 4–5 min.",
         "hbfDirectTitle": "Direct to Leipzig Central Station & City",
-        "hbfDirectDesc": "From Chausseehaus, lines 10, 11, and 16 run every few minutes directly to Central Station and City Center (Augustusplatz / Market).",
-        "btnHbfRoute": "🗺️ Route to Central Station",
+        "hbfDirectDesc": "From Chausseehaus, lines 10, 11, and 16 run every few minutes directly to Leipzig Central Station and City Center (Augustusplatz / Market).",
+        "btnHbfRoute": "🗺️ Route to Leipzig Central Station",
         "chausseeTag": "Main Tram Stop",
         "chausseeTitle": "Chausseehaus Tram Stop",
         "chausseeDist": "🚶 3 min (290 m)",
         "chausseeDesc": "Major transit hub right on Georg-Schumann-Straße.",
-        "line16Desc": "Fair / Messe &larr;&rarr; Central Station &larr;&rarr; Lößnig",
-        "line10Desc": "Wahren &larr;&rarr; Central Station &larr;&rarr; Connewitz",
-        "line11Desc": "Schkeuditz &larr;&rarr; Central Station &larr;&rarr; Markkleeberg",
+        "line16Desc": "Fair / Messe &larr;&rarr; Leipzig Central Station &larr;&rarr; Lößnig",
+        "line10Desc": "Wahren &larr;&rarr; Leipzig Central Station &larr;&rarr; Connewitz",
+        "line11Desc": "Schkeuditz &larr;&rarr; Leipzig Central Station &larr;&rarr; Markkleeberg",
         "btnWalkNav": "🚶 Walking Directions",
         "btnLvbLive": "⏱️ LVB Live Departures",
         "segerTag": "Nearby Tram Stop",
         "segerTitle": "Fritz-Seger-Straße Tram Stop",
         "segerDist": "🚶 2 min (200 m)",
         "segerDesc": "Very close on Georg-Schumann-Straße towards City Center and Wahren.",
-        "segerLine10": "Direct to Central Station",
-        "segerLine11": "Direct to Central Station & Augustusplatz",
+        "segerLine10": "Direct to Leipzig Central Station",
+        "segerLine11": "Direct to Leipzig Central Station & Augustusplatz",
         "bakeriesTitle": "🥐 Bakeries & Breakfast",
         "bakeriesSubtitle": "Fresh bread rolls, coffee, traditional pastries & artisan bakeries",
         "kleinertTag": "Artisan Bakery",
@@ -1498,7 +1608,7 @@
         "btnCheckin": "🔑 Abrir puertas Check-in",
         "heroBadge": "✨ ¡BIENVENIDO A LEIPZIG!",
         "heroTitle": "Tu guía del huésped y alrededores",
-        "heroDesc": "Toda la información importante para tu estancia: código QR de Wi-Fi rápido, las mejores panaderías, supermercados y líneas de tranvía (10, 11 y 16 a la Feria / Messe y Estación Central).",
+        "heroDesc": "Toda la información importante para tu estancia: código QR de Wi-Fi rápido, las mejores panaderías, supermercados y líneas de tranvía (10, 11 y 16 a la Feria / Messe y Estación Central de Leipzig).",
         "metaAddress": "📍 Mechlerstr. 10, 04105 Leipzig (Ático centro)",
         "metaHost": "📞 Anfitrión Falko: 0152 53453390",
         "metaCheckout": "🕒 Check-out hasta las 11:00",
@@ -1514,35 +1624,36 @@
         "wifiSsidLabel": "Nombre Wi-Fi (SSID)",
         "wifiPassLabel": "Contraseña Wi-Fi",
         "btnCopy": "📋 Copiar",
+        "btnCopyFull": "📋 Copiar contraseña Wi-Fi",
         "wifiAlt5g": "Alternativa 5G: gigacube_5G-EA6A (PW: EJ7FYBMQTLHEAJ66)",
         "qrScanHint": "📷 Escanear con la cámara",
         "transitTitle": "🚊 Tranvías y transporte público",
-        "transitSubtitle": "Conexiones directas a la Estación Central, Feria de Leipzig (Messe) y centro",
+        "transitSubtitle": "Conexiones directas a la Estación Central de Leipzig, Feria de Leipzig (Messe) y centro",
         "messeBadge": "Línea 16 a la Feria (Messe)",
         "messeTime": "⏱️ aprox. 14 min.",
         "messeDirectTitle": "¡Conexión directa sin transbordos!",
         "messeDirectDesc": "Desde la parada Chausseehaus toma la Línea 16 (dirección 'Messegelände') directa a los pabellones de la feria. Frecuencia: cada 10 minutos.",
-        "btnMesseRoute": "🗺️ Ruta a la Feria",
-        "hbfBadge": "A la Estación Central y centro",
+        "btnMesseRoute": "🗺️ Ruta a la Feria de Leipzig",
+        "hbfBadge": "A la Estación Central de Leipzig y centro",
         "hbfTime": "⏱️ solo 4–5 min.",
         "hbfDirectTitle": "A la Estación Central de Leipzig y centro",
-        "hbfDirectDesc": "Desde Chausseehaus, las líneas 10, 11 y 16 pasan cada pocos minutos directo a la Estación Central y centro de la ciudad.",
-        "btnHbfRoute": "🗺️ Ruta a la Estación",
+        "hbfDirectDesc": "Desde Chausseehaus, las líneas 10, 11 y 16 pasan cada pocos minutos directo a la Estación Central de Leipzig y centro de la ciudad.",
+        "btnHbfRoute": "🗺️ Ruta a Leipzig Estación Central",
         "chausseeTag": "Parada principal",
         "chausseeTitle": "Parada Chausseehaus",
         "chausseeDist": "🚶 3 min. (290 m)",
         "chausseeDesc": "Punto neurálgico de transporte público en Georg-Schumann-Straße.",
-        "line16Desc": "Feria / Messe &larr;&rarr; Estación Central &larr;&rarr; Lößnig",
-        "line10Desc": "Wahren &larr;&rarr; Estación Central &larr;&rarr; Connewitz",
-        "line11Desc": "Schkeuditz &larr;&rarr; Estación Central &larr;&rarr; Markkleeberg",
+        "line16Desc": "Feria / Messe &larr;&rarr; Leipzig Estación Central &larr;&rarr; Lößnig",
+        "line10Desc": "Wahren &larr;&rarr; Leipzig Estación Central &larr;&rarr; Connewitz",
+        "line11Desc": "Schkeuditz &larr;&rarr; Leipzig Estación Central &larr;&rarr; Markkleeberg",
         "btnWalkNav": "🚶 Ruta a pie",
         "btnLvbLive": "⏱️ Salidas LVB en vivo",
         "segerTag": "Parada cercana",
         "segerTitle": "Parada Fritz-Seger-Straße",
         "segerDist": "🚶 2 min. (200 m)",
         "segerDesc": "Muy cerca en Georg-Schumann-Straße dirección centro.",
-        "segerLine10": "Directo a la Estación Central",
-        "segerLine11": "Directo a la Estación Central y Augustusplatz",
+        "segerLine10": "Directo a la Estación Central de Leipzig",
+        "segerLine11": "Directo a la Estación Central de Leipzig y Augustusplatz",
         "bakeriesTitle": "🥐 Panaderías y desayuno",
         "bakeriesSubtitle": "Pan recién hecho, café, pasteles tradicionales y obradores artesanos",
         "kleinertTag": "Obrador artesanal",
@@ -1604,7 +1715,7 @@
         "btnCheckin": "🔑 Otwórz drzwi Check-in",
         "heroBadge": "✨ WITAMY W LIPSKU",
         "heroTitle": "Twój przewodnik i okolica",
-        "heroDesc": "Wszystkie ważne informacje dotyczące pobytu: szybki kod QR Wi-Fi, najlepsze piekarnie, supermarkety i bezpośrednie linie tramwajowe (10, 11 i 16 na Targi / Messe i Dworzec Główny).",
+        "heroDesc": "Wszystkie ważne informacje dotyczące pobytu: szybki kod QR Wi-Fi, najlepsze piekarnie, supermarkety i bezpośrednie linie tramwajowe (10, 11 i 16 na Targi Lipskie / Messe i Dworzec Główny w Lipsku).",
         "metaAddress": "📍 Mechlerstr. 10, 04105 Lipsk (Poddasze środkowe drzwi)",
         "metaHost": "📞 Gospodarz Falko: 0152 53453390",
         "metaCheckout": "🕒 Wymeldowanie do 11:00",
@@ -1620,35 +1731,36 @@
         "wifiSsidLabel": "Nazwa Wi-Fi (SSID)",
         "wifiPassLabel": "Hasło Wi-Fi",
         "btnCopy": "📋 Kopiuj",
+        "btnCopyFull": "📋 Kopiuj hasło Wi-Fi",
         "wifiAlt5g": "Alternatywa 5G: gigacube_5G-EA6A (Hasło: EJ7FYBMQTLHEAJ66)",
         "qrScanHint": "📷 Zeskanuj aparatem",
         "transitTitle": "🚊 Tramwaje i komunikacja miejska",
-        "transitSubtitle": "Bezpośrednie połączenia z Dworcem Głównym, Targami Lipskimi (Messe) i centrum",
+        "transitSubtitle": "Bezpośrednie połączenia z Dworcem Głównym w Lipsku, Targami Lipskimi (Messe) i centrum",
         "messeBadge": "Linia 16 na Targi (Messe)",
         "messeTime": "⏱️ ok. 14 min.",
         "messeDirectTitle": "Bezpośrednie połączenie bez przesiadek!",
         "messeDirectDesc": "Z przystanku Chausseehaus linia 16 (kierunek Messegelände) jedzie prosto pod hale targowe. Kursuje co 10 minut.",
-        "btnMesseRoute": "🗺️ Trasa na Targi",
-        "hbfBadge": "Dworzec Główny i centrum",
+        "btnMesseRoute": "🗺️ Trasa na Targi Lipskie",
+        "hbfBadge": "Dworzec Główny w Lipsku i centrum",
         "hbfTime": "⏱️ tylko 4–5 min.",
-        "hbfDirectTitle": "Na Dworzec Główny i do centrum Lipska",
-        "hbfDirectDesc": "Z przystanku Chausseehaus linie 10, 11 i 16 odjeżdżają co kilka minut prosto na Dworzec Główny i do centrum.",
-        "btnHbfRoute": "🗺️ Trasa na Dworzec",
+        "hbfDirectTitle": "Na Dworzec Główny w Lipsku i do centrum",
+        "hbfDirectDesc": "Z przystanku Chausseehaus linie 10, 11 i 16 odjeżdżają co kilka minut prosto na Dworzec Główny w Lipsku i do centrum.",
+        "btnHbfRoute": "🗺️ Trasa na Dworzec Główny w Lipsku",
         "chausseeTag": "Główny przystanek",
         "chausseeTitle": "Przystanek Chausseehaus",
         "chausseeDist": "🚶 3 min. (290 m)",
         "chausseeDesc": "Główny węzeł komunikacyjny przy Georg-Schumann-Straße.",
-        "line16Desc": "Targi / Messe &larr;&rarr; Dworzec Główny &larr;&rarr; Lößnig",
-        "line10Desc": "Wahren &larr;&rarr; Dworzec Główny &larr;&rarr; Connewitz",
-        "line11Desc": "Schkeuditz &larr;&rarr; Dworzec Główny &larr;&rarr; Markkleeberg",
+        "line16Desc": "Targi / Messe &larr;&rarr; Dworzec Główny w Lipsku &larr;&rarr; Lößnig",
+        "line10Desc": "Wahren &larr;&rarr; Dworzec Główny w Lipsku &larr;&rarr; Connewitz",
+        "line11Desc": "Schkeuditz &larr;&rarr; Dworzec Główny w Lipsku &larr;&rarr; Markkleeberg",
         "btnWalkNav": "🚶 Nawiguj pieszo",
         "btnLvbLive": "⏱️ Odjazdy na żywo LVB",
         "segerTag": "Bliski przystanek",
         "segerTitle": "Przystanek Fritz-Seger-Straße",
         "segerDist": "🚶 2 min. (200 m)",
         "segerDesc": "Bardzo blisko na Georg-Schumann-Straße w stronę centrum.",
-        "segerLine10": "Bezpośrednio na Dworzec Główny",
-        "segerLine11": "Bezpośrednio na Dworzec Główny i Augustusplatz",
+        "segerLine10": "Bezpośrednio na Dworzec Główny w Lipsku",
+        "segerLine11": "Bezpośrednio na Dworzec Główny w Lipsku i Augustusplatz",
         "bakeriesTitle": "🥐 Piekarnie i śniadanie",
         "bakeriesSubtitle": "Świeże bułki, kawa, tradycyjne ciastka i rzemieślnicze pieczywo",
         "kleinertTag": "Piekarnia rzemieślnicza",
@@ -1710,7 +1822,7 @@
         "btnCheckin": "🔑 Відкрити двері Check-in",
         "heroBadge": "✨ ЛАСКАВО ПРОСИМО ДО ЛЕЙПЦИГА",
         "heroTitle": "Ваш гід для гостей та район",
-        "heroDesc": "Уся важлива інформація для вашого комфортного перебування: швидкий QR-код Wi-Fi, найкращі пекарні, супермаркети та прямі трамвайні лінії (10, 11 та 16 до Ярмарку / Messe та Головного вокзалу).",
+        "heroDesc": "Уся важлива інформація для вашого комфортного перебування: швидкий QR-код Wi-Fi, найкращі пекарні, супермаркети та прямі трамвайні лінії (10, 11 та 16 до Ярмарку / Messe та Головного вокзалу Лейпцига).",
         "metaAddress": "📍 Mechlerstr. 10, 04105 Leipzig (Мансарда, середні двері)",
         "metaHost": "📞 Господар Фалько: 0152 53453390",
         "metaCheckout": "🕒 Виїзд до 11:00",
@@ -1726,35 +1838,36 @@
         "wifiSsidLabel": "Назва Wi-Fi (SSID)",
         "wifiPassLabel": "Пароль Wi-Fi",
         "btnCopy": "📋 Копіювати",
+        "btnCopyFull": "📋 Копіювати пароль Wi-Fi",
         "wifiAlt5g": "Альтернатива 5G: gigacube_5G-EA6A (Пароль: EJ7FYBMQTLHEAJ66)",
         "qrScanHint": "📷 Сканувати камерою",
         "transitTitle": "🚊 Трамваї та громадський транспорт",
-        "transitSubtitle": "Пряме сполучення з Головним вокзалом, Ярмарком Лейпцига (Messe) та центром",
+        "transitSubtitle": "Пряме сполучення з Головним вокзалом Лейпцига, Ярмарком Лейпцига (Messe) та центром",
         "messeBadge": "Лінія 16 до Ярмарку (Messe)",
         "messeTime": "⏱️ бл. 14 хв.",
         "messeDirectTitle": "Прямий маршрут без пересадок!",
         "messeDirectDesc": "З зупинки Chausseehaus трамвай 16 (напрямок Messegelände) їде прямо до виставкових павільйонів. Інтервал: кожні 10 хвилин.",
         "btnMesseRoute": "🗺️ Маршрут до Ярмарку",
-        "hbfBadge": "До Головного вокзалу та центру",
+        "hbfBadge": "До Головного вокзалу Лейпцига та центру",
         "hbfTime": "⏱️ лише 4–5 хв.",
         "hbfDirectTitle": "До Головного вокзалу Лейпцига та центру",
-        "hbfDirectDesc": "З зупинки Chausseehaus трамваї 10, 11 та 16 ходять кожні кілька хвилин прямо до Головного вокзалу та центру міста.",
-        "btnHbfRoute": "🗺️ Маршрут до вокзалу",
+        "hbfDirectDesc": "З зупинки Chausseehaus трамваї 10, 11 та 16 ходять кожні кілька хвилин прямо до Головного вокзалу Лейпцига та центру міста.",
+        "btnHbfRoute": "🗺️ Маршрут до Головного вокзалу Лейпцига",
         "chausseeTag": "Головна зупинка",
         "chausseeTitle": "Зупинка Chausseehaus",
         "chausseeDist": "🚶 3 хв. (290 м)",
         "chausseeDesc": "Головний транспортний вузол поруч на Georg-Schumann-Straße.",
-        "line16Desc": "Ярмарок / Messe &larr;&rarr; Вокзал &larr;&rarr; Lößnig",
-        "line10Desc": "Wahren &larr;&rarr; Головний вокзал &larr;&rarr; Connewitz",
-        "line11Desc": "Schkeuditz &larr;&rarr; Вокзал &larr;&rarr; Markkleeberg",
+        "line16Desc": "Ярмарок / Messe &larr;&rarr; Головний вокзал Лейпцига &larr;&rarr; Lößnig",
+        "line10Desc": "Wahren &larr;&rarr; Головний вокзал Лейпцига &larr;&rarr; Connewitz",
+        "line11Desc": "Schkeuditz &larr;&rarr; Головний вокзал Лейпцига &larr;&rarr; Markkleeberg",
         "btnWalkNav": "🚶 Маршрут пішки",
         "btnLvbLive": "⏱️ Відправлення LVB наживо",
         "segerTag": "Зупинка поруч",
         "segerTitle": "Зупинка Fritz-Seger-Straße",
         "segerDist": "🚶 2 хв. (200 м)",
         "segerDesc": "Дуже близько на Georg-Schumann-Straße у напрямку центру.",
-        "segerLine10": "Прямо до Головного вокзалу",
-        "segerLine11": "Прямо до Головного вокзалу та Augustusplatz",
+        "segerLine10": "Прямо до Головного вокзалу Лейпцига",
+        "segerLine11": "Прямо до Головного вокзалу Лейпцига та Augustusplatz",
         "bakeriesTitle": "🥐 Пекарні та сніданок",
         "bakeriesSubtitle": "Свіжа випічка, кава, традиційні Лейпцизькі жайворонки та крафтовий хліб",
         "kleinertTag": "Крафтова пекарня",
@@ -1816,7 +1929,7 @@
         "btnCheckin": "🔑 Открыть двери Check-in",
         "heroBadge": "✨ ДОБРО ПОЖАЛОВАТЬ В ЛЕЙПЦИГ",
         "heroTitle": "Ваш гид гостя и окрестности",
-        "heroDesc": "Вся полезная информация для комфортного пребывания: быстрый Wi-Fi QR-код для сканирования, лучшие пекарни, супермаркеты и прямые трамваи (10, 11 и 16 до Выставки / Messe и Главного вокзала).",
+        "heroDesc": "Вся полезная информация для комфортного пребывания: быстрый Wi-Fi QR-код для сканирования, лучшие пекарни, супермаркеты и прямые трамваи (10, 11 и 16 до Лейпцигской ярмарки / Messe и Главного вокзала Лейпцига).",
         "metaAddress": "📍 Mechlerstr. 10, 04105 Leipzig (Мансарда, средняя дверь)",
         "metaHost": "📞 Хозяин Фалько: 0152 53453390",
         "metaCheckout": "🕒 Выезд до 11:00",
@@ -1832,35 +1945,36 @@
         "wifiSsidLabel": "Имя Wi-Fi (SSID)",
         "wifiPassLabel": "Пароль Wi-Fi",
         "btnCopy": "📋 Копировать",
+        "btnCopyFull": "📋 Копировать пароль Wi-Fi",
         "wifiAlt5g": "Альтернатива 5G: gigacube_5G-EA6A (Пароль: EJ7FYBMQTLHEAJ66)",
         "qrScanHint": "📷 Сканировать камерой",
         "transitTitle": "🚊 Трамваи и общественный транспорт",
-        "transitSubtitle": "Прямое сообщение с Главным вокзалом, Лейпцигской ярмаркой (Messe) и центром",
+        "transitSubtitle": "Прямое сообщение с Главным вокзалом Лейпцига, Лейпцигской ярмаркой (Messe) и центром",
         "messeBadge": "Линия 16 до Ярмарки (Messe)",
         "messeTime": "⏱️ ок. 14 мин.",
         "messeDirectTitle": "Прямой маршрут без пересадок!",
         "messeDirectDesc": "С остановки Chausseehaus трамвай 16 (направление Messegelände) идет прямо к выставочным павильонам. Интервал: каждые 10 минут.",
         "btnMesseRoute": "🗺️ Маршрут на Ярмарку",
-        "hbfBadge": "До Главного вокзала и центра",
-        "hbfTime": "⏱️ всего 4–5 мин.",
+        "hbfBadge": "До Главного вокзала Лейпцига и центра",
+        "hbfTime": "⏱️ всего 4–5 min.",
         "hbfDirectTitle": "До Главного вокзала Лейпцига и центра",
-        "hbfDirectDesc": "С остановки Chausseehaus трамваи 10, 11 и 16 отправляются каждые несколько минут прямо на Главный вокзал и в центр города.",
-        "btnHbfRoute": "🗺️ Маршрут на вокзал",
+        "hbfDirectDesc": "С остановки Chausseehaus трамваи 10, 11 и 16 отправляются каждые несколько минут прямо на Главный вокзал Лейпцига и в центр города.",
+        "btnHbfRoute": "🗺️ Маршрут на Главный вокзал Лейпцига",
         "chausseeTag": "Главная остановка",
         "chausseeTitle": "Остановка Chausseehaus",
         "chausseeDist": "🚶 3 мин. (290 м)",
         "chausseeDesc": "Ключевой транспортный узел рядом на Georg-Schumann-Straße.",
-        "line16Desc": "Ярмарка / Messe &larr;&rarr; Вокзал &larr;&rarr; Lößnig",
-        "line10Desc": "Wahren &larr;&rarr; Главный вокзал &larr;&rarr; Connewitz",
-        "line11Desc": "Schkeuditz &larr;&rarr; Вокзал &larr;&rarr; Markkleeberg",
+        "line16Desc": "Ярмарка / Messe &larr;&rarr; Главный вокзал Лейпцига &larr;&rarr; Lößnig",
+        "line10Desc": "Wahren &larr;&rarr; Главный вокзал Лейпцига &larr;&rarr; Connewitz",
+        "line11Desc": "Schkeuditz &larr;&rarr; Главный вокзал Лейпцига &larr;&rarr; Markkleeberg",
         "btnWalkNav": "🚶 Маршрут пешком",
         "btnLvbLive": "⏱️ Отправления онлайн LVB",
         "segerTag": "Ближайшая остановка",
         "segerTitle": "Остановка Fritz-Seger-Straße",
         "segerDist": "🚶 2 мин. (200 м)",
         "segerDesc": "Очень близко на Georg-Schumann-Straße в сторону центра.",
-        "segerLine10": "Прямо до Главного вокзала",
-        "segerLine11": "Прямо до Главного вокзала и Augustusplatz",
+        "segerLine10": "Прямо до Главного вокзала Лейпцига",
+        "segerLine11": "Прямо до Главного вокзала Лейпцига и Augustusplatz",
         "bakeriesTitle": "🥐 Пекарни и завтрак",
         "bakeriesSubtitle": "Свежая выпечка, кофе, традиционные Лейпцигские жаворонки и ремесленный хлеб",
         "kleinertTag": "Ремесленная пекарня",
@@ -1917,12 +2031,12 @@
     }
 };
 
-    // Map POI Translations for Popups
+    // Map POI Translations for Popups (No Hbf abbreviation!)
     const poiTranslations = {
       de: {
         apartment: { name: 'Ferienwohnung StayInLeipzig', desc: 'Mechlerstraße 10, 04105 Leipzig (Dachgeschoss)', btn: '🗺️ In Google Maps öffnen' },
-        chausseehaus: { name: 'Haltestelle Chausseehaus', desc: 'Linien 10, 11 & 16 &bull; Direkt zur Messe & Hbf (290 m, 3 Min.)', btn: '🗺️ In Google Maps öffnen' },
-        fritz_seger: { name: 'Haltestelle Fritz-Seger-Straße', desc: 'Linien 10 & 11 zum Hauptbahnhof (200 m, 2 Min.)', btn: '🗺️ In Google Maps öffnen' },
+        chausseehaus: { name: 'Haltestelle Chausseehaus', desc: 'Linien 10, 11 & 16 &bull; Direkt zur Messe & Leipzig Hauptbahnhof (290 m, 3 Min.)', btn: '🗺️ In Google Maps öffnen' },
+        fritz_seger: { name: 'Haltestelle Fritz-Seger-Straße', desc: 'Linien 10 & 11 zum Leipzig Hauptbahnhof (200 m, 2 Min.)', btn: '🗺️ In Google Maps öffnen' },
         penny: { name: 'PENNY Markt (Gohlis Arkaden)', desc: 'Georg-Schumann-Str. 50 &bull; Mo-Sa 07:00-21:00 Uhr (500 m, 6 Min.)', btn: '🗺️ In Google Maps öffnen' },
         kaufland: { name: 'KAUFLAND Gohlis', desc: 'Georg-Schumann-Str. 105 &bull; Großer Markt, Mo-Sa 07:00-22:00 Uhr (850 m)', btn: '🗺️ In Google Maps öffnen' },
         lidl: { name: 'LIDL Theresienstraße', desc: 'Theresienstr. 35 &bull; Mo-Sa 07:00-21:00 Uhr (700 m, 8 Min.)', btn: '🗺️ In Google Maps öffnen' },
@@ -1931,8 +2045,8 @@
       },
       en: {
         apartment: { name: 'Apartment StayInLeipzig', desc: 'Mechlerstraße 10, 04105 Leipzig (Top floor middle)', btn: '🗺️ Open in Google Maps' },
-        chausseehaus: { name: 'Chausseehaus Tram Stop', desc: 'Lines 10, 11 & 16 &bull; Direct to Fair & Central Station (290 m, 3 min)', btn: '🗺️ Open in Google Maps' },
-        fritz_seger: { name: 'Fritz-Seger-Straße Tram Stop', desc: 'Lines 10 & 11 to Central Station (200 m, 2 min)', btn: '🗺️ Open in Google Maps' },
+        chausseehaus: { name: 'Chausseehaus Tram Stop', desc: 'Lines 10, 11 & 16 &bull; Direct to Fair & Leipzig Central Station (290 m, 3 min)', btn: '🗺️ Open in Google Maps' },
+        fritz_seger: { name: 'Fritz-Seger-Straße Tram Stop', desc: 'Lines 10 & 11 to Leipzig Central Station (200 m, 2 min)', btn: '🗺️ Open in Google Maps' },
         penny: { name: 'PENNY Market (Gohlis Arkaden)', desc: 'Georg-Schumann-Str. 50 &bull; Mon-Sat 07:00-21:00 (500 m, 6 min)', btn: '🗺️ Open in Google Maps' },
         kaufland: { name: 'KAUFLAND Gohlis', desc: 'Georg-Schumann-Str. 105 &bull; Large Market, Mon-Sat 07:00-22:00 (850 m)', btn: '🗺️ Open in Google Maps' },
         lidl: { name: 'LIDL Theresienstraße', desc: 'Theresienstr. 35 &bull; Mon-Sat 07:00-21:00 (700 m, 8 min)', btn: '🗺️ Open in Google Maps' },
@@ -1941,8 +2055,8 @@
       },
       es: {
         apartment: { name: 'Apartamento StayInLeipzig', desc: 'Mechlerstraße 10, 04105 Leipzig (Ático centro)', btn: '🗺️ Abrir en Google Maps' },
-        chausseehaus: { name: 'Parada Chausseehaus', desc: 'Líneas 10, 11 y 16 &bull; Directo a la Feria y Estación (290 m, 3 min)', btn: '🗺️ Abrir en Google Maps' },
-        fritz_seger: { name: 'Parada Fritz-Seger-Straße', desc: 'Líneas 10 y 11 a la Estación Central (200 m, 2 min)', btn: '🗺️ Abrir en Google Maps' },
+        chausseehaus: { name: 'Parada Chausseehaus', desc: 'Líneas 10, 11 y 16 &bull; Directo a la Feria y Estación Central de Leipzig (290 m, 3 min)', btn: '🗺️ Abrir en Google Maps' },
+        fritz_seger: { name: 'Parada Fritz-Seger-Straße', desc: 'Líneas 10 y 11 a la Estación Central de Leipzig (200 m, 2 min)', btn: '🗺️ Abrir en Google Maps' },
         penny: { name: 'Supermercado PENNY (Gohlis Arkaden)', desc: 'Georg-Schumann-Str. 50 &bull; Lu-Sá 07:00-21:00 (500 m, 6 min)', btn: '🗺️ Abrir en Google Maps' },
         kaufland: { name: 'KAUFLAND Gohlis', desc: 'Georg-Schumann-Str. 105 &bull; Hipermercado, Lu-Sá 07:00-22:00 (850 m)', btn: '🗺️ Abrir en Google Maps' },
         lidl: { name: 'LIDL Theresienstraße', desc: 'Theresienstr. 35 &bull; Lu-Sá 07:00-21:00 (700 m, 8 min)', btn: '🗺️ Abrir en Google Maps' },
@@ -1951,8 +2065,8 @@
       },
       pl: {
         apartment: { name: 'Apartament StayInLeipzig', desc: 'Mechlerstraße 10, 04105 Lipsk (Poddasze środkowe drzwi)', btn: '🗺️ Otwórz w Google Maps' },
-        chausseehaus: { name: 'Przystanek Chausseehaus', desc: 'Linie 10, 11 i 16 &bull; Prosto na Targi i Dworzec (290 m, 3 min)', btn: '🗺️ Otwórz w Google Maps' },
-        fritz_seger: { name: 'Przystanek Fritz-Seger-Straße', desc: 'Linie 10 i 11 na Dworzec Główny (200 m, 2 min)', btn: '🗺️ Otwórz w Google Maps' },
+        chausseehaus: { name: 'Przystanek Chausseehaus', desc: 'Linie 10, 11 i 16 &bull; Prosto na Targi i Dworzec Główny w Lipsku (290 m, 3 min)', btn: '🗺️ Otwórz w Google Maps' },
+        fritz_seger: { name: 'Przystanek Fritz-Seger-Straße', desc: 'Linie 10 i 11 na Dworzec Główny w Lipsku (200 m, 2 min)', btn: '🗺️ Otwórz w Google Maps' },
         penny: { name: 'Market PENNY (Gohlis Arkaden)', desc: 'Georg-Schumann-Str. 50 &bull; Pn-So 07:00-21:00 (500 m, 6 min)', btn: '🗺️ Otwórz w Google Maps' },
         kaufland: { name: 'KAUFLAND Gohlis', desc: 'Georg-Schumann-Str. 105 &bull; Hipermarket, Pn-So 07:00-22:00 (850 m)', btn: '🗺️ Otwórz w Google Maps' },
         lidl: { name: 'LIDL Theresienstraße', desc: 'Theresienstr. 35 &bull; Pn-So 07:00-21:00 (700 m, 8 min)', btn: '🗺️ Otwórz w Google Maps' },
@@ -1961,8 +2075,8 @@
       },
       uk: {
         apartment: { name: 'Апартаменти StayInLeipzig', desc: 'Mechlerstraße 10, 04105 Leipzig (Мансарда, середні двері)', btn: '🗺️ Відкрити в Google Maps' },
-        chausseehaus: { name: 'Зупинка Chausseehaus', desc: 'Лінії 10, 11 та 16 &bull; До Ярмарку та Вокзалу (290 м, 3 хв)', btn: '🗺️ Відкрити в Google Maps' },
-        fritz_seger: { name: 'Зупинка Fritz-Seger-Straße', desc: 'Лінії 10 та 11 до Головного вокзалу (200 м, 2 хв)', btn: '🗺️ Відкрити в Google Maps' },
+        chausseehaus: { name: 'Зупинка Chausseehaus', desc: 'Лінії 10, 11 та 16 &bull; До Ярмарку та Головного вокзалу Лейпцига (290 м, 3 хв)', btn: '🗺️ Відкрити в Google Maps' },
+        fritz_seger: { name: 'Зупинка Fritz-Seger-Straße', desc: 'Лінії 10 та 11 до Головного вокзалу Лейпцига (200 м, 2 хв)', btn: '🗺️ Відкрити в Google Maps' },
         penny: { name: 'Маркет PENNY (Gohlis Arkaden)', desc: 'Georg-Schumann-Str. 50 &bull; Пн-Сб 07:00-21:00 (500 м, 6 хв)', btn: '🗺️ Відкрити в Google Maps' },
         kaufland: { name: 'KAUFLAND Gohlis', desc: 'Georg-Schumann-Str. 105 &bull; Гіпермаркет, Пн-Сб 07:00-22:00 (850 м)', btn: '🗺️ Відкрити в Google Maps' },
         lidl: { name: 'LIDL Theresienstraße', desc: 'Theresienstr. 35 &bull; Пн-Сб 07:00-21:00 (700 м, 8 хв)', btn: '🗺️ Відкрити в Google Maps' },
@@ -1971,8 +2085,8 @@
       },
       ru: {
         apartment: { name: 'Апартаменты StayInLeipzig', desc: 'Mechlerstraße 10, 04105 Leipzig (Мансарда, средняя дверь)', btn: '🗺️ Открыть в Google Maps' },
-        chausseehaus: { name: 'Остановка Chausseehaus', desc: 'Линии 10, 11 и 16 &bull; До Ярмарки и Вокзала (290 м, 3 мин)', btn: '🗺️ Открыть в Google Maps' },
-        fritz_seger: { name: 'Остановка Fritz-Seger-Straße', desc: 'Линии 10 и 11 на Главный вокзал (200 м, 2 мин)', btn: '🗺️ Открыть в Google Maps' },
+        chausseehaus: { name: 'Остановка Chausseehaus', desc: 'Линии 10, 11 и 16 &bull; До Ярмарки и Главного вокзала Лейпцига (290 м, 3 мин)', btn: '🗺️ Открыть в Google Maps' },
+        fritz_seger: { name: 'Остановка Fritz-Seger-Straße', desc: 'Линии 10 и 11 на Главный вокзал Лейпцига (200 м, 2 мин)', btn: '🗺️ Открыть в Google Maps' },
         penny: { name: 'Маркет PENNY (Gohlis Arkaden)', desc: 'Georg-Schumann-Str. 50 &bull; Пн-Сб 07:00-21:00 (500 м, 6 мин)', btn: '🗺️ Открыть в Google Maps' },
         kaufland: { name: 'KAUFLAND Gohlis', desc: 'Georg-Schumann-Str. 105 &bull; Гипермаркет, Пн-Сб 07:00-22:00 (850 м)', btn: '🗺️ Открыть в Google Maps' },
         lidl: { name: 'LIDL Theresienstraße', desc: 'Theresienstr. 35 &bull; Пн-Сб 07:00-21:00 (700 м, 8 мин)', btn: '🗺️ Открыть в Google Maps' },
@@ -2162,9 +2276,9 @@
         if (info) {
           const popupContent = `
             <div style="font-family:'Inter',sans-serif;padding:4px;color:#0f172a;">
-              <div style="font-weight:700;font-size:14px;margin-bottom:2px;">${info.name}</div>
-              <div style="font-size:12px;color:#475569;margin-bottom:8px;">${info.desc}</div>
-              <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-block;background:#0284c7;color:white;font-size:11px;font-weight:600;padding:5px 10px;border-radius:6px;text-decoration:none;">
+              <div style="font-weight:700;font-size:13.5px;margin-bottom:2px;">${info.name}</div>
+              <div style="font-size:12px;color:#475569;margin-bottom:8px;line-height:1.35;">${info.desc}</div>
+              <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-block;background:#0284c7;color:white;font-size:11.5px;font-weight:700;padding:6px 10px;border-radius:6px;text-decoration:none;">
                 ${info.btn}
               </a>
             </div>
