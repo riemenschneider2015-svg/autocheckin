@@ -2364,14 +2364,17 @@
     ];
 
     function initMap() {
+      // Zoomed out slightly (zoom 14) so all highlights are immediately visible
       map = L.map('interactive-map', {
         scrollWheelZoom: false
-      }).setView([51.3588, 12.3735], 15);
+      }).setView([51.3592, 12.3745], 14);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19
       }).addTo(map);
+
+      const bounds = L.latLngBounds([]);
 
       poiData.forEach(poi => {
         const isHome = poi.type === 'home';
@@ -2386,8 +2389,14 @@
         });
 
         const marker = L.marker([poi.lat, poi.lon], { icon: customIcon }).addTo(map);
+        bounds.extend([poi.lat, poi.lon]);
         markers.push({ id: poi.id, type: poi.type, marker: marker, link: poi.link, isHome: isHome });
       });
+
+      // Fit all markers nicely with padding (zoom 14)
+      if (bounds.isValid()) {
+        map.fitBounds(bounds, { padding: [26, 26], maxZoom: 14 });
+      }
 
       updateMapPopups(currentLang);
     }
@@ -2408,9 +2417,7 @@
             </div>
           `;
           item.marker.unbindPopup().bindPopup(popupContent);
-          if (item.isHome) {
-            item.marker.openPopup();
-          }
+          // Do NOT auto-open popup on load so all highlights remain unobstructed and clearly visible!
         }
       });
     }
@@ -2419,13 +2426,19 @@
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       event.target.classList.add('active');
 
+      const visibleBounds = L.latLngBounds([]);
       markers.forEach(item => {
         if (type === 'all' || item.type === 'home' || item.type === type) {
           map.addLayer(item.marker);
+          visibleBounds.extend(item.marker.getLatLng());
         } else {
           map.removeLayer(item.marker);
         }
       });
+
+      if (visibleBounds.isValid()) {
+        map.fitBounds(visibleBounds, { padding: [26, 26], maxZoom: 14 });
+      }
     }
 
     // Initialize on load
