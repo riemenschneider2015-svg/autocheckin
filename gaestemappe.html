@@ -1044,6 +1044,160 @@
       }
     }
 
+
+    /* ==========================================================================
+       21st.dev Modern Spotlight & Micro-Interaction Hover Suite (PC / Pointer)
+       ========================================================================== */
+    @media (hover: hover) and (pointer: fine) {
+      /* Base Interactive Cards */
+      .poi-card, .wifi-card, .transit-col, .rule-item, .hero-card {
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                    box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                    border-color 0.28s ease,
+                    background 0.28s ease !important;
+        will-change: transform, box-shadow;
+      }
+
+      /* 21st.dev Dynamic Radial Cursor Spotlight */
+      .poi-card::before, .wifi-card::before, .transit-col::before, .rule-item::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        background: radial-gradient(
+          420px circle at var(--mouse-x, -200px) var(--mouse-y, -200px),
+          var(--spotlight-color, rgba(56, 189, 248, 0.16)),
+          transparent 65%
+        );
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* 21st.dev Subtle Border Glow */
+      .poi-card::after, .wifi-card::after, .transit-col::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: radial-gradient(
+          320px circle at var(--mouse-x, -200px) var(--mouse-y, -200px),
+          var(--border-glow, rgba(56, 189, 248, 0.65)),
+          transparent 70%
+        );
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .poi-card:hover::before, .wifi-card:hover::before, .transit-col:hover::before, .rule-item:hover::before,
+      .poi-card:hover::after, .wifi-card:hover::after, .transit-col:hover::after {
+        opacity: 1;
+      }
+
+      /* Smooth Lift on Hover */
+      .poi-card:hover, .transit-col:hover, .rule-item:hover {
+        transform: translateY(-5px);
+      }
+      .wifi-card:hover {
+        transform: translateY(-3px);
+      }
+
+      /* Ensure card content sits above the spotlight overlay */
+      .poi-card > *, .transit-col > *, .wifi-card > *, .rule-item > * {
+        position: relative;
+        z-index: 3;
+      }
+
+      /* 🥐 Bakeries: Warm Gold / Amber Spotlight */
+      #bakeries .poi-card {
+        --spotlight-color: rgba(245, 158, 11, 0.18);
+        --border-glow: rgba(245, 158, 11, 0.7);
+      }
+      #bakeries .poi-card:hover {
+        border-color: rgba(245, 158, 11, 0.55);
+        box-shadow: 0 18px 42px -10px rgba(0, 0, 0, 0.65),
+                    0 0 25px -4px rgba(245, 158, 11, 0.28);
+      }
+
+      /* 🛒 Supermarkets: Fresh Emerald / Green Spotlight */
+      #markets .poi-card {
+        --spotlight-color: rgba(34, 197, 94, 0.18);
+        --border-glow: rgba(34, 197, 94, 0.7);
+      }
+      #markets .poi-card:hover {
+        border-color: rgba(34, 197, 94, 0.55);
+        box-shadow: 0 18px 42px -10px rgba(0, 0, 0, 0.65),
+                    0 0 25px -4px rgba(34, 197, 94, 0.28);
+      }
+
+      /* 📶 Wi-Fi Card: Premium Cyan / Purple Spotlight */
+      .wifi-card {
+        --spotlight-color: rgba(168, 85, 247, 0.2);
+        --border-glow: rgba(56, 189, 248, 0.7);
+      }
+      .wifi-card:hover {
+        border-color: rgba(56, 189, 248, 0.55);
+        box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.7),
+                    0 0 30px -4px rgba(56, 189, 248, 0.32);
+      }
+
+      /* 🚊 Transit Box: Clean Sky Blue Spotlight */
+      .transit-col {
+        --spotlight-color: rgba(56, 189, 248, 0.18);
+        --border-glow: rgba(56, 189, 248, 0.7);
+      }
+      .transit-col:hover {
+        border-color: rgba(56, 189, 248, 0.55);
+        box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.65),
+                    0 0 22px -3px rgba(56, 189, 248, 0.25);
+      }
+
+      /* 📋 House Rules: Clean Subtle Highlight */
+      .rule-item {
+        --spotlight-color: rgba(56, 189, 248, 0.14);
+      }
+      .rule-item:hover {
+        border-color: rgba(56, 189, 248, 0.45);
+        box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.55);
+      }
+
+      /* Micro-Interactions on Nested Elements */
+      .poi-card:hover .poi-qr-thumb {
+        transform: scale(1.06);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+      }
+      .poi-qr-thumb {
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+      }
+
+      .poi-card:hover .poi-action-btn {
+        transform: translateY(-1.5px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        filter: brightness(1.08);
+      }
+      .poi-action-btn {
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .poi-card:hover .poi-type-tag {
+        filter: brightness(1.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      }
+      .poi-type-tag {
+        transition: filter 0.2s ease, box-shadow 0.2s ease;
+      }
+    }
+
     /* PRINT STYLESHEET (Druckversion für Mappe in der Wohnung) */
     @media print {
       body {
@@ -3002,6 +3156,25 @@
       // Auto-refresh opening statuses & live clock every 30 seconds
       setInterval(updateAllLiveStatuses, 30000);
     });
+
+    // 21st.dev Interactive Spotlight Cursor Tracking (Only on pointer/hover devices)
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      const interactiveCards = document.querySelectorAll('.poi-card, .wifi-card, .transit-col, .rule-item');
+      interactiveCards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.setProperty('--mouse-x', '-200px');
+          card.style.setProperty('--mouse-y', '-200px');
+        });
+      });
+    }
+
   </script>
 </body>
 </html>
