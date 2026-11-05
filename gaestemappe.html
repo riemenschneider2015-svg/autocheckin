@@ -671,12 +671,23 @@
       border-radius: 50%;
       color: white;
       font-weight: 800;
-      font-size: 14px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      border: 2px solid white;
+      font-size: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.45);
+      border: 3px solid #ffffff;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      user-select: none;
+    }
+    .custom-marker:hover, .custom-marker:active {
+      transform: scale(1.18);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+      z-index: 1000 !important;
     }
     .marker-home {
       background: #ef4444;
+      font-size: 24px;
+      border: 3.5px solid #ffffff;
+      box-shadow: 0 0 18px rgba(239, 68, 68, 0.7);
       animation: pulse 2s infinite;
     }
 
@@ -894,6 +905,9 @@
           <div class="nav-title" data-i18n="navTitle" style="font-size:15px; font-weight:800; display:flex; align-items:center; gap:6px;">📖 Gästemappe & Guide</div>
         </a>
         <div class="nav-actions">
+          <a href="umgebungskarte_stayinleipzig.pdf" download="umgebungskarte_stayinleipzig.pdf" class="btn btn-secondary" title="Speziell erstellte PDF-Karte herunterladen" style="background: rgba(2, 132, 199, 0.2); border-color: rgba(56, 189, 248, 0.4); color: #38bdf8;">
+            📥 <span class="hide-sm" data-i18n="btnPdfMap">PDF-Karte</span>
+          </a>
           <button onclick="window.print()" class="btn btn-secondary" title="Drucken oder als PDF speichern">
             🖨️ <span class="hide-sm" data-i18n="btnPrint">Drucken / PDF</span>
           </button>
@@ -931,6 +945,9 @@
         <div class="meta-chip" data-i18n="metaAddress">📍 Mechlerstr. 10, 04105 Leipzig (Dachgeschoss Mitte)</div>
         <div class="meta-chip" data-i18n="metaHost">📞 Gastgeber Falko: 0152 53453390</div>
         <div class="meta-chip" data-i18n="metaCheckout">🕒 Check-out bis 11:00 Uhr</div>
+        <a href="umgebungskarte_stayinleipzig.pdf" download="umgebungskarte_stayinleipzig.pdf" class="meta-chip" style="text-decoration:none; color:#38bdf8; background:rgba(2, 132, 199, 0.2); border-color:rgba(56, 189, 248, 0.4); font-weight:700;">
+          <span data-i18n="metaPdfMap">📥 PDF-Karte herunterladen</span>
+        </a>
       </div>
     </header>
 
@@ -1523,7 +1540,12 @@
         "schladitzTitle": "Bäckerei & Konditorei Schladitz",
         "schladitzDist": "🚶 2 Min. (150 m)",
         "schladitzDesc": "Direkt um die Ecke! Frische knusprige Brötchen ab 06:30 Uhr morgens, traditionelles Natursauerteigbrot, feine Kuchen und Kaffeespezialitäten.",
-        "schladitzHours": "🕒 Mo–Fr 06:30–18:00 | Sa 07:00–12:00 | So 08:00–11:00 Uhr"
+        "schladitzHours": "🕒 Mo–Fr 06:30–18:00 | Sa 07:00–12:00 | So 08:00–11:00 Uhr",
+        "btnPdfMap": "PDF-Karte",
+        "metaPdfMap": "📥 PDF-Karte herunterladen",
+        "pdfBannerTitle": "Speziell erstellte PDF-Umgebungskarte",
+        "pdfBannerDesc": "Mit extra großen Piktogrammen, Gehzeiten, Bäckereien, ÖPNV & QR-Codes – ideal zum Ausdrucken oder Offline-Speichern.",
+        "btnPdfDownload": "PDF-Karte herunterladen (A4)"
     },
     "en": {
         "navTitle": "Guest Guide & Area Map",
@@ -1635,7 +1657,12 @@
         "schladitzTitle": "Schladitz Bakery & Confectionery",
         "schladitzDist": "🚶 2 min (150 m)",
         "schladitzDesc": "Right around the corner! Crispy fresh morning bread rolls from 6:30 AM, natural sourdough bread, fine cakes, and pastries.",
-        "schladitzHours": "🕒 Mon–Fri 06:30–18:00 | Sat 07:00–12:00 | Sun 08:00–11:00"
+        "schladitzHours": "🕒 Mon–Fri 06:30–18:00 | Sat 07:00–12:00 | Sun 08:00–11:00",
+        "btnPdfMap": "PDF Map",
+        "metaPdfMap": "📥 Download PDF Map",
+        "pdfBannerTitle": "Specially crafted PDF Area Map",
+        "pdfBannerDesc": "With extra large icons, walking times, bakeries, transit & QR codes – perfect for printing or offline use.",
+        "btnPdfDownload": "Download PDF Map (A4)"
     },
     "es": {
         "navTitle": "Guía del huésped y zona",
@@ -1747,7 +1774,12 @@
         "schladitzTitle": "Panadería y Pastelería Schladitz",
         "schladitzDist": "🚶 2 min. (150 m)",
         "schladitzDesc": "¡A la vuelta de la esquina! Panecillos crujientes recién horneados desde las 06:30 h, pan artesanal de masa madre y deliciosas tartas.",
-        "schladitzHours": "🕒 Lu–Vi 06:30–18:00 | Sá 07:00–12:00 | Do 08:00–11:00"
+        "schladitzHours": "🕒 Lu–Vi 06:30–18:00 | Sá 07:00–12:00 | Do 08:00–11:00",
+        "btnPdfMap": "Mapa PDF",
+        "metaPdfMap": "📥 Descargar mapa en PDF",
+        "pdfBannerTitle": "Mapa de la zona en PDF especialmente diseñado",
+        "pdfBannerDesc": "Con iconos extra grandes, tiempos a pie, panaderías, transporte y códigos QR – ideal para imprimir o guardar sin conexión.",
+        "btnPdfDownload": "Descargar mapa PDF (A4)"
     },
     "pl": {
         "navTitle": "Przewodnik gościa i okolica",
@@ -1859,7 +1891,12 @@
         "schladitzTitle": "Piekarnia i Cukiernia Schladitz",
         "schladitzDist": "🚶 2 min. (150 m)",
         "schladitzDesc": "Tuż za rogiem! Chrupiące świeże bułki od 06:30 rano, tradycyjny chleb na naturalnym zakwasie, wyśmienite ciasta i kawa.",
-        "schladitzHours": "🕒 Pn–Pt 06:30–18:00 | So 07:00–12:00 | Nd 08:00–11:00"
+        "schladitzHours": "🕒 Pn–Pt 06:30–18:00 | So 07:00–12:00 | Nd 08:00–11:00",
+        "btnPdfMap": "Mapa PDF",
+        "metaPdfMap": "📥 Pobierz mapę w PDF",
+        "pdfBannerTitle": "Specjalnie przygotowana mapa okolicy w PDF",
+        "pdfBannerDesc": "Z dużymi ikonami, czasem dojścia, piekarniami, transportem i kodami QR – idealna do druku i na telefon.",
+        "btnPdfDownload": "Pobierz mapę PDF (A4)"
     },
     "uk": {
         "navTitle": "Гід для гостей та район",
@@ -1971,7 +2008,12 @@
         "schladitzTitle": "Пекарня та Кондитерська Schladitz",
         "schladitzDist": "🚶 2 хв. (150 м)",
         "schladitzDesc": "Прямо за рогом! Свіжі хрусткі булочки з 06:30 ранку, традиційний хліб на заквасці, смачні тістечка та кава.",
-        "schladitzHours": "🕒 Пн–Пт 06:30–18:00 | Сб 07:00–12:00 | Нд 08:00–11:00"
+        "schladitzHours": "🕒 Пн–Пт 06:30–18:00 | Сб 07:00–12:00 | Нд 08:00–11:00",
+        "btnPdfMap": "PDF-карта",
+        "metaPdfMap": "📥 Завантажити PDF-карту",
+        "pdfBannerTitle": "Спеціально створена PDF-карта району",
+        "pdfBannerDesc": "З великими піктограмами, часом пішки, пекарнями, транспортом та QR-кодами – ідеально для друку або офлайн.",
+        "btnPdfDownload": "Завантажити PDF-карту (A4)"
     },
     "ru": {
         "navTitle": "Гид гостя и карта района",
@@ -2083,7 +2125,12 @@
         "schladitzTitle": "Пекарня и Кондитерская Schladitz",
         "schladitzDist": "🚶 2 мин. (150 м)",
         "schladitzDesc": "Прямо за углом! Свежие хрустящие булочки с 06:30 утра, натуральный подовый хлеб на закваске, домашние пирожные и кофе.",
-        "schladitzHours": "🕒 Пн–Пт 06:30–18:00 | Сб 07:00–12:00 | Вс 08:00–11:00"
+        "schladitzHours": "🕒 Пн–Пт 06:30–18:00 | Сб 07:00–12:00 | Вс 08:00–11:00",
+        "btnPdfMap": "PDF-карта",
+        "metaPdfMap": "📥 Скачать карту в PDF",
+        "pdfBannerTitle": "Специально созданная PDF-карта района",
+        "pdfBannerDesc": "С крупными пиктограммами, временем пешком, пекарнями, транспортом и QR-кодами – идеально для печати или офлайн.",
+        "btnPdfDownload": "Скачать PDF-карту (A4)"
     }
 };
 
@@ -2325,11 +2372,14 @@
 
       poiData.forEach(poi => {
         const isHome = poi.type === 'home';
+        const size = isHome ? 48 : 40;
+        const half = size / 2;
         const customIcon = L.divIcon({
           className: 'custom-leaflet-marker',
-          html: `<div class="custom-marker ${isHome ? 'marker-home' : ''}" style="background-color:${poi.color};width:${isHome ? '36px' : '30px'};height:${isHome ? '36px' : '30px'};">${poi.icon}</div>`,
-          iconSize: [isHome ? 36 : 30, isHome ? 36 : 30],
-          iconAnchor: [isHome ? 18 : 15, isHome ? 18 : 15]
+          html: `<div class="custom-marker ${isHome ? 'marker-home' : ''}" style="background-color:${poi.color};width:${size}px;height:${size}px;">${poi.icon}</div>`,
+          iconSize: [size, size],
+          iconAnchor: [half, half],
+          popupAnchor: [0, -half - 4]
         });
 
         const marker = L.marker([poi.lat, poi.lon], { icon: customIcon }).addTo(map);
