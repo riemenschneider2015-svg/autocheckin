@@ -30,12 +30,16 @@ RATE_FILE = os.path.join(BASE_DIR, "ratelimit.json")
 def parse_iso(dt_str):
     if not dt_str:
         return datetime.now()
-    clean = str(dt_str).replace(" ", "T")
+    clean = str(dt_str).strip().replace(" ", "T")
     if "T" in clean:
         parts = clean.split("T")
         date_part = parts[0]
-        time_part = parts[1][:8]
-        return datetime.strptime(date_part + " " + time_part, "%Y-%m-%d %H:%M:%S")
+        time_part = parts[1]
+        t_sub = time_part.split(":")
+        hh = t_sub[0].zfill(2)
+        mm = t_sub[1].zfill(2) if len(t_sub) > 1 else "00"
+        ss = t_sub[2][:2].zfill(2) if len(t_sub) > 2 else "00"
+        return datetime.strptime("{0} {1}:{2}:{3}".format(date_part, hh, mm, ss), "%Y-%m-%d %H:%M:%S")
     return datetime.strptime(clean[:10], "%Y-%m-%d")
 
 def load_data():
@@ -121,20 +125,36 @@ def find_pin(pin_code, pins, settings):
     grace_before = timedelta(minutes=settings.get("grace_period_minutes_before", 0))
     grace_after = timedelta(minutes=settings.get("grace_period_minutes_after", 60))
 
+    matching_entries = []
     for p in pins:
         if str(p.get("pin", "")).strip() == str(pin_code).strip() and p.get("active", True):
             try:
                 valid_from = parse_iso(p.get("valid_from")) - grace_before
                 valid_until = parse_iso(p.get("valid_until")) + grace_after
+                matching_entries.append((p, valid_from, valid_until))
             except Exception:
                 continue
 
-            if valid_from <= now <= valid_until:
-                return True, p, "active"
-            elif now < valid_from:
-                return False, p, "future"
-            elif now > valid_until:
-                return False, p, "expired"
+    if not matching_entries:
+        return False, None, "not_found"
+
+    # 1. Check if any matching entry is CURRENTLY active
+    for p, v_from, v_until in matching_entries:
+        if v_from <= now <= v_until:
+            return True, p, "active"
+
+    # 2. Check future bookings (closest upcoming first)
+    future_entries = [(p, v_from, v_until) for (p, v_from, v_until) in matching_entries if now < v_from]
+    if future_entries:
+        future_entries.sort(key=lambda x: x[1])
+        return False, future_entries[0][0], "future"
+
+    # 3. All matching bookings are expired (most recently ended)
+    expired_entries = [(p, v_from, v_until) for (p, v_from, v_until) in matching_entries if now > v_until]
+    if expired_entries:
+        expired_entries.sort(key=lambda x: x[2], reverse=True)
+        return False, expired_entries[0][0], "expired"
+
     return False, None, "not_found"
 
 def trigger_door(door, settings):
@@ -701,21 +721,25 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         name = str(payload.get("name", "Gast")).strip()
         valid_from = payload.get("valid_from")
         valid_until = payload.get("valid_until")
+        booking_id = payload.get("booking_id")
 
         updated = False
-        for p in pins:
-            if str(p.get("pin")) == new_pin:
-                p["name"] = name
-                p["valid_from"] = valid_from
-                p["valid_until"] = valid_until
-                p["active"] = True
-                updated = True
-                break
+        if booking_id:
+            for p in pins:
+                if p.get("booking_id") == booking_id:
+                    p["pin"] = new_pin
+                    p["name"] = name
+                    p["valid_from"] = valid_from
+                    p["valid_until"] = valid_until
+                    p["active"] = True
+                    updated = True
+                    break
+
         if not updated:
             pins.append({
                 "pin": new_pin,
                 "name": name,
-                "booking_id": payload.get("booking_id", "MANUAL-" + str(int(time.time()))),
+                "booking_id": booking_id or ("MANUAL-" + str(int(time.time()))),
                 "valid_from": valid_from,
                 "valid_until": valid_until,
                 "active": True,
@@ -730,9 +754,13 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         if admin_pin not in ("04157", "octasias"):
             self.send_json({"success": False, "error": "Nicht autorisiert"}, code=403)
             return
-        target = str(payload.get("pin", "")).strip()
+        target_pin = str(payload.get("pin", "")).strip()
+        booking_id = str(payload.get("booking_id", "")).strip()
         data = load_data()
-        data["pins"] = [p for p in data.get("pins", []) if str(p.get("pin")) != target]
+        if booking_id:
+            data["pins"] = [p for p in data.get("pins", []) if p.get("booking_id") != booking_id]
+        else:
+            data["pins"] = [p for p in data.get("pins", []) if str(p.get("pin")) != target_pin]
         save_data(data)
         self.send_json({"success": True, "message": "PIN geloescht"})
 

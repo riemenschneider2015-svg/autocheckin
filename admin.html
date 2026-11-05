@@ -962,14 +962,14 @@
               <button class="btn btn-sm btn-link-only" onclick="copyLink('${link}')" title="Admin Check-in Link kopieren">🔗 Link</button>
             ` : `
               <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
-                <button class="btn btn-sm btn-msg-en" onclick="copyGuestMessage('${p.pin}', 'en')" title="Komplette englische Begrüßungsnachricht mit Daten kopieren">✉️ Text (EN)</button>
-                <button class="btn btn-sm btn-msg-de" onclick="copyGuestMessage('${p.pin}', 'de')" title="Komplette deutsche Begrüßungsnachricht mit Daten kopieren">🇩🇪 Text (DE)</button>
+                <button class="btn btn-sm btn-msg-en" onclick="copyGuestMessage('${p.booking_id || p.pin}', 'en')" title="Komplette englische Begrüßungsnachricht mit Daten kopieren">✉️ Text (EN)</button>
+                <button class="btn btn-sm btn-msg-de" onclick="copyGuestMessage('${p.booking_id || p.pin}', 'de')" title="Komplette deutsche Begrüßungsnachricht mit Daten kopieren">🇩🇪 Text (DE)</button>
                 <button class="btn btn-sm btn-link-only" onclick="copyLink('${link}')" title="Nur den Check-in Link kopieren">🔗 Link</button>
               </div>
             `}
           </td>
           <td>
-            ${p.role !== 'admin' ? `<button class="btn btn-sm btn-danger" onclick="deletePin('${p.pin}')">Löschen</button>` : '<em>Fest</em>'}
+            ${p.role !== 'admin' ? `<button class="btn btn-sm btn-danger" onclick="deletePin('${p.pin}', '${p.booking_id || ''}')">Löschen</button>` : '<em>Fest</em>'}
           </td>
         `;
         tb.appendChild(tr);
@@ -1017,10 +1017,10 @@
             </div>
           ` : `
             <div style="display:grid; grid-template-columns: 1fr 1fr auto auto; gap:7px; align-items:center; margin-top:2px;">
-              <button class="btn btn-sm btn-msg-en" style="padding:9px 6px; font-size:12px; font-weight:700; justify-content:center;" onclick="copyGuestMessage('${p.pin}', 'en')" title="Komplette englische Begrüßungsnachricht kopieren">✉️ Text (EN)</button>
-              <button class="btn btn-sm btn-msg-de" style="padding:9px 6px; font-size:12px; font-weight:700; justify-content:center;" onclick="copyGuestMessage('${p.pin}', 'de')" title="Komplette deutsche Begrüßungsnachricht kopieren">🇩🇪 Text (DE)</button>
+              <button class="btn btn-sm btn-msg-en" style="padding:9px 6px; font-size:12px; font-weight:700; justify-content:center;" onclick="copyGuestMessage('${p.booking_id || p.pin}', 'en')" title="Komplette englische Begrüßungsnachricht kopieren">✉️ Text (EN)</button>
+              <button class="btn btn-sm btn-msg-de" style="padding:9px 6px; font-size:12px; font-weight:700; justify-content:center;" onclick="copyGuestMessage('${p.booking_id || p.pin}', 'de')" title="Komplette deutsche Begrüßungsnachricht kopieren">🇩🇪 Text (DE)</button>
               <button class="btn btn-sm btn-link-only" style="padding:9px 11px; font-size:13px;" onclick="copyLink('${link}')" title="Nur 1-Klick Check-in Link kopieren">🔗</button>
-              <button class="btn btn-sm btn-danger" style="padding:9px 11px; font-size:13px;" onclick="deletePin('${p.pin}')" title="PIN löschen">🗑️</button>
+              <button class="btn btn-sm btn-danger" style="padding:9px 11px; font-size:13px;" onclick="deletePin('${p.pin}', '${p.booking_id || ''}')" title="PIN löschen">🗑️</button>
             </div>
           `}
         `;
@@ -1283,8 +1283,8 @@
     copyTextToClipboard(link, "✅ Check-in Link in die Zwischenablage kopiert!");
   }
 
-  function copyGuestMessage(pinCode, lang = 'en') {
-    const pinObj = cachedPins.find(p => String(p.pin) === String(pinCode));
+  function copyGuestMessage(idOrPin, lang = 'en') {
+    const pinObj = cachedPins.find(p => (p.booking_id && p.booking_id === idOrPin) || String(p.pin) === String(idOrPin));
     if (!pinObj) {
       alert("PIN-Daten nicht gefunden.");
       return;
@@ -1484,13 +1484,13 @@ Falko & the StayInLeipzig Family 🏡✨`;
     }
   }
 
-  async function deletePin(pin) {
-    if (!confirm(`Möchtest du den PIN ${pin} wirklich löschen?`)) return;
+  async function deletePin(pin, bookingId = '') {
+    if (!confirm(`Möchtest du die Buchung mit PIN ${pin} wirklich löschen?`)) return;
     try {
       const res = await fetch(getApiEndpoint('admin_delete_pin'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ admin_pin: adminPin, pin: pin })
+        body: JSON.stringify({ admin_pin: adminPin, pin: pin, booking_id: bookingId })
       });
       const data = await res.json();
       if (data.success) {

@@ -26,7 +26,7 @@ END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
 UID:clean-BOOK-2026-001-20261113@stayinleipzig.de
-DTSTAMP:20261104T182740Z
+DTSTAMP:20261105T101207Z
 DTSTART;TZID=Europe/Berlin:20261113T110000
 DTEND;TZID=Europe/Berlin:20261113T140000
 SUMMARY:Reinigung Ferienwohnung (Wohnungswechsel)
@@ -43,17 +43,17 @@ TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
 UID:clean-MANUAL-1793789066-20261204@stayinleipzig.de
-DTSTAMP:20261104T182740Z
+DTSTAMP:20261105T101207Z
 DTSTART;TZID=Europe/Berlin:20261204T110000
 DTEND;TZID=Europe/Berlin:20261204T140000
 SUMMARY:Reinigung Ferienwohnung (Wohnungswechsel)
 DESCRIPTION:REINIGUNG & WOHNUNGSWECHSEL\nAbreise Gast: 04.12.2026 um 11:00 
- Uhr\nStatus: Keine direkte Folgebuchung (ausreichend Zeit).\n\nWo: Mechler
- straße 10\, Dachgeschoss Mitte (StayInLeipzig)\nWLAN: gigacube-EA6A (Pass
- wort: Leipzig2025#)\nKontakt Falko: 0152 53453390\n\nAufgaben:\n- Bettwaes
- che abziehen & frisch beziehen\n- Handtuecher austauschen\n- Bad & Dusche 
- gruendlich reinigen\n- Kueche (Kuehlschrank\, Herd\, Geschirr kontrolliere
- n)\n- Boeden saugen und feucht wischen\n- Muell entsorgen
+ Uhr\nStatus: Keine direkte Folge-Buchung eingetragen (ausreichend Zeit).\n
+ \nWo: Mechlerstraße 10\, Dachgeschoss Mitte (StayInLeipzig)\nWLAN: gigacu
+ be-EA6A (Passwort: Leipzig2025#)\nKontakt Falko: 0152 53453390\n\nAufgaben
+ :\n- Bettwaesche abziehen & frisch beziehen\n- Handtuecher austauschen\n- 
+ Bad & Dusche gruendlich reinigen\n- Kueche (Kuehlschrank\, Herd\, Geschirr
+  kontrollieren)\n- Boeden saugen und feucht wischen\n- Muell entsorgen
 LOCATION:Mechlerstraße 10\, Dachgeschoss Mitte\, 04105 Leipzig
 STATUS:CONFIRMED
 TRANSP:OPAQUE

@@ -103,23 +103,45 @@ function findPinEntry($pin, $pins, $settings) {
     $graceBefore = ($settings['grace_period_minutes_before'] ?? 30) * 60;
     $graceAfter = ($settings['grace_period_minutes_after'] ?? 60) * 60;
 
+    $matches = [];
     foreach ($pins as $entry) {
         if (trim($entry['pin']) === trim($pin) && !empty($entry['active'])) {
             $from = strtotime($entry['valid_from']) - $graceBefore;
             $until = strtotime($entry['valid_until']) + $graceAfter;
-
-            if ($now >= $from && $now <= $until) {
-                return ['valid' => true, 'entry' => $entry, 'status' => 'active'];
-            }
-            if ($now < $from) {
-                return ['valid' => false, 'entry' => $entry, 'status' => 'future'];
-            }
-            if ($now > $until) {
-                return ['valid' => false, 'entry' => $entry, 'status' => 'expired'];
-            }
+            $matches[] = [
+                'entry' => $entry,
+                'from' => $from,
+                'until' => $until
+            ];
         }
     }
-    return ['valid' => false, 'entry' => null, 'status' => 'not_found'];
+
+    if (empty($matches)) {
+        return ['valid' => false, 'entry' => null, 'status' => 'not_found'];
+    }
+
+    // 1. Check if any match is currently active
+    foreach ($matches as $m) {
+        if ($now >= $m['from'] && $now <= $m['until']) {
+            return ['valid' => true, 'entry' => $m['entry'], 'status' => 'active'];
+        }
+    }
+
+    // 2. Check for upcoming / future booking (closest upcoming first)
+    $future = [];
+    foreach ($matches as $m) {
+        if ($now < $m['from']) {
+            $future[] = $m;
+        }
+    }
+    if (!empty($future)) {
+        usort($future, function($a, $b) { return $a['from'] - $b['from']; });
+        return ['valid' => false, 'entry' => $future[0]['entry'], 'status' => 'future'];
+    }
+
+    // 3. All matches are in past (most recently ended)
+    usort($matches, function($a, $b) { return $b['until'] - $a['until']; });
+    return ['valid' => false, 'entry' => $matches[0]['entry'], 'status' => 'expired'];
 }
 
 function triggerFhem($door, $settings) {
@@ -523,23 +545,24 @@ if ($action === 'admin_save_pin') {
     }
 
     $updated = false;
-    foreach ($pins as &$p) {
-        if ($p['pin'] === $pin || $p['booking_id'] === $bookingId) {
-            $p['pin'] = $pin;
-            $p['name'] = $name;
-            $p['booking_id'] = $bookingId;
-            $p['valid_from'] = $from;
-            $p['valid_until'] = $until;
-            $p['active'] = true;
-            $updated = true;
-            break;
+    if (!empty($bookingId)) {
+        foreach ($pins as &$p) {
+            if ($p['booking_id'] === $bookingId) {
+                $p['pin'] = $pin;
+                $p['name'] = $name;
+                $p['valid_from'] = $from;
+                $p['valid_until'] = $until;
+                $p['active'] = true;
+                $updated = true;
+                break;
+            }
         }
     }
     if (!$updated) {
         $pins[] = [
             'pin' => $pin,
             'name' => $name,
-            'booking_id' => $bookingId,
+            'booking_id' => $bookingId ?: ('MANUAL-' . time()),
             'valid_from' => $from,
             'valid_until' => $until,
             'active' => true,
@@ -562,11 +585,15 @@ if ($action === 'admin_delete_pin') {
         exit();
     }
     $targetPin = trim($input['pin'] ?? '');
+    $targetBookingId = trim($input['booking_id'] ?? '');
     $filtered = [];
     foreach ($pins as $p) {
-        if ($p['pin'] !== $targetPin) {
-            $filtered[] = $p;
+        if (!empty($targetBookingId)) {
+            if (($p['booking_id'] ?? '') === $targetBookingId) continue;
+        } else {
+            if ($p['pin'] === $targetPin) continue;
         }
+        $filtered[] = $p;
     }
     $config['pins'] = $filtered;
     saveConfig($config);

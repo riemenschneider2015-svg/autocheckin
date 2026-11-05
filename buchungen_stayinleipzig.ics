@@ -26,7 +26,7 @@ END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
 UID:BOOK-2026-001@stayinleipzig.de
-DTSTAMP:20261104T182740Z
+DTSTAMP:20261105T101207Z
 DTSTART;TZID=Europe/Berlin:20261102T120000
 DTEND;TZID=Europe/Berlin:20261113T110000
 SUMMARY:Aktueller Gast (PIN: 24818)
@@ -40,12 +40,12 @@ TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
 UID:MANUAL-1793789066@stayinleipzig.de
-DTSTAMP:20261104T182740Z
+DTSTAMP:20261105T101207Z
 DTSTART;TZID=Europe/Berlin:20261127T140000
 DTEND;TZID=Europe/Berlin:20261204T110000
-SUMMARY:Soybas (PIN: 93544)
-DESCRIPTION:Gast: Soybas\nPIN: 93544\n1-Klick Check-in: https://checkin.sta
- yinleipzig.de/?code=93544\nBuchungs-ID: MANUAL-1793789066\nWohnung: Mechle
+SUMMARY:Soybas (PIN: 24818)
+DESCRIPTION:Gast: Soybas\nPIN: 24818\n1-Klick Check-in: https://checkin.sta
+ yinleipzig.de/?code=24818\nBuchungs-ID: MANUAL-1793789066\nWohnung: Mechle
  rstraße 10\, Dachgeschoss Mitte\nWLAN: gigacube-EA6A (PW: Leipzig2025#)\n
  Host Falko: 0152 53453390
 LOCATION:Mechlerstraße 10\, 04105 Leipzig\, Deutschland
