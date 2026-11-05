@@ -1595,7 +1595,7 @@
         <div style="font-size:11.5px;color:var(--text-muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;padding-top:4px;line-height:1.4;">
           <span data-i18n="legendStart">🔴 Start: Ferienwohnung Mechlerstr. 10</span>
           <span data-i18n="legendTransit">🔵 Blau: Haltestellen (Chausseehaus & Fritz-Seger-Str.)</span>
-          <span data-i18n="legendBakery">🟠 Orange: Bäckereien (Schladitz, Kleinert, Wendl)</span>
+          <span data-i18n="legendBakery">🟠 Orange: Bäckereien</span>
           <span data-i18n="legendMarket">🟢 Grün: Supermärkte (Penny, Kaufland, Lidl)</span>
         </div>
       </div>
@@ -1762,7 +1762,7 @@
         "filterMarket": "🛒 Supermärkte",
         "legendStart": "🔴 Start: Ferienwohnung Mechlerstr. 10",
         "legendTransit": "🔵 Blau: Haltestellen (Chausseehaus & Fritz-Seger-Str.)",
-        "legendBakery": "🟠 Orange: Bäckereien (Schladitz, Kleinert, Wendl)",
+        "legendBakery": "🟠 Orange: Bäckereien",
         "legendMarket": "🟢 Grün: Supermärkte (Penny, Kaufland, Lidl)",
         "rulesTitle": "📋 Wichtige Hinweise für Ihren Aufenthalt",
         "rulesSubtitle": "Für ein angenehmes Miteinander im Haus",
@@ -1894,7 +1894,7 @@
         "filterMarket": "🛒 Supermarkets",
         "legendStart": "🔴 Start: Apartment Mechlerstr. 10",
         "legendTransit": "🔵 Blue: Tram Stops (Chausseehaus & Fritz-Seger-Str.)",
-        "legendBakery": "🟠 Orange: Bakeries (Schladitz, Kleinert, Wendl)",
+        "legendBakery": "🟠 Orange: Bakeries",
         "legendMarket": "🟢 Green: Supermarkets (Penny, Kaufland, Lidl)",
         "rulesTitle": "📋 Important Information & House Rules",
         "rulesSubtitle": "For a pleasant stay for everyone in the building",
@@ -2026,7 +2026,7 @@
         "filterMarket": "🛒 Supermercados",
         "legendStart": "🔴 Inicio: Apartamento Mechlerstr. 10",
         "legendTransit": "🔵 Azul: Paradas (Chausseehaus y Fritz-Seger-Str.)",
-        "legendBakery": "🟠 Naranja: Panaderías (Schladitz, Kleinert y Wendl)",
+        "legendBakery": "🟠 Naranja: Panaderías",
         "legendMarket": "🟢 Verde: Supermercados (Penny, Kaufland, Lidl)",
         "rulesTitle": "📋 Información importante y normas",
         "rulesSubtitle": "Para una convivencia tranquila y agradable en el edificio",
@@ -2158,7 +2158,7 @@
         "filterMarket": "🛒 Supermarkety",
         "legendStart": "🔴 Start: Apartament Mechlerstr. 10",
         "legendTransit": "🔵 Niebieski: Przystanki tramwajowe",
-        "legendBakery": "🟠 Pomarańczowy: Piekarnie (Kleinert, Wendl)",
+        "legendBakery": "🟠 Pomarańczowy: Piekarnie",
         "legendMarket": "🟢 Zielony: Supermarkety (Penny, Kaufland, Lidl)",
         "rulesTitle": "📋 Ważne informacje i regulamin",
         "rulesSubtitle": "Dla spokojnego i miłego pobytu w budynku",
@@ -2290,7 +2290,7 @@
         "filterMarket": "🛒 Супермаркети",
         "legendStart": "🔴 Старт: Апартаменти Mechlerstr. 10",
         "legendTransit": "🔵 Синій: Зупинки трамваїв",
-        "legendBakery": "🟠 Помаранчевий: Пекарні (Kleinert, Wendl)",
+        "legendBakery": "🟠 Помаранчевий: Пекарні",
         "legendMarket": "🟢 Зелений: Супермаркети (Penny, Kaufland, Lidl)",
         "rulesTitle": "📋 Важлива інформація та правила",
         "rulesSubtitle": "Для приємного та спокійного відпочинку в будинку",
@@ -2422,7 +2422,7 @@
         "filterMarket": "🛒 Супермаркеты",
         "legendStart": "🔴 Старт: Апартаменты Mechlerstr. 10",
         "legendTransit": "🔵 Синий: Остановки трамваев",
-        "legendBakery": "🟠 Оранжевый: Пекарни (Kleinert, Wendl)",
+        "legendBakery": "🟠 Оранжевый: Пекарни",
         "legendMarket": "🟢 Зеленый: Супермаркеты (Penny, Kaufland, Lidl)",
         "rulesTitle": "📋 Важная информация и правила",
         "rulesSubtitle": "Для спокойного и приятного отдыха в доме",
@@ -2912,9 +2912,11 @@
         markers.push({ id: poi.id, type: poi.type, marker: marker, link: poi.link, isHome: isHome });
       });
 
-      // Fit all markers nicely with padding (zoom 14)
-      if (bounds.isValid()) {
-        map.fitBounds(bounds, { padding: [26, 26], maxZoom: 14 });
+      // Exakt die gewuenschte Position und Zoom (Zoom 15 auf Desktop, responsive fit auf Mobilgeraeten)
+      if (window.innerWidth >= 768) {
+        map.setView([51.3596, 12.3722], 15);
+      } else if (bounds.isValid()) {
+        map.fitBounds(bounds, { padding: [16, 16], maxZoom: 15 });
       }
 
       updateMapPopups(currentLang);
@@ -2969,8 +2971,10 @@
         }
       });
 
-      if (visibleBounds.isValid()) {
-        map.fitBounds(visibleBounds, { padding: [26, 26], maxZoom: 14 });
+      if (type === 'all' && window.innerWidth >= 768) {
+        map.setView([51.3596, 12.3722], 15);
+      } else if (visibleBounds.isValid()) {
+        map.fitBounds(visibleBounds, { padding: [20, 20], maxZoom: 15 });
       }
     }
 
