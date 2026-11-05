@@ -547,6 +547,7 @@
     .line-16 { background: #e11d48; color: white; }
     .line-10 { background: #0284c7; color: white; }
     .line-11 { background: #f59e0b; color: black; }
+    .line-38 { background: #8b5cf6; color: white; }
 
     .poi-bottom {
       display: flex;
@@ -939,7 +940,7 @@
       <h1 class="hero-title" data-i18n="heroTitle">Ihre Gästemappe & Umgebung</h1>
       <p class="hero-desc" data-i18n="heroDesc">
         Hier finden Sie alle wichtigen Informationen für Ihren Aufenthalt: Schnelles WLAN zum Scannen, 
-        die besten Bäckereien, Supermärkte und die Straßenbahn-Verbindungen (Linien 10, 11 & 16 zur Leipziger Messe und zum Leipzig Hauptbahnhof).
+        die besten Bäckereien, Supermärkte und die Straßenbahn-Verbindungen (Linien 10, 11, 16 & 38 zur Leipziger Messe und zum Leipzig Hauptbahnhof).
       </p>
       <div class="hero-quick-meta">
         <div class="meta-chip" data-i18n="metaAddress">📍 Mechlerstr. 10, 04105 Leipzig (Dachgeschoss Mitte)</div>
@@ -954,7 +955,7 @@
     <!-- Quick Jump Bar -->
     <div class="jump-bar">
       <a href="#wifi" class="jump-link" data-i18n="jumpWifi">📶 Highspeed WLAN</a>
-      <a href="#transit" class="jump-link" data-i18n="jumpTransit">🚊 Straßenbahn (10, 11, 16)</a>
+      <a href="#transit" class="jump-link" data-i18n="jumpTransit">🚊 Straßenbahn (10, 11, 16, 38)</a>
       <a href="#bakeries" class="jump-link" data-i18n="jumpBakeries">🥐 Bäcker & Frühstück</a>
       <a href="#markets" class="jump-link" data-i18n="jumpMarkets">🛒 Supermärkte (Penny/Kaufland)</a>
       <a href="#map" class="jump-link" data-i18n="jumpMap">🗺️ Interaktive Karte</a>
@@ -999,7 +1000,7 @@
       </div>
     </section>
 
-    <!-- 2. ÖPNV, Straßenbahn & Haltestellen (10, 11, 16) -->
+    <!-- 2. ÖPNV, Straßenbahn & Haltestellen (10, 11, 16, 38) -->
     <section id="transit">
       <div class="section-header">
         <div>
@@ -1049,7 +1050,7 @@
             Zum Leipzig Hauptbahnhof & Innenstadt
           </div>
           <p style="font-size:12px;color:var(--text-muted);" data-i18n="hbfDirectDesc">
-            Ab Haltestelle Chausseehaus fahren die Linien 10, 11 und 16 im Minutentakt direkt zum Leipzig Hauptbahnhof und weiter in die Innenstadt (Augustusplatz / Markt).
+            Ab Haltestelle Chausseehaus fahren die Linien 10, 11, 16 und 38 im Minutentakt direkt zum Leipzig Hauptbahnhof und weiter in die Innenstadt (Augustusplatz / Markt).
           </p>
           <div style="display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:8px;">
             <div class="poi-qr-thumb">
@@ -1084,6 +1085,9 @@
               </div>
               <div class="poi-lines-list">
                 <span class="line-badge line-11">Linie 11</span> <span data-i18n="line11Desc">Schkeuditz &larr;&rarr; Leipzig Hauptbahnhof &larr;&rarr; Markkleeberg</span>
+              </div>
+              <div class="poi-lines-list">
+                <span class="line-badge line-38">Linie 38</span> <span data-i18n="line38Desc">Wahren &larr;&rarr; Leipzig Hauptbahnhof &larr;&rarr; Paunsdorf-Nord</span>
               </div>
             </div>
           </div>
@@ -1354,7 +1358,7 @@
           <div class="map-filters-wrap">
             <div class="map-filters">
               <button class="filter-btn active" onclick="filterMap('all')" data-i18n="filterAll">Alle Orte</button>
-              <button class="filter-btn" onclick="filterMap('transit')" data-i18n="filterTransit">🚊 ÖPNV (10/11/16)</button>
+              <button class="filter-btn" onclick="filterMap('transit')" data-i18n="filterTransit">🚊 ÖPNV (10/11/16/38)</button>
               <button class="filter-btn" onclick="filterMap('bakery')" data-i18n="filterBakery">🥐 Bäcker</button>
               <button class="filter-btn" onclick="filterMap('market')" data-i18n="filterMarket">🛒 Supermärkte</button>
             </div>
@@ -1440,7 +1444,7 @@
         "btnCheckin": "🔑 Check-in Türöffnung",
         "heroBadge": "✨ HERZLICH WILLKOMMEN",
         "heroTitle": "Ihre Gästemappe & Umgebung",
-        "heroDesc": "Hier finden Sie alle wichtigen Informationen für Ihren Aufenthalt: Schnelles WLAN zum Scannen, die besten Bäckereien, Supermärkte und die Straßenbahn-Verbindungen (Linien 10, 11 & 16 zur Leipziger Messe und zum Leipzig Hauptbahnhof).",
+        "heroDesc": "Hier finden Sie alle wichtigen Informationen für Ihren Aufenthalt: Schnelles WLAN zum Scannen, die besten Bäckereien, Supermärkte und die Straßenbahn-Verbindungen (Linien 10, 11, 16 & 38 zur Leipziger Messe und zum Leipzig Hauptbahnhof).",
         "metaAddress": "📍 Mechlerstr. 10, 04105 Leipzig (Dachgeschoss Mitte)",
         "metaHost": "📞 Gastgeber Falko: +49 152 53453390",
         "metaCheckout": "🕒 Check-out bis 11:00 Uhr",
@@ -1469,7 +1473,7 @@
         "hbfBadge": "Zum Leipzig Hauptbahnhof & City",
         "hbfTime": "⏱️ nur 4–5 Min.",
         "hbfDirectTitle": "Zum Leipzig Hauptbahnhof & Innenstadt",
-        "hbfDirectDesc": "Ab Haltestelle Chausseehaus fahren die Linien 10, 11 und 16 im Minutentakt direkt zum Leipzig Hauptbahnhof und weiter in die Innenstadt (Augustusplatz / Markt).",
+        "hbfDirectDesc": "Ab Haltestelle Chausseehaus fahren die Linien 10, 11, 16 und 38 im Minutentakt direkt zum Leipzig Hauptbahnhof und weiter in die Innenstadt (Augustusplatz / Markt).",
         "btnHbfRoute": "🗺️ Route zum Leipzig Hauptbahnhof",
         "chausseeTag": "Haupt-Haltestelle",
         "chausseeTitle": "Haltestelle Chausseehaus",
@@ -1478,6 +1482,7 @@
         "line16Desc": "Messe &larr;&rarr; Leipzig Hauptbahnhof &larr;&rarr; Lößnig",
         "line10Desc": "Wahren &larr;&rarr; Leipzig Hauptbahnhof &larr;&rarr; Connewitz",
         "line11Desc": "Schkeuditz &larr;&rarr; Leipzig Hauptbahnhof &larr;&rarr; Markkleeberg",
+        "line38Desc": "Wahren &larr;&rarr; Leipzig Hauptbahnhof &larr;&rarr; Paunsdorf-Nord",
         "btnWalkNav": "🚶 Fußweg navigieren",
         "btnLvbLive": "⏱️ LVB Live-Abfahrten",
         "segerTag": "Haltestelle",
@@ -1519,7 +1524,7 @@
         "mapTitle": "🗺️ Umgebungskarte",
         "mapSubtitle": "Alle Orte auf einen Blick mit Fußweg und Haltestellen",
         "filterAll": "Alle Orte",
-        "filterTransit": "🚊 ÖPNV (10/11/16)",
+        "filterTransit": "🚊 ÖPNV (10/11/16/38)",
         "filterBakery": "🥐 Bäcker",
         "filterMarket": "🛒 Supermärkte",
         "legendStart": "🔴 Start: Ferienwohnung Mechlerstr. 10",
@@ -1595,6 +1600,7 @@
         "line16Desc": "Fair / Messe &larr;&rarr; Leipzig Central Station &larr;&rarr; Lößnig",
         "line10Desc": "Wahren &larr;&rarr; Leipzig Central Station &larr;&rarr; Connewitz",
         "line11Desc": "Schkeuditz &larr;&rarr; Leipzig Central Station &larr;&rarr; Markkleeberg",
+        "line38Desc": "Wahren &larr;&rarr; Leipzig Central Station &larr;&rarr; Paunsdorf-Nord",
         "btnWalkNav": "🚶 Walking Directions",
         "btnLvbLive": "⏱️ LVB Live Departures",
         "segerTag": "Nearby Tram Stop",
@@ -1636,7 +1642,7 @@
         "mapTitle": "🗺️ Neighborhood Map",
         "mapSubtitle": "All places at a glance with walking routes and transit stops",
         "filterAll": "All Places",
-        "filterTransit": "🚊 Transit (10/11/16)",
+        "filterTransit": "🚊 Transit (10/11/16/38)",
         "filterBakery": "🥐 Bakeries",
         "filterMarket": "🛒 Supermarkets",
         "legendStart": "🔴 Start: Apartment Mechlerstr. 10",
@@ -1703,7 +1709,7 @@
         "hbfBadge": "A la Estación Central de Leipzig y centro",
         "hbfTime": "⏱️ solo 4–5 min.",
         "hbfDirectTitle": "A la Estación Central de Leipzig y centro",
-        "hbfDirectDesc": "Desde Chausseehaus, las líneas 10, 11 y 16 pasan cada pocos minutos directo a la Estación Central de Leipzig y centro de la ciudad.",
+        "hbfDirectDesc": "Desde Chausseehaus, las líneas 10, 11, 16 y 38 pasan cada pocos minutos directo a la Estación Central de Leipzig y centro de la ciudad.",
         "btnHbfRoute": "🗺️ Ruta a Leipzig Estación Central",
         "chausseeTag": "Parada principal",
         "chausseeTitle": "Parada Chausseehaus",
@@ -1712,6 +1718,7 @@
         "line16Desc": "Feria / Messe &larr;&rarr; Leipzig Estación Central &larr;&rarr; Lößnig",
         "line10Desc": "Wahren &larr;&rarr; Leipzig Estación Central &larr;&rarr; Connewitz",
         "line11Desc": "Schkeuditz &larr;&rarr; Leipzig Estación Central &larr;&rarr; Markkleeberg",
+        "line38Desc": "Wahren &larr;&rarr; Leipzig Estación Central &larr;&rarr; Paunsdorf-Nord",
         "btnWalkNav": "🚶 Ruta a pie",
         "btnLvbLive": "⏱️ Salidas LVB en vivo",
         "segerTag": "Parada cercana",
@@ -1753,7 +1760,7 @@
         "mapTitle": "🗺️ Mapa de los alrededores",
         "mapSubtitle": "Todos los lugares con rutas a pie y paradas de transporte",
         "filterAll": "Todos los sitios",
-        "filterTransit": "🚊 Transporte (10/11/16)",
+        "filterTransit": "🚊 Transporte (10/11/16/38)",
         "filterBakery": "🥐 Panaderías",
         "filterMarket": "🛒 Supermercados",
         "legendStart": "🔴 Inicio: Apartamento Mechlerstr. 10",
@@ -1820,7 +1827,7 @@
         "hbfBadge": "Dworzec Główny w Lipsku i centrum",
         "hbfTime": "⏱️ tylko 4–5 min.",
         "hbfDirectTitle": "Na Dworzec Główny w Lipsku i do centrum",
-        "hbfDirectDesc": "Z przystanku Chausseehaus linie 10, 11 i 16 odjeżdżają co kilka minut prosto na Dworzec Główny w Lipsku i do centrum.",
+        "hbfDirectDesc": "Z przystanku Chausseehaus linie 10, 11, 16 i 38 odjeżdżają co kilka minut prosto na Dworzec Główny w Lipsku i do centrum.",
         "btnHbfRoute": "🗺️ Trasa na Dworzec Główny w Lipsku",
         "chausseeTag": "Główny przystanek",
         "chausseeTitle": "Przystanek Chausseehaus",
@@ -1829,6 +1836,7 @@
         "line16Desc": "Targi / Messe &larr;&rarr; Dworzec Główny w Lipsku &larr;&rarr; Lößnig",
         "line10Desc": "Wahren &larr;&rarr; Dworzec Główny w Lipsku &larr;&rarr; Connewitz",
         "line11Desc": "Schkeuditz &larr;&rarr; Dworzec Główny w Lipsku &larr;&rarr; Markkleeberg",
+        "line38Desc": "Wahren &larr;&rarr; Dworzec Główny w Lipsku &larr;&rarr; Paunsdorf-Nord",
         "btnWalkNav": "🚶 Nawiguj pieszo",
         "btnLvbLive": "⏱️ Odjazdy na żywo LVB",
         "segerTag": "Bliski przystanek",
@@ -1870,7 +1878,7 @@
         "mapTitle": "🗺️ Mapa okolicy",
         "mapSubtitle": "Wszystkie miejsca z trasami pieszymi i przystankami",
         "filterAll": "Wszystkie",
-        "filterTransit": "🚊 Komunikacja (10/11/16)",
+        "filterTransit": "🚊 Komunikacja (10/11/16/38)",
         "filterBakery": "🥐 Piekarnie",
         "filterMarket": "🛒 Supermarkety",
         "legendStart": "🔴 Start: Apartament Mechlerstr. 10",
@@ -1937,7 +1945,7 @@
         "hbfBadge": "До Головного вокзалу Лейпцига та центру",
         "hbfTime": "⏱️ лише 4–5 хв.",
         "hbfDirectTitle": "До Головного вокзалу Лейпцига та центру",
-        "hbfDirectDesc": "З зупинки Chausseehaus трамваї 10, 11 та 16 ходять кожні кілька хвилин прямо до Головного вокзалу Лейпцига та центру міста.",
+        "hbfDirectDesc": "З зупинки Chausseehaus трамваї 10, 11, 16 та 38 ходять кожні кілька хвилин прямо до Головного вокзалу Лейпцига та центру міста.",
         "btnHbfRoute": "🗺️ Маршрут до Головного вокзалу Лейпцига",
         "chausseeTag": "Головна зупинка",
         "chausseeTitle": "Зупинка Chausseehaus",
@@ -1946,6 +1954,7 @@
         "line16Desc": "Ярмарок / Messe &larr;&rarr; Головний вокзал Лейпцига &larr;&rarr; Lößnig",
         "line10Desc": "Wahren &larr;&rarr; Головний вокзал Лейпцига &larr;&rarr; Connewitz",
         "line11Desc": "Schkeuditz &larr;&rarr; Головний вокзал Лейпцига &larr;&rarr; Markkleeberg",
+        "line38Desc": "Wahren &larr;&rarr; Головний вокзал Лейпцига &larr;&rarr; Paunsdorf-Nord",
         "btnWalkNav": "🚶 Маршрут пішки",
         "btnLvbLive": "⏱️ Відправлення LVB наживо",
         "segerTag": "Зупинка поруч",
@@ -1987,7 +1996,7 @@
         "mapTitle": "🗺️ Карта району",
         "mapSubtitle": "Усі локації з пішохідними маршрутами та зупинками",
         "filterAll": "Усі місця",
-        "filterTransit": "🚊 Транспорт (10/11/16)",
+        "filterTransit": "🚊 Транспорт (10/11/16/38)",
         "filterBakery": "🥐 Пекарні",
         "filterMarket": "🛒 Супермаркети",
         "legendStart": "🔴 Старт: Апартаменти Mechlerstr. 10",
@@ -2054,7 +2063,7 @@
         "hbfBadge": "До Главного вокзала Лейпцига и центра",
         "hbfTime": "⏱️ всего 4–5 min.",
         "hbfDirectTitle": "До Главного вокзала Лейпцига и центра",
-        "hbfDirectDesc": "С остановки Chausseehaus трамваи 10, 11 и 16 отправляются каждые несколько минут прямо на Главный вокзал Лейпцига и в центр города.",
+        "hbfDirectDesc": "С остановки Chausseehaus трамваи 10, 11, 16 и 38 отправляются каждые несколько минут прямо на Главный вокзал Лейпцига и в центр города.",
         "btnHbfRoute": "🗺️ Маршрут на Главный вокзал Лейпцига",
         "chausseeTag": "Главная остановка",
         "chausseeTitle": "Остановка Chausseehaus",
@@ -2063,6 +2072,7 @@
         "line16Desc": "Ярмарка / Messe &larr;&rarr; Главный вокзал Лейпцига &larr;&rarr; Lößnig",
         "line10Desc": "Wahren &larr;&rarr; Главный вокзал Лейпцига &larr;&rarr; Connewitz",
         "line11Desc": "Schkeuditz &larr;&rarr; Главный вокзал Лейпцига &larr;&rarr; Markkleeberg",
+        "line38Desc": "Wahren &larr;&rarr; Главный вокзал Лейпцига &larr;&rarr; Paunsdorf-Nord",
         "btnWalkNav": "🚶 Маршрут пешком",
         "btnLvbLive": "⏱️ Отправления онлайн LVB",
         "segerTag": "Ближайшая остановка",
@@ -2104,7 +2114,7 @@
         "mapTitle": "🗺️ Карта окрестностей",
         "mapSubtitle": "Все объекты с пешими маршрутами и остановками",
         "filterAll": "Все места",
-        "filterTransit": "🚊 Транспорт (10/11/16)",
+        "filterTransit": "🚊 Транспорт (10/11/16/38)",
         "filterBakery": "🥐 Пекарни",
         "filterMarket": "🛒 Супермаркеты",
         "legendStart": "🔴 Старт: Апартаменты Mechlerstr. 10",
@@ -2141,7 +2151,7 @@
     const poiTranslations = {
       de: {
         apartment: { name: 'Ferienwohnung StayInLeipzig', desc: 'Mechlerstraße 10, 04105 Leipzig (Dachgeschoss)', btn: '🗺️ In Google Maps öffnen' },
-        chausseehaus: { name: 'Haltestelle Chausseehaus', desc: 'Linien 10, 11 & 16 &bull; Direkt zur Messe & Leipzig Hauptbahnhof (290 m, 3 Min.)', btn: '🗺️ In Google Maps öffnen' },
+        chausseehaus: { name: 'Haltestelle Chausseehaus', desc: 'Linien 10, 11, 16 & 38 &bull; Direkt zur Messe & Leipzig Hauptbahnhof (290 m, 3 Min.)', btn: '🗺️ In Google Maps öffnen' },
         fritz_seger: { name: 'Haltestelle Fritz-Seger-Straße', desc: 'Linien 10 & 11 zum Leipzig Hauptbahnhof (200 m, 2 Min.)', btn: '🗺️ In Google Maps öffnen' },
         schladitz: { name: 'Bäckerei & Konditorei Schladitz', desc: 'Ehrensteinstraße 44 &bull; Nächster Bäcker (150 m, 2 Min.) &bull; Mo-So geöffnet', btn: '🗺️ In Google Maps öffnen' },
         penny: { name: 'PENNY Markt (Gohlis Arkaden)', desc: 'Georg-Schumann-Str. 50 &bull; Mo-Sa 07:00-21:00 Uhr (500 m, 6 Min.)', btn: '🗺️ In Google Maps öffnen' },
@@ -2152,7 +2162,7 @@
       },
       en: {
         apartment: { name: 'Apartment StayInLeipzig', desc: 'Mechlerstraße 10, 04105 Leipzig (Top floor middle)', btn: '🗺️ Open in Google Maps' },
-        chausseehaus: { name: 'Chausseehaus Tram Stop', desc: 'Lines 10, 11 & 16 &bull; Direct to Fair & Leipzig Central Station (290 m, 3 min)', btn: '🗺️ Open in Google Maps' },
+        chausseehaus: { name: 'Chausseehaus Tram Stop', desc: 'Lines 10, 11, 16 & 38 &bull; Direct to Fair & Leipzig Central Station (290 m, 3 min)', btn: '🗺️ Open in Google Maps' },
         fritz_seger: { name: 'Fritz-Seger-Straße Tram Stop', desc: 'Lines 10 & 11 to Leipzig Central Station (200 m, 2 min)', btn: '🗺️ Open in Google Maps' },
         schladitz: { name: 'Schladitz Bakery & Confectionery', desc: 'Ehrensteinstraße 44 &bull; Nearest bakery (150 m, 2 min) &bull; Open Mon-Sun', btn: '🗺️ Open in Google Maps' },
         penny: { name: 'PENNY Market (Gohlis Arkaden)', desc: 'Georg-Schumann-Str. 50 &bull; Mon-Sat 07:00-21:00 (500 m, 6 min)', btn: '🗺️ Open in Google Maps' },
@@ -2163,7 +2173,7 @@
       },
       es: {
         apartment: { name: 'Apartamento StayInLeipzig', desc: 'Mechlerstraße 10, 04105 Leipzig (Ático centro)', btn: '🗺️ Abrir en Google Maps' },
-        chausseehaus: { name: 'Parada Chausseehaus', desc: 'Líneas 10, 11 y 16 &bull; Directo a la Feria y Estación Central de Leipzig (290 m, 3 min)', btn: '🗺️ Abrir en Google Maps' },
+        chausseehaus: { name: 'Parada Chausseehaus', desc: 'Líneas 10, 11, 16 y 38 &bull; Directo a la Feria y Estación Central de Leipzig (290 m, 3 min)', btn: '🗺️ Abrir en Google Maps' },
         fritz_seger: { name: 'Parada Fritz-Seger-Straße', desc: 'Líneas 10 y 11 a la Estación Central de Leipzig (200 m, 2 min)', btn: '🗺️ Abrir en Google Maps' },
         schladitz: { name: 'Panadería y Pastelería Schladitz', desc: 'Ehrensteinstraße 44 &bull; Panadería más cercana (150 m, 2 min)', btn: '🗺️ Abrir en Google Maps' },
         penny: { name: 'Supermercado PENNY (Gohlis Arkaden)', desc: 'Georg-Schumann-Str. 50 &bull; Lu-Sá 07:00-21:00 (500 m, 6 min)', btn: '🗺️ Abrir en Google Maps' },
@@ -2174,7 +2184,7 @@
       },
       pl: {
         apartment: { name: 'Apartament StayInLeipzig', desc: 'Mechlerstraße 10, 04105 Lipsk (Poddasze środkowe drzwi)', btn: '🗺️ Otwórz w Google Maps' },
-        chausseehaus: { name: 'Przystanek Chausseehaus', desc: 'Linie 10, 11 i 16 &bull; Prosto na Targi i Dworzec Główny w Lipsku (290 m, 3 min)', btn: '🗺️ Otwórz w Google Maps' },
+        chausseehaus: { name: 'Przystanek Chausseehaus', desc: 'Linie 10, 11, 16 i 38 &bull; Prosto na Targi i Dworzec Główny w Lipsku (290 m, 3 min)', btn: '🗺️ Otwórz w Google Maps' },
         fritz_seger: { name: 'Przystanek Fritz-Seger-Straße', desc: 'Linie 10 i 11 na Dworzec Główny w Lipsku (200 m, 2 min)', btn: '🗺️ Otwórz w Google Maps' },
         schladitz: { name: 'Piekarnia i Cukiernia Schladitz', desc: 'Ehrensteinstraße 44 &bull; Najbliższa piekarnia (150 m, 2 min)', btn: '🗺️ Otwórz w Google Maps' },
         penny: { name: 'Market PENNY (Gohlis Arkaden)', desc: 'Georg-Schumann-Str. 50 &bull; Pn-So 07:00-21:00 (500 m, 6 min)', btn: '🗺️ Otwórz w Google Maps' },
@@ -2185,7 +2195,7 @@
       },
       uk: {
         apartment: { name: 'Апартаменти StayInLeipzig', desc: 'Mechlerstraße 10, 04105 Leipzig (Мансарда, середні двері)', btn: '🗺️ Відкрити в Google Maps' },
-        chausseehaus: { name: 'Зупинка Chausseehaus', desc: 'Лінії 10, 11 та 16 &bull; До Ярмарку та Головного вокзалу Лейпцига (290 м, 3 хв)', btn: '🗺️ Відкрити в Google Maps' },
+        chausseehaus: { name: 'Зупинка Chausseehaus', desc: 'Лінії 10, 11, 16 та 38 &bull; До Ярмарку та Головного вокзалу Лейпцига (290 м, 3 хв)', btn: '🗺️ Відкрити в Google Maps' },
         fritz_seger: { name: 'Зупинка Fritz-Seger-Straße', desc: 'Лінії 10 та 11 до Головного вокзалу Лейпцига (200 м, 2 хв)', btn: '🗺️ Відкрити в Google Maps' },
         schladitz: { name: 'Пекарня Schladitz', desc: 'Ehrensteinstraße 44 &bull; Найближча пекарня (150 м, 2 хв)', btn: '🗺️ Відкрити в Google Maps' },
         penny: { name: 'Маркет PENNY (Gohlis Arkaden)', desc: 'Georg-Schumann-Str. 50 &bull; Пн-Сб 07:00-21:00 (500 м, 6 хв)', btn: '🗺️ Відкрити в Google Maps' },
@@ -2196,7 +2206,7 @@
       },
       ru: {
         apartment: { name: 'Апартаменты StayInLeipzig', desc: 'Mechlerstraße 10, 04105 Leipzig (Мансарда, средняя дверь)', btn: '🗺️ Открыть в Google Maps' },
-        chausseehaus: { name: 'Остановка Chausseehaus', desc: 'Линии 10, 11 и 16 &bull; До Ярмарки и Главного вокзала Лейпцига (290 м, 3 мин)', btn: '🗺️ Открыть в Google Maps' },
+        chausseehaus: { name: 'Остановка Chausseehaus', desc: 'Линии 10, 11, 16 и 38 &bull; До Ярмарки и Главного вокзала Лейпцига (290 м, 3 мин)', btn: '🗺️ Открыть в Google Maps' },
         fritz_seger: { name: 'Остановка Fritz-Seger-Straße', desc: 'Линии 10 и 11 на Главный вокзал Лейпцига (200 м, 2 мин)', btn: '🗺️ Открыть в Google Maps' },
         schladitz: { name: 'Пекарня Schladitz', desc: 'Ehrensteinstraße 44 &bull; Ближайшая пекарня (150 м, 2 мин)', btn: '🗺️ Открыть в Google Maps' },
         penny: { name: 'Маркет PENNY (Gohlis Arkaden)', desc: 'Georg-Schumann-Str. 50 &bull; Пн-Сб 07:00-21:00 (500 м, 6 мин)', btn: '🗺️ Открыть в Google Maps' },
