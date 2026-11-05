@@ -764,7 +764,7 @@
         </div>
       </div>
       <!-- Digital Guest Guide & Map Link -->
-      <a href="gaestemappe.html" class="guide-link-card">
+      <a id="guideLinkCard" href="gaestemappe.html" class="guide-link-card">
         <div class="guide-link-left">
           <span class="guide-icon">📖</span>
           <div class="guide-text-wrap">
@@ -955,7 +955,9 @@
         gatewayErrorTitle: "Немає зв'язку із замком",
         gatewayErrorDesc: "Шлюз дверей зараз не відповідає. Спробуйте ще раз або зателефонуйте господарю Фалько.",
         retryBtn: "Спробувати ще раз",
-        callHostBtn: "Подзвонити Фалько (+49 152 53453390)"
+        callHostBtn: "Подзвонити Фалько (+49 152 53453390)",
+        guideTitle: "Гід для гостей та район",
+        guideSub: "Код Wi-Fi • 🚊 Трамваї (10/11/16) • Пекарні та магазини"
       },
       ru: {
         title: "AutoCheckin Mechlerstr. 10",
@@ -983,7 +985,9 @@
         gatewayErrorTitle: "Нет связи с замком",
         gatewayErrorDesc: "Дверной шлюз не отвечает. Попробуйте ещё раз или позвоните хозяину Фалько напрямую.",
         retryBtn: "Попробовать ещё раз",
-        callHostBtn: "Позвонить Фалько (+49 152 53453390)"
+        callHostBtn: "Позвонить Фалько (+49 152 53453390)",
+        guideTitle: "Гид гостя и карта района",
+        guideSub: "Код Wi-Fi • 🚊 Трамваи (10/11/16) • Пекарни и магазины"
       }
     };
 
@@ -1037,6 +1041,10 @@
         }
       });
       updatePinDisplay();
+      const guideLink = document.getElementById('guideLinkCard');
+      if (guideLink) {
+        guideLink.href = 'gaestemappe.html?lang=' + lang;
+      }
     }
 
     function pressKey(num) {
@@ -1044,16 +1052,28 @@
       currentPin += num;
       if (navigator.vibrate) navigator.vibrate(20);
       updatePinDisplay();
+      const guideLink = document.getElementById('guideLinkCard');
+      if (guideLink) {
+        guideLink.href = 'gaestemappe.html?lang=' + lang;
+      }
     }
 
     function clearPin() {
       currentPin = '';
       updatePinDisplay();
+      const guideLink = document.getElementById('guideLinkCard');
+      if (guideLink) {
+        guideLink.href = 'gaestemappe.html?lang=' + lang;
+      }
     }
 
     function backspacePin() {
       currentPin = currentPin.slice(0, -1);
       updatePinDisplay();
+      const guideLink = document.getElementById('guideLinkCard');
+      if (guideLink) {
+        guideLink.href = 'gaestemappe.html?lang=' + lang;
+      }
     }
 
     function updatePinDisplay() {
