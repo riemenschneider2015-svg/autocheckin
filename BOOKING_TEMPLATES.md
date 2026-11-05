@@ -58,7 +58,7 @@ WLAN-QR-Code, Bäckereien (frische Brötchen & Leipziger Lerchen), Supermärkte 
 
 ### 📞 Kontakt bei Fragen oder Problemen
 Sollte die Tür einmal nicht sofort reagieren oder Sie eine Frage haben, bin ich jederzeit gerne für Sie erreichbar:  
-**Host Falko: 0152 53453390** (gerne auch per WhatsApp)
+**Host Falko: +49 152 53453390** (gerne auch per WhatsApp)
 
 Wir wünschen Ihnen eine angenehme Anreise und einen wunderschönen Aufenthalt in Leipzig!
 
@@ -206,6 +206,6 @@ https://checkin.stayinleipzig.de/?code=[PIN]
 🚭 **Wichtig:** Reine Nichtraucherwohnung!
 
 Bei Fragen jederzeit gerne melden:  
-📞 **Falko: 0152 53453390**
+📞 **Falko: +49 152 53453390**
 
 Einen wunderschönen Aufenthalt in Leipzig! ✨

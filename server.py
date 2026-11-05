@@ -93,7 +93,7 @@ def check_rate_limit(ip, max_attempts=5, lockout_minutes=10):
         entry = rates[ip]
         if entry.get("locked_until", 0) > now:
             rem = int((entry["locked_until"] - now) // 60) + 1
-            return False, "Zu viele Fehlversuche. Gesperrt für {0} Minute(n). Bitte Falko anrufen (015253453390).".format(rem)
+            return False, "Zu viele Fehlversuche. Gesperrt für {0} Minute(n). Bitte Falko anrufen (+49 152 53453390).".format(rem)
     return True, ""
 
 def record_attempt(ip, success, max_attempts=5, lockout_minutes=10):
@@ -381,7 +381,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
                 "success": False,
                 "error": msg,
                 "status": status,
-                "contact": "015253453390",
+                "contact": "+4915253453390",
                 "valid_from": entry.get("valid_from") if entry else None,
                 "valid_until": entry.get("valid_until") if entry else None
             })
@@ -421,7 +421,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
             })
         else:
             log_access(ip, pin, entry.get("name", "Gast"), door, False, "Fehler Türsteuerung: " + res_msg)
-            self.send_json({"success": False, "error": "Türsteuerung nicht erreichbar. Bitte Falko anrufen (015253453390).", "contact": "015253453390"})
+            self.send_json({"success": False, "error": "Türsteuerung nicht erreichbar. Bitte Falko anrufen (+49 152 53453390).", "contact": "+4915253453390"})
 
     @staticmethod
     def fold_ical(line, max_len=75):
@@ -519,7 +519,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
                 "Buchungs-ID: {2}\n"
                 "Wohnung: Mechlerstraße 10, Dachgeschoss Mitte\n"
                 "WLAN: gigacube-EA6A (PW: Leipzig2025#)\n"
-                "Host Falko: 0152 53453390"
+                "Host Falko: +49 152 53453390"
             ).format(name, pin, booking_id)
 
             lines.extend([
@@ -649,7 +649,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
                 "Status: {1}\n\n"
                 "Wo: Mechlerstraße 10, Dachgeschoss Mitte (StayInLeipzig)\n"
                 "WLAN: gigacube-EA6A (Passwort: Leipzig2025#)\n"
-                "Kontakt Falko: 0152 53453390\n\n"
+                "Kontakt Falko: +49 152 53453390\n\n"
                 "Aufgaben:\n"
                 "- Bettwaesche abziehen & frisch beziehen\n"
                 "- Handtuecher austauschen\n"

@@ -47,7 +47,7 @@ function checkRateLimit($ip, $maxAttempts = 5, $lockoutMinutes = 10) {
             $remaining = ceil(($entry['locked_until'] - $now) / 60);
             return [
                 'allowed' => false,
-                'message' => "Zu viele Fehlversuche! Login für $remaining Minute(n) gesperrt. Bitte Falko anrufen (015253453390)."
+                'message' => "Zu viele Fehlversuche! Login für $remaining Minute(n) gesperrt. Bitte Falko anrufen (+49 152 53453390)."
             ];
         }
         // Reset window if older than lockoutMinutes * 60
@@ -207,7 +207,7 @@ if (!$rateStatus['allowed'] && $action !== 'settings') {
         'success' => false,
         'error' => $rateStatus['message'],
         'locked' => true,
-        'contact' => $settings['contact_phone'] ?? '015253453390'
+        'contact' => $settings['contact_phone'] ?? '+4915253453390'
     ]);
     exit();
 }
@@ -270,7 +270,7 @@ if ($action === 'open') {
             'success' => false,
             'error' => $msg,
             'status' => $status,
-            'contact' => $settings['contact_phone'] ?? '015253453390'
+            'contact' => $settings['contact_phone'] ?? '+4915253453390'
         ]);
         exit();
     }
@@ -318,8 +318,8 @@ if ($action === 'open') {
         logAccess($pin, $entry['name'] ?? '', $door, false, "FHEM-Steuerungsfehler: " . ($fhemRes['error_code'] ?? 'timeout'));
         echo json_encode([
             'success' => false,
-            'error' => 'Die Türsteuerung konnte nicht erreicht werden. Bitte rufen Sie direkt Falko an (015253453390).',
-            'contact' => $settings['contact_phone'] ?? '015253453390'
+            'error' => 'Die Türsteuerung konnte nicht erreicht werden. Bitte rufen Sie direkt Falko an (+49 152 53453390).',
+            'contact' => $settings['contact_phone'] ?? '+4915253453390'
         ]);
     }
     exit();
@@ -406,7 +406,7 @@ if ($action === 'cleaning_ical') {
               . "Status: " . $bufferInfo . "\\n\\n"
               . "📍 Wo: Mechlerstraße 10, Dachgeschoss Mitte (StayInLeipzig)\\n"
               . "WLAN: gigacube-EA6A (Passwort: Leipzig2025#)\\n"
-              . "📞 Kontakt Falko: 0152 53453390\\n\\n"
+              . "📞 Kontakt Falko: +49 152 53453390\\n\\n"
               . "Aufgaben:\\n"
               . "- Bettwäsche abziehen & frisch beziehen\\n"
               . "- Handtücher austauschen\\n"
@@ -480,7 +480,7 @@ if ($action === 'ical') {
               . "Buchungs-ID: " . $bookingId . "\\n"
               . "Wohnung: Mechlerstraße 10, Dachgeschoss Mitte\\n"
               . "WLAN: gigacube-EA6A (PW: Leipzig2025#)\\n"
-              . "Host Falko: 0152 53453390";
+              . "Host Falko: +49 152 53453390";
 
         echo "BEGIN:VEVENT\r\n";
         echo "UID:" . $uid . "\r\n";

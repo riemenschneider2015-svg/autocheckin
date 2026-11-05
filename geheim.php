@@ -72,7 +72,7 @@ if (strlen($bruteforce)<=$maxLogins) {
 flush();
 ?>
 <p class="pin">
-<a href="tel:015253453390">Problem beim Checkin - Hier klicken um Falko anrufen</a>
+<a href="tel:+4915253453390">Problem beim Checkin - Hier klicken um Falko anrufen</a>
 </p>
 </div>
 <?php
@@ -105,7 +105,7 @@ if ($url != '') {
 	if ($errno!==0) {
 		?>
 	    <p class='pinrot'><b>Autocheckin fehlgeschlagen</b></p>
-		<a href="tel:015253453390" class="ui-btn ui-icon-phone ui-btn-icon-left">Bitte Falko anrufen</a>
+		<a href="tel:+4915253453390" class="ui-btn ui-icon-phone ui-btn-icon-left">Bitte Falko anrufen</a>
 		<?php
 	}
 }

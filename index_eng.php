@@ -1,7 +1,8 @@
 
 <html>  
 <head>
-  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -47,6 +48,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', end
 
 		<input type="submit" name="wohnungauf" value="flat door open" data-icon="forward">	
 		<br>
-		    <a href="tel:015253453390" class="ui-btn ui-icon-phone ui-btn-icon-left">Problem ? - Call Falko</a>
+		    <a href="tel:+4915253453390" class="ui-btn ui-icon-phone ui-btn-icon-left">Problem ? - Call Falko</a>
 		
  </form> </body> </html>
