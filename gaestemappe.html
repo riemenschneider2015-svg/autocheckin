@@ -536,12 +536,25 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 16px;
+      width: 100%;
     }
 
     @media (min-width: 860px) {
       .cards-grid {
         grid-template-columns: repeat(3, 1fr);
       }
+      /* Transit Haltestellen (2 cards): 2 equal columns spanning 100% full width */
+      #transit .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    #transit .poi-card {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      grid-row: auto !important;
+      height: 100%;
     }
 
     /* POI Card - Laser-Aligned Row Layout */
