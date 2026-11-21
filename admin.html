@@ -246,6 +246,95 @@
       background: rgba(255, 255, 255, 0.16);
       opacity: 1;
     }
+    .btn-edit {
+      background: rgba(245, 158, 11, 0.16);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.38);
+      font-weight: 600;
+    }
+    .btn-edit:hover {
+      background: rgba(245, 158, 11, 0.28);
+      opacity: 1;
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.16);
+      opacity: 1;
+    }
+
+    /* Edit PIN Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 9000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      padding: 22px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-close {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      border: none;
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: var(--text);
+    }
+    .input-with-btn {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+    }
+    .input-with-btn input {
+      flex: 1;
+      min-width: 0;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     @media(max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
@@ -479,6 +568,46 @@
 
       <!-- Mobile Logs Cards View (screens <= 768px: No horizontal scrolling!) -->
       <div id="logsCardsContainer" class="mobile-cards-container" style="max-height: 380px; overflow-y: auto; gap: 9px; padding-right: 2px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit PIN Modal -->
+<div id="editPinModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="editPinModalTitle" onclick="if(event.target === this) closeEditPinModal()">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <h2 id="editPinModalTitle" style="font-size: 18px; font-weight: 800;">✏️ Buchung / PIN bearbeiten</h2>
+        <div id="editPinBookingMeta" style="font-size: 12px; color: var(--text-muted); margin-top: 4px;"></div>
+      </div>
+      <button type="button" class="modal-close" onclick="closeEditPinModal()" title="Schließen" aria-label="Schließen">✕</button>
+    </div>
+
+    <div class="grid-2">
+      <div class="form-group">
+        <label for="editGuestName">Gast Name</label>
+        <input type="text" id="editGuestName" placeholder="z. B. Max Mustermann">
+      </div>
+      <div class="form-group">
+        <label for="editPinCode">PIN Code (Login)</label>
+        <div class="input-with-btn">
+          <input type="text" id="editPinCode" placeholder="z. B. 48192">
+          <button type="button" class="btn btn-sm btn-secondary" onclick="generateEditRandomPin()" title="Neuen zufälligen 5-stelligen PIN erzeugen">🎲 Neu</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="editValidFrom">Gültig ab (Check-In)</label>
+        <input type="datetime-local" id="editValidFrom">
+      </div>
+      <div class="form-group">
+        <label for="editValidUntil">Gültig bis (Check-Out)</label>
+        <input type="datetime-local" id="editValidUntil">
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn btn-secondary" onclick="closeEditPinModal()">Abbrechen</button>
+      <button type="button" class="btn" id="saveEditPinBtn" onclick="saveEditedPin()">💾 Änderungen speichern</button>
     </div>
   </div>
 </div>
@@ -982,6 +1111,8 @@
 
       const host = getCheckinBaseUrl();
       const link = `${host}?code=${p.pin}`;
+      const safePinArg = escapeAttrJs(p.pin);
+      const safeBookingIdArg = escapeAttrJs(p.booking_id || '');
 
       // 1. Desktop Table Row
       if (tb) {
@@ -1007,7 +1138,12 @@
             `}
           </td>
           <td>
-            ${p.role !== 'admin' ? `<button class="btn btn-sm btn-danger" onclick="deletePin('${p.pin}', '${p.booking_id || ''}')">Löschen</button>` : '<em>Fest</em>'}
+            ${p.role !== 'admin' ? `
+              <div style="display:flex; gap:6px; flex-wrap:nowrap; align-items:center;">
+                <button class="btn btn-sm btn-edit" onclick="openEditPinModal('${safePinArg}', '${safeBookingIdArg}')" title="Gastname, PIN oder Zeitraum bearbeiten">✏️ Bearbeiten</button>
+                <button class="btn btn-sm btn-danger" onclick="deletePin('${safePinArg}', '${safeBookingIdArg}')">Löschen</button>
+              </div>
+            ` : '<em>Fest</em>'}
           </td>
         `;
         tb.appendChild(tr);
@@ -1054,11 +1190,16 @@
               <button class="btn btn-sm btn-link-only" style="padding:9px 16px; font-size:13px; font-weight:600; width:100%; justify-content:center;" onclick="copyLink('${link}')">🔗 Admin Check-in Link kopieren</button>
             </div>
           ` : `
-            <div style="display:grid; grid-template-columns: 1fr 1fr auto auto; gap:7px; align-items:center; margin-top:2px;">
-              <button class="btn btn-sm btn-msg-en" style="padding:9px 6px; font-size:12px; font-weight:700; justify-content:center;" onclick="copyGuestMessage('${p.booking_id || p.pin}', 'en')" title="Komplette englische Begrüßungsnachricht kopieren">✉️ Text (EN)</button>
-              <button class="btn btn-sm btn-msg-de" style="padding:9px 6px; font-size:12px; font-weight:700; justify-content:center;" onclick="copyGuestMessage('${p.booking_id || p.pin}', 'de')" title="Komplette deutsche Begrüßungsnachricht kopieren">🇩🇪 Text (DE)</button>
-              <button class="btn btn-sm btn-link-only" style="padding:9px 11px; font-size:13px;" onclick="copyLink('${link}')" title="Nur 1-Klick Check-in Link kopieren">🔗</button>
-              <button class="btn btn-sm btn-danger" style="padding:9px 11px; font-size:13px;" onclick="deletePin('${p.pin}', '${p.booking_id || ''}')" title="PIN löschen">🗑️</button>
+            <div style="display:flex; flex-direction:column; gap:7px; margin-top:2px;">
+              <div style="display:grid; grid-template-columns: 1fr 1fr auto; gap:7px; align-items:center;">
+                <button class="btn btn-sm btn-msg-en" style="padding:9px 6px; font-size:12px; font-weight:700; justify-content:center;" onclick="copyGuestMessage('${p.booking_id || p.pin}', 'en')" title="Komplette englische Begrüßungsnachricht kopieren">✉️ Text (EN)</button>
+                <button class="btn btn-sm btn-msg-de" style="padding:9px 6px; font-size:12px; font-weight:700; justify-content:center;" onclick="copyGuestMessage('${p.booking_id || p.pin}', 'de')" title="Komplette deutsche Begrüßungsnachricht kopieren">🇩🇪 Text (DE)</button>
+                <button class="btn btn-sm btn-link-only" style="padding:9px 11px; font-size:13px;" onclick="copyLink('${link}')" title="Nur 1-Klick Check-in Link kopieren">🔗</button>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr auto; gap:7px; align-items:center;">
+                <button class="btn btn-sm btn-edit" style="padding:9px 12px; font-size:12.5px; font-weight:700; justify-content:center;" onclick="openEditPinModal('${safePinArg}', '${safeBookingIdArg}')" title="Gastname, PIN oder Zeitraum bearbeiten">✏️ Bearbeiten</button>
+                <button class="btn btn-sm btn-danger" style="padding:9px 12px; font-size:12.5px;" onclick="deletePin('${safePinArg}', '${safeBookingIdArg}')" title="PIN löschen">🗑️ Löschen</button>
+              </div>
             </div>
           `}
         `;
@@ -1555,6 +1696,196 @@ Falko & the StayInLeipzig Family 🏡✨`;
       }
     } catch (e) {
       alert('Fehler beim Löschen');
+    }
+  }
+
+  let editingPinOriginal = null;
+
+  function escapeAttrJs(str) {
+    return String(str ?? '')
+      .replace(/\\/g, '\\\\')
+      .replace(/'/g, "\\'")
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function toDateTimeLocalValue(str) {
+    if (!str) return '';
+    const trimmed = String(str).trim().replace(' ', 'T');
+    const m = trimmed.match(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2})/);
+    if (m) return m[1];
+    const d = new Date(trimmed);
+    if (isNaN(d.getTime())) return '';
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  function generateEditRandomPin() {
+    const p = Math.floor(10000 + Math.random() * 90000).toString();
+    document.getElementById('editPinCode').value = p;
+  }
+
+  function openEditPinModal(pin, bookingId = '') {
+    const pinObj = cachedPins.find(p =>
+      (bookingId && p.booking_id === bookingId) ||
+      (!bookingId && !p.booking_id && String(p.pin) === String(pin)) ||
+      (!bookingId && String(p.pin) === String(pin))
+    );
+    if (!pinObj) {
+      alert('Buchung / PIN-Daten nicht gefunden.');
+      return;
+    }
+
+    editingPinOriginal = {
+      pin: String(pinObj.pin || ''),
+      booking_id: pinObj.booking_id || ''
+    };
+
+    document.getElementById('editGuestName').value = pinObj.name || '';
+    document.getElementById('editPinCode').value = pinObj.pin || '';
+    document.getElementById('editValidFrom').value = toDateTimeLocalValue(pinObj.valid_from);
+    document.getElementById('editValidUntil').value = toDateTimeLocalValue(pinObj.valid_until);
+
+    const metaEl = document.getElementById('editPinBookingMeta');
+    if (metaEl) {
+      metaEl.textContent = pinObj.booking_id ? `Buchungs-ID: ${pinObj.booking_id}` : 'Manueller Eintrag';
+    }
+
+    const modal = document.getElementById('editPinModal');
+    modal.style.display = 'flex';
+    setTimeout(() => {
+      const nameInput = document.getElementById('editGuestName');
+      if (nameInput) nameInput.focus();
+    }, 30);
+  }
+
+  function closeEditPinModal() {
+    const modal = document.getElementById('editPinModal');
+    if (modal) modal.style.display = 'none';
+    editingPinOriginal = null;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const modal = document.getElementById('editPinModal');
+      if (modal && modal.style.display === 'flex') {
+        closeEditPinModal();
+      }
+    }
+  });
+
+  async function saveEditedPin() {
+    if (!editingPinOriginal) return;
+
+    const name = document.getElementById('editGuestName').value.trim();
+    const pin = document.getElementById('editPinCode').value.trim();
+    const valid_from = document.getElementById('editValidFrom').value;
+    const valid_until = document.getElementById('editValidUntil').value;
+
+    if (!pin) {
+      alert('Bitte einen PIN eingeben oder generieren.');
+      return;
+    }
+    if (valid_from && valid_until && new Date(valid_until) <= new Date(valid_from)) {
+      alert('„Gültig bis“ (Check-Out) muss nach „Gültig ab“ (Check-In) liegen.');
+      return;
+    }
+
+    const saveBtn = document.getElementById('saveEditPinBtn');
+    if (saveBtn) {
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Speichert...';
+    }
+
+    try {
+      const origBookingId = editingPinOriginal.booking_id;
+      const origPin = editingPinOriginal.pin;
+
+      if (origBookingId) {
+        const res = await fetch(getApiEndpoint('admin_save_pin'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            admin_pin: adminPin,
+            name: name || 'Gast',
+            pin: pin,
+            valid_from: valid_from,
+            valid_until: valid_until,
+            booking_id: origBookingId
+          })
+        });
+        const data = await res.json();
+        if (!data.success) {
+          alert(data.error || 'Fehler beim Speichern');
+          return;
+        }
+      } else {
+        const newBookingId = 'MANUAL-' + Date.now() + '-' + Math.floor(Math.random() * 900 + 100);
+        if (pin !== origPin) {
+          const saveRes = await fetch(getApiEndpoint('admin_save_pin'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              admin_pin: adminPin,
+              name: name || 'Gast',
+              pin: pin,
+              valid_from: valid_from,
+              valid_until: valid_until,
+              booking_id: newBookingId
+            })
+          });
+          const saveData = await saveRes.json();
+          if (!saveData.success) {
+            alert(saveData.error || 'Fehler beim Speichern');
+            return;
+          }
+          await fetch(getApiEndpoint('admin_delete_pin'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ admin_pin: adminPin, pin: origPin, booking_id: '' })
+          });
+        } else {
+          const delRes = await fetch(getApiEndpoint('admin_delete_pin'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ admin_pin: adminPin, pin: origPin, booking_id: '' })
+          });
+          const delData = await delRes.json();
+          if (!delData.success) {
+            alert(delData.error || 'Fehler beim Aktualisieren');
+            return;
+          }
+          const saveRes = await fetch(getApiEndpoint('admin_save_pin'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              admin_pin: adminPin,
+              name: name || 'Gast',
+              pin: pin,
+              valid_from: valid_from,
+              valid_until: valid_until,
+              booking_id: newBookingId
+            })
+          });
+          const saveData = await saveRes.json();
+          if (!saveData.success) {
+            alert(saveData.error || 'Fehler beim Speichern');
+            return;
+          }
+        }
+      }
+
+      closeEditPinModal();
+      showToast(`✅ Änderungen für "${escapeHtml(name || 'Gast')}" (PIN: ${escapeHtml(pin)}) gespeichert!`);
+      loadData();
+    } catch (e) {
+      alert('Netzwerkfehler beim Speichern');
+    } finally {
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = '💾 Änderungen speichern';
+      }
     }
   }
 </script>
