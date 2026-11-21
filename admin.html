@@ -5,6 +5,20 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const code = (params.get('code') || params.get('pin') || '').trim();
+      if (code) {
+        const basePath = window.location.pathname
+          .replace(/\/admin(?:\.html|\.php)?\/?$/i, '')
+          .replace(/\/+$/, '') + '/';
+        if (basePath !== window.location.pathname) {
+          window.location.replace(basePath + window.location.search + window.location.hash);
+        }
+      }
+    })();
+  </script>
   <title>Admin Dashboard – AutoCheckin Mechlerstr. 10 Leipzig</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -522,6 +536,13 @@
     return `${base}/api.php?action=${action}`;
   }
 
+  function getCheckinBaseUrl() {
+    const cleanPath = window.location.pathname
+      .replace(/\/admin(?:\.html|\.php)?\/?$/i, '')
+      .replace(/\/+$/, '');
+    return `${window.location.origin}${cleanPath}/`;
+  }
+
   let cachedPins = [];
   let cachedLogs = [];
   let currentSort = {
@@ -959,7 +980,7 @@
         `;
       }
 
-      const host = window.location.origin + window.location.pathname.replace('admin.html', '').replace('admin.php', '');
+      const host = getCheckinBaseUrl();
       const link = `${host}?code=${p.pin}`;
 
       // 1. Desktop Table Row
@@ -1313,7 +1334,7 @@
       return;
     }
 
-    const host = window.location.origin + window.location.pathname.replace('admin.html', '').replace('admin.php', '');
+    const host = getCheckinBaseUrl();
     const link = `${host}?code=${pinObj.pin}`;
 
     const dFrom = new Date(pinObj.valid_from);

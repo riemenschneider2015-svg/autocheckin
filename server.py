@@ -220,7 +220,15 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         elif parsed.path in ("/", "/mechler", "/mechler/"):
             self.path = "/index.html"
             super().do_GET()
-        elif parsed.path in ("/admin", "/admin/"):
+        elif parsed.path in ("/admin", "/admin/", "/admin.html", "/admin.php"):
+            qs_dict = urllib.parse.parse_qs(parsed.query)
+            if qs_dict.get("code") or qs_dict.get("pin"):
+                safe_query = parsed.query.replace("\r", "").replace("\n", "")
+                self.send_response(302)
+                self.send_header("Location", "/?" + safe_query)
+                self.send_header("Cache-Control", "no-store")
+                self.end_headers()
+                return
             self.path = "/admin.html"
             super().do_GET()
         else:
