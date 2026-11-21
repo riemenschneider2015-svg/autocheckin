@@ -33,6 +33,11 @@
       --text-muted: #94a3b8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+      overflow-x: clip;
+    }
     body {
       font-family: 'Inter', sans-serif;
       background: #0f172a;
@@ -40,17 +45,21 @@
       padding: 24px 16px;
       min-height: 100vh;
     }
-    .wrapper { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
-    .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    .wrapper { width: 100%; max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+    #mainDashboard { width: 100%; max-width: 100%; min-width: 0; }
+    .header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
     h1 { font-size: 24px; font-weight: 800; }
-    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
-    .card-title { font-size: 17px; font-weight: 700; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; width: 100%; max-width: 100%; min-width: 0; }
+    .card-title { font-size: 17px; font-weight: 700; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
     
     /* Login */
     #loginCard { max-width: 400px; margin: 60px auto; }
-    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; min-width: 0; }
     label { font-size: 13px; font-weight: 600; color: var(--text-muted); }
     input, select, textarea {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
       background: rgba(15, 23, 42, 0.8);
       border: 1px solid var(--border);
       border-radius: 10px;
@@ -336,31 +345,48 @@
       flex-wrap: wrap;
     }
 
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    @media(max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .grid-2 > * { min-width: 0; }
+    @media(max-width: 640px) { .grid-2 { grid-template-columns: minmax(0, 1fr); } }
 
     /* Desktop table vs Mobile cards */
     .desktop-table-container {
       display: block;
       overflow-x: auto;
+      max-width: 100%;
     }
     .mobile-cards-container {
       display: none;
       flex-direction: column;
       gap: 12px;
-      -webkit-overflow-scrolling: touch;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
     }
 
     @media (max-width: 768px) {
       body {
-        padding: 16px 10px;
+        padding: 14px 10px;
       }
       .wrapper {
-        gap: 18px;
+        gap: 16px;
+      }
+      h1 {
+        font-size: 19px;
+        line-height: 1.25;
       }
       .card {
         padding: 16px 14px;
         border-radius: 14px;
+      }
+      #cleaningCard {
+        padding: 16px 14px !important;
+      }
+      #cleaningHeadline {
+        font-size: 18px !important;
+      }
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
       }
       .desktop-table-container {
         display: none !important;
@@ -381,6 +407,12 @@
       }
       .sort-select {
         flex: 1 1 100%;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+      .mobile-booking-card small {
+        white-space: normal !important;
       }
     }
   </style>
@@ -566,8 +598,8 @@
         </table>
       </div>
 
-      <!-- Mobile Logs Cards View (screens <= 768px: No horizontal scrolling!) -->
-      <div id="logsCardsContainer" class="mobile-cards-container" style="max-height: 380px; overflow-y: auto; gap: 9px; padding-right: 2px;"></div>
+      <!-- Mobile Logs Cards View (screens <= 768px: Natural page flow, no inner scroller!) -->
+      <div id="logsCardsContainer" class="mobile-cards-container" style="gap: 9px;"></div>
     </div>
   </div>
 </div>
@@ -946,7 +978,7 @@
       .filter(s => s.from >= co)
       .sort((a, b) => a.from - b.from)[0];
 
-    const chipStyleBase = "display:inline-flex; align-items:center; gap:7px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:7px 13px; border-radius:8px; font-size:12.5px; color:#cbd5e1;";
+    const chipStyleBase = "display:inline-flex; flex-wrap:wrap; align-items:center; gap:5px 7px; max-width:100%; word-break:break-word; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:7px 12px; border-radius:8px; font-size:12.5px; color:#cbd5e1;";
 
     let chipsHtml = `
       <div style="${chipStyleBase}">
@@ -1157,22 +1189,22 @@
 
         cardEl.innerHTML = `
           <!-- Header: Guest Name + PIN badge + Status Badge -->
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
-            <div>
-              <div style="font-size:15.5px; font-weight:700; color:#ffffff;">${p.name || 'Gast'}</div>
-              <div style="margin-top:4px; display:flex; align-items:center; gap:6px;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
+            <div style="flex:1 1 160px; min-width:0; overflow-wrap:anywhere;">
+              <div style="font-size:15.5px; font-weight:700; color:#ffffff; word-break:break-word;">${p.name || 'Gast'}</div>
+              <div style="margin-top:4px; display:flex; align-items:center; flex-wrap:wrap; gap:6px;">
                 <span style="font-size:11.5px; color:var(--text-muted); font-weight:600;">PIN:</span>
                 <code style="font-size:15px; color:var(--primary); font-weight:800; background:rgba(56,189,248,0.12); padding:2px 8px; border-radius:6px; letter-spacing:0.5px;">${p.pin}</code>
-                ${p.booking_id ? `<span style="font-size:11px; color:var(--text-muted);">(${p.booking_id})</span>` : ''}
+                ${p.booking_id ? `<span style="font-size:11px; color:var(--text-muted); word-break:break-all;">(${p.booking_id})</span>` : ''}
               </div>
             </div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end;">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; max-width:100%;">
               ${badge}
             </div>
           </div>
 
           <!-- Stay Period Box -->
-          <div style="background:rgba(15,23,42,0.65); border:1px solid rgba(255,255,255,0.06); padding:9px 12px; border-radius:9px; font-size:12px; color:#cbd5e1; display:flex; align-items:center; justify-content:space-between; gap:6px;">
+          <div style="background:rgba(15,23,42,0.65); border:1px solid rgba(255,255,255,0.06); padding:9px 12px; border-radius:9px; font-size:12px; color:#cbd5e1; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
             <div>
               <span style="color:var(--text-muted); font-size:10.5px; display:block; text-transform:uppercase;">Check-in ab:</span>
               <b style="color:#f1f5f9;">${pad(from.getDate())}.${pad(from.getMonth() + 1)}., ${pad(from.getHours())}:${pad(from.getMinutes())} Uhr</b>
@@ -1272,6 +1304,14 @@
     }
   }
 
+  let showAllMobileLogs = false;
+  const MOBILE_LOGS_INITIAL_LIMIT = 8;
+
+  function toggleMobileLogs() {
+    showAllMobileLogs = !showAllMobileLogs;
+    renderLogs(cachedLogs);
+  }
+
   function renderLogs(logs) {
     const tb = document.getElementById('logsTableBody');
     const cardsContainer = document.getElementById('logsCardsContainer');
@@ -1291,7 +1331,7 @@
       return;
     }
 
-    logs.forEach(l => {
+    logs.forEach((l, idx) => {
       const doorDisplay = (l.door === 'haustuer') ? '🚪 Haustür' : ((l.door === 'wohnungstuer') ? '🔑 Wohnungstür' : (escapeHtml(l.door) || '-'));
       const timeDesktop = formatEuropeanTimestamp(l.timestamp, false);
       const timeMobile = formatEuropeanTimestamp(l.timestamp, true);
@@ -1315,8 +1355,8 @@
         tb.appendChild(tr);
       }
 
-      // 2. Mobile Responsive Card (Zero horizontal scrolling on phone)
-      if (cardsContainer) {
+      // 2. Mobile Responsive Card (Zero horizontal scrolling, no inner scroll box)
+      if (cardsContainer && (showAllMobileLogs || idx < MOBILE_LOGS_INITIAL_LIMIT)) {
         const card = document.createElement('div');
         card.style.cssText = `
           background: rgba(15, 23, 42, 0.7);
@@ -1327,14 +1367,16 @@
           display: flex;
           flex-direction: column;
           gap: 6px;
+          max-width: 100%;
+          min-width: 0;
         `;
 
         card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px 8px;">
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; min-width:0;">
               <span style="font-size:13.5px; font-weight:700; color:#f8fafc;">${doorDisplay}</span>
               <span style="color:var(--text-muted); font-size:11px;">•</span>
-              <b style="font-size:13px; color:#38bdf8;">${guestName}</b>
+              <b style="font-size:13px; color:#38bdf8; word-break:break-word;">${guestName}</b>
             </div>
             <span class="badge" style="background:${isSuccess ? 'rgba(34,197,94,0.18)' : 'rgba(239,68,68,0.18)'}; color:${isSuccess ? '#4ade80' : '#ef4444'}; border:1px solid ${isSuccess ? 'rgba(34,197,94,0.35)' : 'rgba(239,68,68,0.35)'}; font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:999px; white-space:nowrap;">
               ${isSuccess ? '✓ OK' : '✕ Fehlgeschlagen'}
@@ -1342,19 +1384,31 @@
           </div>
 
           ${msgSafe ? `
-            <div style="font-size:12px; color:#cbd5e1; line-height:1.35;">
+            <div style="font-size:12px; color:#cbd5e1; line-height:1.35; word-break:break-word; overflow-wrap:anywhere;">
               ${msgSafe}
             </div>
           ` : ''}
 
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:11px; color:var(--text-muted); padding-top:5px; border-top:1px solid rgba(255,255,255,0.05); margin-top:2px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px 8px; font-size:11px; color:var(--text-muted); padding-top:5px; border-top:1px solid rgba(255,255,255,0.05); margin-top:2px;">
             <span>🕒 ${timeMobile}</span>
-            <code style="background:rgba(255,255,255,0.06); padding:1px 6px; border-radius:4px; font-size:10.5px; color:#94a3b8;">${ipSafe}</code>
+            <code style="background:rgba(255,255,255,0.06); padding:1px 6px; border-radius:4px; font-size:10.5px; color:#94a3b8; max-width:100%; word-break:break-all;">${ipSafe}</code>
           </div>
         `;
         cardsContainer.appendChild(card);
       }
     });
+
+    if (cardsContainer && logs.length > MOBILE_LOGS_INITIAL_LIMIT) {
+      const toggleBtn = document.createElement('button');
+      toggleBtn.type = 'button';
+      toggleBtn.className = 'btn btn-sm btn-secondary';
+      toggleBtn.style.cssText = 'width: 100%; justify-content: center; padding: 9px 12px; margin-top: 2px;';
+      toggleBtn.textContent = showAllMobileLogs
+        ? '⬆️ Weniger Einträge anzeigen'
+        : `⬇️ Alle ${logs.length} Einträge anzeigen`;
+      toggleBtn.onclick = toggleMobileLogs;
+      cardsContainer.appendChild(toggleBtn);
+    }
   }
 
   function showToast(message) {
