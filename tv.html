@@ -856,6 +856,38 @@
     .radio-catalog-tools { display:flex; gap:.6rem; flex-wrap:wrap; }
     .channel-logo { width:2rem; height:1.55rem; object-fit:contain; background:#fff; border-radius:4px; }
     .channel-btn .channel-row-name { display:flex; align-items:center; gap:.55rem; }
+
+    /* Guest dashboard — independent panels share one spacing and focus system. */
+    .tv-stage { padding:clamp(12px,2.4vh,32px) clamp(16px,4vw,80px); gap:clamp(10px,1.65vh,23px); }
+    .tv-topbar { padding:.5rem 1.05rem; background:rgba(251,253,255,.95); }
+    .current-weather { padding-left:1rem; padding-right:.3rem; }
+    .current-weather-temp { font-size:clamp(26px,3vw,51px); }
+    .home-actions { grid-template-columns:minmax(0,1.48fr) minmax(310px,1fr); gap:clamp(12px,1.65vw,28px); }
+    .home-primary { display:grid; gap:clamp(10px,1.3vh,19px); min-width:0; }
+    .welcome-card,.menu-section,.home-departures { border:1px solid rgba(255,255,255,.76); border-radius:clamp(16px,1.65vw,28px); background:rgba(250,252,255,.96); box-shadow:0 2px 4px rgba(19,31,53,.05),0 10px 32px rgba(19,31,53,.15); }
+    .welcome-card { max-width:none; padding:clamp(14px,1.65vw,29px); min-width:0; }
+    .welcome-kicker { letter-spacing:.11em; }
+    .welcome-headline { margin:.12em 0; font-size:clamp(31px,3.8vw,75px); line-height:1.05; text-shadow:none; }
+    .welcome-guest { font-size:clamp(20px,2.25vw,37px); line-height:1.15; letter-spacing:-.025em; }
+    .welcome-subtext { margin:.35rem 0 .7rem; line-height:1.4; font-size:clamp(16px,1.45vw,26px); }
+    .welcome-badges { margin:0 0 .55rem; }
+    .welcome-actions { display:flex; align-items:baseline; gap:.45rem 1rem; flex-wrap:wrap; }
+    .welcome-help { color:#1e5292; font-size:clamp(14px,1.05vw,20px); font-weight:650; text-decoration:none; border-radius:5px; }
+    .welcome-help:focus { outline:2px solid #4670b7; outline-offset:4px; }
+    .menu-section { padding:clamp(12px,1.4vw,24px); }
+    .menu-header { margin-bottom:.65rem; }
+    .tv-tile { position:relative; padding:.6rem .8rem; min-height:clamp(46px,7.4vh,91px); border-radius:clamp(10px,1.1vw,18px); background:linear-gradient(160deg,#fff 32%,#f7f9fc); transition:background .18s, box-shadow .18s, border-color .18s; }
+    .tv-tile:hover,.tv-tile:focus { background:radial-gradient(ellipse at 12% 0%,#fff,#e6f0ff); }
+    .home-support { grid-template-columns:minmax(0,1fr) minmax(0,1.45fr); margin:0; gap:.75rem; }
+    .home-wifi,.home-forecast { background:rgba(251,253,255,.97); }
+    .home-wifi img { width:clamp(48px,5vw,78px); height:auto; }
+    .home-departures { padding:clamp(12px,1.35vw,22px); display:grid; gap:.8rem; }
+    .home-board + .home-board { padding-top:.65rem; border-top:1px solid #dae2ed; }
+    .home-departures-button { padding:.25rem .15rem .5rem; color:#202e43; }
+    .home-departures-button .tv-line-icon { width:clamp(20px,1.6vw,29px); height:auto; }
+    .home-stationboard { height:clamp(152px,24vh,245px); }
+    @media (max-width:850px) { .home-actions { grid-template-columns:1fr; } }
+    @media (prefers-reduced-motion:reduce) { .tv-tile { transition:none; } }
   </style>
 </head>
 <body>
@@ -876,16 +908,20 @@
       </div>
     </div>
   </header>
-  <section class="hero-grid"><div class="welcome-card">
+  <div class="home-actions">
+  <div class="home-primary">
+  <section class="welcome-card" aria-labelledby="welcomeHeadline">
     <p class="welcome-kicker">Mechlerstraße 10</p>
     <h1 class="welcome-headline" id="welcomeHeadline">Willkommen in Leipzig</h1>
-    <p class="welcome-guest" id="welcomeGuest" hidden></p>
+    <p class="welcome-guest" id="welcomeGuest" aria-live="polite" hidden></p>
     <p class="welcome-subtext" id="welcomeSubtext">Schön, dass Sie da sind!</p>
-    <div class="welcome-badges"><p class="info-chip" id="stayPeriodText" hidden></p></div>
+    <div class="welcome-badges" id="welcomeDates" hidden><p class="info-chip" id="stayPeriodText"></p></div>
+    <div class="welcome-actions">
     <a class="stay-guide-link" href="gaestemappe.html" target="_blank" rel="noopener noreferrer" data-stay-rules>Bitte im Haus nicht rauchen · Nachtruhe 22–7 Uhr · Check-out bis 11 Uhr</a>
+    <a class="welcome-help" href="tel:+4915253453390" data-welcome-help>Gastgeber anrufen</a>
+    </div>
     <div id="nowPlayingRadioBanner" style="display:none"><span id="nowPlayingRadioName"></span></div>
-  </div></section>
-  <div class="home-actions">
+  </section>
   <section class="menu-section" aria-labelledby="easyMenuHeading">
     <div class="menu-header"><h2 class="menu-title" id="easyMenuHeading"><span data-text="3">Entdecken</span></h2>
     <p class="remote-hint"><span data-text="4">Pfeiltasten · OK · Zurück</span></p></div>
@@ -897,9 +933,13 @@
       <button type="button" class="tv-tile" onclick="openModal('youtubeModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3V9Z"/></svg><span class="tile-name"><span data-text="8">YouTube</span></span></button>
       <button type="button" class="tv-tile" onclick="openModal('netflixModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4l3 5m3-5 3 5m-7 4 5 2-5 2v-4Z"/></svg><span class="tile-name"><span data-text="9">Streaming</span></span></button>
     </div>
-<div class="home-support"><div class="home-wifi"><img src="qrcodes/qr_wifi.svg" width="72" height="72" alt="WLAN QR"><span><strong data-text="11">WLAN</strong><small>gigacube-EA6A</small></span></div><div id="weatherForecast" class="home-forecast" hidden aria-label="Wetter für die nächsten Tage"></div></div>
   </section>
-  <section class="home-departures"><button type="button" class="home-departures-button" onclick="openModal('departureModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14M8 18l-2 3m10-3 2 3m-10-6h1m6 0h1"/></svg><span data-home-transit>Live-Abfahrten · Chausseehaus</span></button><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=0" title="LVB Stationboard · Chausseehaus" tabindex="-1"></iframe><h3 class="home-stop-name">Fritz-Seger-Straße</h3><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012971?headertext=Fritz-Seger-Stra%C3%9Fe&amp;showheader=0" title="LVB Stationboard · Fritz-Seger-Straße" tabindex="-1"></iframe></section>
+  <div class="home-support"><div class="home-wifi"><img src="qrcodes/qr_wifi.svg" width="72" height="72" alt="WLAN QR"><span><strong data-text="11">WLAN</strong><small>gigacube-EA6A</small></span></div><div id="weatherForecast" class="home-forecast" hidden aria-label="Wetter für die nächsten Tage"></div></div>
+  </div>
+  <section class="home-departures" aria-label="LVB Live-Abfahrten">
+    <div class="home-board"><button type="button" class="home-departures-button" onclick="openModal('departureModal','0012968')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14M8 18l-2 3m10-3 2 3m-10-6h1m6 0h1"/></svg><span data-home-transit>Live-Abfahrten · Chausseehaus</span></button><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=0" title="LVB Stationboard · Chausseehaus" tabindex="-1"></iframe></div>
+    <div class="home-board"><button type="button" class="home-departures-button" onclick="openModal('departureModal','0012971')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14M8 18l-2 3m10-3 2 3m-10-6h1m6 0h1"/></svg><span>Fritz-Seger-Straße</span></button><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012971?headertext=Fritz-Seger-Stra%C3%9Fe&amp;showheader=0" title="LVB Stationboard · Fritz-Seger-Straße" tabindex="-1"></iframe></div>
+  </section>
   </div>
 </main>
 <!-- =========================================================
@@ -1462,8 +1502,9 @@
     const period = document.getElementById('stayPeriodText');
     const from = new Date(currentGuest && currentGuest.valid_from || '');
     const until = new Date(currentGuest && currentGuest.valid_until || '');
-    period.hidden = !Number.isFinite(+from) || !Number.isFinite(+until);
-    period.textContent = period.hidden ? '' : from.toLocaleDateString(currentLang) + ' – ' + until.toLocaleDateString(currentLang);
+    const hasDates = Number.isFinite(+from) && Number.isFinite(+until);
+    document.getElementById('welcomeDates').hidden = !hasDates;
+    period.textContent = !hasDates ? '' : from.toLocaleDateString(currentLang) + ' – ' + until.toLocaleDateString(currentLang);
   }
 
   function setTvLang(lang) {
@@ -1479,6 +1520,7 @@
     document.querySelectorAll('[data-text]').forEach(el => { el.textContent = translations[currentLang][el.dataset.text]; });
     const [callLabel, scanLabel, routeLabel] = guideLabels[currentLang];
     document.querySelector('[data-call-label]').textContent = callLabel;
+    document.querySelector('[data-welcome-help]').textContent = callLabel;
     document.querySelector('[data-scan-label]').textContent = scanLabel;
     document.querySelectorAll('[data-route-label]').forEach(el => { el.textContent = routeLabel; });
     const search = document.getElementById('channelSearch');
@@ -2088,7 +2130,7 @@
   const remoteKeyCodes = {13:'Enter',37:'ArrowLeft',38:'ArrowUp',39:'ArrowRight',40:'ArrowDown',10009:'Escape'};
   const directions = { ArrowLeft:[-1,0], ArrowRight:[1,0], ArrowUp:[0,-1], ArrowDown:[0,1] };
 
-  function openModal(id) {
+  function openModal(id, stopId) {
     closeAllModals(false);
     const modal = document.getElementById(id);
     modal.classList.add('active');
@@ -2102,7 +2144,8 @@
     } else if (id === 'youtubeModal') {
       stopRadio();
     } else if (id === 'departureModal') {
-      const stop = modal.querySelector('.stop-button[aria-pressed=true]');
+      const stops = Array.from(modal.querySelectorAll('.stop-button'));
+      const stop = (stopId && stops.find(button => button.dataset.board.includes('/'+stopId+'?'))) || stops.find(button => button.getAttribute('aria-pressed') === 'true');
       selectDepartureStop(stop);
       stop.focus();
       return;
