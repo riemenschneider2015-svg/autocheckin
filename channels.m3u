@@ -148,3 +148,853 @@ https://live-hls-web-aja.getaj.net/AJA/index.m3u8
 https://dwamdstream103.akamaized.net/hls/live/2015526/dwstream103/index.m3u8
 #EXTINF:-1 group-title="🌍 العربية (Arabic)",TRT عربي HD
 https://tv-trtarabi.medya.trt.com.tr/master.m3u8
+
+# IPTV-org · additional HTTPS/HLS streams · https://github.com/iptv-org/iptv
+#EXTINF:-1 tvg-id="ABNsat.iq" tvg-language="العربية" group-title="Irak",ABNsat (720p)
+https://mediaserver.abnvideos.com/streams/abnsat.m3u8
+#EXTINF:-1 tvg-id="AfghanistanInternational.uk" tvg-language="العربية" group-title="Vereinigtes Königreich",Afghanistan International (720p)
+https://hls.afintl.com/hls/stream.m3u8
+#EXTINF:-1 tvg-id="Aflam.sa" tvg-language="العربية" group-title="Saudi-Arabien",Aflam (1080p)
+https://shd-amg-fast.edgenextcdn.net/tx001/playlist.m3u8
+#EXTINF:-1 tvg-id="AghaniAghaniTV.lb" tvg-language="العربية" group-title="Libanon",Aghani Aghani TV (1080p)
+https://cdn.streamlane.tv/hls/aghanitv/index.m3u8
+#EXTINF:-1 tvg-id="AghapyTV.eg" tvg-language="العربية" group-title="Ägypten",Aghapy TV (1080p) [Not 24/7]
+https://5b622f07944df.streamlock.net/aghapy.tv/aghapy.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="AjmanTV.ae" tvg-language="العربية" group-title="Vereinigte Arabische Emirate",Ajman TV (1080p)
+https://cdn1.logichost.in/ajmantv/live/playlist.m3u8
+#EXTINF:-1 tvg-id="AlAlamAlYawm.sa" tvg-language="العربية" group-title="Saudi-Arabien",Al Alam Al Yawm
+https://mn-nl.mncdn.com/mekameleen/smil:mekameleentv.smil/chunklist_b928000.m3u8
+#EXTINF:-1 tvg-id="AlArabiyaBusiness.ae" tvg-language="العربية" group-title="Vereinigte Arabische Emirate",Al Arabiya Business (1080p)
+https://live.alarabiya.net/alarabiapublish/aswaaq.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="AlArabiyaPrograms.ae" tvg-language="العربية" group-title="Vereinigte Arabische Emirate",Al Arabiya Programs (1280p)
+https://live.alarabiya.net/alarabiapublish/aaprograms.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="AlArabyTV.qa" tvg-language="العربية" group-title="Katar",Al Araby TV (1080p)
+https://live.kwikmotion.com/alaraby1live/alaraby_abr/playlist.m3u8
+#EXTINF:-1 tvg-id="AlArabyTV2.qa" tvg-language="العربية" group-title="Katar",Al Araby TV 2 (1080p)
+https://live.kwikmotion.com/alaraby2live/alaraby2.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="AlEkhbariya.sa" tvg-language="العربية" group-title="Saudi-Arabien",Al Ekhbariya (1080p)
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-al-ekhbaria/297b3ef1cd0633ad9cfba7473a686a06/index.m3u8
+#EXTINF:-1 tvg-id="AlGhadTV.eg" tvg-language="العربية" group-title="Ägypten",Al Ghad TV (1080p)
+https://eazyvwqssi.erbvr.com/alghadtv/alghadtv.m3u8
+#EXTINF:-1 tvg-id="AlHadath.sa" tvg-language="العربية" group-title="Saudi-Arabien",Al Hadath (1080p)
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-hadath/2ff87ec4c2f3ede35295a20637d9f8fd/index.m3u8
+#EXTINF:-1 tvg-id="AlHayatTV.us" tvg-language="العربية" group-title="Vereinigte Staaten",Al Hayat TV (720p)
+https://cdn3.wowza.com/5/OE5HREpIcEkySlNT/alhayat-live/ngrp:livestream_all/playlist.m3u8
+#EXTINF:-1 tvg-id="AlHiwarTV.uk" tvg-language="العربية" group-title="Vereinigtes Königreich",Al Hiwar TV (1080p) [Not 24/7]
+https://mn-nl.mncdn.com/alhiwar_live/smil:alhiwar.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="AlIraqiaNews.iq" tvg-language="العربية" group-title="Irak",Al Iraqia News (720p)
+https://imn-live.esite-lab.com/hls/iraqia-news.m3u8
+#EXTINF:-1 tvg-id="AlJazeera.qa" tvg-language="العربية" group-title="Katar",Al Jazeera (1080p)
+https://live-hls-apps-aja-fa.getaj.net/AJA/01.m3u8
+#EXTINF:-1 tvg-id="AlJazeera2.qa" tvg-language="العربية" group-title="Katar",Al Jazeera 2 (1080p)
+https://live-hls-web-aja2-gcp.thehlive.com/AJA2/index.m3u8
+#EXTINF:-1 tvg-id="AlJazeeraMubasher.qa" tvg-language="العربية" group-title="Katar",Al Jazeera Mubasher (1080p)
+https://live-hls-apps-ajm-fa.getaj.net/AJM/index.m3u8
+#EXTINF:-1 tvg-id="AlJazeeraMubasher24.qa" tvg-language="العربية" group-title="Katar",Al Jazeera Mubasher 24 (1080p)
+https://live-hls-apps-ajm24-fa.getaj.net/AJM24/index.m3u8
+#EXTINF:-1 tvg-id="AlJazeeraMubasherBroadcast2.qa" tvg-language="العربية" group-title="Katar",Al Jazeera Mubasher Broadcast 2 (1080p)
+https://live-hls-apps-ajm2-fa.getaj.net/AJM2/index.m3u8
+#EXTINF:-1 tvg-id="AlMaarefTV.qa" tvg-language="العربية" group-title="Katar",Al Maaref TV (1080p)
+https://bucharest.zeuscdn724.com/lb0/CH-AL-MA/index.m3u8
+#EXTINF:-1 tvg-id="AlMadina.ps" tvg-language="العربية" group-title="Palästinensische Autonomiegebiete",Al Madina (720p)
+https://streaming.zaytonatube.com:8081/AlMadinatv/almadina21/index.m3u8
+#EXTINF:-1 tvg-id="AlMasarTV.ly" tvg-language="العربية" group-title="Libyen",Al Masar TV (576p)
+https://starmenajo.com/hls/almasar/index.m3u8
+#EXTINF:-1 tvg-id="AlMasirah.ye" tvg-language="العربية" group-title="Jemen",Al Masirah (720p) [Not 24/7]
+https://live.cdnbridge.tv/Almasirah/Almasirah_all/playlist.m3u8
+#EXTINF:-1 tvg-id="AlMasirahMubacher.ye" tvg-language="العربية" group-title="Jemen",Al Masirah Mubacher (642p) [Not 24/7]
+https://live2.cdnbridge.tv/AlmasirahMubasher/Mubasher_All/playlist.m3u8
+#EXTINF:-1 tvg-id="BarrandovKrimi.cz" tvg-language="Čeština" group-title="Tschechien",Barrandov Krimi (1080p)
+https://dash4.antik.sk/live/test_barrandov_plus_atk_1200/playlist.m3u8
+#EXTINF:-1 tvg-id="ElektrikaTV.cz" tvg-language="Čeština" group-title="Tschechien",Elektrika TV (1080p)
+https://rtmp.elektrika.cz/live/myStream.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="GolfChannel.cz" tvg-language="Čeština" group-title="Tschechien",Golf Channel (Czech Republic)
+https://dash4.antik.sk/live/test_golf_channel/playlist.m3u8
+#EXTINF:-1 tvg-id="JC1.cz" tvg-language="Čeština" group-title="Tschechien",JC1 (1080p)
+https://stream.jc1.cz/hls/jc1.m3u8
+#EXTINF:-1 tvg-id="Jihoceskatelevize.cz" tvg-language="Čeština" group-title="Tschechien",Jihoceska televize (1080p)
+https://vysilani.zaktv.cz/broadcast/hls/jtv/index.m3u8
+#EXTINF:-1 tvg-id="MISATV.ro" tvg-language="Čeština" group-title="Rumänien",MISA TV Czech (576i) [Not 24/7]
+https://vidl.youniverse.name:5050/MSTV/czech_360p/playlist.m3u8
+#EXTINF:-1 tvg-id="MnauTV.cz" tvg-language="Čeština" group-title="Tschechien",Mnau TV (1080p)
+https://5ca49f2417d90.streamlock.net/mnau/livestream/playlist.m3u8
+#EXTINF:-1 tvg-id="Ocko.cz" tvg-language="Čeština" group-title="Tschechien",Ocko (540p)
+https://ocko-live-dash.ssl.cdn.cra.cz/cra_live2/ocko.stream.1.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="OckoBlack.cz" tvg-language="Čeština" group-title="Tschechien",Ocko Black
+https://dash2.antik.sk/live/test_ocko_black/playlist.m3u8
+#EXTINF:-1 tvg-id="OckoExpres.cz" tvg-language="Čeština" group-title="Tschechien",Ocko Expres (540p)
+https://ocko-live.ssl.cdn.cra.cz/channels/ocko_expres/playlist.m3u8
+#EXTINF:-1 tvg-id="OckoGold.cz" tvg-language="Čeština" group-title="Tschechien",Ocko Gold (540p)
+https://ocko-live.ssl.cdn.cra.cz/channels/ocko_gold/playlist.m3u8
+#EXTINF:-1 tvg-id="OckoStar.cz" tvg-language="Čeština" group-title="Tschechien",Ocko Star
+https://dash4.antik.sk/live/test_ocko_star/playlist.m3u8
+#EXTINF:-1 tvg-id="PlzenTV.cz" tvg-language="Čeština" group-title="Tschechien",Plzen TV (1080p)
+https://vysilani.zaktv.cz/broadcast/hls/ptv/index.m3u8
+#EXTINF:-1 tvg-id="PolarTV.cz" tvg-language="Čeština" group-title="Tschechien",Polar TV (Czech Republic) (1080p)
+https://stream.polar.cz/polar/polarlive-1/playlist.m3u8
+#EXTINF:-1 tvg-id="RetroMusicTV.cz" tvg-language="Čeština" group-title="Tschechien",Retro Music TV (360p)
+https://stream.mediawork.cz/retrotv/retrotvHQ1/playlist.m3u8
+#EXTINF:-1 tvg-id="TVBrno1.cz" tvg-language="Čeština" group-title="Tschechien",TV Brno 1 (1080p)
+https://stream.polar.cz/tvbrno1/tvbrno1live-1/playlist.m3u8
+#EXTINF:-1 tvg-id="TVNoe.cz" tvg-language="Čeština" group-title="Tschechien",TV Noe (720p) [Geo-blocked]
+https://n105.quickmedia.tv/noetv/live/noetv/Ifd4_1_4/chunks_dvr_timeshift-0-7200.m3u8
+#EXTINF:-1 tvg-id="TVNoePlus.cz" tvg-language="Čeština" group-title="Tschechien",TV Noe+ (720p) [Geo-blocked]
+https://n105.quickmedia.tv/noetvplus/live/noetvplus/Shz3_1_1/chunks_dvr_timeshift-0-7200.m3u8
+#EXTINF:-1 tvg-id="UpNetwork.cz" tvg-language="Čeština" group-title="Tschechien",Up Network
+https://dash.antik.sk/live/test_upnetwork/playlist.m3u8
+#EXTINF:-1 tvg-id="UTV.cz" tvg-language="Čeština" group-title="Tschechien",UTV (Czech Republic) (1080p)
+https://vysilani.zaktv.cz/broadcast/hls/utv/index.m3u8
+#EXTINF:-1 tvg-id="VychodoceskaTV.cz" tvg-language="Čeština" group-title="Tschechien",Vychodoceska TV (1080p)
+https://stream.polar.cz/vctv/vctvlive-1/playlist.m3u8
+#EXTINF:-1 tvg-id="3sat.de" tvg-language="Deutsch" group-title="Deutschland",3sat
+https://dash4.antik.sk/live/test_drei_sat_tizen/playlist.m3u8
+#EXTINF:-1 tvg-id="AdriaMusicTelevision.de" tvg-language="Deutsch" group-title="Deutschland",Adria Music Television
+https://adriaapp.b-cdn.net/1080p/index.m3u8
+#EXTINF:-1 tvg-id="AlexBerlin.de" tvg-language="Deutsch" group-title="Deutschland",Alex Berlin (1080p)
+https://alex-stream.rosebud-media.de/bounce/alexlivetv50.smil/index.m3u8
+#EXTINF:-1 tvg-id="AllgauTV.de" tvg-language="Deutsch" group-title="Deutschland",Allgau TV (1080p)
+https://stream01.welocal.stream/stream/fhd-allgaeutv_25679/ngrp:stream_all/playlist.m3u8
+#EXTINF:-1 tvg-id="ARDalpha.de" tvg-language="Deutsch" group-title="Deutschland",ARD-alpha (720p)
+https://mcdn.br.de/br/fs/ard_alpha/hls/de/master.m3u8
+#EXTINF:-1 tvg-id="arte.de" tvg-language="Deutsch" group-title="Deutschland",arte (Germany) (720p) [Geo-blocked]
+https://artesimulcast.akamaized.net/hls/live/2030993/artelive_de/index.m3u8
+#EXTINF:-1 tvg-id="AugsburgTV.de" tvg-language="Deutsch" group-title="Deutschland",Augsburg TV (1080p)
+https://stream02.welocal.stream/stream/fhd-augsburgtv_104951/ngrp:stream_all/playlist.m3u8
+#EXTINF:-1 tvg-id="BibelTV.de" tvg-language="Deutsch" group-title="Deutschland",Bibel TV (720p)
+https://bibint01.iptv-playoutcenter.de/bibint01/bibint01.stream_all/playlist.m3u8
+#EXTINF:-1 tvg-id="BibelTVImpuls.de" tvg-language="Deutsch" group-title="Deutschland",Bibel TV Impuls (720p)
+https://bibeltv02.iptv-playoutcenter.de/bibeltv02/bibeltv02.stream_1/playlist.m3u8
+#EXTINF:-1 tvg-id="BibelTVMusik.de" tvg-language="Deutsch" group-title="Deutschland",Bibel TV Musik (720p)
+https://bibeltv03.iptv-playoutcenter.de/bibeltv03/bibeltv03.stream_1/playlist.m3u8
+#EXTINF:-1 tvg-id="BRFernsehen.de" tvg-language="Deutsch" group-title="Deutschland",BR Fernsehen (720p)
+https://mcdn.br.de/br/fs/bfs_nord/hls/de/master.m3u8
+#EXTINF:-1 tvg-id="CanalAlphaNeuchatel.ch" tvg-language="Deutsch" group-title="Schweiz",Canal Alpha Neuchatel (1080p) [Not 24/7]
+https://canalalpha.vedge.infomaniak.com/livecast/ik:canalalpha/playlist.m3u8
+#EXTINF:-1 tvg-id="DHA.tr" tvg-language="Deutsch" group-title="Türkei",DHA (720p) [Not 24/7]
+https://603c568fccdf5.streamlock.net/live/dhaweb1_C5efC/playlist.m3u8
+#EXTINF:-1 tvg-id="DieNeueZeitTV.ch" tvg-language="Deutsch" group-title="Schweiz",Die Neue Zeit TV (576p)
+https://bild-und-ton.stream/die-neue-zeit-tv-live/smil:dnz-de.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="FIFAPlus.uk" tvg-language="Deutsch" group-title="Vereinigtes Königreich",FIFA+ German (720p)
+https://4397879b.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWRlX0ZJRkFQbHVzR2VybWFuX0hMUw/playlist.m3u8
+#EXTINF:-1 tvg-id="FolxSlovenija.si" tvg-language="Deutsch" group-title="Slowenien",Folx Slovenija
+https://folxsloapp.b-cdn.net/1080p/index.m3u8
+#EXTINF:-1 tvg-id="ImmaculataTV.ch" tvg-language="Deutsch" group-title="Schweiz",Immaculata TV (720p)
+https://g5nl63z8lpq6-hls-live.5centscdn.com/tvistream/a5586d8ea3b7b021120a05c60dc59876.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="AcheloosTV.gr" tvg-language="Ελληνικά" group-title="Griechenland",Acheloos TV (576p)
+https://acheloostv.streamings.gr/live/stream/index.m3u8
+#EXTINF:-1 tvg-id="AigaioTV.gr" tvg-language="Ελληνικά" group-title="Griechenland",Aigaio TV (720p)
+https://fr.crystalweb.net:1936/aigaiotv/aigaiotv/playlist.m3u8
+#EXTINF:-1 tvg-id="AlphaTV.gr" tvg-language="Ελληνικά" group-title="Griechenland",Alpha TV (1080p)
+https://alphatvlive2.siliconweb.com/alphatvlive/live_abr/playlist.m3u8
+#EXTINF:-1 tvg-id="BarazaTV.gr" tvg-language="Ελληνικά" group-title="Griechenland",Baraza TV (1080p)
+https://eco.streams.ovh:8081/barazatv/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-id="BarazaTVDeepHouse.gr" tvg-language="Ελληνικά" group-title="Griechenland",Baraza TV Deep House (720p)
+https://rtmp.streams.ovh:1936/barazarelax/barazazararelax/barazarelax/playlist.m3u8
+#EXTINF:-1 tvg-id="BarazaTVRelaxing.gr" tvg-language="Ελληνικά" group-title="Griechenland",Baraza TV Relaxing (720p)
+https://rtmp.streams.ovh:1936/barazarelax/barazarelax/playlist.m3u8
+#EXTINF:-1 tvg-id="BlueSkyTV.gr" tvg-language="Ελληνικά" group-title="Griechenland",Blue Sky TV (720p)
+https://cdn5.smart-tv-data.com/bluesky/bluesky-live/playlist.m3u8
+#EXTINF:-1 tvg-id="CenterTV.gr" tvg-language="Ελληνικά" group-title="Griechenland",Center TV (1080p)
+https://eu1.streams.gr:8081/centertv/index.m3u8
+#EXTINF:-1 tvg-id="Channel8.gr" tvg-language="Ελληνικά" group-title="Griechenland",Channel 8 (Greece) (1080p)
+https://gra1.crystalweb.net:1936/channel8/channel8/playlist.m3u8
+#EXTINF:-1 tvg-id="EcclesiaTV.gr" tvg-language="Ελληνικά" group-title="Griechenland",Ecclesia TV (Greece) (1080p)
+https://liveopen.siliconweb.com/openTvLive/openEcclessia/playlist.m3u8
+#EXTINF:-1 tvg-id="EgnatiaTV.gr" tvg-language="Ελληνικά" group-title="Griechenland",Egnatia TV (576p)
+https://video.streams.ovh:1936/egnatiatv/egnatiatv/index.m3u8
+#EXTINF:-1 tvg-id="EllinikosFM.gr" tvg-language="Ελληνικά" group-title="Griechenland",Ellinikos FM (720p)
+https://rtmp.win:3603/live/ellinikosfmlive.m3u8
+#EXTINF:-1 tvg-id="ENAChannel.gr" tvg-language="Ελληνικά" group-title="Griechenland",ENA Channel (1080p)
+https://cdn5.smart-tv-data.com/ena/ena_channel/playlist.m3u8
+#EXTINF:-1 tvg-id="EpilogesTV.gr" tvg-language="Ελληνικά" group-title="Griechenland",Epiloges TV (480p)
+https://gra1.crystalweb.net:1936/epilogestv/epilogestv/playlist.m3u8
+#EXTINF:-1 tvg-id="ERTCosmos.gr" tvg-language="Ελληνικά" group-title="Griechenland",ERT Cosmos (1080p)
+https://ert-ucdn.broadpeak-aas.com/bpk-tv/ERTCosmos/default/index.m3u8
+#EXTINF:-1 tvg-id="EuronewsGreek.fr" tvg-language="Ελληνικά" group-title="Frankreich",Euronews Greek (720p)
+https://cdn-euronews.akamaized.net/live/eds/euronews-el/25068/index.m3u8
+#EXTINF:-1 tvg-id="HellenicTV.uk" tvg-language="Ελληνικά" group-title="Vereinigtes Königreich",Hellenic TV (720p) [Not 24/7]
+https://l5.cloudskep.com/hellenictv/htv/playlist.m3u8
+#EXTINF:-1 tvg-id="OmegaChannel.cy" tvg-language="Ελληνικά" group-title="Zypern",Omega Channel (576i)
+https://l1.cloudskep.com/omegatv/omcy/playlist.m3u8
+#EXTINF:-1 tvg-id="RIKSat.cy" tvg-language="Ελληνικά" group-title="Zypern",RIK Sat (720p) [Not 24/7]
+https://l3.cloudskep.com/cybcsat/abr/playlist.m3u8
+#EXTINF:-1 tvg-id="SigmaTV.cy" tvg-language="Ελληνικά" group-title="Zypern",Sigma TV (576p) [Not 24/7]
+https://sl2.sigmatv.com/hls/live.m3u8
+#EXTINF:-1 tvg-id="10Bold.au" tvg-language="English" group-title="Australien",10 Bold (1080p)
+https://dce3793146fef017.mediapackage.us-west-2.amazonaws.com/out/v1/55cdf73af7894775ba6de8f57482b66a/CMAF_HLS/index.m3u8
+#EXTINF:-1 tvg-id="1KZNTV.za" tvg-language="English" group-title="Südafrika",1KZN TV (576p)
+https://cdn.freevisiontv.co.za/sttv/smil:1kzn.stream.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="24HourFreeMovies.us" tvg-language="English" group-title="Vereinigte Staaten",24 Hour Free Movies (720p)
+https://d1j2u714xk898n.cloudfront.net/scheduler/scheduleMaster/145.m3u8
+#EXTINF:-1 tvg-id="30AGolfKingdom.us" tvg-language="English" group-title="Vereinigte Staaten",30A Golf Kingdom (720p)
+https://30a-tv.com/feeds/vidaa/golf.m3u8
+#EXTINF:-1 tvg-id="30AInvestmentPitch.us" tvg-language="English" group-title="Vereinigte Staaten",30A Investment Pitch (720p)
+https://30a-tv.com/feeds/xodglobal/30atv.m3u8
+#EXTINF:-1 tvg-id="30ALuxeLifeDiscovered.us" tvg-language="English" group-title="Vereinigte Staaten",30A Luxe Life Discovered (720p)
+https://30a-tv.com/feeds/vidaa/luxelife.m3u8
+#EXTINF:-1 tvg-id="30ARidiculousTV.us" tvg-language="English" group-title="Vereinigte Staaten",30A Ridiculous TV (720p)
+https://30a-tv.com/feeds/720p/63.m3u8
+#EXTINF:-1 tvg-id="30ATelevisionChannel.us" tvg-language="English" group-title="Vereinigte Staaten",30A Television Channel (720p)
+https://30a-tv.com/feeds/masters/30atv.m3u8
+#EXTINF:-1 tvg-id="30ATVClassicMovies.us" tvg-language="English" group-title="Vereinigte Staaten",30A TV Classic Movies (720p)
+https://30a-tv.com/feeds/pzaz/30atvmovies.m3u8
+#EXTINF:-1 tvg-id="3ABNCanada.ca" tvg-language="English" group-title="Kanada",3ABN Canada (720p)
+https://3abn.bozztv.com/3abncanada/3ABN/master.m3u8
+#EXTINF:-1 tvg-id="3ABNEnglish.us" tvg-language="English" group-title="Vereinigte Staaten",3ABN English (720p)
+https://3abn.bozztv.com/3abn2/3abn_live/smil:3abn_live.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="3ABNInternational.us" tvg-language="English" group-title="Vereinigte Staaten",3ABN International (720p)
+https://3abn.bozztv.com/3abn2/Int_live/smil:Int_live.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="3ABNKids.us" tvg-language="English" group-title="Vereinigte Staaten",3ABN Kids (720p)
+https://3abn.bozztv.com/3abn2/Kids_live/smil:Kids_live.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="3ABNPraiseHimMusicNetwork.us" tvg-language="English" group-title="Vereinigte Staaten",3ABN Praise Him Music Network (720p)
+https://3abn.bozztv.com/3abn1/PraiseHim/smil:PraiseHim.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="3ABNProclaimNetwork.us" tvg-language="English" group-title="Vereinigte Staaten",3ABN Proclaim! Network (720p)
+https://3abn.bozztv.com/3abn2/Pro_live/smil:Pro_live.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="3HD.th" tvg-language="English" group-title="Thailand",3HD (576p)
+https://live-us1.thaimomo.com/live-as/ch3hd-3/playlist.m3u8
+#EXTINF:-1 tvg-id="247BoxTV.ir" tvg-language="فارسی" group-title="Iran",247 Box TV
+https://hls.247box.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="4Music.fr" tvg-language="فارسی" group-title="Frankreich",4 Music
+https://musichls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="4Kurd.fr" tvg-language="فارسی" group-title="Frankreich",4Kurd
+https://4kuhls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="4UTV.tr" tvg-language="فارسی" group-title="Türkei",4U TV (720p)
+https://hls.4utv.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="AFNTV.ir" tvg-language="فارسی" group-title="Iran",AFN TV (720p)
+https://bozztv.com/1gbw5/tintv2/tintv2/playlist.m3u8
+#EXTINF:-1 tvg-id="AfraFilm.ir" tvg-language="فارسی" group-title="Iran",Afra Film
+https://afrafhls.wns.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="AlMahdiTV.us" tvg-language="فارسی" group-title="Vereinigte Staaten",Al-Mahdi TV (1080p)
+https://iptv.almahditv.com/almahditv/playlist.m3u8
+#EXTINF:-1 tvg-id="AraxTV.ir" tvg-language="فارسی" group-title="Iran",Arax TV
+https://araxhls.wns.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="ArkoTV.ir" tvg-language="فارسی" group-title="Iran",Arko TV
+https://arkhls.wns.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="ArvanTV.ir" tvg-language="فارسی" group-title="Iran",Arvan TV
+https://arvhls.wns.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="AVAFamily.ir" tvg-language="فارسی" group-title="Iran",AVA Family
+https://familyhls.avatv.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="AVASeries.ir" tvg-language="فارسی" group-title="Iran",AVA Series
+https://avaserieshls.wns.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="AvangTV.us" tvg-language="فارسی" group-title="Vereinigte Staaten",Avang TV (1080p)
+https://hls.avang.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="CafeFilm.ir" tvg-language="فارسی" group-title="Iran",Cafe Film
+https://cafefhls.wns.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="ClassicTV.ir" tvg-language="فارسی" group-title="Iran",Classic TV
+https://clshls.wns.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="DidgahTV.us" tvg-language="فارسی" group-title="Vereinigte Staaten",Didgah TV (576p)
+https://media.streambrothers.com:1936/8276/8276/playlist.m3u8
+#EXTINF:-1 tvg-id="ErfanHalghehTV.ca" tvg-language="فارسی" group-title="Kanada",Erfan Halgheh TV (720p)
+https://hls.erfanhalgheh.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="GanjeHozourTV.us" tvg-language="فارسی" group-title="Vereinigte Staaten",Ganj e Hozour TV (1080p)
+https://media.parvizshahbazi.com/ganjehozour/Main_tv/playlist.m3u8
+#EXTINF:-1 tvg-id="2MMonde.ma" tvg-language="Français" group-title="Marokko",2M Monde +1 (1080p)
+https://d2qh3gh0k5vp3v.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-n6pess5lwbghr/2M_ES.m3u8
+#EXTINF:-1 tvg-id="3ABNFrench.us" tvg-language="Français" group-title="Vereinigte Staaten",3ABN French (720p)
+https://3abn.bozztv.com/3abn2/Fre_live/smil:Fre_live.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="7Info.ci" tvg-language="Français" group-title="Côte d’Ivoire",7 Info
+https://video1.getstreamhosting.com:1936/8042/8042/playlist.m3u8
+#EXTINF:-1 tvg-id="A2iMusic.sn" tvg-language="Français" group-title="Senegal",A2i Music (720p) [Not 24/7]
+https://stream.sen-gt.com/A2iMusic/myStream/playlist.m3u8
+#EXTINF:-1 tvg-id="A2iReligion.sn" tvg-language="Français" group-title="Senegal",A2i Religion (720p) [Not 24/7]
+https://stream.sen-gt.com/A2iReligion/myStream/playlist.m3u8
+#EXTINF:-1 tvg-id="A2iTV.it" tvg-language="Français" group-title="Italien",A2i TV (1080p)
+https://stream.sen-gt.com/A2itv/myStream/playlist.m3u8
+#EXTINF:-1 tvg-id="Action.fr" tvg-language="Français" group-title="Frankreich",Action (540p)
+https://r.eu.cdn-redge.media/livehls/oeu/mt/live/action/live.livx/playlist.m3u8
+#EXTINF:-1 tvg-id="ACTV.be" tvg-language="Français" group-title="Belgien",ACTV (Belgium) (504p)
+https://dlgt0tdl2hpq3.cloudfront.net/rtbf/clr-rtbf/4db788c7/index.m3u8
+#EXTINF:-1 tvg-id="ADNTVPlus.fr" tvg-language="Français" group-title="Frankreich",ADN TV+ (720p)
+https://d3b73b34o7cvkq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-gz2sgqzp076kf/adn.m3u8
+#EXTINF:-1 tvg-id="ADOTV.bj" tvg-language="Français" group-title="Benin",ADO TV (720p)
+https://strhls.streamakaci.tv/ortb/ortb2-multi/playlist.m3u8
+#EXTINF:-1 tvg-id="Africa24.fr" tvg-language="Français" group-title="Frankreich",Africa 24 (1080p)
+https://africa24.vedge.infomaniak.com/livecast/ik:africa24/manifest.m3u8
+#EXTINF:-1 tvg-id="Africa24Sport.fr" tvg-language="Français" group-title="Frankreich",Africa 24 Sport (1080p)
+https://africa24.vedge.infomaniak.com/livecast/ik:africa24sport/manifest.m3u8
+#EXTINF:-1 tvg-id="AfricanewsFrench.fr" tvg-language="Français" group-title="Frankreich",Africanews French (720p)
+https://cdn-euronews.akamaized.net/live/eds/africanews-fr/25050/index.m3u8
+#EXTINF:-1 tvg-id="AlpedHuezTV.fr" tvg-language="Français" group-title="Frankreich",Alpe d'Huez TV (720p) [Not 24/7]
+https://edge13.vedge.infomaniak.com/livecast/ik:adhtv/manifest.m3u8
+#EXTINF:-1 tvg-id="Animaux.fr" tvg-language="Français" group-title="Frankreich",Animaux (720p)
+https://r.eu.cdn-redge.media/livehls/oeu/mt/live/animaux/live.livx/playlist.m3u8
+#EXTINF:-1 tvg-id="AntenneReunion.fr" tvg-language="Français" group-title="Frankreich",Antenne Reunion (720p) [Not 24/7]
+https://live-antenne-reunion.zeop.tv/live/c3eds/antreunihd/hls_fta/antreunihd.m3u8?location=ZEOP01
+#EXTINF:-1 tvg-id="Automotolachaine.fr" tvg-language="Français" group-title="Frankreich",Automoto la chaine (720p)
+https://r.eu.cdn-redge.media/livehls/oeu/mt/live/automoto/live.livx/playlist.m3u8
+#EXTINF:-1 tvg-id="BabyFirst.us" tvg-language="Français" group-title="Vereinigte Staaten",BabyFirst (720p)
+https://cdn.fast.jwp.services/v1/channel/1_jB6940Ei_TvhvIHDL/manifest.m3u8
+#EXTINF:-1 tvg-id="BarakaTelevision.cd" tvg-language="Français" group-title="Kongo-Kinshasa",Baraka Television (720p) [Not 24/7]
+https://stream.berosat.live:19360/baraka-hd/baraka-hd.m3u8
+#EXTINF:-1 tvg-id="AndTV.in" tvg-language="हिन्दी" group-title="Indien",&TV International (1080p)
+https://3f56f997.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/U2Ftc3VuZy1nYl9BbmRUVl9ITFM/playlist.m3u8
+#EXTINF:-1 tvg-id="7XMusic.in" tvg-language="हिन्दी" group-title="Indien",7X Music (1080p)
+https://7xshreeshyam.akamaized.net/7XPunjabi/index.m3u8
+#EXTINF:-1 tvg-id="9XJalwa.in" tvg-language="हिन्दी" group-title="Indien",9X Jalwa (1080p)
+https://wiselp.wiseplayout.com/9X_Jalwa/master.m3u8
+#EXTINF:-1 tvg-id="AadinathTV.in" tvg-language="हिन्दी" group-title="Indien",Aadinath TV (576p)
+https://cdn.pishow.tv/ott/live/252/master.m3u8
+#EXTINF:-1 tvg-id="AajKiKhabar.in" tvg-language="हिन्दी" group-title="Indien",Aaj Ki Khabar (1080p)
+https://stream.ottlive.co.in/aajkikhabar/index.m3u8
+#EXTINF:-1 tvg-id="AasthaBhajan.in" tvg-language="हिन्दी" group-title="Indien",Aastha Bhajan (720p)
+https://d2lk5u59tns74c.cloudfront.net/out/v1/218f9e64bdce42369500e93cff50572f/index.m3u8
+#EXTINF:-1 tvg-id="Aastha.in" tvg-language="हिन्दी" group-title="Indien",Aastha HD (720p)
+https://aasthaott.akamaized.net/110923/smil:aasthatv.smil/index.m3u8
+#EXTINF:-1 tvg-id="AasthaInternational.in" tvg-language="हिन्दी" group-title="Indien",Aastha International (576p)
+https://aasthaott.akamaized.net/110923/smil:aasthausa.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="AasthaPrime1.in" tvg-language="हिन्दी" group-title="Indien",Aastha Prime 1 (720p)
+https://aasthaott.akamaized.net/110923/smil:aasthaprime1.smil/master.m3u8
+#EXTINF:-1 tvg-id="ABNTVIndia.us" tvg-language="हिन्दी" group-title="Vereinigte Staaten",ABN TV India (540p)
+https://mediaserver.abnvideos.com/streams/abntvindia.m3u8
+#EXTINF:-1 tvg-id="ABPGanga.in" tvg-language="हिन्दी" group-title="Indien",ABP Ganga (1080p)
+https://d2l4ar6y3mrs4k.cloudfront.net/live-streaming/ganga-livetv/master.m3u8
+#EXTINF:-1 tvg-id="ABPNews.in" tvg-language="हिन्दी" group-title="Indien",ABP News (1080p)
+https://abpmitv.akamaized.net/hls/live/2042842/abpnews/master.m3u8
+#EXTINF:-1 tvg-id="AdhyatmTV.in" tvg-language="हिन्दी" group-title="Indien",Adhyatm TV (720p)
+https://mumbai-edge.smartplaytv.in/AdhyatmTV/index.m3u8
+#EXTINF:-1 tvg-id="AnandTV.in" tvg-language="हिन्दी" group-title="Indien",Anand TV (India) (1080p)
+https://live.legitpro.co.in/anandtv/index.m3u8
+#EXTINF:-1 tvg-id="ANBNews.in" tvg-language="हिन्दी" group-title="Indien",ANB News (1080p)
+https://stream.ottlive.co.in/anb/index.m3u8
+#EXTINF:-1 tvg-id="APN.in" tvg-language="हिन्दी" group-title="Indien",APN (576p)
+https://d1msejlow1t3l4.cloudfront.net/fta/apnnews/playlist.m3u8
+#EXTINF:-1 tvg-id="ApnaPunjabTV.ca" tvg-language="हिन्दी" group-title="Kanada",Apna Punjab TV (Canada) (720p)
+https://plus.gigabitcdn.net/live-stream/apna-punjab-H3sE/playlist.m3u8
+#EXTINF:-1 tvg-id="BollywoodClassic.ro" tvg-language="हिन्दी" group-title="Rumänien",Bollywood Classic Romania (576p)
+https://hls02ns.antenaplay.ro/hls/bollywood-sd/index.m3u8
+#EXTINF:-1 tvg-id="DiyaTV.us" tvg-language="हिन्दी" group-title="Vereinigte Staaten",Diya TV (1080p)
+https://stream.diyatvinc.com/diya.m3u8
+#EXTINF:-1 tvg-id="HyderTV.ca" tvg-language="हिन्दी" group-title="Kanada",Hyder TV (720p)
+https://cdn.live247stream.com/hyder/tv/playlist.m3u8
+#EXTINF:-1 tvg-id="KanshiTV.uk" tvg-language="हिन्दी" group-title="Vereinigtes Königreich",Kanshi TV (720p) [Not 24/7]
+https://live.kanshitv.co.uk/mobile/kanshitvkey.m3u8
+#EXTINF:-1 tvg-id="LLBNTVSouthAsia.us" tvg-language="हिन्दी" group-title="Vereinigte Staaten",LLBN TV South Asia (480p)
+https://brightstar-southasia-pull-secure.akamaized.net/brightstarsouthasia/stream.m3u8
+#EXTINF:-1 tvg-id="MBCBollywood.ae" tvg-language="हिन्दी" group-title="Vereinigte Arabische Emirate",MBC Bollywood (1080p) [Geo-blocked]
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-bollywood/546eb40d7dcf9a209255dd2496903764/index.m3u8
+#EXTINF:-1 tvg-id="BravoKidsTV.hr" tvg-language="Hrvatski" group-title="Kroatien",Bravo! Kids TV
+https://streaming.radiohub.hr/RadioHub_WEB_streaming/BHWUC27pGZ/3.m3u8
+#EXTINF:-1 tvg-id="CMCTV.hr" tvg-language="Hrvatski" group-title="Kroatien",CMC TV (1080p)
+https://stream.cmctv.hr:49998/cmc/live.m3u8
+#EXTINF:-1 tvg-id="DiadoraTV.hr" tvg-language="Hrvatski" group-title="Kroatien",Diadora TV (720p)
+https://diadoratv.stream/live/diadora/playlist.m3u8
+#EXTINF:-1 tvg-id="KlapeiTambureTV.hr" tvg-language="Hrvatski" group-title="Kroatien",Klape i Tambure TV (1080p)
+https://stream.cmctv.hr:49998/kit/live.m3u8
+#EXTINF:-1 tvg-id="RadioTelevizijaBanovina.hr" tvg-language="Hrvatski" group-title="Kroatien",Radio Televizija Banovina (1080p) [Not 24/7]
+https://pool.alter-media.hr:1936/live/myStream/playlist.m3u8?DVR=
+#EXTINF:-1 tvg-id="RTVHB.ba" tvg-language="Hrvatski" group-title="Bosnien und Herzegowina",RTV HB (576p) [Not 24/7]
+https://prd-hometv-live-open.spectar.tv/ERO_1_083/playlist.m3u8
+#EXTINF:-1 tvg-id="SBTV.hr" tvg-language="Hrvatski" group-title="Kroatien",SBTV (1080p) [Not 24/7]
+https://live.leveex.hr/hls/live.m3u8
+#EXTINF:-1 tvg-id="ShiftTV.hr" tvg-language="Hrvatski" group-title="Kroatien",Shift TV (1080p)
+https://hls.shift.tv/live/shifttv/playlist.m3u8
+#EXTINF:-1 tvg-id="TVJadran.hr" tvg-language="Hrvatski" group-title="Kroatien",TV Jadran (720p) [Not 24/7]
+https://tvjadran.stream.agatin.hr:3412/live/tvjadranlive.m3u8
+#EXTINF:-1 tvg-id="TVNova.hr" tvg-language="Hrvatski" group-title="Kroatien",TV Nova (720p)
+https://stream.agatin.hr:3727/live/tvnovalive.m3u8
+#EXTINF:-1 tvg-id="111TV.it" tvg-language="Italiano" group-title="Italien",111 TV (720p)
+https://5db313b643fd8.streamlock.net/111/111/playlist.m3u8
+#EXTINF:-1 tvg-id="7080TV.it" tvg-language="Italiano" group-title="Italien",70-80 TV (1080p)
+https://585b674743bbb.streamlock.net/9050/9050/playlist.m3u8
+#EXTINF:-1 tvg-id="ACISportTV.it" tvg-language="Italiano" group-title="Italien",ACI Sport TV SD (1080p)
+https://webstream.multistream.it/memfs/e2cb3629-c1a2-495b-b43a-9eb386f04ed8.m3u8
+#EXTINF:-1 tvg-id="AltoAdigeTV.it" tvg-language="Italiano" group-title="Italien",AltoAdige TV (720p)
+https://5f204aff97bee.streamlock.net/AltoAdigeTV/livestream/playlist.m3u8
+#EXTINF:-1 tvg-id="Antenna2TV.it" tvg-language="Italiano" group-title="Italien",Antenna 2 TV (720p)
+https://58f12ffd2447a.streamlock.net/Antenna2/livestream/playlist.m3u8
+#EXTINF:-1 tvg-id="AntennaSicilia.it" tvg-language="Italiano" group-title="Italien",Antenna Sicilia (720p)
+https://antennasicilialive.cdn.netrw.it/antennasicilialive/hls/ccr/antennasicilia/master.m3u8
+#EXTINF:-1 tvg-id="AuroraArte.it" tvg-language="Italiano" group-title="Italien",Aurora Arte (480p)
+https://59d7d6f47d7fc.streamlock.net/auroraarte/auroraarte/playlist.m3u8
+#EXTINF:-1 tvg-id="AzzurraTV.it" tvg-language="Italiano" group-title="Italien",Azzurra TV (576p)
+https://ed05.top-ix.org/avtvlive/azzurra/streaming/playlist.m3u8
+#EXTINF:-1 tvg-id="BeJoykids.it" tvg-language="Italiano" group-title="Italien",BeJoy.kids (1080p)
+https://stream.paroledivita.org/bejoy.m3u8
+#EXTINF:-1 tvg-id="BergamoTV.it" tvg-language="Italiano" group-title="Italien",Bergamo TV (1080p)
+https://db142859fd5541b09de25d6507f1f2d3.msvdn.net/live/S17501676/oIxAsgEEA46M/playlist_dvr.m3u8
+#EXTINF:-1 tvg-id="BikeChannel.it" tvg-language="Italiano" group-title="Italien",Bike Channel HD (1080p)
+https://018e1901ad234f04ae16388eda6778e5.msvdn.net/live/S94763187/reFXDHQfBndw/playlist.m3u8
+#EXTINF:-1 tvg-id="Boing.it" tvg-language="Italiano" group-title="Italien",Boing (Italy) HD (1080p)
+https://boing.akamaized.net/6380392800112/eu-central-1/6284318116001/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3N0Ijoib3dwbnN1LmVncmVzcy5haGc3NmwiLCJhY2NvdW50X2lkIjoiNjI4NDMxODExNjAwMSIsImVobiI6ImJvaW5nLmFrYW1haXplZC5uZXQiLCJpc3MiOiJibGl2ZS1wbGF5YmFjay1zb3VyY2UtYXBpIiwic3ViIjoicGF0aG1hcHRva2VuIiwiYXVkIjpbIjYyODQzMTgxMTYwMDEiXSwianRpIjoiNjM4MDM5MjgwMDExMiJ9.0RWQ0yZrauU0cHSnbpBYhgyRPeq1Lyw6nOn_fo7_cg0/playlist-hls.m3u8
+#EXTINF:-1 tvg-id="BomChannel.it" tvg-language="Italiano" group-title="Italien",Bom Channel (720p)
+https://5f22d76e220e1.streamlock.net/canale6/canale6/playlist.m3u8
+#EXTINF:-1 tvg-id="CafeTV24.it" tvg-language="Italiano" group-title="Italien",CafeTV24 (720p)
+https://srvx1.selftv.video/cafe/live/playlist.m3u8
+#EXTINF:-1 tvg-id="CalabriaTV.it" tvg-language="Italiano" group-title="Italien",Calabria TV (1080p)
+https://64b16f23efbee.streamlock.net/calabriatv/calabriatv/playlist.m3u8
+#EXTINF:-1 tvg-id="CameradeiDeputati.it" tvg-language="Italiano" group-title="Italien",Camera dei Deputati (240p)
+https://video-ar.radioradicale.it/diretta/camera2/playlist.m3u8
+#EXTINF:-1 tvg-id="Canale2Altamura.it" tvg-language="Italiano" group-title="Italien",Canale 2 Altamura (576p) [Not 24/7]
+https://59d7d6f47d7fc.streamlock.net/canale2/canale2/playlist.m3u8
+#EXTINF:-1 tvg-id="EuronewsItalian.fr" tvg-language="Italiano" group-title="Frankreich",Euronews Italian (720p)
+https://acb6ca89.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmxheHhUVi1ldV9FdXJvbmV3c0l0YWxpYW5vX0hMUw/playlist.m3u8
+#EXTINF:-1 tvg-id="FailArmy.us" tvg-language="Italiano" group-title="Vereinigte Staaten",FailArmy Italy (720p)
+https://failarmy-international-it.samsung.wurl.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="MrBeanAnimated.uk" tvg-language="Italiano" group-title="Vereinigtes Königreich",Mr Bean Animated IT (1080p)
+https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8
+#EXTINF:-1 tvg-id="DellaTV.it" tvg-language="日本語" group-title="Italien",DellaTV (720p)
+https://183.giatvcdn.com/giatvplayout7/giatv-211474/playlist.m3u8
+#EXTINF:-1 tvg-id="NHKWorldPremium.jp" tvg-language="日本語" group-title="Japan",NHK World Premium (720p)
+https://media-tyo.hls.nhkworld.jp/hls/wp/live/master.m3u8
+#EXTINF:-1 tvg-id="NHKWorldJapan.jp" tvg-language="日本語" group-title="Japan",NHK World-Japan (1080p)
+https://cdn.pishow.tv/ott/live/455/master.m3u8
+#EXTINF:-1 tvg-id="QVC.jp" tvg-language="日本語" group-title="Japan",QVC (Japan) (1080p)
+https://d1flvb4iqlercm.cloudfront.net/live/live_1080p_2nd.m3u8
+#EXTINF:-1 tvg-id="Weathernews.jp" tvg-language="日本語" group-title="Japan",Weathernews (720p)
+https://rch01e-alive-hls.akamaized.net/38fb45b25cdb05a1/out/v1/4e907bfabc684a1dae10df8431a84d21/index.m3u8
+#EXTINF:-1 tvg-id="ABN.kr" tvg-language="한국어" group-title="Südkorea",ABN (720p)
+https://vod2.abn.co.kr/IPHONE/abn.m3u8
+#EXTINF:-1 tvg-id="BTNTV.kr" tvg-language="한국어" group-title="Südkorea",BTN TV (South Korea) (1080p)
+https://btn.nowcdn.co.kr/btn/btnlive2m/playlist.m3u8
+#EXTINF:-1 tvg-id="CJOnStylePlus.kr" tvg-language="한국어" group-title="Südkorea",CJ OnStyle+ (540p)
+https://live-ch2.cjonstyle.net/cjosplus/live2/playlist.m3u8
+#EXTINF:-1 tvg-id="EBS1TV.kr" tvg-language="한국어" group-title="Südkorea",EBS 1TV (400p) [Not 24/7]
+https://ebsonair.ebs.co.kr/ebs1familypc/familypc1m/playlist.m3u8
+#EXTINF:-1 tvg-id="EBS2TV.kr" tvg-language="한국어" group-title="Südkorea",EBS 2TV (400p) [Not 24/7]
+https://ebsonair.ebs.co.kr/ebs2familypc/familypc1m/playlist.m3u8
+#EXTINF:-1 tvg-id="EBSEnglish.kr" tvg-language="한국어" group-title="Südkorea",EBS English (400p) [Not 24/7]
+https://ebsonair.ebs.co.kr/plus3familypc/familypc1m/playlist.m3u8
+#EXTINF:-1 tvg-id="EBSKids.kr" tvg-language="한국어" group-title="Südkorea",EBS Kids (400p) [Not 24/7]
+https://ebsonair.ebs.co.kr/ebsufamilypc/familypc1m/playlist.m3u8
+#EXTINF:-1 tvg-id="EBSPlus1.kr" tvg-language="한국어" group-title="Südkorea",EBS Plus 1 (400p)
+https://ebsonair.ebs.co.kr/plus1familypc/familypc1m/playlist.m3u8
+#EXTINF:-1 tvg-id="EBSPlus2.kr" tvg-language="한국어" group-title="Südkorea",EBS Plus 2 (400p)
+https://ebsonair.ebs.co.kr/plus2familypc/familypc1m/playlist.m3u8
+#EXTINF:-1 tvg-id="FGTV.kr" tvg-language="한국어" group-title="Südkorea",FGTV (South Korea) (720p)
+https://fgtvlive.fgtv.com/smil:fgtv.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="GongyoungHomeShopping.kr" tvg-language="한국어" group-title="Südkorea",Gongyoung Home Shopping (720p)
+https://etv.publichs.com/live5.stream/playlist.m3u8
+#EXTINF:-1 tvg-id="GSMyShop.kr" tvg-language="한국어" group-title="Südkorea",GS My Shop (1080p)
+https://gstv-myshop.gsshop.com/myshop_hd/myshop_hd.stream/playlist.m3u8
+#EXTINF:-1 tvg-id="GugakTV.kr" tvg-language="한국어" group-title="Südkorea",Gugak TV (1080p)
+https://mgugaklive.nowcdn.co.kr/gugakvideo/gugakvideo.stream/playlist.m3u8
+#EXTINF:-1 tvg-id="HLAJDTV.kr" tvg-language="한국어" group-title="Südkorea",HLAJ-DTV (352p) [Not 24/7]
+https://wowza.jejumbc.com/live/tv_jejumbc/playlist.m3u8
+#EXTINF:-1 tvg-id="HLANDTV.kr" tvg-language="한국어" group-title="Südkorea",HLAN-DTV (480p) [Not 24/7]
+https://stream.chmbc.co.kr/TV/myStream/playlist.m3u8
+#EXTINF:-1 tvg-id="HLATDTV.kr" tvg-language="한국어" group-title="Südkorea",HLAT-DTV (1080p) [Not 24/7]
+https://5c3639aa99149.streamlock.net/live_TV/tv/playlist.m3u8
+#EXTINF:-1 tvg-id="HLCQDTV.kr" tvg-language="한국어" group-title="Südkorea",HLCQ-DTV (720p) [Not 24/7]
+https://ns1.tjmbc.co.kr/live/myStream.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="HLCTDTV.kr" tvg-language="한국어" group-title="Südkorea",HLCT-DTV (480p) [Not 24/7]
+https://5ee1ec6f32118.streamlock.net/live/livetv/playlist.m3u8
+#EXTINF:-1 tvg-id="HLDHDTV.kr" tvg-language="한국어" group-title="Südkorea",HLDH-DTV (1080p) [Not 24/7]
+https://vod.ikbc.co.kr/KBCTV/tv/playlist.m3u8
+#EXTINF:-1 tvg-id="HLDPDTV.kr" tvg-language="한국어" group-title="Südkorea",HLDP-DTV (540p) [Not 24/7]
+https://stream.ubc.co.kr/hls/ubctvstream/index.m3u8
+#EXTINF:-1 tvg-id="LLBNTVKorean.us" tvg-language="한국어" group-title="Vereinigte Staaten",LLBN TV Korean (480p)
+https://brightstar-korean-pull-secure.akamaized.net/brightstarkorean/stream.m3u8
+#EXTINF:-1 tvg-id="MBCAmerica.us" tvg-language="한국어" group-title="Vereinigte Staaten",MBC America (1080p)
+https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/624ff8f9-db18-da92-4d42-896fa2ff3eb3/source/index.m3u8
+#EXTINF:-1 tvg-id="PersianaKorea.fr" tvg-language="한국어" group-title="Frankreich",Persiana Korea
+https://korhls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="A1TV.nl" tvg-language="Nederlands" group-title="Niederlande",A1 TV (1080p) [Not 24/7]
+https://stream.a1mediagroep.nl/hls/a1tv.m3u8
+#EXTINF:-1 tvg-id="AltenaTV.nl" tvg-language="Nederlands" group-title="Niederlande",Altena TV (720p)
+https://dnx1f4sl30ba2.cloudfront.net/nlpo/clr-nlpo/altenatv/index.m3u8
+#EXTINF:-1 tvg-id="ATV.be" tvg-language="Nederlands" group-title="Belgien",ATV (Belgium) (1080p)
+https://live.zendzend.com/mpegts/29375_107244/media_mpegts_0.m3u8
+#EXTINF:-1 tvg-id="BEATTV.nl" tvg-language="Nederlands" group-title="Niederlande",BEATTV (1080p)
+https://tv.beatfm.nl/live.m3u8
+#EXTINF:-1 tvg-id="BNRNieuwsradio.nl" tvg-language="Nederlands" group-title="Niederlande",BNR Nieuwsradio (720p) [Geo-blocked]
+https://bnr-cache-cdp.triple-it.nl/studio/index.m3u8
+#EXTINF:-1 tvg-id="Bonairetv.bq" tvg-language="Nederlands" group-title="Karibische Niederlande",Bonaire.tv (1080p) [Not 24/7]
+https://media.streambrothers.com:1936/8506/8506/playlist.m3u8
+#EXTINF:-1 tvg-id="BonceTV.cw" tvg-language="Nederlands" group-title="Curaçao",Bonce TV (480p) [Not 24/7]
+https://seswa.bonce.tv/hls/bonceswa.m3u8
+#EXTINF:-1 tvg-id="CoolFM989.aw" tvg-language="Nederlands" group-title="Aruba",Cool FM 98.9 (720p)
+https://live2.tensila.com/cool-v-1.arubara/hls/master.m3u8
+#EXTINF:-1 tvg-id="DanceTelevision.nl" tvg-language="Nederlands" group-title="Niederlande",Dance Television (1080p)
+https://m1b2.worldcast.tv/dancetelevisionone/2/dancetelevisionone.m3u8
+#EXTINF:-1 tvg-id="EnergiaTV.bq" tvg-language="Nederlands" group-title="Karibische Niederlande",Energia TV (720p) [Not 24/7]
+https://sincerecloud.stream/loadbalancer/public/actMdyoE.m3u8
+#EXTINF:-1 tvg-id="GigantFM.nl" tvg-language="Nederlands" group-title="Niederlande",Gigant FM (720p)
+https://video.uitzending.tv:19360/gigantfm/gigantfm.m3u8
+#EXTINF:-1 tvg-id="Haarlem105TV.nl" tvg-language="Nederlands" group-title="Niederlande",Haarlem105 TV (720p)
+https://d2qm50imcbcfqx.cloudfront.net/nlpo/clr-nlpo/haarlem105/index.m3u8
+#EXTINF:-1 tvg-id="HeartRadioAruba.aw" tvg-language="Nederlands" group-title="Aruba",Heart Radio Aruba
+https://live2.tensila.com/heart-v-1.heartar/hls/live/mystream.m3u8
+#EXTINF:-1 tvg-id="HypeVisualRadio.nl" tvg-language="Nederlands" group-title="Niederlande",Hype Visual Radio (1080p)
+https://streammix.alsolnet.com/hyperadio/live/playlist.m3u8
+#EXTINF:-1 tvg-id="KanaalZ.be" tvg-language="Nederlands" group-title="Belgien",Kanaal Z (1080p)
+https://d1hz1p2gea2zy4.cloudfront.net/live/rmgtv/RMG-TRENDSZNL-LIVE/index.m3u8
+#EXTINF:-1 tvg-id="Klara.be" tvg-language="Nederlands" group-title="Belgien",Klara (720p)
+https://live.vrtcdn.be/groupb/live/9c429b62-e160-417a-b438-cdf985bcd352/live.isml/.m3u8
+#EXTINF:-1 tvg-id="L1TV.nl" tvg-language="Nederlands" group-title="Niederlande",L1 TV (720p) [Not 24/7]
+https://d34pj260kw1xmk.cloudfront.net/live/l1/tv/index.m3u8
+#EXTINF:-1 tvg-id="LangstraatTV.nl" tvg-language="Nederlands" group-title="Niederlande",Langstraat TV (720p)
+https://d1qpgfi3ivud4k.cloudfront.net/nlpo/clr-nlpo/langstraat/index.m3u8
+#EXTINF:-1 tvg-id="LansingerlandTV.nl" tvg-language="Nederlands" group-title="Niederlande",Lansingerland TV (720p)
+https://ms7.mx-cd.net/tv/278-3414514/RTV_Lansingerland.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="LEOMiddelseTV.nl" tvg-language="Nederlands" group-title="Niederlande",LEO Middelse TV (480p)
+https://ms7.mx-cd.net/tv/238-2061506/Omroep_LEO_TV.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="Live99FM.bq" tvg-language="Nederlands" group-title="Karibische Niederlande",Live99FM (1080p)
+https://media.streambrothers.com:1936/8014/8014/playlist.m3u8
+#EXTINF:-1 tvg-id="LONTV.nl" tvg-language="Nederlands" group-title="Niederlande",LON TV (720p)
+https://streamingserver02.omroepnuenen.nl/lon/lonweb/chunklist_w1463772894.m3u8
+#EXTINF:-1 tvg-id="4FunKids.pl" tvg-language="Polski" group-title="Polen",4 Fun Kids (576i)
+https://stream.4fun.tv:8889/hls/4fk.m3u8
+#EXTINF:-1 tvg-id="BialogardzkaTelewizjaKablowa.pl" tvg-language="Polski" group-title="Polen",Bialogardzka Telewizja Kablowa (1080p)
+https://bsmbialogard.pl/live/index.m3u8
+#EXTINF:-1 tvg-id="Bigtime.pl" tvg-language="Polski" group-title="Polen",Bigtime (720p)
+https://103f01c3ff79408e83c9212f8a374ecc.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/RakutenTV-eu_BjgtjmeDarmoweFilmy/playlist.m3u8
+#EXTINF:-1 tvg-id="BTB3.pl" tvg-language="Polski" group-title="Polen",BTB 3 (1080p)
+https://emisja3.btb.j00r.us/iptv/session/3/live.m3u8
+#EXTINF:-1 tvg-id="CarCityAdventures.pl" tvg-language="Polski" group-title="Polen",Car City Adventures (720p)
+https://d39g1vxj2ef6in.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-rakuten-stitched/master.m3u8?ads.xumo_channelId=88883095
+#EXTINF:-1 tvg-id="dlaCiebietv.pl" tvg-language="Polski" group-title="Polen",dlaCiebie.tv (1080p)
+https://6034e09794f07.streamlock.net/tv/dlaCiebieTv/playlist.m3u8
+#EXTINF:-1 tvg-id="DrGMedicalExaminer.pl" tvg-language="Polski" group-title="Polen",Dr G Medical Examiner (720p)
+https://d39g1vxj2ef6in.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-rakuten-stitched/master.m3u8?ads.xumo_channelId=88883008
+#EXTINF:-1 tvg-id="EbSPlus.be" tvg-language="Polski" group-title="Belgien",EbS+ (1080p)
+https://streams.prd.commavservices.eu/live/ebsplus/index.m3u8
+#EXTINF:-1 tvg-id="Euronews.pl" tvg-language="Polski" group-title="Polen",Euronews (720p)
+https://cdn-euronews.akamaized.net/live/eds/euronews-pl/26382/index.m3u8
+#EXTINF:-1 tvg-id="EWTNPoland.pl" tvg-language="Polski" group-title="Polen",EWTN Poland (1080p)
+https://cdn3.wowza.com/1/ZHdrMWt1NjlDSzFu/bzdDVG10/hls/live/playlist.m3u8
+#EXTINF:-1 tvg-id="Grjngo.pl" tvg-language="Polski" group-title="Polen",Grjngo (720p)
+https://b6c7c7d1020a4588982ca7c2625f85d1.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/RakutenTV-eu_GrjngoWesterny/playlist.m3u8
+#EXTINF:-1 tvg-id="Moconomy.pl" tvg-language="Polski" group-title="Polen",Moconomy (720p)
+https://3ee905090d464be5a51478fd9c642e93.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/RakutenTV-pl_Moconomy/playlist.m3u8
+#EXTINF:-1 tvg-id="NewTV.pl" tvg-language="Polski" group-title="Polen",NewTV (1080p)
+https://1409502578.rsc.cdn77.org/live/stream-1/chunklist.m3u8
+#EXTINF:-1 tvg-id="Polsat1.pl" tvg-language="Polski" group-title="Polen",Polsat 1 [Not 24/7]
+https://kotmruk.github.io/polish-potato/polsat1.m3u8
+#EXTINF:-1 tvg-id="Puls2.pl" tvg-language="Polski" group-title="Polen",Puls 2 (1080p)
+https://edge01.cdn.emitel.pl/bpk-tv/Puls2_HD/hbbtv-hls/index.m3u8
+#EXTINF:-1 tvg-id="RADIOCLUBDJTV.pl" tvg-language="Polski" group-title="Polen",RADIO CLUB DJ TV
+https://radioclubdj.pro/stream/tv.m3u8
+#EXTINF:-1 tvg-id="ADBTV.pt" tvg-language="Português" group-title="Portugal",ADB TV (1080p)
+https://live-tv.waytv.pt/adbtv/adbtv/playlist.m3u8
+#EXTINF:-1 tvg-id="AdessoTV.br" tvg-language="Português" group-title="Brasilien",Adesso TV (720p)
+https://cdn.jmvstream.com/w/LVW-9715/LVW9715_12B26T62tm/playlist.m3u8
+#EXTINF:-1 tvg-id="AmazonSat.br" tvg-language="Português" group-title="Brasilien",Amazon Sat (1080p)
+https://amazonsat.brasilstream.com.br/hls/amazonsat/index.m3u8
+#EXTINF:-1 tvg-id="ArarunaTV.br" tvg-language="Português" group-title="Brasilien",Araruna TV (614p)
+https://video05.logicahost.com.br/ararunatv/ararunatv/playlist.m3u8
+#EXTINF:-1 tvg-id="AratuOn.br" tvg-language="Português" group-title="Brasilien",Aratu On (1080p)
+https://cdn.live.br1.jmvstream.com/w/LVW-9359/LVW9359_XSyReL0QVf/playlist.m3u8
+#EXTINF:-1 tvg-id="ARTV.pt" tvg-language="Português" group-title="Portugal",ARTV (720p) [Not 24/7]
+https://playout172.livextend.cloud/liveiframe/_definst_/liveartvabr/playlist.m3u8
+#EXTINF:-1 tvg-id="BoasNovas.br" tvg-language="Português" group-title="Brasilien",Boas Novas (1080p)
+https://cdn.jmvstream.com/w/LVW-9375/LVW9375_6i0wPBCHYc/playlist.m3u8
+#EXTINF:-1 tvg-id="Canal38.br" tvg-language="Português" group-title="Brasilien",Canal 38 (720p)
+https://cdn.jmvstream.com/w/LVW-8503/LVW8503_d0V5oduFlK/playlist.m3u8
+#EXTINF:-1 tvg-id="CNNPortugal.pt" tvg-language="Português" group-title="Portugal",CNN Portugal (720p)
+https://github.com/thomraider12/canaistvpt/raw/main/m3u8s/cnnpt.m3u8
+#EXTINF:-1 tvg-id="A7TV.ro" tvg-language="Română" group-title="Rumänien",A7TV (1080p)
+https://a7tvlive.ro/A7TV/A7TV/playlist.m3u8
+#EXTINF:-1 tvg-id="AccesDirect.ro" tvg-language="Română" group-title="Rumänien",Acces Direct (576p)
+https://live77cdn2.antenaplay.ro/live2_fast/ch6/stream.m3u8
+#EXTINF:-1 tvg-id="AgroTV.ro" tvg-language="Română" group-title="Rumänien",Agro TV (Romania) (360p) [Not 24/7]
+https://agrotv.streamnet.ro/mobile_tv/agrotv.m3u8
+#EXTINF:-1 tvg-id="AlephBusiness.ro" tvg-language="Română" group-title="Rumänien",Aleph Business (1280p)
+https://streamw.m.ro/Aleph/ngrp:Alephbiz.stream_all/playlist.m3u8
+#EXTINF:-1 tvg-id="AlephNews.ro" tvg-language="Română" group-title="Rumänien",Aleph News (720p)
+https://stream-aleph.m.ro/Aleph/ngrp:Alephnewsmain.stream_all/playlist.m3u8
+#EXTINF:-1 tvg-id="AlfaOmegaTV.ro" tvg-language="Română" group-title="Rumänien",Alfa Omega TV (1080p) [Not 24/7]
+https://aom-live.maghost.ro/aomTV/streams/OOztu5o9Fx6dh9mD1711027803849.m3u8
+#EXTINF:-1 tvg-id="Antena3Suceava.ro" tvg-language="Română" group-title="Rumänien",Antena 3 Suceava (576i)
+https://livestream.a3sv.ro/master.m3u8
+#EXTINF:-1 tvg-id="AntenaInternational.ro" tvg-language="Română" group-title="Rumänien",Antena International (576p)
+https://live77cdn2.antenaplay.ro/live2_sdi06/live2_sdi06.m3u8
+#EXTINF:-1 tvg-id="AntenaMonden.ro" tvg-language="Română" group-title="Rumänien",Antena Monden (720p)
+https://stream1.antenaplay.ro/live/AntenaMonden/playlist.m3u8
+#EXTINF:-1 tvg-id="ArgesTV.ro" tvg-language="Română" group-title="Rumänien",Arges TV (720p)
+https://btutzctahuf0wjoq.cdn.streamingserver.io/hls/yjvam8hlp2g3u08z02tv0yz66rq3cy.m3u8
+#EXTINF:-1 tvg-id="ASTV.ro" tvg-language="Română" group-title="Rumänien",AS TV (Romania) (576p)
+https://s2.netstreaming.eu/astv.m3u8
+#EXTINF:-1 tvg-id="AtomicAcademyTV.ro" tvg-language="Română" group-title="Rumänien",Atomic Academy TV (480p)
+https://atomic.streamnet.ro/academia.m3u8
+#EXTINF:-1 tvg-id="AtomicTV.ro" tvg-language="Română" group-title="Rumänien",Atomic TV (360p)
+https://atomic.streamnet.ro/atomictv.m3u8
+#EXTINF:-1 tvg-id="B1.ro" tvg-language="Română" group-title="Rumänien",B1
+https://hls02ns.antenaplay.ro/hls/b1-tv-hd/index.m3u8
+#EXTINF:-1 tvg-id="Eurosport4K.fr" tvg-language="Română" group-title="Frankreich",Eurosport 4K Romania (2160p) [Geo-blocked]
+https://vip-acasatv.online:25463/lrZuGxAuP3/6782859900/5449.m3u8
+#EXTINF:-1 tvg-id="FILMBOXPlusHits.pl" tvg-language="Română" group-title="Polen",FILMBOX+ Hits Romania (576p)
+https://nosignal1.antenaplay.ro/hls/fb-hits-sd/index.m3u8
+#EXTINF:-1 tvg-id="HitFM.md" tvg-language="Română" group-title="Republik Moldau",Hit FM (1080p)
+https://hitfm.nfthost.net/hls/hitfm/live_all/playlist.m3u8
+#EXTINF:-1 tvg-id="LiraTV.es" tvg-language="Română" group-title="Spanien",LiraTV (720p)
+https://cloud2.streaminglivehd.com:1936/liratv/liratv/playlist.m3u8
+#EXTINF:-1 tvg-id="LLBNTVRomanian.us" tvg-language="Română" group-title="Vereinigte Staaten",LLBN TV Romanian (480p)
+https://brightstar-romanian-pull-secure.akamaized.net/brightstarromanian/stream.m3u8
+#EXTINF:-1 tvg-id="Moldova1.md" tvg-language="Română" group-title="Republik Moldau",Moldova 1 (1080p)
+https://v0.trm.md/static/streaming-playlists/hls/9b79338b-1870-4cd7-91d4-0f6ce5cac7ca/master.m3u8
+#EXTINF:-1 tvg-id="Moldova2.md" tvg-language="Română" group-title="Republik Moldau",Moldova 2 (1080p)
+https://v0.trm.md/static/streaming-playlists/hls/d5fafab0-9c37-4746-9e7a-b2d6c0427015/master.m3u8
+#EXTINF:-1 tvg-id="PrivescEuTV.md" tvg-language="Română" group-title="Republik Moldau",Privesc.Eu TV (2160p)
+https://cachestar.privesc.eu/liniar/moldova/playlist.m3u8
+#EXTINF:-1 tvg-id="24KZ.kz" tvg-language="Русский" group-title="Kasachstan",24KZ (576p)
+https://fs.uplink.kz/24KZ/mono.m3u8?token=onlinetv
+#EXTINF:-1 tvg-id="360News.ru" tvg-language="Русский" group-title="Russland",360° News (1080p)
+https://live-vgtrksmotrim.cdnvideo.ru/vgtrksmotrim/smotrim-live-03-srt.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="3ABNRussia.ru" tvg-language="Русский" group-title="Russland",3ABN Russia (720p)
+https://hls.tv.3angels.ru/stream.m3u8
+#EXTINF:-1 tvg-id="86.ru" tvg-language="Русский" group-title="Russland",86 (1080p) [Not 24/7]
+https://sitv.ru/hls/s86.m3u8
+#EXTINF:-1 tvg-id="AbazaTV.ru" tvg-language="Русский" group-title="Russland",Abaza TV
+https://public.apsny.camera/tv_abaza_tv_to_site/index.m3u8
+#EXTINF:-1 tvg-id="AlmatyTV.kz" tvg-language="Русский" group-title="Kasachstan",Almaty TV (576p)
+https://fs.uplink.kz/almaty/mono.m3u8?token=onlinetv
+#EXTINF:-1 tvg-id="AngelTV.in" tvg-language="Русский" group-title="Indien",Angel TV Russian (720p)
+https://janya-digimix.akamaized.net/vglive-sk-955415/russia/ngrp:angelrussia_all/playlist.m3u8
+#EXTINF:-1 tvg-id="ApsuaTV.ge" tvg-language="Русский" group-title="Georgien",Apsua TV (1080p)
+https://gcmx3v3owcj.a.trbcdn.net/livemaster/ba7pu_fgej0zelpw.smil/playlist.m3u8?blstid=null
+#EXTINF:-1 tvg-id="Aqlvoy.uz" tvg-language="Русский" group-title="Usbekistan",Aqlvoy
+https://stream8.cinerama.uz/1205/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-id="Arkhyz24.ru" tvg-language="Русский" group-title="Russland",Arkhyz 24 (1080p)
+https://live.mediacdn.ru/sr1/arhis24/playlist.m3u8
+#EXTINF:-1 tvg-id="Arsenal.ru" tvg-language="Русский" group-title="Russland",Arsenal (576p)
+https://stream8.cinerama.uz/1414/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-id="ARTNTV.us" tvg-language="Русский" group-title="Vereinigte Staaten",ARTN TV (1080p) [Not 24/7]
+https://streamer1.connectto.com/ARTN_mobile/index.m3u8
+#EXTINF:-1 tvg-id="Astrahan24.ru" tvg-language="Русский" group-title="Russland",Astrahan 24 (720p)
+https://streaming.astrakhan.ru/astrakhan24/playlist.m3u8
+#EXTINF:-1 tvg-id="AstrahanRuSport.ru" tvg-language="Русский" group-title="Russland",Astrahan.Ru Sport (720p)
+https://streaming.astrakhan.ru/astrakhanrusporthd/playlist.m3u8
+#EXTINF:-1 tvg-id="AstrahanRuTV.ru" tvg-language="Русский" group-title="Russland",Astrahan.Ru TV (480p)
+https://streaming.astrakhan.ru/astrakhanrulivehd/playlist.m3u8
+#EXTINF:-1 tvg-id="AtamekenBusiness.kz" tvg-language="Русский" group-title="Kasachstan",Atameken Business (576p)
+https://fs.uplink.kz/atameken/mono.m3u8?token=onlinetv
+#EXTINF:-1 tvg-id="Belarus1.by" tvg-language="Русский" group-title="Belarus",Belarus-1 (1080p)
+https://ngtrk.dc.beltelecom.by/ngtrk/_definst_/smil:belarus1.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="Belarus2.by" tvg-language="Русский" group-title="Belarus",Belarus-2 HD (1080p)
+https://ngtrk.dc.beltelecom.by/ngtrk/smil:belarus2.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="Belarus24.by" tvg-language="Русский" group-title="Belarus",Belarus-24 HD (1080p)
+https://ngtrk.dc.beltelecom.by/ngtrk/smil:belarus24.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="Belarus3.by" tvg-language="Русский" group-title="Belarus",Belarus-3 HD (1080p) [Not 24/7]
+https://ngtrk.dc.beltelecom.by/ngtrk/smil:belarus3.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="Belarus4.by" tvg-language="Русский" group-title="Belarus",Belarus-4 Gomel (1080p)
+https://live.dc.beltelecom.by/trkgomel/trkgomel.stream/playlist.m3u8
+#EXTINF:-1 tvg-id="Belarus5.by" tvg-language="Русский" group-title="Belarus",Belarus-5 (1080p) [Not 24/7]
+https://ngtrk.dc.beltelecom.by/ngtrk/smil:belarus5.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="Belgorod24.ru" tvg-language="Русский" group-title="Russland",Belgorod 24 (1080p)
+https://belnovosti.cdn.easyhoster.ru:8443/stream.m3u8
+#EXTINF:-1 tvg-id="BigPlanet.ru" tvg-language="Русский" group-title="Russland",Big Planet (576p)
+https://fs.uplink.kz/big_planet/mono.m3u8?token=onlinetv
+#EXTINF:-1 tvg-id="BollywoodHD.ro" tvg-language="Русский" group-title="Rumänien",Bollywood HD Russia (576p)
+https://xykt-fix.github.io/cinerama_edge01/hls/BOLLYWOOD_RU/Movie009.m3u8
+#EXTINF:-1 tvg-id="BST.ru" tvg-language="Русский" group-title="Russland",BST (576p)
+https://bsttv.bonus-tv.ru/cdn/bst/playlist.m3u8
+#EXTINF:-1 tvg-id="13Festival.cl" tvg-language="Español" group-title="Chile",13 Festival (1080p)
+https://origin.dpsgo.com/ssai/event/Nftd0fM2SXasfDlRphvUsg/master.m3u8
+#EXTINF:-1 tvg-id="13Humor.cl" tvg-language="Español" group-title="Chile",13 Humor (1080p)
+https://origin.dpsgo.com/ssai/event/cKWySXKgSK-SzlJmESkOWw/master.m3u8
+#EXTINF:-1 tvg-id="13Kids.cl" tvg-language="Español" group-title="Chile",13 Kids (1080p)
+https://origin.dpsgo.com/ssai/event/LhHrVtyeQkKZ-Ye_xEU75g/master.m3u8
+#EXTINF:-1 tvg-id="13Realities.cl" tvg-language="Español" group-title="Chile",13 Realities (1080p)
+https://origin.dpsgo.com/ssai/event/g7_JOM0ORki9SR5RKHe-Kw/master.m3u8
+#EXTINF:-1 tvg-id="13C.cl" tvg-language="Español" group-title="Chile",13C (1080p)
+https://origin.dpsgo.com/ssai/event/GI-9cp_bT8KcerLpZwkuhw/master.m3u8
+#EXTINF:-1 tvg-id="13T.cl" tvg-language="Español" group-title="Chile",13T (720p)
+https://origin.dpsgo.com/ssai/event/f4TrySe8SoiGF8Lu3EIq1g/master.m3u8
+#EXTINF:-1 tvg-id="151BPB.cl" tvg-language="Español" group-title="Chile",15.1 BPB (720p)
+https://v2.tustreaming.cl/enlacebpbtv/index.m3u8
+#EXTINF:-1 tvg-id="24Horas.es" tvg-language="Español" group-title="Spanien",24 Horas (720p)
+https://rtvelivestream.rtve.es/rtvesec/24h/24h_main_dvr.m3u8
+#EXTINF:-1 tvg-id="24HorasCatalunya.es" tvg-language="Español" group-title="Spanien",24 Horas Catalunya (720p)
+https://rtvelivestream.rtve.es/rtvesec/cat/24h_cat_main_dvr.m3u8
+#EXTINF:-1 tvg-id="247CanaldeNoticias.ar" tvg-language="Español" group-title="Argentinien",24/7 Canal de Noticias (360p)
+https://panel.host-live.com:19360/cn247tv/cn247tv.m3u8
+#EXTINF:-1 tvg-id="36TVHuacho.pe" tvg-language="Español" group-title="Peru",36 TV Huacho (720p)
+https://live-evg10.tv360.bitel.com.pe/bitel/36tvSRT/playlist.m3u8
+#EXTINF:-1 tvg-id="360RFTV.cr" tvg-language="Español" group-title="Costa Rica",360 RFTV (576p) [Geo-blocked]
+https://acceso.mediosdecostarica.com:3638/live/360rftvcrlive.m3u8
+#EXTINF:-1 tvg-id="5tv.ar" tvg-language="Español" group-title="Argentinien",5tv (608p)
+https://617c5175c970b.streamlock.net:4444/tvcinco/live1/playlist.m3u8
+#EXTINF:-1 tvg-id="6WiseTv.us" tvg-language="Español" group-title="Vereinigte Staaten",6 Wise Tv (720p)
+https://edge.enhdtv.com/8150/index.m3u8
+#EXTINF:-1 tvg-id="7TV.es" tvg-language="Español" group-title="Spanien",7TV
+https://especial7tv.gestec-video.com/hls/regional.m3u8
+#EXTINF:-1 tvg-id="8NTV.mx" tvg-language="Español" group-title="Mexiko",8NTV (1080p)
+https://60417ddeaf0d9.streamlock.net/ntv/videontv/playlist.m3u8
+#EXTINF:-1 tvg-id="A24Paraguay.py" tvg-language="Español" group-title="Paraguay",A24 Paraguay (1080p)
+https://a24-live.argosworkspace.com/a24/index.m3u8
+#EXTINF:-1 tvg-id="A7TV.do" tvg-language="Español" group-title="Dominikanische Republik",A7 TV (720p) [Not 24/7]
+https://183.giatvcdn.com/ssh101/ssh101/a7tvjarabacoa/playlist.m3u8
+#EXTINF:-1 tvg-id="ABCTeleshow.pe" tvg-language="Español" group-title="Peru",ABC Teleshow (720p)
+https://live-evg10.tv360.bitel.com.pe/bitel/abctv/playlist.m3u8
+#EXTINF:-1 tvg-id="ABTelevision.pe" tvg-language="Español" group-title="Peru",ABTelevision (720p)
+https://live-evg8.tv360.bitel.com.pe/bitel/abctelevisionSRT/playlist.m3u8
+#EXTINF:-1 tvg-id="ABTVBariloche.ar" tvg-language="Español" group-title="Argentinien",ABTV Bariloche
+https://videostream.shockmedia.com.ar/hls/abtvbariloche/abtvbariloche.m3u8
+#EXTINF:-1 tvg-id="ActivaTV.es" tvg-language="Español" group-title="Spanien",Activa TV (720p)
+https://streamtv.mediasector.es/hls/activatv/index.m3u8
+#EXTINF:-1 tvg-id="ADATV.cl" tvg-language="Español" group-title="Chile",ADA TV (720p)
+https://live-evg10.tv360.bitel.com.pe/bitel/alasdeaguilaSRT/playlist.m3u8
+#EXTINF:-1 tvg-id="ATGLive.se" tvg-language="Svenska" group-title="Schweden",ATG Live (720p)
+https://kanal75xto-llhls.akamaized.net/live/Data/atg-kanal-15-02a-rr/HLS-Legacy-HL/atg-kanal-15-02a-rr.m3u8
+#EXTINF:-1 tvg-id="DiTV.se" tvg-language="Svenska" group-title="Schweden",Di TV (1080p)
+https://cdn0-03837-liveedge0.dna.ip-only.net/03837-liveedge0/smil:03837-tx4/playlist.m3u8
+#EXTINF:-1 tvg-id="HimlenTV7.fi" tvg-language="Svenska" group-title="Finnland",Himlen TV7 (720p)
+https://vod.tv7.fi/tv7-se/smil:tv7-se.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="NarTV.fi" tvg-language="Svenska" group-title="Finnland",Nar-TV (360p)
+https://streaming.nartv.fi/live/ngrp:NAR_TV.stream_all/playlist.m3u8
+#EXTINF:-1 tvg-id="24TV.tr" tvg-language="Türkçe" group-title="Türkei",24 TV (720p)
+https://turkmedya-live.ercdn.net/tv24/tv24.m3u8
+#EXTINF:-1 tvg-id="360.tr" tvg-language="Türkçe" group-title="Türkei",360 (720p) [Not 24/7]
+https://turkmedya-live.ercdn.net/tv360/tv360.m3u8
+#EXTINF:-1 tvg-id="AHaber.tr" tvg-language="Türkçe" group-title="Türkei",A Haber (1080p)
+https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/ahaber/ahaber.m3u8
+#EXTINF:-1 tvg-id="ASpor.tr" tvg-language="Türkçe" group-title="Türkei",A Spor SD (1080p)
+https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/aspor/aspor.m3u8
+#EXTINF:-1 tvg-id="A2TV.tr" tvg-language="Türkçe" group-title="Türkei",A2TV (1080p)
+https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/a2tv/a2tv.m3u8
+#EXTINF:-1 tvg-id="AksuTV.tr" tvg-language="Türkçe" group-title="Türkei",Aksu TV (720p)
+https://live.artidijitalmedya.com/artidijital_aksutv/aksutv/playlist.m3u8
+#EXTINF:-1 tvg-id="AlanyaPostaTV.tr" tvg-language="Türkçe" group-title="Türkei",Alanya Posta TV (1080p)
+https://api-tv3.yayin.com.tr/postatv/postatv/playlist.m3u8
+#EXTINF:-1 tvg-id="AnadoluNetTV.tr" tvg-language="Türkçe" group-title="Türkei",Anadolu Net TV (1080p)
+https://live.artidijitalmedya.com/artidijital_anadolunet/anadolunet/playlist.m3u8
+#EXTINF:-1 tvg-id="ASTV.tr" tvg-language="Türkçe" group-title="Türkei",AS TV (Turkiye) (900p)
+https://live.artidijitalmedya.com/artidijital_astv/astv/playlist.m3u8
+#EXTINF:-1 tvg-id="ATV.tr" tvg-language="Türkçe" group-title="Türkei",ATV (Turkiye) (1080p)
+https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/atv/atv_1080p.m3u8
+#EXTINF:-1 tvg-id="BirTV.tr" tvg-language="Türkçe" group-title="Türkei",Bir TV (720p)
+https://edge.taksimbilisim.com/birtv/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="BloombergHT.tr" tvg-language="Türkçe" group-title="Türkei",Bloomberg HT (720p)
+https://mumbai-edge.smartplaytv.in/BloombergHT/index.m3u8
+#EXTINF:-1 tvg-id="BRTV.tr" tvg-language="Türkçe" group-title="Türkei",BRTV (Turkiye) (720p) [Geo-blocked]
+https://live.artidijitalmedya.com/artidijital_brtv/brtv/playlist.m3u8
+#EXTINF:-1 tvg-id="ChassePeche.fr" tvg-language="Türkçe" group-title="Frankreich",Chasse & Peche (540p)
+https://r.eu.cdn-redge.media/livehls/oeu/mt/live/chasse_et_peche/live.livx/playlist.m3u8
+#EXTINF:-1 tvg-id="CiftciTV.tr" tvg-language="Türkçe" group-title="Türkei",Ciftci TV (720p) [Not 24/7]
+https://live.artidijitalmedya.com/artidijital_ciftcitv/ciftcitv/playlist.m3u8
+#EXTINF:-1 tvg-id="CNBCe.tr" tvg-language="Türkçe" group-title="Türkei",CNBC-e
+https://hnpsechtsc.turknet.ercdn.net/xpnvudnlsv/cnbc-e/cnbc-e.m3u8
+#EXTINF:-1 tvg-id="DenizPostasiTV.tr" tvg-language="Türkçe" group-title="Türkei",Deniz Postasi TV (720p) [Not 24/7]
+https://live.artidijitalmedya.com/artidijital_denizpostasi/denizpostasi/playlist.m3u8
+#EXTINF:-1 tvg-id="FinestTV.de" tvg-language="Türkçe" group-title="Deutschland",Finest TV (288p) [Not 24/7]
+https://media.finest.tv/hls/live.m3u8
+#EXTINF:-1 tvg-id="LoveNature.ca" tvg-language="Türkçe" group-title="Kanada",Love Nature (1080p)
+https://aegis-cloudfront-1.tubi.video/6d6d0f24-8445-4b4c-bdf6-44f9e38beaa4/playlist.m3u8
+#EXTINF:-1 tvg-id="MyZenTV.fr" tvg-language="Türkçe" group-title="Frankreich",MyZen TV (720p)
+https://r.eu.cdn-redge.media/livehls/oeu/mt/live/myzen_tv/live.livx/playlist.m3u8
+#EXTINF:-1 tvg-id="PersianaTurkiye.fr" tvg-language="Türkçe" group-title="Frankreich",Persiana Turkiye
+https://turkhls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="Sat7Turk.cy" tvg-language="Türkçe" group-title="Zypern",Sat 7 Turk (1080p)
+https://live.artidijitalmedya.com/artidijital_sat7turk/sat7turk/playlist.m3u8
+#EXTINF:-1 tvg-id="366TV.ua" tvg-language="Українська" group-title="Ukraine",36.6 TV
+https://dash2.antik.sk/live/test_tridsatsest_hd_atktv/playlist.m3u8
+#EXTINF:-1 tvg-id="Channel24.ua" tvg-language="Українська" group-title="Ukraine",Channel 24 (Ukraine) (1080p)
+https://streamvideol1.luxnet.ua/news24/smil:news24.stream.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="Dacha.ua" tvg-language="Українська" group-title="Ukraine",Dacha (1080p)
+https://dash2.antik.sk/live/test_dacha_tv_atktv/playlist.m3u8
+#EXTINF:-1 tvg-id="EbS.be" tvg-language="Українська" group-title="Belgien",EbS (1080p)
+https://streams.prd.commavservices.eu/live/ebs/index.m3u8
+#EXTINF:-1 tvg-id="EWTNUkraine.ua" tvg-language="Українська" group-title="Ukraine",EWTN Ukraine (1080p)
+https://cdn3.wowza.com/1/WjduMm1tYnlwNXQx/M01NV3Uz/hls/live/playlist.m3u8
+#EXTINF:-1 tvg-id="FilmUALive.ua" tvg-language="Українська" group-title="Ukraine",FilmUA Live
+https://dash2.antik.sk/live/test_film_life_atktv/playlist.m3u8
+#EXTINF:-1 tvg-id="FilmUADrama.ua" tvg-language="Українська" group-title="Ukraine",FilmUADrama
+https://dash2.antik.sk/live/test_film_drama_atktv/playlist.m3u8
+#EXTINF:-1 tvg-id="InterPlus.ua" tvg-language="Українська" group-title="Ukraine",Inter+ (720p)
+https://cdn15.live-tv.cloud/ua_infinitas_tv/inter-abr/playlist.m3u8
+#EXTINF:-1 tvg-id="Islandia.ua" tvg-language="Українська" group-title="Ukraine",Islandia (720p)
+https://cdn15.live-tv.cloud/ua_infinitas_tv/islandiya-abr/playlist.m3u8
+#EXTINF:-1 tvg-id="IzmailTV.ua" tvg-language="Українська" group-title="Ukraine",Izmail TV (384p)
+https://cdn10.live-tv.cloud/izod/izod-abr-lq/playlist.m3u8
+#EXTINF:-1 tvg-id="KusKus.ua" tvg-language="Українська" group-title="Ukraine",Kus-Kus
+https://dash2.antik.sk/live/test_kuskus_tv_atktv/playlist.m3u8
+#EXTINF:-1 tvg-id="Muzvar.ua" tvg-language="Українська" group-title="Ukraine",Muzvar (1080p)
+https://cdn15.live-tv.cloud/ua_infinitas_tv/muzvar-abr/playlist.m3u8
+#EXTINF:-1 tvg-id="NASHEMusic.ua" tvg-language="Українська" group-title="Ukraine",NASHE Music (720p)
+https://cdn15.live-tv.cloud/ua_infinitas_tv/nashemus-abr/playlist.m3u8
+#EXTINF:-1 tvg-id="NTKTV.ua" tvg-language="Українська" group-title="Ukraine",NTK TV (1080p) [Not 24/7]
+https://stream.ntktv.ua/s/ntk/ntk.m3u8
+#EXTINF:-1 tvg-id="ZaTV.ru" tvg-language="Українська" group-title="Russland",Za! TV
+https://streaming.televizor-24-tochka.ru/live/25.m3u8
+#EXTINF:-1 tvg-id="ABHPTV.us" tvg-language="Tiếng Việt" group-title="Vereinigte Staaten",ABHP TV (480p)
+https://vietprocast.app/hls/abhp/index.m3u8
+#EXTINF:-1 tvg-id="AnNinhTV.vn" tvg-language="Tiếng Việt" group-title="Vietnam",An Ninh TV HD (1080p)
+https://freem3u.xyz/api/live/play.m3u8?vid=20
+#EXTINF:-1 tvg-id="AsianFoodNetwork.sg" tvg-language="Tiếng Việt" group-title="Singapur",Asian Food Network Vietnam (1080p)
+https://freem3u.xyz/api/live/play.m3u8?vid=215
+#EXTINF:-1 tvg-id="BrianTV.la" tvg-language="Tiếng Việt" group-title="Laos",Brian TV (720p) [Not 24/7]
+https://livefta.malimarcdn.com/ftaedge00/briantv.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="CanThoTV.vn" tvg-language="Tiếng Việt" group-title="Vietnam",Can Tho TV (1080p)
+https://live.canthotv.vn/live/tv/chunklist.m3u8
+#EXTINF:-1 tvg-id="CaoBangTV.vn" tvg-language="Tiếng Việt" group-title="Vietnam",Cao Bang TV (720p)
+https://stream.thingnet.vn/live/smil:CRTV.smil/chunklist.m3u8
+#EXTINF:-1 tvg-id="DaNangTV1.vn" tvg-language="Tiếng Việt" group-title="Vietnam",Da Nang TV 1 (1080p) [Not 24/7]
+https://live.mediatech.vn/live/285b59a111d76974225a8e3004bfc31a509/chunklist.m3u8
+#EXTINF:-1 tvg-id="DaNangTV2.vn" tvg-language="Tiếng Việt" group-title="Vietnam",Da Nang TV2 (1080p) [Not 24/7]
+https://live.mediatech.vn/live/2859145290d0d7947ef88b6240123b62474/chunklist.m3u8
+#EXTINF:-1 tvg-id="DienBienTV.vn" tvg-language="Tiếng Việt" group-title="Vietnam",Dien Bien TV (1080p)
+https://stream.langsontv.vn/live/2855dfeccb7f49a41a2b0441b3bfeda413c/playlist.m3u8
+#EXTINF:-1 tvg-id="DongNaiTV1.vn" tvg-language="Tiếng Việt" group-title="Vietnam",Dong Nai TV 1 (1080p)
+https://freem3u.xyz/api/live/play.m3u8?vid=53
+#EXTINF:-1 tvg-id="DongNaiTV2.vn" tvg-language="Tiếng Việt" group-title="Vietnam",Dong Nai TV 2 (1080p)
+https://freem3u.xyz/api/live/play.m3u8?vid=255
+#EXTINF:-1 tvg-id="GEBNetwork.us" tvg-language="Tiếng Việt" group-title="Vereinigte Staaten",GEB Network KBPX-LD (1080p)
+https://edge1.lifestreamcdn.com/live/geb/playlist.m3u8
+#EXTINF:-1 tvg-id="HmongStarTV.us" tvg-language="Tiếng Việt" group-title="Vereinigte Staaten",Hmong Star TV (720p) [Not 24/7]
+https://livefta.malimarcdn.com/ftaedge00/hmongstartv.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="HmongTVNetwork.us" tvg-language="Tiếng Việt" group-title="Vereinigte Staaten",Hmong TV Network (720p)
+https://livefta.malimarcdn.com/ftaedge00/cvabroadcasting.stream/playlist.m3u8
+#EXTINF:-1 tvg-id="HTV4.vn" tvg-language="Tiếng Việt" group-title="Vietnam",HTV4 (1080p)
+https://freem3u.xyz/api/live/play.m3u8?vid=9
+#EXTINF:-1 tvg-id="HTV5.vn" tvg-language="Tiếng Việt" group-title="Vietnam",HTV5 (1080p)
+https://freem3u.xyz/api/live/play.m3u8?vid=151
+#EXTINF:-1 tvg-id="ISTV.la" tvg-language="Tiếng Việt" group-title="Laos",ISTV (Laos) (480p)
+https://livefta.malimarcdn.com/ftaedge00/ichannel.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="LaoThaiTV.us" tvg-language="Tiếng Việt" group-title="Vereinigte Staaten",Lao-Thai TV (720p)
+https://livefta.malimarcdn.com/ftaedge00/laothaius.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="OhMuangLaoTV.la" tvg-language="Tiếng Việt" group-title="Laos",Oh Muang Lao TV (720p)
+https://livefta.malimarcdn.com/ftaedge00/ohmuanglao.stream/playlist.m3u8
+#EXTINF:-1 tvg-id="OutdoorChannel.us" tvg-language="Tiếng Việt" group-title="Vereinigte Staaten",Outdoor Channel Vietnam (1080p)
+https://freem3u.xyz/api/live/play.m3u8?vid=216
+#EXTINF:-1 tvg-id="ABNChina.us" tvg-language="中文" group-title="Vereinigte Staaten",ABN China (720p)
+https://mediaserver.abnvideos.com/streams/abnchina.m3u8
+#EXTINF:-1 tvg-id="AnhuiTV.cn" tvg-language="中文" group-title="China",Anhui TV (1080p)
+https://restream.pdtvhd.com/memfs/c1cd2ed0-3b2b-4c25-af98-a7fb0b1eb130.m3u8
+#EXTINF:-1 tvg-id="BaichengTV.cn" tvg-language="中文" group-title="China",Baicheng TV [Geo-blocked]
+https://stream2.jlntv.cn/baicheng1/sd/live.m3u8
+#EXTINF:-1 tvg-id="BeautifulLifeTV.tw" tvg-language="中文" group-title="Taiwan",Beautiful Life TV (720p)
+https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/playlist.m3u8
+#EXTINF:-1 tvg-id="CCTV4America.cn" tvg-language="中文" group-title="China",CCTV-4 America
+https://h5cul1yar48um3t.wcetv.com/hls/cctv4.m3u8
+#EXTINF:-1 tvg-id="CCTV4Europe.cn" tvg-language="中文" group-title="China",CCTV-4 Europe
+https://dash2.antik.sk/live/test_cctv_tizen/playlist.m3u8
+#EXTINF:-1 tvg-id="CCTV9.cn" tvg-language="中文" group-title="China",CCTV-9 (576i)
+https://xykt-fix.github.io/Y77.m3u8
+#EXTINF:-1 tvg-id="CCTVPlus2.cn" tvg-language="中文" group-title="China",CCTV+ 2 (600p) [Not 24/7]
+https://cd-live-stream.news.cctvplus.com/live/smil:CHANNEL2.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="CGNTVChinese.tw" tvg-language="中文" group-title="Taiwan",CGNTV Chinese (1080p)
+https://d3e05csss9c272.cloudfront.net/out/v1/f0bf71c57581470fb9379f603e8f5d83/CGNWebLiveCN.m3u8
+#EXTINF:-1 tvg-id="CGTN.cn" tvg-language="中文" group-title="China",CGTN (1080p)
+https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8
+#EXTINF:-1 tvg-id="CGTNGlobalBiz.cn" tvg-language="中文" group-title="China",CGTN Global Biz (1080p)
+https://fastlive.cctvplus.com/out/v1/2b3d8a0c805d437f9dc85b764c2ac599/index.m3u8
+#EXTINF:-1 tvg-id="ChinaTravel.cn" tvg-language="中文" group-title="China",China Travel (1080p)
+https://fastlive.cctvplus.com/out/v1/ca6f9297b7314a63959435028af287fc/index.m3u8
+#EXTINF:-1 tvg-id="DAAITV.id" tvg-language="中文" group-title="Indonesien",DAAI TV
+https://pull.daaiplus.com/live-DAAIPLUS/live-DAAIPLUS_HD.m3u8
+#EXTINF:-1 tvg-id="DiscoveringChina.cn" tvg-language="中文" group-title="China",Discovering China (1080p)
+https://fastlive.cctvplus.com/out/v1/8442c3bfd4c64a3984389328f6087879/index.m3u8
+#EXTINF:-1 tvg-id="GodStandsKidsClubTV.pk" tvg-language="中文" group-title="Pakistan",God Stands Kids Club TV Chinese
+https://online.godstands.tv:5443/WebRTCApp/streams/KidsChinese.m3u8
+#EXTINF:-1 tvg-id="GodStandsTV.pk" tvg-language="中文" group-title="Pakistan",God Stands TV Chinese
+https://online.godstands.tv:5443/WebRTCApp/streams/chineselive.m3u8
+#EXTINF:-1 tvg-id="Good2.tw" tvg-language="中文" group-title="Taiwan",Good 2 (720p)
+https://live.streamingfast.net/osmflivech2.m3u8
+#EXTINF:-1 tvg-id="GoodTV.tw" tvg-language="中文" group-title="Taiwan",Good TV (Taiwan) (720p) [Not 24/7]
+https://live.streamingfast.net/osmflivech1.m3u8
+#EXTINF:-1 tvg-id="GuangdongSatelliteTV.cn" tvg-language="中文" group-title="China",Guangdong Satellite TV
+https://h5cul1yar48um3t.wcetv.com/hls/gdsatellite.m3u8
+#EXTINF:-1 tvg-id="GuangdongTVAmerica.us" tvg-language="中文" group-title="Vereinigte Staaten",Guangdong TV America
+https://h5cul1yar48um3t.wcetv.com/hls/gdtv.m3u8
+#EXTINF:-1 tvg-id="GuangzhouTV.cn" tvg-language="中文" group-title="China",Guangzhou TV
+https://tencentplaybusiness.gztv.com/live/zonghes.m3u8
+#EXTINF:-1 tvg-id="HakkaTV.tw" tvg-language="中文" group-title="Taiwan",Hakka TV
+https://h5cul1yar48um3t.wcetv.com/hls/hakkatv.m3u8
+#EXTINF:-1 tvg-id="HarbinComprehensiveNewsChannel.cn" tvg-language="中文" group-title="China",Harbin Comprehensive News Channel
+https://stream.hrbtv.net/xwzh/playlist.m3u8?_upt=ef41dd531755913594
+#EXTINF:-1 tvg-id="HarbinMovieChannel.cn" tvg-language="中文" group-title="China",Harbin Movie Channel
+https://stream.hrbtv.net/yspd/playlist.m3u8
+#EXTINF:-1 tvg-id="HebeiTV.cn" tvg-language="中文" group-title="China",Hebei TV (2160p)
+https://event.pull.hebtv.com/live/live101.m3u8
+#EXTINF:-1 tvg-id="HunanEconomyChannel.cn" tvg-language="中文" group-title="China",Hunan Economy Channel
+https://p8.vzan.com/slowlive/415983998730568937/live.m3u8
