@@ -190,6 +190,141 @@ function triggerFhem($door, $settings) {
     return ['success' => ($errno === 0), 'error_code' => $errno, 'http_code' => $httpCode];
 }
 
+function sendWolMagicPacket($macAddress, $ipHint = '') {
+    $cleanMac = preg_replace('/[^0-9A-Fa-f]/', '', (string)$macAddress);
+    if (strlen($cleanMac) !== 12) {
+        return ['success' => false, 'message' => 'Keine gültige TV MAC-Adresse konfiguriert'];
+    }
+    $macBytes = hex2bin($cleanMac);
+    if ($macBytes === false) {
+        return ['success' => false, 'message' => 'MAC-Fehler'];
+    }
+    $packet = str_repeat(chr(0xFF), 6) . str_repeat($macBytes, 16);
+
+    $targets = ['255.255.255.255', '192.168.8.255', '192.168.178.255', '192.168.1.255'];
+    if (!empty($ipHint) && strpos($ipHint, '.') !== false) {
+        $parts = explode('.', trim($ipHint));
+        if (count($parts) === 4) {
+            $subBcast = $parts[0] . '.' . $parts[1] . '.' . $parts[2] . '.255';
+            if (!in_array($subBcast, $targets, true)) {
+                array_unshift($targets, $subBcast);
+            }
+            $targets[] = trim($ipHint);
+        }
+    }
+
+    $sent = 0;
+    if (function_exists('socket_create')) {
+        $sock = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+        if ($sock) {
+            @socket_set_option($sock, SOL_SOCKET, SO_BROADCAST, 1);
+            foreach ($targets as $host) {
+                foreach ([9, 7, 2304] as $port) {
+                    if (@socket_sendto($sock, $packet, strlen($packet), 0, $host, $port) !== false) {
+                        $sent++;
+                    }
+                }
+            }
+            @socket_close($sock);
+        }
+    }
+    if ($sent === 0) {
+        foreach ($targets as $host) {
+            foreach ([9, 7] as $port) {
+                $fp = @stream_socket_client("udp://$host:$port", $errno, $errstr, 0.5);
+                if ($fp) {
+                    @fwrite($fp, $packet);
+                    @fclose($fp);
+                    $sent++;
+                }
+            }
+        }
+    }
+    return [
+        'success' => ($sent > 0),
+        'message' => "Wake-on-LAN Magic Packet gesendet ($sent Pakete an $macAddress)"
+    ];
+}
+
+function readArpTablePhp() {
+    $arp = [];
+    if (file_exists('/proc/net/arp')) {
+        $lines = @file('/proc/net/arp', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        if (is_array($lines)) {
+            foreach (array_slice($lines, 1) as $line) {
+                $cols = preg_split('/\s+/', trim($line));
+                if (count($cols) >= 4 && $cols[3] !== '00:00:00:00:00:00') {
+                    $arp[$cols[0]] = strtoupper($cols[3]);
+                }
+            }
+        }
+    }
+    return $arp;
+}
+
+function probeSamsungTvPhp($ipAddr, $timeoutSec = 1) {
+    $ch = curl_init("http://$ipAddr:8001/api/v2/");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeoutSec);
+    curl_setopt($ch, CURLOPT_TIMEOUT, $timeoutSec);
+    $raw = @curl_exec($ch);
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    if ($raw && $code === 200) {
+        $info = json_decode($raw, true);
+        if (is_array($info)) {
+            $dev = $info['device'] ?? [];
+            $mac = strtoupper($dev['wifiMac'] ?? ($dev['mac'] ?? ''));
+            $name = $dev['name'] ?? ($info['name'] ?? ($dev['modelName'] ?? 'Samsung Smart TV'));
+            $model = $dev['modelName'] ?? '';
+            return ['ip' => $ipAddr, 'mac' => $mac, 'name' => $name, 'model' => $model];
+        }
+    }
+    return null;
+}
+
+function wakeAndGreetTvPhp($entry, $door, &$config, $manual = false) {
+    $settings = &$config['settings'];
+    $guestName = $entry['name'] ?? 'Gast';
+    $guestPin = (string)($entry['pin'] ?? '');
+    $salutation = $entry['salutation'] ?? 'auto';
+
+    $settings['tv_last_guest'] = [
+        'name' => $guestName,
+        'salutation' => $salutation,
+        'pin' => $guestPin,
+        'valid_from' => $entry['valid_from'] ?? '',
+        'valid_until' => $entry['valid_until'] ?? '',
+        'woke_at' => date('Y-m-d H:i:s'),
+        'door' => $door
+    ];
+    saveConfig($config);
+
+    $tvMac = trim($settings['tv_mac'] ?? '') ?: '74:6D:FA:7B:B0:3B';
+    $tvIp = trim($settings['tv_ip'] ?? '') ?: '192.168.8.113';
+
+    $wolRes = sendWolMagicPacket($tvMac, $tvIp);
+    sendWolMagicPacket('94:E6:BA:B1:04:D2', $tvIp);
+
+    if (!empty($tvIp)) {
+        $welcomeUrl = 'https://checkin.stayinleipzig.de/tv.html' . ($guestPin ? ('?pin=' . urlencode($guestPin)) : '');
+        foreach (['3202010022079', 'org.tizen.browser', 'CloudBrowser'] as $appId) {
+            $ch = curl_init("http://$tvIp:8001/api/v2/applications/$appId");
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $welcomeUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 1);
+            @curl_exec($ch);
+            curl_close($ch);
+        }
+    }
+
+    $trig = $manual ? 'Manuell (Admin)' : 'Haustür Check-in';
+    logAccess($guestPin ?: 'TV', $guestName, 'tv', true, "Smart-TV Wake-on-LAN ($trig): " . $wolRes['message']);
+    return $wolRes;
+}
+
 // Read input
 $input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
 $action = $_GET['action'] ?? ($input['action'] ?? 'open');
@@ -304,6 +439,12 @@ if ($action === 'open') {
 
         $logMsg = "$doorName erfolgreich geöffnet" . ($isFirstCheckin ? " (Erster Check-in)" : "");
         logAccess($pin, $entry['name'] ?? '', $door, true, $logMsg);
+
+        // Auto Wake-on-LAN & TV Welcome when guest opens Haustür (or on first check-in)
+        $autoWake = $settings['tv_auto_wake'] ?? true;
+        if (($door === 'haustuer' || $isFirstCheckin) && $autoWake !== false) {
+            wakeAndGreetTvPhp($entry, $door, $config, false);
+        }
 
         echo json_encode([
             'success' => true,
@@ -535,6 +676,7 @@ if ($action === 'admin_save_pin') {
 
     $pin = trim($input['pin'] ?? '');
     $name = trim($input['name'] ?? 'Gast');
+    $salutation = trim($input['salutation'] ?? 'auto') ?: 'auto';
     $bookingId = trim($input['booking_id'] ?? ('MANUAL-' . time()));
     $from = trim($input['valid_from'] ?? date('Y-m-d\TH:i:s'));
     $until = trim($input['valid_until'] ?? date('Y-m-d\TH:i:s', strtotime('+3 days')));
@@ -550,6 +692,7 @@ if ($action === 'admin_save_pin') {
             if ($p['booking_id'] === $bookingId) {
                 $p['pin'] = $pin;
                 $p['name'] = $name;
+                $p['salutation'] = $salutation;
                 $p['valid_from'] = $from;
                 $p['valid_until'] = $until;
                 $p['active'] = true;
@@ -562,6 +705,7 @@ if ($action === 'admin_save_pin') {
         $pins[] = [
             'pin' => $pin,
             'name' => $name,
+            'salutation' => $salutation,
             'booking_id' => $bookingId ?: ('MANUAL-' . time()),
             'valid_from' => $from,
             'valid_until' => $until,
@@ -598,6 +742,166 @@ if ($action === 'admin_delete_pin') {
     $config['pins'] = $filtered;
     saveConfig($config);
     echo json_encode(['success' => true, 'pins' => $filtered]);
+    exit();
+}
+
+// ACTION: TV STATUS (FOR SMART-TV WELCOME DASHBOARD tv.html)
+if ($action === 'tv_status') {
+    $reqPin = trim($_GET['pin'] ?? ($input['pin'] ?? ''));
+    $guestPins = array_values(array_filter($pins, function($p) {
+        return (($p['role'] ?? '') !== 'admin') && !empty($p['active']);
+    }));
+
+    $chosen = null;
+    if (!empty($reqPin)) {
+        foreach ($guestPins as $p) {
+            if (trim((string)$p['pin']) === $reqPin) {
+                $chosen = $p;
+                break;
+            }
+        }
+    }
+    if (!$chosen && !empty($settings['tv_last_guest']['name'])) {
+        $chosen = $settings['tv_last_guest'];
+    }
+    $now = time();
+    if (!$chosen) {
+        foreach ($guestPins as $p) {
+            $vf = strtotime($p['valid_from'] ?? '') - 12 * 3600;
+            $vu = strtotime($p['valid_until'] ?? '') + 6 * 3600;
+            if ($vf && $vu && $now >= $vf && $now <= $vu) {
+                $chosen = $p;
+                if (!empty($p['checked_in_at'])) break;
+            }
+        }
+    }
+    if (!$chosen && !empty($guestPins)) {
+        $chosen = $guestPins[0];
+    }
+
+    echo json_encode([
+        'success' => true,
+        'guest' => $chosen ?: ['name' => 'Liebe Gäste', 'salutation' => 'auto'],
+        'tv_custom_m3u' => $settings['tv_custom_m3u'] ?? '',
+        'tv_ip' => $settings['tv_ip'] ?? '',
+        'tv_mac' => $settings['tv_mac'] ?? '',
+        'tv_name' => $settings['tv_name'] ?? '',
+        'tv_auto_wake' => $settings['tv_auto_wake'] ?? true
+    ]);
+    exit();
+}
+
+// ACTION: ADMIN - DISCOVER SAMSUNG TV ON LAN
+if ($action === 'admin_discover_tv') {
+    $adminPin = trim($input['admin_pin'] ?? '');
+    if ($adminPin !== 'octasias' && $adminPin !== '04157') {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'error' => 'Nicht autorisiert']);
+        exit();
+    }
+    $arp = readArpTablePhp();
+    $found = null;
+    $candidates = array_keys($arp);
+    if (!empty($settings['tv_ip']) && !in_array($settings['tv_ip'], $candidates, true)) {
+        array_unshift($candidates, $settings['tv_ip']);
+    }
+    foreach ($candidates as $cip) {
+        $res = probeSamsungTvPhp($cip, 1);
+        if ($res) {
+            if (empty($res['mac']) && isset($arp[$cip])) {
+                $res['mac'] = $arp[$cip];
+            }
+            $found = $res;
+            break;
+        }
+    }
+    if ($found) {
+        $config['settings']['tv_ip'] = $found['ip'];
+        if (!empty($found['mac'])) $config['settings']['tv_mac'] = $found['mac'];
+        if (!empty($found['name'])) $config['settings']['tv_name'] = $found['name'];
+        saveConfig($config);
+        echo json_encode(['success' => true, 'tv' => $found, 'arp' => $arp]);
+    } else {
+        echo json_encode([
+            'success' => false,
+            'error' => 'Kein eingeschalteter Samsung TV auf Port 8001 gefunden (bitte TV einmalig einschalten oder IP/MAC manuell eintragen).',
+            'arp' => $arp
+        ]);
+    }
+    exit();
+}
+
+// ACTION: ADMIN - SAVE TV SETTINGS & CHANNEL LIST
+if ($action === 'admin_tv_settings') {
+    $adminPin = trim($input['admin_pin'] ?? '');
+    if ($adminPin !== 'octasias' && $adminPin !== '04157') {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'error' => 'Nicht autorisiert']);
+        exit();
+    }
+    if (isset($input['tv_ip'])) $config['settings']['tv_ip'] = trim($input['tv_ip']);
+    if (isset($input['tv_mac'])) $config['settings']['tv_mac'] = strtoupper(trim($input['tv_mac']));
+    if (isset($input['tv_auto_wake'])) $config['settings']['tv_auto_wake'] = (bool)$input['tv_auto_wake'];
+    if (isset($input['tv_custom_m3u'])) $config['settings']['tv_custom_m3u'] = (string)$input['tv_custom_m3u'];
+    saveConfig($config);
+    echo json_encode(['success' => true, 'settings' => $config['settings']]);
+    exit();
+}
+
+// ACTION: ADMIN - WAKE TV & GREET GUEST NOW
+if ($action === 'admin_wake_tv') {
+    $adminPin = trim($input['admin_pin'] ?? '');
+    if ($adminPin !== 'octasias' && $adminPin !== '04157') {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'error' => 'Nicht autorisiert']);
+        exit();
+    }
+    if (!empty($input['tv_ip'])) $config['settings']['tv_ip'] = trim($input['tv_ip']);
+    if (!empty($input['tv_mac'])) $config['settings']['tv_mac'] = strtoupper(trim($input['tv_mac']));
+    $entry = [
+        'name' => trim($input['guest_name'] ?? '') ?: 'Gast',
+        'salutation' => trim($input['salutation'] ?? 'auto') ?: 'auto',
+        'pin' => trim($input['pin'] ?? ''),
+        'valid_from' => $input['valid_from'] ?? '',
+        'valid_until' => $input['valid_until'] ?? ''
+    ];
+    $wolRes = wakeAndGreetTvPhp($entry, 'haustuer', $config, true);
+    echo json_encode([
+        'success' => true,
+        'message' => 'Wake-on-LAN & TV-Begrüßung für „' . $entry['name'] . '“ gestartet! (' . $wolRes['message'] . ')',
+        'tv_ip' => $config['settings']['tv_ip'] ?? '192.168.8.113',
+        'tv_mac' => $config['settings']['tv_mac'] ?? '74:6D:FA:7B:B0:3B'
+    ]);
+    exit();
+}
+
+// ACTION: LAUNCH NATIVE SAMSUNG TV APP (WHITELISTED)
+if ($action === 'tv_launch_app') {
+    $allowed = [
+        '3202010022079' => 'Samsung Browser',
+        '3201907018807' => 'Netflix',
+        '111299001912' => 'YouTube',
+        '3201910019365' => 'Prime Video',
+        '3201606009684' => 'Spotify',
+        '3201901017640' => 'Disney+'
+    ];
+    $appId = trim($input['app_id'] ?? ($_GET['app_id'] ?? ''));
+    if (!isset($allowed[$appId])) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'error' => 'App nicht freigegeben']);
+        exit();
+    }
+    $tvIp = trim($settings['tv_ip'] ?? '') ?: '192.168.8.113';
+    $ch = curl_init("http://$tvIp:8001/api/v2/applications/$appId");
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, '');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 2);
+    @curl_exec($ch);
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    echo json_encode(['success' => ($code === 200 || $code === 201), 'app' => $allowed[$appId], 'tv_ip' => $tvIp]);
     exit();
 }
 

@@ -1,0 +1,150 @@
+#EXTM3U
+
+# =========================================================================
+# StayInLeipzig · Smart-TV Live-TV Senderliste (55 geprüfte HD-Streams)
+# Sortiert nach Ländern & in der jeweiligen Landessprache
+# =========================================================================
+
+# --- 🇩🇪 Deutschland (Deutsch) ---
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",MDR Sachsen HD (Leipzig)
+https://mdrtvsnhls.akamaized.net/hls/live/2016928/mdrtvsn/index.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",Das Erste (ARD) HD
+https://daserste-live.ard-mcdn.de/daserste/live/hls/de/master.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",ZDF HD
+https://zdf-hls-15.akamaized.net/hls/live/2016498/de/high/master.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",tagesschau24 HD
+https://tagesschau.akamaized.net/hls/live/2020115/tagesschau/tagesschau_1/master.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",ZDFneo HD
+https://zdf-hls-16.akamaized.net/hls/live/2016499/de/high/master.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",ZDFinfo HD
+https://zdf-hls-17.akamaized.net/hls/live/2016500/de/high/master.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",3sat HD
+https://zdf-hls-18.akamaized.net/hls/live/2016501/dach/high/master.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",phoenix HD
+https://zdf-hls-19.akamaized.net/hls/live/2016502/de/high/master.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",KiKA HD
+https://kikageohls.akamaized.net/hls/live/2022693/livetvkika_de/master.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",NDR Fernsehen HD
+https://mcdn.ndr.de/ndr/hls/ndr_fs/ndr_nds/master.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",BR Fernsehen HD
+https://mcdn.br.de/br/fs/bfs_sued/hls/de/master.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",hr-fernsehen HD
+https://hrhls.akamaized.net/hls/live/2024525/hrhls/master.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",rbb Fernsehen HD
+https://rbb-hls-berlin.akamaized.net/hls/live/2017824/rbb_berlin/master.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",MDR Thüringen HD
+https://mdrtvthhls.akamaized.net/hls/live/2016880/mdrtvth/index.m3u8
+#EXTINF:-1 group-title="🇩🇪 Deutschland (Deutsch)",MDR Sachsen-Anhalt HD
+https://mdrtvsahls.akamaized.net/hls/live/2016879/mdrtvsa/index.m3u8
+
+# --- 🇬🇧 United Kingdom & Intl. (English) ---
+#EXTINF:-1 group-title="🇬🇧 United Kingdom & Intl. (English)",Sky News International HD
+https://linear901-oo-hls0-prd-gtm.delivery.skycdp.com/17501/sde-fast-skynews/master.m3u8
+#EXTINF:-1 group-title="🇬🇧 United Kingdom & Intl. (English)",GB News UK HD
+https://live-gbnews.simplestreamcdn.com/live5/gbnews/bitrate1.isml/manifest.m3u8
+#EXTINF:-1 group-title="🇬🇧 United Kingdom & Intl. (English)",DW English HD
+https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8
+#EXTINF:-1 group-title="🇬🇧 United Kingdom & Intl. (English)",TRT World English HD
+https://tv-trtworld.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 group-title="🇬🇧 United Kingdom & Intl. (English)",CGTN English HD
+https://news.cgtn.com/resource/live/english/cgtn-news.m3u8
+
+# --- 🇺🇸 United States (English) ---
+#EXTINF:-1 group-title="🇺🇸 United States (English)",CBS News 24/7 USA HD
+https://cbsn-us.cbsnstream.cbsnews.com/out/v1/55a8648e8f134e82a470f83d562deeca/master.m3u8
+#EXTINF:-1 group-title="🇺🇸 United States (English)",Red Bull TV HD
+https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8
+#EXTINF:-1 group-title="🇺🇸 United States (English)",NASA TV Public HD
+https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8
+
+# --- 🇫🇷 France (Français) ---
+#EXTINF:-1 group-title="🇫🇷 France (Français)",TV5MONDE Info HD
+https://ott.tv5monde.com/Content/HLS/Live/channel(info)/variant.m3u8
+#EXTINF:-1 group-title="🇫🇷 France (Français)",20 Minutes TV Paris HD
+https://live-20minutestv.digiteka.com/1961167769/index.m3u8
+#EXTINF:-1 group-title="🇫🇷 France (Français)",6ter France HD
+https://r.eu.cdn-redge.media/livehls/oeu/mt/live/6ter_fr/live.livx/playlist.m3u8
+#EXTINF:-1 group-title="🇫🇷 France (Français)",AB1 France HD
+https://r.eu.cdn-redge.media/livehls/oeu/mt/live/ab1/live.livx/playlist.m3u8
+
+# --- 🇪🇸 España & Latinoamérica (Español) ---
+#EXTINF:-1 group-title="🇪🇸 España & Latinoamérica (Español)",DW Español HD
+https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8
+#EXTINF:-1 group-title="🇪🇸 España & Latinoamérica (Español)",3CatInfo Noticias 24h HD
+https://directes-tv-int.3catdirectes.cat/live-origin/canal324-hls/master.m3u8
+#EXTINF:-1 group-title="🇪🇸 España & Latinoamérica (Español)",7TV Andalucía HD
+https://especial7tv.gestec-video.com/hls/7TVSEVILLA.m3u8
+#EXTINF:-1 group-title="🇪🇸 España & Latinoamérica (Español)",3Cat Entretenimiento HD
+https://fast-tailor.3catdirectes.cat/v1/channel/ccma-channel2/hls.m3u8
+
+# --- 🇮🇹 Italia (Italiano) ---
+#EXTINF:-1 group-title="🇮🇹 Italia (Italiano)",7 Gold Italia HD
+https://streamcdnr6-dddfac816632463dac50b21109dc1bb3.msvdn.net/live/S58803518/OOZape6Nxp4H/playlist.m3u8
+#EXTINF:-1 group-title="🇮🇹 Italia (Italiano)",50 Canale Italia HD
+https://load-balancer.azotosolutions.com/cdnedge37/canale50/playlist.m3u8
+#EXTINF:-1 group-title="🇮🇹 Italia (Italiano)",12 TV Parma Italia
+https://5929b138b139d.streamlock.net/12TVParma/livestream/playlist.m3u8
+
+# --- 🇵🇱 Polska (Polski) ---
+#EXTINF:-1 group-title="🇵🇱 Polska (Polski)",ATM Rozrywka Polska HD
+https://183.giatvcdn.com/giatvplayout7/giatv-211353/playlist.m3u8
+#EXTINF:-1 group-title="🇵🇱 Polska (Polski)",4Fun TV Polska
+https://stream.4fun.tv:8888/hls/4f.m3u8
+#EXTINF:-1 group-title="🇵🇱 Polska (Polski)",4Fun Kids Polska HD
+https://stream.4fun.tv:8889/hd/kids_hd_high.m3u8
+
+# --- 🇳🇱 Nederland (Nederlands) ---
+#EXTINF:-1 group-title="🇳🇱 Nederland (Nederlands)",1Twente TV Nederland HD
+https://ms7.mx-cd.net/dtv-11/198-989148/1Twente_TV.smil/chunklist_w954512639_b4292608_slNLD.m3u8
+#EXTINF:-1 group-title="🇳🇱 Nederland (Nederlands)",1Almere TV Nederland HD
+https://d3472rjicrodic.cloudfront.net/nlpo/clr-nlpo/709d5260/index.m3u8
+#EXTINF:-1 group-title="🇳🇱 Nederland (Nederlands)",360TuneBox Muziek HD
+https://dash3.antik.sk/live/test_360_tunebox_medium_atk/playlist.m3u8
+
+# --- 🇹🇷 Türkiye (Türkçe) ---
+#EXTINF:-1 group-title="🇹🇷 Türkiye (Türkçe)",TRT Haber HD
+https://tv-trthaber.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 group-title="🇹🇷 Türkiye (Türkçe)",TRT Türk HD
+https://tv-trtturk.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 group-title="🇹🇷 Türkiye (Türkçe)",TRT Müzik HD
+https://tv-trtmuzik.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 group-title="🇹🇷 Türkiye (Türkçe)",TRT Çocuk HD
+https://tv-trtcocuk.medya.trt.com.tr/master.m3u8
+
+# --- 🇺🇦 Україна (Українська) ---
+#EXTINF:-1 group-title="🇺🇦 Україна (Українська)",1+1 International HD
+https://dash2.antik.sk/live/test_one_plus_one_int_tizen/playlist.m3u8
+#EXTINF:-1 group-title="🇺🇦 Україна (Українська)",1+1 Марафон · Єдині Новини HD
+https://dash2.antik.sk/live/1plus1_marathon/playlist.m3u8
+#EXTINF:-1 group-title="🇺🇦 Україна (Українська)",24 Канал Новини України HD
+https://cdn15.live-tv.cloud/ua_infinitas_tv/news24-abr/playlist.m3u8
+#EXTINF:-1 group-title="🇺🇦 Україна (Українська)",DW Східна Європа HD
+https://dwamdstream105.akamaized.net/hls/live/2015531/dwstream105/index.m3u8
+
+# --- 🇷🇺 Русский (Russian) ---
+#EXTINF:-1 group-title="🇷🇺 Русский (Russian)",DW Русский HD
+https://dwamdstream105.akamaized.net/hls/live/2015531/dwstream105/index.m3u8
+#EXTINF:-1 group-title="🇷🇺 Русский (Russian)",360° HD (1080p)
+https://cdn-evacoder-tv.facecast.io/evacoder_hls_hi/CkxfR1xNUAJwTgtXTBZTAJli/index.m3u8
+#EXTINF:-1 group-title="🇷🇺 Русский (Russian)",360° Новости HD (1080p)
+https://edge-tv-ll.facecast.io/evacoder_hls_hi/UBZfFgtKB1JwTwoDERNQVGGs/index.m3u8
+#EXTINF:-1 group-title="🇷🇺 Русский (Russian)",365 Дней ТВ (История)
+https://stream8.cinerama.uz/1242/tracks-v1a1/mono.m3u8
+
+# --- 🇦🇹 Österreich & 🇨🇭 Schweiz ---
+#EXTINF:-1 group-title="🇦🇹 Österreich & 🇨🇭 Schweiz",Antenne Kärnten TV HD (AT)
+https://60efd7a2b4d02.streamlock.net/a_kaernten/ngrp:livestream_all/playlist.m3u8
+#EXTINF:-1 group-title="🇦🇹 Österreich & 🇨🇭 Schweiz",Antenne Steiermark TV HD (AT)
+https://60efd7a2b4d02.streamlock.net/a_steiermark/ngrp:livestream_all/playlist.m3u8
+#EXTINF:-1 group-title="🇦🇹 Österreich & 🇨🇭 Schweiz",Canal Alpha Suisse HD (CH)
+https://canalalphaju.vedge.infomaniak.com/livecast/ik:canalalphaju/playlist.m3u8
+#EXTINF:-1 group-title="🇦🇹 Österreich & 🇨🇭 Schweiz",Carac 1 Suisse HD (CH)
+https://edge13.vedge.infomaniak.com/livecast/ik:event/manifest.m3u8
+
+# --- 🌍 العربية (Arabic) ---
+#EXTINF:-1 group-title="🌍 العربية (Arabic)",Al Jazeera الجزيرة مباشر HD
+https://live-hls-web-aja.getaj.net/AJA/index.m3u8
+#EXTINF:-1 group-title="🌍 العربية (Arabic)",DW عربية HD
+https://dwamdstream103.akamaized.net/hls/live/2015526/dwstream103/index.m3u8
+#EXTINF:-1 group-title="🌍 العربية (Arabic)",TRT عربي HD
+https://tv-trtarabi.medya.trt.com.tr/master.m3u8

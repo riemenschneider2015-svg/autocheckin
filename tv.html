@@ -1,0 +1,2051 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Willkommen in Leipzig – Smart-TV Portal | StayInLeipzig Mechlerstr. 10</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.15/dist/hls.min.js"></script>
+  <style>
+    :root {
+      --bg-dark: #070b14;
+      --glass-bg: rgba(15, 23, 42, 0.76);
+      --glass-strong: rgba(15, 23, 42, 0.92);
+      --glass-border: rgba(255, 255, 255, 0.14);
+      --primary: #38bdf8;
+      --accent: #22c55e;
+      --gold: #fbbf24;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #cbd5e1;
+      --focus-ring: #38bdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* Fullscreen Leipzig Panorama Backdrop */
+    .tv-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-color: #0b1325;
+      background-image:
+        radial-gradient(circle at 80% 18%, rgba(251, 191, 36, 0.22), transparent 45%),
+        radial-gradient(circle at 18% 80%, rgba(56, 189, 248, 0.2), transparent 50%),
+        linear-gradient(180deg, rgba(7, 11, 20, 0.45) 0%, rgba(7, 11, 20, 0.65) 52%, rgba(7, 11, 20, 0.94) 100%),
+        url('https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=1920&q=85');
+      background-size: cover;
+      background-position: center;
+      transition: background-image 0.8s ease;
+    }
+
+    .tv-stage {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2.2vh 3.2vw;
+      gap: 1.8vh;
+    }
+
+    /* Top Header: Brand + Language + Weather Leipzig + Clock */
+    .tv-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--glass-border);
+      padding: 10px 18px;
+      border-radius: 999px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+    }
+
+    .brand-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: clamp(14px, 1.25vw, 20px);
+      letter-spacing: -0.2px;
+    }
+
+    .brand-sub {
+      color: var(--text-muted);
+      font-size: clamp(12px, 0.95vw, 15px);
+      font-weight: 500;
+    }
+
+    .top-right-cluster {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .lang-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--glass-border);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    .lang-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: clamp(11px, 0.85vw, 14px);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .lang-btn.active, .lang-btn:focus, .lang-btn:hover {
+      background: rgba(56, 189, 248, 0.22);
+      color: #ffffff;
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .weather-pill {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--glass-border);
+      padding: 8px 18px;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    }
+
+    .weather-main {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .weather-icon {
+      font-size: clamp(24px, 2.2vw, 36px);
+      line-height: 1;
+    }
+
+    .weather-temp {
+      font-size: clamp(20px, 1.9vw, 30px);
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .weather-desc {
+      font-size: clamp(11px, 0.85vw, 14px);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .weather-forecast-mini {
+      display: flex;
+      gap: 10px;
+      padding-left: 12px;
+      border-left: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: clamp(11px, 0.8vw, 13px);
+      color: var(--text-muted);
+    }
+
+    .forecast-day {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .clock-pill {
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--glass-border);
+      padding: 8px 18px;
+      border-radius: 16px;
+      text-align: right;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    }
+
+    .clock-time {
+      font-size: clamp(20px, 1.9vw, 30px);
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1.05;
+    }
+
+    .clock-date {
+      font-size: clamp(11px, 0.8vw, 13px);
+      color: var(--primary);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* Center Hero Welcome + Apartment Info Grid */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.65fr 1fr;
+      gap: 2vw;
+      align-items: stretch;
+    }
+
+    .welcome-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.84) 0%, rgba(30, 41, 59, 0.72) 100%);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-left: 6px solid var(--primary);
+      border-radius: 24px;
+      padding: 2.6vh 2.4vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.2vh;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: clamp(12px, 0.95vw, 15px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--gold);
+    }
+
+    .welcome-headline {
+      font-size: clamp(26px, 3.1vw, 52px);
+      font-weight: 900;
+      line-height: 1.12;
+      letter-spacing: -0.8px;
+      color: #ffffff;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+    }
+
+    .welcome-headline .guest-highlight {
+      background: linear-gradient(90deg, #38bdf8, #818cf8, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .welcome-subtext {
+      font-size: clamp(14px, 1.15vw, 19px);
+      color: #e2e8f0;
+      line-height: 1.45;
+      max-width: 95%;
+    }
+
+    .welcome-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 0.6vh;
+    }
+
+    .info-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 7px 14px;
+      border-radius: 12px;
+      font-size: clamp(12px, 0.95vw, 15px);
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    .salutation-switcher {
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #7dd3fc;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .salutation-switcher:hover, .salutation-switcher:focus {
+      background: rgba(56, 189, 248, 0.28);
+      color: #ffffff;
+      outline: 2px solid var(--primary);
+    }
+
+    /* Quick Wi-Fi & Apartment Card */
+    .wifi-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2.2vh 1.8vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    .wifi-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .wifi-tag {
+      font-size: clamp(11px, 0.85vw, 13px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--primary);
+    }
+
+    .wifi-row {
+      font-size: clamp(13px, 1.05vw, 17px);
+      color: var(--text-muted);
+    }
+
+    .wifi-row b {
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    .wifi-qr-box {
+      background: #ffffff;
+      padding: 8px;
+      border-radius: 14px;
+      width: clamp(86px, 7.5vw, 124px);
+      height: clamp(86px, 7.5vw, 124px);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .wifi-qr-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Easy Menu Bar (6 Smart TV Tiles) */
+    .menu-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2vh;
+    }
+
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .menu-title {
+      font-size: clamp(13px, 1.05vw, 17px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .remote-hint {
+      font-size: clamp(11px, 0.85vw, 14px);
+      color: #94a3b8;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 1.1vw;
+    }
+
+    .tv-tile {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 2vh 1.2vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.2vh;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      position: relative;
+      text-align: left;
+      color: var(--text);
+      min-height: 15vh;
+    }
+
+    .tv-tile:hover,
+    .tv-tile:focus,
+    .tv-tile.focused {
+      transform: translateY(-6px) scale(1.03);
+      border-color: var(--primary);
+      background: rgba(30, 41, 59, 0.92);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), 0 0 0 3px rgba(56, 189, 248, 0.35);
+      outline: none;
+      z-index: 3;
+    }
+
+    .tile-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .tile-icon {
+      font-size: clamp(26px, 2.4vw, 40px);
+      line-height: 1;
+    }
+
+    .tile-key {
+      font-size: 11px;
+      font-weight: 800;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .tile-name {
+      font-size: clamp(15px, 1.25vw, 21px);
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 3px;
+    }
+
+    .tile-desc {
+      font-size: clamp(11px, 0.82vw, 13.5px);
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    .tile-badge-adfree {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #4ade80;
+      background: rgba(34, 197, 94, 0.16);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+
+    /* Fullscreen Overlays (Live-TV, Radio, SAT, TizenTube, Netflix, Guide) */
+    .tv-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(7, 11, 20, 0.95);
+      backdrop-filter: blur(20px);
+      display: none;
+      flex-direction: column;
+      padding: 2.2vh 2.8vw;
+      gap: 1.6vh;
+    }
+
+    .tv-modal.active {
+      display: flex;
+    }
+
+    .modal-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 1.2vh;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .modal-title {
+      font-size: clamp(20px, 1.8vw, 30px);
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tv-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.18);
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.18s;
+    }
+
+    .tv-btn:hover, .tv-btn:focus {
+      background: var(--primary);
+      color: #0f172a;
+      border-color: #ffffff;
+      outline: none;
+      transform: scale(1.03);
+    }
+
+    .tv-btn-primary {
+      background: var(--primary);
+      color: #0f172a;
+      border-color: var(--primary);
+    }
+
+    /* Live-TV Layout: Countries Sidebar + Channels List + Video Player */
+    .iptv-layout {
+      display: grid;
+      grid-template-columns: 230px 290px 1fr;
+      gap: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .iptv-panel {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+    }
+
+    .iptv-panel-header {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--primary);
+      padding: 4px 8px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .country-btn, .channel-btn {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+
+    .country-btn:hover, .country-btn:focus,
+    .channel-btn:hover, .channel-btn:focus {
+      background: rgba(56, 189, 248, 0.18);
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .country-btn.active, .channel-btn.active {
+      background: rgba(56, 189, 248, 0.25);
+      border-color: var(--primary);
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    .count-pill {
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 7px;
+      border-radius: 999px;
+      color: var(--text-muted);
+    }
+
+    .iptv-player-box {
+      background: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #liveTvVideo {
+      width: 100%;
+      flex: 1;
+      background: #000;
+      min-height: 0;
+    }
+
+    .player-osd {
+      background: linear-gradient(0deg, rgba(7, 11, 20, 0.96) 0%, rgba(7, 11, 20, 0.75) 100%);
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* Radio Grid */
+    .radio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 14px;
+      overflow-y: auto;
+      padding: 4px;
+    }
+
+    .radio-card {
+      background: rgba(30, 41, 59, 0.8);
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 18px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.18s;
+      color: var(--text);
+      text-align: left;
+    }
+
+    .radio-card:hover, .radio-card:focus, .radio-card.playing {
+      border-color: var(--primary);
+      background: rgba(56, 189, 248, 0.18);
+      outline: none;
+      transform: translateY(-3px);
+    }
+
+    /* QR Guide Grid */
+    .qr-guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      overflow-y: auto;
+      padding: 4px;
+    }
+
+    .qr-guide-card {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 18px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+
+    .qr-guide-card .qr-img-wrap {
+      background: #ffffff;
+      padding: 10px;
+      border-radius: 14px;
+      width: 130px;
+      height: 130px;
+    }
+
+    .qr-guide-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    @media (max-width: 1024px) {
+      html, body { overflow-y: auto; height: auto; }
+      .tv-stage { height: auto; min-height: 100vh; padding: 16px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .tiles-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .iptv-layout { grid-template-columns: 1fr; }
+      #liveTvVideo { min-height: 260px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="tv-backdrop" id="tvBackdrop"></div>
+
+<main class="tv-stage">
+  <!-- TOP BAR -->
+  <header class="tv-topbar">
+    <div class="brand-pill">
+      <span class="brand-dot"></span>
+      <div>
+        <div class="brand-title">🏡 StayInLeipzig · Mechlerstraße 10</div>
+        <div class="brand-sub" id="topSubTitle">Smart-TV Gäste-Portal · 100 % Werbefrei</div>
+      </div>
+    </div>
+
+    <div class="top-right-cluster">
+      <!-- Language Switcher -->
+      <div class="lang-bar" role="group" aria-label="Sprache">
+        <button type="button" class="lang-btn active" onclick="setTvLang('de')" id="langBtn_de">🇩🇪 DE</button>
+        <button type="button" class="lang-btn" onclick="setTvLang('en')" id="langBtn_en">🇬🇧 EN</button>
+        <button type="button" class="lang-btn" onclick="setTvLang('es')" id="langBtn_es">🇪🇸 ES</button>
+        <button type="button" class="lang-btn" onclick="setTvLang('fr')" id="langBtn_fr">🇫🇷 FR</button>
+        <button type="button" class="lang-btn" onclick="setTvLang('pl')" id="langBtn_pl">🇵🇱 PL</button>
+        <button type="button" class="lang-btn" onclick="setTvLang('tr')" id="langBtn_tr">🇹🇷 TR</button>
+        <button type="button" class="lang-btn" onclick="setTvLang('ru')" id="langBtn_ru">🇷🇺 RU</button>
+      </div>
+
+      <!-- Live Weather Leipzig -->
+      <div class="weather-pill" id="weatherPill">
+        <div class="weather-main">
+          <span class="weather-icon" id="weatherIcon">⛅</span>
+          <div>
+            <div class="weather-temp" id="weatherTemp">--°C</div>
+            <div class="weather-desc" id="weatherDesc">Leipzig Wetter lädt…</div>
+          </div>
+        </div>
+        <div class="weather-forecast-mini" id="weatherForecastMini"></div>
+      </div>
+
+      <!-- Clock -->
+      <div class="clock-pill">
+        <div class="clock-time" id="clockTime">--:--</div>
+        <div class="clock-date" id="clockDate">Leipzig</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CENTER HERO: PERSONALIZED GUEST WELCOME + WI-FI -->
+  <section class="hero-grid">
+    <div class="welcome-card">
+      <div class="welcome-kicker">
+        <span>✨</span>
+        <span id="welcomeKickerText">HERZLICH WILLKOMMEN IN LEIPZIG</span>
+      </div>
+
+      <h1 class="welcome-headline" id="welcomeHeadline">
+        Willkommen, <span class="guest-highlight" id="guestGreetingName">Liebe Gäste</span>! 🌸
+      </h1>
+
+      <p class="welcome-subtext" id="welcomeSubtext">
+        Wir freuen uns sehr, dass Sie bei uns im Dachgeschoss der Mechlerstraße 10 zu Gast sind. Lehnen Sie sich zurück und fühlen Sie sich ganz wie zu Hause!
+      </p>
+
+      <div class="welcome-badges">
+        <div class="info-chip" id="stayPeriodChip">
+          <span>🗓️</span>
+          <span id="stayPeriodText">Aufenthalt in Leipzig · Check-out bis 11:00 Uhr</span>
+        </div>
+        <div class="info-chip">
+          <span>📞</span>
+          <span>Host Falko: +49 152 53453390 (WhatsApp & Anruf)</span>
+        </div>
+        <button type="button" class="info-chip salutation-switcher" onclick="cycleSalutationMode()" title="Anrede wechseln (Herr / Frau / Firma / Familie)">
+          <span>👤</span>
+          <span id="salutationCycleLabel">Anrede anpassen</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="wifi-card">
+      <div class="wifi-details">
+        <div class="wifi-tag" id="wifiCardTag">📶 Kostenloses Highspeed WLAN</div>
+        <div class="wifi-row">WLAN (SSID): <b>gigacube-EA6A</b></div>
+        <div class="wifi-row">Passwort: <b>Leipzig2025#</b></div>
+        <div class="wifi-row" style="font-size: 12px; color: #94a3b8; margin-top: 4px;" id="wifiScanHint">
+          📱 Einfach QR-Code mit der Handykamera vom TV scannen!
+        </div>
+        <div id="nowPlayingRadioBanner" style="display:none; margin-top:6px; padding:6px 10px; background:rgba(34,197,94,0.18); border:1px solid rgba(34,197,94,0.4); border-radius:8px; font-size:12px; color:#4ade80; font-weight:700;">
+          📻 Radio läuft: <span id="nowPlayingRadioName">-</span>
+          <button type="button" onclick="stopRadio()" style="margin-left:8px; background:transparent; border:none; color:#ffffff; cursor:pointer; font-weight:800;">⏹ Stopp</button>
+        </div>
+      </div>
+      <div class="wifi-qr-box">
+        <img src="qrcodes/qr_wifi.svg" alt="WLAN QR-Code">
+      </div>
+    </div>
+  </section>
+
+  <!-- EASY MENU (6 AD-FREE TILES) -->
+  <section class="menu-section">
+    <div class="menu-header">
+      <div class="menu-title">
+        <span>🎛️</span>
+        <span id="easyMenuHeading">Easy-Menü · Fernsehen, Radio & Streaming (Ohne Werbung)</span>
+      </div>
+      <div class="remote-hint" id="remoteHintText">
+        📺 TV-Fernbedienung: Pfeiltasten ◀ ▶ & OK (oder Tasten 1–6)
+      </div>
+    </div>
+
+    <div class="tiles-grid" id="tilesGrid">
+      <!-- Tile 1: Live-TV International by Country -->
+      <button type="button" class="tv-tile focused" data-tile-index="0" onclick="openModal('liveTvModal')">
+        <div class="tile-top">
+          <span class="tile-icon">🌍</span>
+          <span class="tile-key">1</span>
+        </div>
+        <div>
+          <div class="tile-name" id="tile1Title">Live-TV (Länder)</div>
+          <div class="tile-desc" id="tile1Desc">Deutsche & ausländische Sender nach Land sortiert</div>
+          <span class="tile-badge-adfree">✓ Direkt abspielbar</span>
+        </div>
+      </button>
+
+      <!-- Tile 2: Radio Leipzig & Chillout -->
+      <button type="button" class="tv-tile" data-tile-index="1" onclick="openModal('radioModal')">
+        <div class="tile-top">
+          <span class="tile-icon">📻</span>
+          <span class="tile-key">2</span>
+        </div>
+        <div>
+          <div class="tile-name" id="tile2Title">Radio & Musik</div>
+          <div class="tile-desc" id="tile2Desc">Radio Leipzig, MDR, Lounge, Jazz & International</div>
+          <span class="tile-badge-adfree">✓ 100 % Werbefrei</span>
+        </div>
+      </button>
+
+      <!-- Tile 3: SAT-TV -->
+      <button type="button" class="tv-tile" data-tile-index="2" onclick="openModal('satModal')">
+        <div class="tile-top">
+          <span class="tile-icon">📡</span>
+          <span class="tile-key">3</span>
+        </div>
+        <div>
+          <div class="tile-name" id="tile3Title">SAT-TV</div>
+          <div class="tile-desc" id="tile3Desc">Klassisches Satelliten-Fernsehen (ARD, ZDF, RTL, Pro7…)</div>
+        </div>
+      </button>
+
+      <!-- Tile 4: TizenTube / YouTube Ad-Free -->
+      <button type="button" class="tv-tile" data-tile-index="3" onclick="openModal('youtubeModal')">
+        <div class="tile-top">
+          <span class="tile-icon">▶️</span>
+          <span class="tile-key">4</span>
+        </div>
+        <div>
+          <div class="tile-name" id="tile4Title">TizenTube / YouTube</div>
+          <div class="tile-desc" id="tile4Desc">Videos, Musik & Leipzig-Guides ohne Werbeunterbrechung</div>
+          <span class="tile-badge-adfree">✓ Ad-Block / TizenTube</span>
+        </div>
+      </button>
+
+      <!-- Tile 5: Netflix -->
+      <button type="button" class="tv-tile" data-tile-index="4" onclick="openModal('netflixModal')">
+        <div class="tile-top">
+          <span class="tile-icon">🎬</span>
+          <span class="tile-key">5</span>
+        </div>
+        <div>
+          <div class="tile-name" id="tile5Title">Netflix & Serien</div>
+          <div class="tile-desc" id="tile5Desc">Filme & Serien in 4K auf dem Smart-TV starten</div>
+        </div>
+      </button>
+
+      <!-- Tile 6: Leipzig Guide & Tram QR Codes -->
+      <button type="button" class="tv-tile" data-tile-index="5" onclick="openModal('guideModal')">
+        <div class="tile-top">
+          <span class="tile-icon">🗺️</span>
+          <span class="tile-key">6</span>
+        </div>
+        <div>
+          <div class="tile-name" id="tile6Title">Leipzig & Bahnen</div>
+          <div class="tile-desc" id="tile6Desc">Straßenbahn Live, Bäcker, Supermärkte & Gästemappe</div>
+        </div>
+      </button>
+    </div>
+  </section>
+</main>
+
+<!-- =========================================================
+     MODAL 1: LIVE-TV (FOREIGN & GERMAN CHANNELS BY COUNTRY)
+     ========================================================= -->
+<div class="tv-modal" id="liveTvModal" role="dialog" aria-modal="true">
+  <div class="modal-topbar">
+    <div class="modal-title">
+      <span>🌍</span>
+      <span>Live-TV · Deutsche & Ausländische Sender nach Land sortiert</span>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button type="button" class="tv-btn" onclick="promptCustomM3uImport()" title="Eigene M3U / Senderliste einfügen">➕ Senderliste (M3U)</button>
+      <button type="button" class="tv-btn" onclick="toggleVideoFullscreen()">⛶ Vollbild</button>
+      <button type="button" class="tv-btn tv-btn-primary" onclick="closeAllModals()">✕ Zurück zum Menü (ESC)</button>
+    </div>
+  </div>
+
+  <div class="iptv-layout">
+    <!-- Column 1: Countries -->
+    <div class="iptv-panel">
+      <div class="iptv-panel-header">1. Land wählen</div>
+      <div id="countriesListContainer" style="display:flex; flex-direction:column; gap:6px;"></div>
+    </div>
+
+    <!-- Column 2: Channels in Selected Country -->
+    <div class="iptv-panel">
+      <div class="iptv-panel-header" id="channelsPanelHeader">2. Sender wählen</div>
+      <div id="channelsListContainer" style="display:flex; flex-direction:column; gap:6px;"></div>
+    </div>
+
+    <!-- Column 3: Video Player -->
+    <div class="iptv-player-box">
+      <video id="liveTvVideo" controls playsinline poster=""></video>
+      <div class="player-osd">
+        <div>
+          <div style="font-size:18px; font-weight:800; color:#ffffff;" id="currentChannelTitle">Sender auswählen…</div>
+          <div style="font-size:12.5px; color:var(--text-muted);" id="currentChannelMeta">Wählen Sie links ein Land und einen TV-Sender</div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="tv-btn" onclick="stepChannel(-1)">⬆️ Vorheriger Sender</button>
+          <button type="button" class="tv-btn" onclick="stepChannel(1)">⬇️ Nächster Sender</button>
+          <button type="button" class="tv-btn" onclick="openExternalStreamTab()" id="externalStreamBtn" style="display:none;">↗ Direkt öffnen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     MODAL 2: RADIO LEIPZIG & MUSIK
+     ========================================================= -->
+<div class="tv-modal" id="radioModal" role="dialog" aria-modal="true">
+  <div class="modal-topbar">
+    <div class="modal-title">
+      <span>📻</span>
+      <span>Radio Leipzig, Sachsen & Chillout Lounge (100 % Werbefrei im Player)</span>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <button type="button" class="tv-btn" onclick="stopRadio()">⏹ Radio stoppen</button>
+      <button type="button" class="tv-btn tv-btn-primary" onclick="closeAllModals()">✕ Zurück zum Menü (ESC)</button>
+    </div>
+  </div>
+
+  <div class="radio-grid" id="radioStationsGrid"></div>
+  <audio id="radioAudioPlayer" preload="none"></audio>
+</div>
+
+<!-- =========================================================
+     MODAL 3: SAT-TV GUIDE
+     ========================================================= -->
+<div class="tv-modal" id="satModal" role="dialog" aria-modal="true">
+  <div class="modal-topbar">
+    <div class="modal-title">
+      <span>📡</span>
+      <span>SAT-TV · Klassisches Satelliten-Fernsehen</span>
+    </div>
+    <button type="button" class="tv-btn tv-btn-primary" onclick="closeAllModals()">✕ Zurück zum Menü</button>
+  </div>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px; margin-top:10px;">
+    <div class="welcome-card" style="border-left-color: var(--gold);">
+      <div class="welcome-kicker">📺 SO SCHALTEN SIE AUF SAT-TV UM</div>
+      <h2 style="font-size:26px; font-weight:800; margin:6px 0;">Mit 1 Tastendruck auf Ihrer Fernbedienung:</h2>
+      <ol style="font-size:17px; line-height:1.75; color:#e2e8f0; padding-left:22px;">
+        <li>Drücken Sie auf der Samsung-Fernbedienung die Taste <b>„Source“ (Quelle)</b> oder <b>„Home 🏠 → Live TV“</b>.</li>
+        <li>Wählen Sie <b>„TV / Satellit“</b> (oder drücken Sie direkt die Programm-Taste <b>CH ︿ / ﹀</b>).</li>
+        <li>Um wieder hierher zum Gäste-Portal zurückzukehren, öffnen Sie im TV-Menü einfach den <b>Internet-Browser</b>.</li>
+      </ol>
+      <div style="margin-top:14px;">
+        <button type="button" class="tv-btn tv-btn-primary" onclick="openModal('liveTvModal')">🌍 Oder direkt hier im Browser Live-TV (ohne Umschalten) schauen</button>
+      </div>
+    </div>
+
+    <div class="welcome-card">
+      <div class="welcome-kicker">🌍 AUSLÄNDISCHE SENDER & NEWS</div>
+      <h3 style="font-size:22px; font-weight:800; margin:6px 0;">Internationale Sender nach Land sortiert</h3>
+      <p style="font-size:15.5px; color:var(--text-muted); line-height:1.55;">
+        Über den Menüpunkt <b>„1 · Live-TV (Länder)“</b> empfangen Sie deutsche und internationale TV-Sender (Englisch, Französisch, Spanisch, Italienisch, Polnisch, Türkisch, Ukrainisch, Arabisch u. v. m.) direkt hier auf dem Smart-TV – übersichtlich nach Ländern geordnet.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     MODAL 4: TIZENTUBE / YOUTUBE AD-FREE
+     ========================================================= -->
+<div class="tv-modal" id="youtubeModal" role="dialog" aria-modal="true">
+  <div class="modal-topbar">
+    <div class="modal-title">
+      <span>▶️</span>
+      <span>TizenTube / YouTube · Videos, Leipzig & Musik</span>
+    </div>
+    <button type="button" class="tv-btn tv-btn-primary" onclick="closeAllModals()">✕ Zurück zum Menü</button>
+  </div>
+
+  <div style="display:grid; grid-template-columns: 340px 1fr; gap:18px; flex:1; min-height:0;">
+    <div class="iptv-panel">
+      <div class="iptv-panel-header">Schnellwahl & App-Start</div>
+      <button type="button" class="channel-btn active" onclick="loadYoutubeEmbed('leipzig')">🏙️ Leipzig Stadtrundgang & Highlights (4K)</button>
+      <button type="button" class="channel-btn" onclick="loadYoutubeEmbed('fireplace')">🔥 Kaminfeuer & Entspannung (4K UHD)</button>
+      <button type="button" class="channel-btn" onclick="loadYoutubeEmbed('jazz')">🎷 Relaxing Café Jazz & Lounge</button>
+      <button type="button" class="channel-btn" onclick="loadYoutubeEmbed('classical')">🎻 Bach & Gewandhaus Klassik aus Leipzig</button>
+      <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin:8px 0;">
+      <button type="button" class="tv-btn tv-btn-primary" style="width:100%; justify-content:center;" onclick="launchNativeTvApp('111299001912', 'https://www.youtube.com/tv')">
+        🚀 YouTube App auf Samsung TV starten
+      </button>
+      <button type="button" class="tv-btn" style="width:100%; justify-content:center; margin-top:4px;" onclick="launchNativeTvApp('3201606009684', 'https://open.spotify.com')">
+        🎵 Spotify App auf TV starten
+      </button>
+      <div style="font-size:12px; color:var(--text-muted); line-height:1.45; padding:8px; background:rgba(255,255,255,0.04); border-radius:10px; margin-top:6px;">
+        💡 <b>Tipp (TizenTube):</b> Falls <b>TizenTube</b> im Samsung Smart-Hub installiert ist, starten Sie TizenTube über die <b>🏠 Home-Taste</b> der Fernbedienung für 100 % werbefreies YouTube inkl. SponsorBlock.
+      </div>
+    </div>
+
+    <div class="iptv-player-box">
+      <iframe id="youtubeIframe" style="width:100%; height:100%; border:none;" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     MODAL 5: NETFLIX
+     ========================================================= -->
+<div class="tv-modal" id="netflixModal" role="dialog" aria-modal="true">
+  <div class="modal-topbar">
+    <div class="modal-title">
+      <span>🎬</span>
+      <span>Netflix & Streaming</span>
+    </div>
+    <button type="button" class="tv-btn tv-btn-primary" onclick="closeAllModals()">✕ Zurück zum Menü</button>
+  </div>
+
+  <div class="welcome-card" style="max-width:780px; margin:auto;">
+    <div class="welcome-kicker">🍿 NETFLIX AUF DEM SMART-TV</div>
+    <h2 style="font-size:30px; font-weight:900;">So starten Sie Netflix mit 1 Klick:</h2>
+    <p style="font-size:17px; color:#e2e8f0; line-height:1.6;">
+      Drücken Sie auf Ihrer Samsung-Fernbedienung einfach die direkte <b>NETFLIX-Taste</b> (oder die <b>🏠 Home-Taste → Netflix</b>).
+    </p>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
+      <button type="button" class="tv-btn tv-btn-primary" onclick="launchNativeTvApp('3201907018807', 'https://www.netflix.com')">🎬 Netflix direkt am TV starten</button>
+      <button type="button" class="tv-btn" onclick="launchNativeTvApp('3201910019365', 'https://www.primevideo.com')">🎥 Prime Video starten</button>
+      <button type="button" class="tv-btn" onclick="launchNativeTvApp('3201901017640', 'https://www.disneyplus.com')">✨ Disney+ starten</button>
+      <button type="button" class="tv-btn" onclick="closeAllModals()">Zurück zur Übersicht</button>
+    </div>
+    <p style="font-size:13px; color:var(--gold); margin-top:10px;">
+      🔒 Hinweis für Ihren Aufenthalt: Sie können sich gerne mit Ihrem eigenen Netflix-Profil per QR-Code am TV anmelden. Denken Sie vor dem Check-out einfach ans Abmelden.
+    </p>
+  </div>
+</div>
+
+<!-- =========================================================
+     MODAL 6: LEIPZIG GUIDE & TRAM QR CODES
+     ========================================================= -->
+<div class="tv-modal" id="guideModal" role="dialog" aria-modal="true">
+  <div class="modal-topbar">
+    <div class="modal-title">
+      <span>🗺️</span>
+      <span>Leipzig Umgebungs-Guide, Straßenbahn Live & Bäckereien (Einfach vom TV scannen)</span>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <a href="gaestemappe.html" class="tv-btn" style="text-decoration:none;">📖 Vollständige Gästemappe öffnen</a>
+      <button type="button" class="tv-btn tv-btn-primary" onclick="closeAllModals()">✕ Zurück zum Menü</button>
+    </div>
+  </div>
+
+  <div class="qr-guide-grid">
+    <div class="qr-guide-card">
+      <div class="qr-img-wrap"><img src="qrcodes/qr_wifi.svg" alt="WLAN"></div>
+      <div style="font-weight:800; font-size:15px;">📶 Highspeed WLAN</div>
+      <div style="font-size:12px; color:var(--text-muted);">gigacube-EA6A · PW: Leipzig2025#</div>
+    </div>
+    <div class="qr-guide-card">
+      <div class="qr-img-wrap"><img src="qrcodes/qr_lvb_live.svg" alt="LVB Live"></div>
+      <div style="font-weight:800; font-size:15px;">🚋 Straßenbahn Live</div>
+      <div style="font-size:12px; color:var(--text-muted);">Echtzeit-Abfahrten Chausseehaus (Linien 10, 11, 16)</div>
+    </div>
+    <div class="qr-guide-card">
+      <div class="qr-img-wrap"><img src="qrcodes/qr_tram_hbf.svg" alt="Hbf"></div>
+      <div style="font-weight:800; font-size:15px;">🚆 Direkt zum Hauptbahnhof</div>
+      <div style="font-size:12px; color:var(--text-muted);">Nur 2 Haltestellen bis Leipzig Hbf / Zentrum</div>
+    </div>
+    <div class="qr-guide-card">
+      <div class="qr-img-wrap"><img src="qrcodes/qr_tram16_messe.svg" alt="Messe"></div>
+      <div style="font-weight:800; font-size:15px;">🏛️ Linie 16 zur Messe</div>
+      <div style="font-size:12px; color:var(--text-muted);">Direktverbindung ohne Umsteigen zur Leipziger Messe</div>
+    </div>
+    <div class="qr-guide-card">
+      <div class="qr-img-wrap"><img src="qrcodes/qr_baecker_wendl.svg" alt="Bäcker Wendl"></div>
+      <div style="font-weight:800; font-size:15px;">🥐 Bäckerei Wendl</div>
+      <div style="font-size:12px; color:var(--text-muted);">Frische Brötchen, Kaffee & Leipziger Lerchen</div>
+    </div>
+    <div class="qr-guide-card">
+      <div class="qr-img-wrap"><img src="qrcodes/qr_penny.svg" alt="Penny"></div>
+      <div style="font-weight:800; font-size:15px;">🛒 Penny Supermarkt</div>
+      <div style="font-size:12px; color:var(--text-muted);">Direkt um die Ecke für den täglichen Einkauf</div>
+    </div>
+    <div class="qr-guide-card">
+      <div class="qr-img-wrap"><img src="qrcodes/qr_kaufland.svg" alt="Kaufland"></div>
+      <div style="font-weight:800; font-size:15px;">🛍️ Kaufland</div>
+      <div style="font-size:12px; color:var(--text-muted);">Große Auswahl & lange Öffnungszeiten</div>
+    </div>
+    <div class="qr-guide-card">
+      <div class="qr-img-wrap"><img src="qrcodes/qr_checkin.svg" alt="Check-in"></div>
+      <div style="font-weight:800; font-size:15px;">🔑 Smartphone Türöffner</div>
+      <div style="font-size:12px; color:var(--text-muted);">checkin.stayinleipzig.de auf dem Handy öffnen</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // =========================================================
+  // 1. CONFIGURATION & API ENDPOINT
+  // =========================================================
+  function getApiEndpoint(action) {
+    const isTunnelHost = (window.location.hostname === 'fhem-tuer-mechler-leipzig.stayinleipzig.de');
+    const base = isTunnelHost ? '' : 'https://fhem-tuer-mechler-leipzig.stayinleipzig.de';
+    return `${base}/api.php?action=${action}`;
+  }
+
+  let currentLang = 'de';
+  let currentGuestObj = {
+    name: '',
+    salutation: 'auto', // 'auto' | 'Herr' | 'Frau' | 'Firma' | 'Familie' | 'neutral'
+    valid_from: '',
+    valid_until: '',
+    pin: ''
+  };
+  const salutationModes = ['auto', 'Herr', 'Frau', 'Firma', 'Familie', 'neutral'];
+
+  // Common German & international first names for automatic Herr / Frau detection
+  const FEMALE_NAMES = new Set([
+    'anna','anne','annika','andrea','angelika','anja','antje','astrid','barbara','beate','bianca','birgit','brigitte',
+    'carina','carla','carmen','carolin','caroline','charlotte','christa','christiane','christina','christine','claudia','cornelia',
+    'daniela','diana','doris','elena','elisabeth','elke','emma','emily','erika','eva','franziska','gabriele','gisela',
+    'hannah','heike','helena','helga','ines','ingrid','irene','iris','isabell','isabella','jana','janina','jasmin','jennifer',
+    'jessica','johanna','julia','juliane','jutta','karin','karolina','katharina','kathrin','katja','katrin','kerstin','klara',
+    'kristina','lara','laura','lea','lena','leonie','linda','lisa','luisa','luise','manuela','maria','marie','marina','marion',
+    'martina','melanie','mia','michaela','miriam','monika','nadine','nadja','natalie','nicole','nina','olga','patricia','paula',
+    'petra','ramona','rebecca','regina','renate','rita','sabine','sabrina','sandra','sara','sarah','silke','simone','sofia',
+    'sonja','sophia','sophie','stefanie','stephanie','susanne','svenja','tanja','theresa','ulrike','ursula','vanessa','vera',
+    'verena','victoria','yvonne'
+  ]);
+
+  const MALE_NAMES = new Set([
+    'alexander','andreas','anton','armin','axel','bastiaan','bastian','ben','benjamin','bernd','bernhard','björn','carsten',
+    'christian','christoph','christopher','claus','daniel','david','dennis','detlef','dieter','dirk','dominik','eckhard',
+    'elias','emil','eric','erik','ernst','fabian','falko','felix','florian','frank','franz','friedrich','georg','gerd',
+    'gerhard','günter','günther','hans','harald','heiko','heinrich','heinz','helmut','hendrik','henning','henry','herbert',
+    'holger','horst','hubert','ingo','jakob','jan','jens','joachim','johannes','jonas','jonathan','jörg','josef','julian',
+    'jürgen','kai','karl','karsten','kevin','klaus','konrad','konstantin','lars','leon','leonard','lorenz','lothar','luca',
+    'lukas','lutz','manfred','manuel','marc','marcel','marco','marcus','mario','marius','mark','markus','martin','mathias',
+    'matthias','max','maximilian','michael','moritz','niklas','nico','nicolas','nils','norbert','olaf','oliver','oskar',
+    'patrick','paul','peter','philipp','ralf','ralph','rainer','reinhard','rene','rené','richard','robert','roland','rolf',
+    'roman','ronny','rüdiger','sascha','sebastian','simon','stefan','steffen','stephan','sven','theo','thomas','thorsten',
+    'tilo','tim','timo','tobias','tom','torsten','udo','uli','ulrich','uwe','valentin','viktor','volker','walter','werner',
+    'wilhelm','wolfgang'
+  ]);
+
+  const COMPANY_KEYWORDS = /\b(gmbh|ag|kg|ug|ohg|gbr|e\.?\s*v\.?|ltd|inc|llc|corp|co\.|firma|company|group|gruppe|holding|consulting|consult|bau|montage|service|services|media|events|logistik|logistics|technik|engineering|IT|akademie|institut|stiftung|verlag|agentur|studio|atelier|handel|immobilien|pflege|klinik|praxis)\b/i;
+
+  function detectSalutation(rawName, explicitSalutation) {
+    const clean = (rawName || '').trim();
+    if (!clean) return { type: 'guest', displayName: '' };
+
+    if (explicitSalutation && explicitSalutation !== 'auto') {
+      return { type: explicitSalutation, displayName: clean };
+    }
+
+    // 1. Check explicit prefixes in the name string
+    if (/^(firma|company|fa\.)\s+/i.test(clean) || COMPANY_KEYWORDS.test(clean)) {
+      const stripped = clean.replace(/^(firma|company|fa\.)\s+/i, '').trim();
+      return { type: 'Firma', displayName: stripped || clean };
+    }
+    if (/^(herr|hr\.|mr\.?)\s+/i.test(clean)) {
+      return { type: 'Herr', displayName: clean.replace(/^(herr|hr\.|mr\.?)\s+/i, '').trim() };
+    }
+    if (/^(frau|fr\.|mrs\.?|ms\.?)\s+/i.test(clean)) {
+      return { type: 'Frau', displayName: clean.replace(/^(frau|fr\.|mrs\.?|ms\.?)\s+/i, '').trim() };
+    }
+    if (/^(familie|fam\.|family)\s+/i.test(clean)) {
+      return { type: 'Familie', displayName: clean.replace(/^(familie|fam\.|family)\s+/i, '').trim() };
+    }
+
+    // 2. Check if first token is a known male/female first name
+    const tokens = clean.split(/\s+/);
+    if (tokens.length >= 2) {
+      const firstToken = tokens[0].toLowerCase().replace(/[^a-zäöüßé]/g, '');
+      if (FEMALE_NAMES.has(firstToken)) return { type: 'Frau', displayName: clean };
+      if (MALE_NAMES.has(firstToken)) return { type: 'Herr', displayName: clean };
+    }
+
+    // 3. Single surname or unknown gender -> polite "Herr / Frau <Name>"
+    return { type: 'HerrFrau', displayName: clean };
+  }
+
+  const I18N = {
+    de: {
+      kicker: 'HERZLICH WILLKOMMEN IN LEIPZIG',
+      subtext: 'Wir freuen uns sehr, dass Sie bei uns im Dachgeschoss der Mechlerstraße 10 zu Gast sind. Lehnen Sie sich zurück und fühlen Sie sich ganz wie zu Hause!',
+      wifiTag: '📶 Kostenloses Highspeed WLAN',
+      wifiHint: '📱 Einfach QR-Code mit der Handykamera vom TV scannen!',
+      menuHeading: 'Easy-Menü · Fernsehen, Radio & Streaming (Ohne Werbung)',
+      remoteHint: '📺 TV-Fernbedienung: Pfeiltasten ◀ ▶ & OK (oder Tasten 1–6)',
+      greetDefault: 'Herzlich willkommen, <span class="guest-highlight">Liebe Gäste</span>! 🌸',
+      greetHerr: (n) => `Herzlich willkommen, <span class="guest-highlight">Herr ${escapeHtml(n)}</span>! 🌸`,
+      greetFrau: (n) => `Herzlich willkommen, <span class="guest-highlight">Frau ${escapeHtml(n)}</span>! 🌸`,
+      greetHerrFrau: (n) => `Herzlich willkommen, <span class="guest-highlight">Herr / Frau ${escapeHtml(n)}</span>! 🌸`,
+      greetFirma: (n) => `Herzlich willkommen, <span class="guest-highlight">Firma ${escapeHtml(n)}</span>! 🌸`,
+      greetFamilie: (n) => `Herzlich willkommen, <span class="guest-highlight">Familie ${escapeHtml(n)}</span>! 🌸`,
+      greetNeutral: (n) => `Herzlich willkommen, <span class="guest-highlight">${escapeHtml(n)}</span>! 🌸`
+    },
+    en: {
+      kicker: 'WARM WELCOME TO LEIPZIG',
+      subtext: 'We are delighted to host you in our penthouse apartment at Mechlerstraße 10. Relax, enjoy your ad-free Smart TV, and feel right at home!',
+      wifiTag: '📶 Free High-Speed Wi-Fi',
+      wifiHint: '📱 Simply scan the QR code with your phone camera!',
+      menuHeading: 'Easy Menu · Live TV, Radio & Streaming (100% Ad-Free)',
+      remoteHint: '📺 TV Remote: Arrow Keys ◀ ▶ & OK (or Keys 1–6)',
+      greetDefault: 'Welcome to Leipzig, <span class="guest-highlight">Dear Guests</span>! 🌸',
+      greetHerr: (n) => `Welcome to Leipzig, <span class="guest-highlight">Mr. ${escapeHtml(n)}</span>! 🌸`,
+      greetFrau: (n) => `Welcome to Leipzig, <span class="guest-highlight">Ms. ${escapeHtml(n)}</span>! 🌸`,
+      greetHerrFrau: (n) => `Welcome to Leipzig, <span class="guest-highlight">Mr. / Ms. ${escapeHtml(n)}</span>! 🌸`,
+      greetFirma: (n) => `Welcome to Leipzig, <span class="guest-highlight">${escapeHtml(n)}</span>! 🌸`,
+      greetFamilie: (n) => `Welcome to Leipzig, <span class="guest-highlight">${escapeHtml(n)} Family</span>! 🌸`,
+      greetNeutral: (n) => `Welcome to Leipzig, <span class="guest-highlight">${escapeHtml(n)}</span>! 🌸`
+    },
+    es: {
+      kicker: 'BIENVENIDOS A LEIPZIG',
+      subtext: 'Nos alegra mucho recibirle en nuestro apartamento en Mechlerstraße 10. ¡Siéntase como en casa!',
+      wifiTag: '📶 Wi-Fi de Alta Velocidad Gratis',
+      wifiHint: '📱 ¡Escanee el código QR con la cámara de su móvil!',
+      menuHeading: 'Menú Fácil · TV en Vivo, Radio y Streaming (Sin Publicidad)',
+      remoteHint: '📺 Mando TV: Flechas ◀ ▶ y OK',
+      greetDefault: '¡Bienvenidos, <span class="guest-highlight">Queridos Huéspedes</span>! 🌸',
+      greetHerr: (n) => `¡Bienvenido a Leipzig, <span class="guest-highlight">Sr. ${escapeHtml(n)}</span>! 🌸`,
+      greetFrau: (n) => `¡Bienvenida a Leipzig, <span class="guest-highlight">Sra. ${escapeHtml(n)}</span>! 🌸`,
+      greetHerrFrau: (n) => `¡Bienvenido/a a Leipzig, <span class="guest-highlight">Sr. / Sra. ${escapeHtml(n)}</span>! 🌸`,
+      greetFirma: (n) => `¡Bienvenidos a Leipzig, <span class="guest-highlight">${escapeHtml(n)}</span>! 🌸`,
+      greetFamilie: (n) => `¡Bienvenida a Leipzig, <span class="guest-highlight">Familia ${escapeHtml(n)}</span>! 🌸`,
+      greetNeutral: (n) => `¡Bienvenido/a a Leipzig, <span class="guest-highlight">${escapeHtml(n)}</span>! 🌸`
+    },
+    fr: {
+      kicker: 'BIENVENUE À LEIPZIG',
+      subtext: 'Nous sommes ravis de vous accueillir au Mechlerstraße 10. Détendez-vous et faites comme chez vous !',
+      wifiTag: '📶 Wi-Fi Haut Débit Gratuit',
+      wifiHint: '📱 Scannez simplement le QR code avec votre téléphone !',
+      menuHeading: 'Menu TV · Chaînes Internationales, Radio & Streaming',
+      remoteHint: '📺 Télécommande : Flèches ◀ ▶ & OK',
+      greetDefault: 'Bienvenue à Leipzig, <span class="guest-highlight">Chers Invités</span> ! 🌸',
+      greetHerr: (n) => `Bienvenue à Leipzig, <span class="guest-highlight">M. ${escapeHtml(n)}</span> ! 🌸`,
+      greetFrau: (n) => `Bienvenue à Leipzig, <span class="guest-highlight">Mme ${escapeHtml(n)}</span> ! 🌸`,
+      greetHerrFrau: (n) => `Bienvenue à Leipzig, <span class="guest-highlight">M. / Mme ${escapeHtml(n)}</span> ! 🌸`,
+      greetFirma: (n) => `Bienvenue à Leipzig, <span class="guest-highlight">${escapeHtml(n)}</span> ! 🌸`,
+      greetFamilie: (n) => `Bienvenue à Leipzig, <span class="guest-highlight">Famille ${escapeHtml(n)}</span> ! 🌸`,
+      greetNeutral: (n) => `Bienvenue à Leipzig, <span class="guest-highlight">${escapeHtml(n)}</span> ! 🌸`
+    },
+    pl: {
+      kicker: 'SERDECZNIE WITAMY W LIPSKU',
+      subtext: 'Cieszymy się, że gościmy Państwa w naszym apartamencie przy Mechlerstraße 10. Proszę czuć się jak w domu!',
+      wifiTag: '📶 Darmowe Szybkie Wi-Fi',
+      wifiHint: '📱 Zeskanuj kod QR aparatem w telefonie!',
+      menuHeading: 'Menu TV · Telewizja na żywo, Radio i Streaming (Bez reklam)',
+      remoteHint: '📺 Pilot TV: Strzałki ◀ ▶ i OK',
+      greetDefault: 'Witamy w Lipsku, <span class="guest-highlight">Drodzy Goście</span>! 🌸',
+      greetHerr: (n) => `Witamy w Lipsku, <span class="guest-highlight">Panie ${escapeHtml(n)}</span>! 🌸`,
+      greetFrau: (n) => `Witamy w Lipsku, <span class="guest-highlight">Pani ${escapeHtml(n)}</span>! 🌸`,
+      greetHerrFrau: (n) => `Witamy w Lipsku, <span class="guest-highlight">Państwo ${escapeHtml(n)}</span>! 🌸`,
+      greetFirma: (n) => `Witamy w Lipsku, <span class="guest-highlight">Firma ${escapeHtml(n)}</span>! 🌸`,
+      greetFamilie: (n) => `Witamy w Lipsku, <span class="guest-highlight">Rodzina ${escapeHtml(n)}</span>! 🌸`,
+      greetNeutral: (n) => `Witamy w Lipsku, <span class="guest-highlight">${escapeHtml(n)}</span>! 🌸`
+    },
+    tr: {
+      kicker: 'LEIPZIG\'E HOŞ GELDİNİZ',
+      subtext: 'Mechlerstraße 10\'daki dairemizde sizi ağırlamaktan mutluluk duyuyoruz. Kendinizi evinizde hissedin!',
+      wifiTag: '📶 Ücretsiz Yüksek Hızlı Wi-Fi',
+      wifiHint: '📱 QR kodunu telefonunuzun kamerasıyla tarayın!',
+      menuHeading: 'Kolay Menü · Canlı TV, Radyo ve Streaming (Reklamsız)',
+      remoteHint: '📺 TV Kumandası: Ok Tuşları ◀ ▶ ve OK',
+      greetDefault: 'Leipzig\'e Hoş Geldiniz, <span class="guest-highlight">Değerli Misafirlerimiz</span>! 🌸',
+      greetHerr: (n) => `Leipzig'e Hoş Geldiniz, <span class="guest-highlight">Sayın ${escapeHtml(n)} Bey</span>! 🌸`,
+      greetFrau: (n) => `Leipzig'e Hoş Geldiniz, <span class="guest-highlight">Sayın ${escapeHtml(n)} Hanım</span>! 🌸`,
+      greetHerrFrau: (n) => `Leipzig'e Hoş Geldiniz, <span class="guest-highlight">Sayın ${escapeHtml(n)}</span>! 🌸`,
+      greetFirma: (n) => `Leipzig'e Hoş Geldiniz, <span class="guest-highlight">${escapeHtml(n)}</span>! 🌸`,
+      greetFamilie: (n) => `Leipzig'e Hoş Geldiniz, <span class="guest-highlight">${escapeHtml(n)} Ailesi</span>! 🌸`,
+      greetNeutral: (n) => `Leipzig'e Hoş Geldiniz, <span class="guest-highlight">${escapeHtml(n)}</span>! 🌸`
+    },
+    ru: {
+      kicker: 'ДОБРО ПОЖАЛОВАТЬ В ЛЕЙПЦИГ',
+      subtext: 'Мы очень рады приветствовать вас в наших апартаментах по адресу Mechlerstraße 10. Устраивайтесь поудобнее и чувствуйте себя как дома!',
+      wifiTag: '📶 Бесплатный высокоскоростной Wi-Fi',
+      wifiHint: '📱 Просто отсканируйте QR-код камерой телефона!',
+      menuHeading: 'Простое меню · Прямой эфир ТВ, Радио и Стриминг (Без рекламы)',
+      remoteHint: '📺 Пульт ТВ: Стрелки ◀ ▶ и OK (или кнопки 1–6)',
+      greetDefault: 'Добро пожаловать в Лейпциг, <span class="guest-highlight">Дорогие гости</span>! 🌸',
+      greetHerr: (n) => `Добро пожаловать в Лейпциг, <span class="guest-highlight">Господин ${escapeHtml(n)}</span>! 🌸`,
+      greetFrau: (n) => `Добро пожаловать в Лейпциг, <span class="guest-highlight">Госпожа ${escapeHtml(n)}</span>! 🌸`,
+      greetHerrFrau: (n) => `Добро пожаловать в Лейпциг, <span class="guest-highlight">Господин / Госпожа ${escapeHtml(n)}</span>! 🌸`,
+      greetFirma: (n) => `Добро пожаловать в Лейпциг, <span class="guest-highlight">Компания ${escapeHtml(n)}</span>! 🌸`,
+      greetFamilie: (n) => `Добро пожаловать в Лейпциг, <span class="guest-highlight">Семья ${escapeHtml(n)}</span>! 🌸`,
+      greetNeutral: (n) => `Добро пожаловать в Лейпциг, <span class="guest-highlight">${escapeHtml(n)}</span>! 🌸`
+    }
+  };
+
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function renderGuestGreeting() {
+    const dict = I18N[currentLang] || I18N.de;
+    document.getElementById('welcomeKickerText').textContent = dict.kicker;
+    document.getElementById('welcomeSubtext').textContent = dict.subtext;
+    document.getElementById('wifiCardTag').textContent = dict.wifiTag;
+    document.getElementById('wifiScanHint').textContent = dict.wifiHint;
+    document.getElementById('easyMenuHeading').textContent = dict.menuHeading;
+    document.getElementById('remoteHintText').textContent = dict.remoteHint;
+
+    const headlineEl = document.getElementById('welcomeHeadline');
+    const rawName = (currentGuestObj.name || '').trim();
+
+    if (!rawName || rawName.toLowerCase() === 'gast') {
+      headlineEl.innerHTML = dict.greetDefault;
+    } else {
+      const parsed = detectSalutation(rawName, currentGuestObj.salutation);
+      if (parsed.type === 'Herr') {
+        headlineEl.innerHTML = dict.greetHerr(parsed.displayName);
+      } else if (parsed.type === 'Frau') {
+        headlineEl.innerHTML = dict.greetFrau(parsed.displayName);
+      } else if (parsed.type === 'Firma') {
+        headlineEl.innerHTML = dict.greetFirma(parsed.displayName);
+      } else if (parsed.type === 'Familie') {
+        headlineEl.innerHTML = dict.greetFamilie(parsed.displayName);
+      } else if (parsed.type === 'neutral') {
+        headlineEl.innerHTML = dict.greetNeutral(parsed.displayName);
+      } else {
+        headlineEl.innerHTML = dict.greetHerrFrau(parsed.displayName);
+      }
+    }
+
+    const modeLabels = {
+      auto: 'Anrede: Automatisch',
+      Herr: 'Anrede: Herr',
+      Frau: 'Anrede: Frau',
+      Firma: 'Anrede: Firma',
+      Familie: 'Anrede: Familie',
+      neutral: 'Anrede: Nur Name'
+    };
+    const cycleEl = document.getElementById('salutationCycleLabel');
+    if (cycleEl) cycleEl.textContent = modeLabels[currentGuestObj.salutation] || 'Anrede anpassen';
+
+    if (currentGuestObj.valid_from && currentGuestObj.valid_until) {
+      const pad = (n) => String(n).padStart(2, '0');
+      const d1 = new Date(currentGuestObj.valid_from);
+      const d2 = new Date(currentGuestObj.valid_until);
+      if (!isNaN(d1.getTime()) && !isNaN(d2.getTime())) {
+        const s1 = `${pad(d1.getDate())}.${pad(d1.getMonth() + 1)}.${d1.getFullYear()}`;
+        const s2 = `${pad(d2.getDate())}.${pad(d2.getMonth() + 1)}.${d2.getFullYear()}`;
+        const coTime = `${pad(d2.getHours())}:${pad(d2.getMinutes())}`;
+        document.getElementById('stayPeriodText').textContent = `Aufenthalt: ${s1} – ${s2} · Check-out bis ${coTime} Uhr`;
+      }
+    }
+  }
+
+  function cycleSalutationMode() {
+    const idx = salutationModes.indexOf(currentGuestObj.salutation || 'auto');
+    currentGuestObj.salutation = salutationModes[(idx + 1) % salutationModes.length];
+    renderGuestGreeting();
+  }
+
+  function setTvLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.getElementById('langBtn_' + lang);
+    if (btn) btn.classList.add('active');
+    renderGuestGreeting();
+  }
+
+  // =========================================================
+  // 2. LOAD ACTIVE GUEST FROM BACKEND / PINS.JSON / URL
+  // =========================================================
+  function pickActiveGuestFromPins(pins, targetPin = '') {
+    if (!Array.isArray(pins)) return null;
+    const guestPins = pins.filter(p => p.role !== 'admin' && p.active !== false);
+    if (targetPin) {
+      const exact = guestPins.find(p => String(p.pin) === String(targetPin));
+      if (exact) return exact;
+    }
+
+    const now = new Date();
+    // 1. Prefer guest who most recently checked in and is still within stay window
+    const activeCheckedIn = guestPins
+      .filter(p => {
+        const f = new Date(p.valid_from);
+        const u = new Date(p.valid_until);
+        return !isNaN(f) && !isNaN(u) && now >= new Date(f.getTime() - 12 * 3600 * 1000) && now <= new Date(u.getTime() + 6 * 3600 * 1000);
+      })
+      .sort((a, b) => {
+        if (a.checked_in_at && !b.checked_in_at) return -1;
+        if (!a.checked_in_at && b.checked_in_at) return 1;
+        return new Date(a.valid_from) - new Date(b.valid_from);
+      });
+
+    if (activeCheckedIn.length > 0) return activeCheckedIn[0];
+
+    // 2. Fallback: next upcoming booking within 48h
+    const upcoming = guestPins
+      .filter(p => new Date(p.valid_from) >= now)
+      .sort((a, b) => new Date(a.valid_from) - new Date(b.valid_from));
+    if (upcoming.length > 0) return upcoming[0];
+
+    return guestPins[0] || null;
+  }
+
+  async function fetchActiveGuestStatus() {
+    const params = new URLSearchParams(window.location.search);
+    const urlGuest = params.get('guest') || params.get('name');
+    const urlSalutation = params.get('salutation');
+    const urlPin = params.get('pin') || params.get('code') || '';
+
+    if (urlGuest) {
+      currentGuestObj.name = urlGuest;
+      if (urlSalutation) currentGuestObj.salutation = urlSalutation;
+      renderGuestGreeting();
+    }
+
+    // 1. Query live backend tv_status action
+    try {
+      const res = await fetch(getApiEndpoint(`tv_status&pin=${encodeURIComponent(urlPin)}&t=${Date.now()}`));
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.success && data.guest) {
+          currentGuestObj = {
+            name: data.guest.name || currentGuestObj.name,
+            salutation: urlSalutation || data.guest.salutation || currentGuestObj.salutation || 'auto',
+            valid_from: data.guest.valid_from || '',
+            valid_until: data.guest.valid_until || '',
+            pin: data.guest.pin || ''
+          };
+          if (data.tv_custom_m3u) {
+            mergeCustomM3uChannels(data.tv_custom_m3u);
+          }
+          renderGuestGreeting();
+          return;
+        }
+      }
+    } catch (e) {}
+
+    // 2. Fallback to static pins.json on GitHub Pages
+    try {
+      const fb = await fetch('pins.json?t=' + Date.now());
+      if (fb.ok) {
+        const fbData = await fb.json();
+        const chosen = pickActiveGuestFromPins(fbData.pins || [], urlPin);
+        if (chosen && !urlGuest) {
+          currentGuestObj = {
+            name: chosen.name || '',
+            salutation: urlSalutation || chosen.salutation || 'auto',
+            valid_from: chosen.valid_from || '',
+            valid_until: chosen.valid_until || '',
+            pin: chosen.pin || ''
+          };
+          renderGuestGreeting();
+        }
+      }
+    } catch (e) {}
+  }
+
+  // =========================================================
+  // 3. LIVE WEATHER LEIPZIG (Open-Meteo API, No Key Needed)
+  // =========================================================
+  const WMO_CODES = {
+    0: { icon: '☀️', de: 'Sonnig & klar' },
+    1: { icon: '🌤️', de: 'Überwiegend sonnig' },
+    2: { icon: '⛅', de: 'Leicht bewölkt' },
+    3: { icon: '☁️', de: 'Bewölkt' },
+    45: { icon: '🌫️', de: 'Neblig' },
+    48: { icon: '🌫️', de: 'Reifnebel' },
+    51: { icon: '🌦️', de: 'Leichter Nieselregen' },
+    53: { icon: '🌦️', de: 'Nieselregen' },
+    55: { icon: '🌧️', de: 'Starker Nieselregen' },
+    61: { icon: '🌦️', de: 'Leichter Regen' },
+    63: { icon: '🌧️', de: 'Regen' },
+    65: { icon: '🌧️', de: 'Kräftiger Regen' },
+    71: { icon: '🌨️', de: 'Leichter Schneefall' },
+    73: { icon: '❄️', de: 'Schneefall' },
+    75: { icon: '❄️', de: 'Starker Schneefall' },
+    80: { icon: '🌦️', de: 'Regenschauer' },
+    81: { icon: '🌧️', de: 'Kräftige Schauer' },
+    95: { icon: '⛈️', de: 'Gewitter' }
+  };
+
+  async function fetchLeipzigWeather() {
+    try {
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=51.3397&longitude=12.3731&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FBerlin&forecast_days=4';
+      const res = await fetch(url);
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data && data.current) {
+        const temp = Math.round(data.current.temperature_2m);
+        const code = data.current.weather_code;
+        const wmo = WMO_CODES[code] || { icon: '⛅', de: 'Leipzig' };
+        document.getElementById('weatherIcon').textContent = wmo.icon;
+        document.getElementById('weatherTemp').textContent = `${temp}°C`;
+        document.getElementById('weatherDesc').textContent = `Leipzig · ${wmo.de}`;
+      }
+      if (data && data.daily && Array.isArray(data.daily.time)) {
+        const mini = document.getElementById('weatherForecastMini');
+        mini.innerHTML = '';
+        const dayNames = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+        for (let i = 1; i <= 3 && i < data.daily.time.length; i++) {
+          const d = new Date(data.daily.time[i]);
+          const dayLabel = dayNames[d.getDay()];
+          const wmo = WMO_CODES[data.daily.weather_code[i]] || { icon: '⛅' };
+          const maxT = Math.round(data.daily.temperature_2m_max[i]);
+          const minT = Math.round(data.daily.temperature_2m_min[i]);
+          const div = document.createElement('div');
+          div.className = 'forecast-day';
+          div.innerHTML = `<span>${dayLabel}</span><span>${wmo.icon}</span><b style="color:#f8fafc;">${maxT}°/${minT}°</b>`;
+          mini.appendChild(div);
+        }
+      }
+    } catch (e) {}
+  }
+
+  function updateClock() {
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    document.getElementById('clockTime').textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    document.getElementById('clockDate').textContent = now.toLocaleDateString('de-DE', {
+      weekday: 'short',
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  }
+
+  // =========================================================
+  // 4. INTERNATIONAL & GERMAN LIVE-TV CHANNELS (SORTED BY COUNTRY)
+  // =========================================================
+  const DEFAULT_TV_CHANNELS = [
+    // 🇩🇪 Deutschland (Deutsch) - 15 geprüfte HD-Streams
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'MDR Sachsen HD (Leipzig)', desc: 'Regionalprogramm für Leipzig & Sachsen', url: 'https://mdrtvsnhls.akamaized.net/hls/live/2016928/mdrtvsn/index.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'Das Erste (ARD) HD', desc: 'Erstes Deutsches Fernsehen · Live', url: 'https://daserste-live.ard-mcdn.de/daserste/live/hls/de/master.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'ZDF HD', desc: 'Zweites Deutsches Fernsehen · Live', url: 'https://zdf-hls-15.akamaized.net/hls/live/2016498/de/high/master.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'tagesschau24 HD', desc: 'Aktuelle Nachrichten rund um die Uhr', url: 'https://tagesschau.akamaized.net/hls/live/2020115/tagesschau/tagesschau_1/master.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'ZDFneo HD', desc: 'Serien, Spielfilme & Unterhaltung', url: 'https://zdf-hls-16.akamaized.net/hls/live/2016499/de/high/master.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'ZDFinfo HD', desc: 'Dokumentationen, Geschichte & Wissen', url: 'https://zdf-hls-17.akamaized.net/hls/live/2016500/de/high/master.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: '3sat HD', desc: 'Kultur & Wissenschaft (D-A-CH)', url: 'https://zdf-hls-18.akamaized.net/hls/live/2016501/dach/high/master.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'phoenix HD', desc: 'Dokumentationen, Debatten & Politik', url: 'https://zdf-hls-19.akamaized.net/hls/live/2016502/de/high/master.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'KiKA HD', desc: 'Kinder- und Familienprogramm von ARD & ZDF', url: 'https://kikageohls.akamaized.net/hls/live/2022693/livetvkika_de/master.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'NDR Fernsehen HD', desc: 'Norddeutscher Rundfunk · Live', url: 'https://mcdn.ndr.de/ndr/hls/ndr_fs/ndr_nds/master.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'BR Fernsehen HD', desc: 'Bayerischer Rundfunk · Live', url: 'https://mcdn.br.de/br/fs/bfs_sued/hls/de/master.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'hr-fernsehen HD', desc: 'Hessischer Rundfunk · Live', url: 'https://hrhls.akamaized.net/hls/live/2024525/hrhls/master.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'rbb Fernsehen HD', desc: 'Rundfunk Berlin-Brandenburg · Live', url: 'https://rbb-hls-berlin.akamaized.net/hls/live/2017824/rbb_berlin/master.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'MDR Thüringen HD', desc: 'Mitteldeutscher Rundfunk Thüringen', url: 'https://mdrtvthhls.akamaized.net/hls/live/2016880/mdrtvth/index.m3u8' },
+    { country: '🇩🇪 Deutschland (Deutsch)', name: 'MDR Sachsen-Anhalt HD', desc: 'Mitteldeutscher Rundfunk Sachsen-Anhalt', url: 'https://mdrtvsahls.akamaized.net/hls/live/2016879/mdrtvsa/index.m3u8' },
+
+    // 🇬🇧 United Kingdom & International (English) - 5 geprüfte HD-Streams
+    { country: '🇬🇧 United Kingdom & Intl. (English)', name: 'Sky News International HD', desc: '24/7 Live UK & World Breaking News in English', url: 'https://linear901-oo-hls0-prd-gtm.delivery.skycdp.com/17501/sde-fast-skynews/master.m3u8' },
+    { country: '🇬🇧 United Kingdom & Intl. (English)', name: 'GB News UK HD', desc: 'Live British News & Discussion in English', url: 'https://live-gbnews.simplestreamcdn.com/live5/gbnews/bitrate1.isml/manifest.m3u8' },
+    { country: '🇬🇧 United Kingdom & Intl. (English)', name: 'DW English HD', desc: 'International News & Documentaries from Germany', url: 'https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8' },
+    { country: '🇬🇧 United Kingdom & Intl. (English)', name: 'TRT World English HD', desc: 'Global News & Current Affairs in English', url: 'https://tv-trtworld.medya.trt.com.tr/master.m3u8' },
+    { country: '🇬🇧 United Kingdom & Intl. (English)', name: 'CGTN English HD', desc: 'International News & Documentaries in English', url: 'https://news.cgtn.com/resource/live/english/cgtn-news.m3u8' },
+
+    // 🇺🇸 United States (English) - 3 geprüfte HD-Streams
+    { country: '🇺🇸 United States (English)', name: 'CBS News 24/7 USA HD', desc: 'Live US & World News Coverage in English', url: 'https://cbsn-us.cbsnstream.cbsnews.com/out/v1/55a8648e8f134e82a470f83d562deeca/master.m3u8' },
+    { country: '🇺🇸 United States (English)', name: 'Red Bull TV HD', desc: 'Live Sports, Adventure, Music & Lifestyle', url: 'https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8' },
+    { country: '🇺🇸 United States (English)', name: 'NASA TV Public HD', desc: 'Live Space Station (ISS) & Missions', url: 'https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8' },
+
+    // 🇫🇷 France (Français) - 4 geprüfte HD-Streams
+    { country: '🇫🇷 France (Français)', name: 'TV5MONDE Info HD', desc: 'Actualités internationales 24h/24 en français', url: 'https://ott.tv5monde.com/Content/HLS/Live/channel(info)/variant.m3u8' },
+    { country: '🇫🇷 France (Français)', name: '20 Minutes TV Paris HD', desc: 'Actualités, culture et direct Île-de-France', url: 'https://live-20minutestv.digiteka.com/1961167769/index.m3u8' },
+    { country: '🇫🇷 France (Français)', name: '6ter France HD', desc: 'Divertissement, séries et magazines en français', url: 'https://r.eu.cdn-redge.media/livehls/oeu/mt/live/6ter_fr/live.livx/playlist.m3u8' },
+    { country: '🇫🇷 France (Français)', name: 'AB1 France HD', desc: 'Séries, divertissement et cinéma en français', url: 'https://r.eu.cdn-redge.media/livehls/oeu/mt/live/ab1/live.livx/playlist.m3u8' },
+
+    // 🇪🇸 España & Latinoamérica (Español) - 4 geprüfte HD-Streams
+    { country: '🇪🇸 España & Latinoamérica (Español)', name: 'DW Español HD', desc: 'Noticias internacionales y documentales en español', url: 'https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8' },
+    { country: '🇪🇸 España & Latinoamérica (Español)', name: '3CatInfo Noticias 24h HD', desc: 'Informació i notícies en directe 24h', url: 'https://directes-tv-int.3catdirectes.cat/live-origin/canal324-hls/master.m3u8' },
+    { country: '🇪🇸 España & Latinoamérica (Español)', name: '7TV Andalucía HD', desc: 'Televisión en directo de España en español', url: 'https://especial7tv.gestec-video.com/hls/7TVSEVILLA.m3u8' },
+    { country: '🇪🇸 España & Latinoamérica (Español)', name: '3Cat Entretenimiento HD', desc: 'Series, cultura y entretenimiento en directo', url: 'https://fast-tailor.3catdirectes.cat/v1/channel/ccma-channel2/hls.m3u8' },
+
+    // 🇮🇹 Italia (Italiano) - 3 geprüfte HD-Streams
+    { country: '🇮🇹 Italia (Italiano)', name: '7 Gold Italia HD', desc: 'Intrattenimento, sport e film in diretta (Italiano)', url: 'https://streamcdnr6-dddfac816632463dac50b21109dc1bb3.msvdn.net/live/S58803518/OOZape6Nxp4H/playlist.m3u8' },
+    { country: '🇮🇹 Italia (Italiano)', name: '50 Canale Italia HD', desc: 'Informazione, cultura e diretta dall\'Italia', url: 'https://load-balancer.azotosolutions.com/cdnedge37/canale50/playlist.m3u8' },
+    { country: '🇮🇹 Italia (Italiano)', name: '12 TV Parma Italia', desc: 'Notizie, attualità e programmi in italiano', url: 'https://5929b138b139d.streamlock.net/12TVParma/livestream/playlist.m3u8' },
+
+    // 🇵🇱 Polska (Polski) - 3 geprüfte HD-Streams
+    { country: '🇵🇱 Polska (Polski)', name: 'ATM Rozrywka Polska HD', desc: 'Filmy, seriale i rozrywka po polsku (1080p)', url: 'https://183.giatvcdn.com/giatvplayout7/giatv-211353/playlist.m3u8' },
+    { country: '🇵🇱 Polska (Polski)', name: '4Fun TV Polska', desc: 'Polska telewizja muzyczna i rozrywkowa na żywo', url: 'https://stream.4fun.tv:8888/hls/4f.m3u8' },
+    { country: '🇵🇱 Polska (Polski)', name: '4Fun Kids Polska HD', desc: 'Programy i muzyka dla dzieci i rodziny po polsku', url: 'https://stream.4fun.tv:8889/hd/kids_hd_high.m3u8' },
+
+    // 🇳🇱 Nederland (Nederlands) - 3 geprüfte HD-Streams
+    { country: '🇳🇱 Nederland (Nederlands)', name: '1Twente TV Nederland HD', desc: 'Nieuws, sport en cultuur uit Nederland (1080p)', url: 'https://ms7.mx-cd.net/dtv-11/198-989148/1Twente_TV.smil/chunklist_w954512639_b4292608_slNLD.m3u8' },
+    { country: '🇳🇱 Nederland (Nederlands)', name: '1Almere TV Nederland HD', desc: 'Live televisie uit Nederland in het Nederlands', url: 'https://d3472rjicrodic.cloudfront.net/nlpo/clr-nlpo/709d5260/index.m3u8' },
+    { country: '🇳🇱 Nederland (Nederlands)', name: '360TuneBox Muziek HD', desc: '24/7 Non-stop muziekvideo\'s in Full HD', url: 'https://dash3.antik.sk/live/test_360_tunebox_medium_atk/playlist.m3u8' },
+
+    // 🇹🇷 Türkiye (Türkçe) - 4 geprüfte HD-Streams
+    { country: '🇹🇷 Türkiye (Türkçe)', name: 'TRT Haber HD', desc: '7/24 Canlı Haber ve Gündem Yayını (Türkçe)', url: 'https://tv-trthaber.medya.trt.com.tr/master.m3u8' },
+    { country: '🇹🇷 Türkiye (Türkçe)', name: 'TRT Türk HD', desc: 'Türkiye ve Avrupa Canlı Yayını (Türkçe)', url: 'https://tv-trtturk.medya.trt.com.tr/master.m3u8' },
+    { country: '🇹🇷 Türkiye (Türkçe)', name: 'TRT Müzik HD', desc: '7/24 Türkçe Müzik ve Konserler', url: 'https://tv-trtmuzik.medya.trt.com.tr/master.m3u8' },
+    { country: '🇹🇷 Türkiye (Türkçe)', name: 'TRT Çocuk HD', desc: 'Çocuk ve Aile Kanalı (Türkçe)', url: 'https://tv-trtcocuk.medya.trt.com.tr/master.m3u8' },
+
+    // 🇺🇦 Україна (Українська) - 4 geprüfte HD-Streams
+    { country: '🇺🇦 Україна (Українська)', name: '1+1 International HD', desc: 'Український телеканал 1+1 наживо (Smart-TV)', url: 'https://dash2.antik.sk/live/test_one_plus_one_int_tizen/playlist.m3u8' },
+    { country: '🇺🇦 Україна (Українська)', name: '1+1 Марафон · Єдині Новини HD', desc: 'Інформаційний марафон України наживо (1080p)', url: 'https://dash2.antik.sk/live/1plus1_marathon/playlist.m3u8' },
+    { country: '🇺🇦 Україна (Українська)', name: '24 Канал Новини України HD', desc: 'Цілодобові новини України українською мовою', url: 'https://cdn15.live-tv.cloud/ua_infinitas_tv/news24-abr/playlist.m3u8' },
+    { country: '🇺🇦 Україна (Українська)', name: 'DW Східна Європа HD', desc: 'Міжнародні новини та документалістика', url: 'https://dwamdstream105.akamaized.net/hls/live/2015531/dwstream105/index.m3u8' },
+
+    // 🇷🇺 Русский (Russian) - 4 geprüfte HD-Streams
+    { country: '🇷🇺 Русский (Russian)', name: 'DW Русский HD', desc: 'Новости и репортажи Deutsche Welle на русском языке', url: 'https://dwamdstream105.akamaized.net/hls/live/2015531/dwstream105/index.m3u8' },
+    { country: '🇷🇺 Русский (Russian)', name: '360° HD (1080p)', desc: 'Прямой эфир новостей, кино и передач на русском', url: 'https://cdn-evacoder-tv.facecast.io/evacoder_hls_hi/CkxfR1xNUAJwTgtXTBZTAJli/index.m3u8' },
+    { country: '🇷🇺 Русский (Russian)', name: '360° Новости HD (1080p)', desc: 'Круглосуточный новостной эфир на русском языке', url: 'https://edge-tv-ll.facecast.io/evacoder_hls_hi/UBZfFgtKB1JwTwoDERNQVGGs/index.m3u8' },
+    { country: '🇷🇺 Русский (Russian)', name: '365 Дней ТВ (История)', desc: 'Исторические и документальные программы на русском', url: 'https://stream8.cinerama.uz/1242/tracks-v1a1/mono.m3u8' },
+
+    // 🇦🇹 Österreich & 🇨🇭 Schweiz / Suisse - 4 geprüfte HD-Streams
+    { country: '🇦🇹 Österreich & 🇨🇭 Schweiz', name: 'Antenne Kärnten TV HD (AT)', desc: 'Live-Fernsehen & Musik aus Österreich', url: 'https://60efd7a2b4d02.streamlock.net/a_kaernten/ngrp:livestream_all/playlist.m3u8' },
+    { country: '🇦🇹 Österreich & 🇨🇭 Schweiz', name: 'Antenne Steiermark TV HD (AT)', desc: 'Nachrichten & Unterhaltung aus Österreich', url: 'https://60efd7a2b4d02.streamlock.net/a_steiermark/ngrp:livestream_all/playlist.m3u8' },
+    { country: '🇦🇹 Österreich & 🇨🇭 Schweiz', name: 'Canal Alpha Suisse HD (CH)', desc: 'Télévision régionale suisse en direct (1080p)', url: 'https://canalalphaju.vedge.infomaniak.com/livecast/ik:canalalphaju/playlist.m3u8' },
+    { country: '🇦🇹 Österreich & 🇨🇭 Schweiz', name: 'Carac 1 Suisse HD (CH)', desc: 'Chaîne suisse en direct Full HD', url: 'https://edge13.vedge.infomaniak.com/livecast/ik:event/manifest.m3u8' },
+
+    // 🌍 العربية (Arabic) - 3 geprüfte HD-Streams
+    { country: '🌍 العربية (Arabic)', name: 'Al Jazeera الجزيرة مباشر HD', desc: 'قناة الجزيرة الإخبارية بث مباشر 24/7', url: 'https://live-hls-web-aja.getaj.net/AJA/index.m3u8' },
+    { country: '🌍 العربية (Arabic)', name: 'DW عربية HD', desc: 'دويتشه فيله الأخبار والوثائقيات بالعربية', url: 'https://dwamdstream103.akamaized.net/hls/live/2015526/dwstream103/index.m3u8' },
+    { country: '🌍 العربية (Arabic)', name: 'TRT عربي HD', desc: 'البث المباشر لقناة TRT العربية', url: 'https://tv-trtarabi.medya.trt.com.tr/master.m3u8' }
+  ];
+
+  let allTvChannels = [...DEFAULT_TV_CHANNELS];
+  let selectedCountry = '🇩🇪 Deutschland (Deutsch)';
+  let currentChannelIndex = 0;
+  let hlsInstance = null;
+
+  function parseM3uOrLineList(rawText) {
+    if (!rawText || !rawText.trim()) return [];
+    const lines = rawText.replace(/\r\n/g, '\n').split('\n').map(l => l.trim()).filter(Boolean);
+    const parsed = [];
+    let pendingMeta = null;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (line.startsWith('#EXTM3U')) continue;
+      if (line.startsWith('#EXTINF')) {
+        const groupMatch = line.match(/group-title="([^"]+)"/i);
+        const commaIdx = line.lastIndexOf(',');
+        const title = commaIdx !== -1 ? line.slice(commaIdx + 1).trim() : 'TV-Sender';
+        pendingMeta = {
+          country: groupMatch ? groupMatch[1].trim() : '⭐ Eigene Sender',
+          name: title || 'TV-Sender',
+          desc: groupMatch ? groupMatch[1].trim() : 'Eigene Senderliste'
+        };
+      } else if (line.includes('|') && !line.startsWith('http')) {
+        // Format: Land | Sendername | Stream-URL
+        const parts = line.split('|').map(s => s.trim());
+        if (parts.length >= 3 && parts[2].startsWith('http')) {
+          parsed.push({
+            country: parts[0] || '⭐ Eigene Sender',
+            name: parts[1] || 'TV-Sender',
+            desc: parts[0] || 'Live-Stream',
+            url: parts[2]
+          });
+        }
+      } else if (/^https?:\/\//i.test(line)) {
+        parsed.push({
+          country: pendingMeta ? pendingMeta.country : '⭐ Eigene Sender',
+          name: pendingMeta ? pendingMeta.name : `Sender ${parsed.length + 1}`,
+          desc: pendingMeta ? pendingMeta.desc : 'Live-Stream',
+          url: line
+        });
+        pendingMeta = null;
+      }
+    }
+    return parsed;
+  }
+
+  function mergeCustomM3uChannels(rawText) {
+    const custom = parseM3uOrLineList(rawText);
+    if (custom.length === 0) return;
+    const seen = new Set(custom.map(c => c.url));
+    allTvChannels = [...custom, ...DEFAULT_TV_CHANNELS.filter(c => !seen.has(c.url))];
+    if (custom[0] && custom[0].country) {
+      selectedCountry = custom[0].country;
+    }
+    renderIptvLists();
+  }
+
+  async function tryLoadRepoCustomChannels() {
+    const savedLocal = localStorage.getItem('tv_custom_m3u');
+    if (savedLocal) mergeCustomM3uChannels(savedLocal);
+    try {
+      const res = await fetch('channels.m3u?t=' + Date.now());
+      if (res.ok) {
+        const txt = await res.text();
+        mergeCustomM3uChannels(txt);
+      }
+    } catch (e) {}
+  }
+
+  function promptCustomM3uImport() {
+    const example = 'Beispiel 1 (M3U):\\n#EXTINF:-1 group-title="🇵🇱 Polen",TVP Polonia\\nhttps://.../stream.m3u8\\n\\nBeispiel 2 (Einfach):\\n🇵🇱 Polen | TVP Polonia | https://.../stream.m3u8';
+    const current = localStorage.getItem('tv_custom_m3u') || '';
+    const input = prompt(`Eigene ausländische Senderliste (M3U oder "Land | Sender | URL") einfügen:\n\n${example}`, current);
+    if (input !== null) {
+      localStorage.setItem('tv_custom_m3u', input);
+      allTvChannels = [...DEFAULT_TV_CHANNELS];
+      mergeCustomM3uChannels(input);
+      renderIptvLists();
+    }
+  }
+
+  function getCountriesMap() {
+    const map = new Map();
+    allTvChannels.forEach((ch, idx) => {
+      if (!map.has(ch.country)) map.set(ch.country, []);
+      map.get(ch.country).push({ ...ch, globalIndex: idx });
+    });
+    return map;
+  }
+
+  function renderIptvLists() {
+    const countriesContainer = document.getElementById('countriesListContainer');
+    const channelsContainer = document.getElementById('channelsListContainer');
+    if (!countriesContainer || !channelsContainer) return;
+
+    const map = getCountriesMap();
+    if (!map.has(selectedCountry)) {
+      selectedCountry = map.keys().next().value || '🇩🇪 Deutschland';
+    }
+
+    countriesContainer.innerHTML = '';
+    map.forEach((list, country) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'country-btn' + (country === selectedCountry ? ' active' : '');
+      btn.innerHTML = `<span>${escapeHtml(country)}</span><span class="count-pill">${list.length}</span>`;
+      btn.onclick = () => {
+        selectedCountry = country;
+        renderIptvLists();
+      };
+      countriesContainer.appendChild(btn);
+    });
+
+    const channels = map.get(selectedCountry) || [];
+    document.getElementById('channelsPanelHeader').textContent = `2. Sender (${selectedCountry})`;
+    channelsContainer.innerHTML = '';
+
+    channels.forEach((ch) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'channel-btn' + (ch.globalIndex === currentChannelIndex ? ' active' : '');
+      btn.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:2px;">
+          <span>📺 ${escapeHtml(ch.name)}</span>
+          <small style="font-size:11px; color:var(--text-muted); font-weight:500;">${escapeHtml(ch.desc || '')}</small>
+        </div>
+        <span style="font-size:12px; color:var(--primary);">▶</span>
+      `;
+      btn.onclick = () => playTvChannel(ch.globalIndex);
+      channelsContainer.appendChild(btn);
+    });
+  }
+
+  function playTvChannel(globalIdx) {
+    if (globalIdx < 0 || globalIdx >= allTvChannels.length) return;
+    currentChannelIndex = globalIdx;
+    const ch = allTvChannels[globalIdx];
+    selectedCountry = ch.country;
+    renderIptvLists();
+
+    document.getElementById('currentChannelTitle').textContent = `${ch.country} · ${ch.name}`;
+    document.getElementById('currentChannelMeta').textContent = ch.desc || 'Live-Stream';
+
+    const extBtn = document.getElementById('externalStreamBtn');
+    extBtn.style.display = 'inline-flex';
+
+    const video = document.getElementById('liveTvVideo');
+    if (hlsInstance) {
+      hlsInstance.destroy();
+      hlsInstance = null;
+    }
+
+    if (ch.url.includes('.m3u8')) {
+      if (window.Hls && Hls.isSupported()) {
+        hlsInstance = new Hls({ enableWorker: true, lowLatencyMode: true });
+        hlsInstance.loadSource(ch.url);
+        hlsInstance.attachMedia(video);
+        hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play().catch(() => {});
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = ch.url;
+        video.play().catch(() => {});
+      }
+    } else {
+      window.open(ch.url, '_blank');
+    }
+  }
+
+  function stepChannel(delta) {
+    const next = (currentChannelIndex + delta + allTvChannels.length) % allTvChannels.length;
+    playTvChannel(next);
+  }
+
+  function openExternalStreamTab() {
+    const ch = allTvChannels[currentChannelIndex];
+    if (ch && ch.url) window.open(ch.url, '_blank');
+  }
+
+  function toggleVideoFullscreen() {
+    const video = document.getElementById('liveTvVideo');
+    if (!video) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else if (video.requestFullscreen) {
+      video.requestFullscreen().catch(() => {});
+    }
+  }
+
+  // =========================================================
+  // 5. RADIO LEIPZIG & MUSIK PLAYER
+  // =========================================================
+  const RADIO_STATIONS = [
+    { name: '🏙️ Radio Leipzig', genre: 'Leipzigs Nummer 1 · Lokal & Hits', url: 'https://streams.bcs-systems.de/slp/live/leipzig/mp3/radioplayer/web' },
+    { name: '🟢 MDR SACHSEN – Das Sachsenradio', genre: 'Regionalprogramm Leipzig & Sachsen', url: 'https://mdr-284280-1.sslcast.mdr.de/mdr/284280/1/mp3/high/stream.mp3' },
+    { name: '⚡ MDR JUMP', genre: 'Pop, Charts & Aktuelles aus Mitteldeutschland', url: 'https://mdr-284320-0.sslcast.mdr.de/mdr/284320/0/mp3/high/stream.mp3' },
+    { name: '🎻 MDR KULTUR', genre: 'Kultur, Klassik & Gewandhaus-Stadt Leipzig', url: 'https://mdr-284310-0.sslcast.mdr.de/mdr/284310/0/mp3/high/stream.mp3' },
+    { name: '📰 MDR AKTUELL', genre: 'Nachrichten im 15-Minuten-Takt', url: 'https://mdr-284340-0.sslcast.mdr.de/mdr/284340/0/mp3/high/stream.mp3' },
+    { name: '🎵 Radio PSR Sachsen', genre: 'Supermix für Sachsen', url: 'https://streams.radiopsr.de/psr-live/mp3-192/mediaplayer' },
+    { name: '🛋️ SomaFM Groove Salad', genre: 'Ambient Chillout & Downtempo Lounge (Werbefrei)', url: 'https://ice2.somafm.com/groovesalad-128-mp3' },
+    { name: '🎷 SwissJazz (SRG SSR)', genre: '24/7 Smooth Jazz, Swing & Soul (100 % Werbefrei)', url: 'https://stream.srg-ssr.ch/m/rsj/mp3_128' },
+    { name: '🎼 SwissClassic (SRG SSR)', genre: '24/7 Klassische Meisterwerke (100 % Werbefrei)', url: 'https://stream.srg-ssr.ch/m/rsc_de/mp3_128' },
+    { name: '🌍 BBC World Service', genre: 'International English Radio 24/7', url: 'https://stream.live.vc.bbcmedia.co.uk/bbc_world_service' }
+  ];
+
+  let activeRadioUrl = '';
+
+  function renderRadioStations() {
+    const grid = document.getElementById('radioStationsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    RADIO_STATIONS.forEach(st => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'radio-card' + (activeRadioUrl === st.url ? ' playing' : '');
+      btn.innerHTML = `
+        <div style="font-size:17px; font-weight:800; color:#ffffff;">${escapeHtml(st.name)}</div>
+        <div style="font-size:13px; color:var(--text-muted);">${escapeHtml(st.genre)}</div>
+        <div style="margin-top:6px; font-size:12px; font-weight:700; color:${activeRadioUrl === st.url ? '#4ade80' : 'var(--primary)'};">
+          ${activeRadioUrl === st.url ? '🟢 Läuft gerade…' : '▶ Jetzt abspielen'}
+        </div>
+      `;
+      btn.onclick = () => playRadioStation(st);
+      grid.appendChild(btn);
+    });
+  }
+
+  function playRadioStation(st) {
+    const audio = document.getElementById('radioAudioPlayer');
+    activeRadioUrl = st.url;
+    audio.src = st.url;
+    audio.play().catch(() => {});
+    document.getElementById('nowPlayingRadioName').textContent = st.name;
+    document.getElementById('nowPlayingRadioBanner').style.display = 'block';
+    renderRadioStations();
+  }
+
+  function stopRadio() {
+    const audio = document.getElementById('radioAudioPlayer');
+    audio.pause();
+    audio.src = '';
+    activeRadioUrl = '';
+    document.getElementById('nowPlayingRadioBanner').style.display = 'none';
+    renderRadioStations();
+  }
+
+  // =========================================================
+  // 6. YOUTUBE / TIZENTUBE EMBEDS
+  // =========================================================
+  const YT_PRESETS = {
+    leipzig: 'https://www.youtube-nocookie.com/embed/videoseries?list=PL5725688318B9507A&autoplay=1',
+    fireplace: 'https://www.youtube-nocookie.com/embed/L_LUpnjgPso?autoplay=1',
+    jazz: 'https://www.youtube-nocookie.com/embed/Dx5qFachd3A?autoplay=1',
+    classical: 'https://www.youtube-nocookie.com/embed/6JQm5aSjX6g?autoplay=1'
+  };
+
+  function loadYoutubeEmbed(key) {
+    const iframe = document.getElementById('youtubeIframe');
+    if (iframe) iframe.src = YT_PRESETS[key] || YT_PRESETS.fireplace;
+  }
+
+  async function launchNativeTvApp(appId, fallbackUrl) {
+    try {
+      const res = await fetch(getApiEndpoint(`tv_launch_app&app_id=${encodeURIComponent(appId)}`), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ app_id: appId })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.success) return;
+      }
+    } catch (e) {}
+    if (fallbackUrl) window.open(fallbackUrl, '_blank');
+  }
+
+  // =========================================================
+  // 7. MODAL & SAMSUNG TV REMOTE (D-PAD) NAVIGATION
+  // =========================================================
+  let focusedTileIdx = 0;
+
+  function setTileFocus(idx) {
+    const tiles = Array.from(document.querySelectorAll('.tv-tile'));
+    if (!tiles.length) return;
+    focusedTileIdx = (idx + tiles.length) % tiles.length;
+    tiles.forEach((t, i) => {
+      if (i === focusedTileIdx) {
+        t.classList.add('focused');
+        t.focus();
+      } else {
+        t.classList.remove('focused');
+      }
+    });
+  }
+
+  function openModal(modalId) {
+    closeAllModals(false);
+    const el = document.getElementById(modalId);
+    if (!el) return;
+    el.classList.add('active');
+
+    if (modalId === 'liveTvModal') {
+      stopRadio();
+      renderIptvLists();
+      playTvChannel(currentChannelIndex);
+    } else if (modalId === 'radioModal') {
+      renderRadioStations();
+    } else if (modalId === 'youtubeModal') {
+      stopRadio();
+      loadYoutubeEmbed('fireplace');
+    }
+  }
+
+  function closeAllModals(restoreFocus = true) {
+    document.querySelectorAll('.tv-modal').forEach(m => m.classList.remove('active'));
+    const video = document.getElementById('liveTvVideo');
+    if (video) {
+      video.pause();
+      video.removeAttribute('src');
+    }
+    if (hlsInstance) {
+      hlsInstance.destroy();
+      hlsInstance = null;
+    }
+    const yt = document.getElementById('youtubeIframe');
+    if (yt) yt.src = '';
+    if (restoreFocus) setTileFocus(focusedTileIdx);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    const anyModalOpen = document.querySelector('.tv-modal.active');
+
+    // Back / Return key on Samsung Tizen TV Remote (keyCode 10009) or Escape
+    if (e.key === 'Escape' || e.key === 'Backspace' || e.keyCode === 10009) {
+      if (anyModalOpen && document.activeElement.tagName !== 'INPUT') {
+        e.preventDefault();
+        closeAllModals(true);
+        return;
+      }
+    }
+
+    if (anyModalOpen) {
+      if (anyModalOpen.id === 'liveTvModal') {
+        if (e.key === 'PageUp' || e.keyCode === 427) { e.preventDefault(); stepChannel(-1); }
+        if (e.key === 'PageDown' || e.keyCode === 428) { e.preventDefault(); stepChannel(1); }
+      }
+      return;
+    }
+
+    // Main Dashboard Tile Navigation
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      setTileFocus(focusedTileIdx + 1);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      setTileFocus(focusedTileIdx - 1);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      setTileFocus((focusedTileIdx + 3) % 6);
+    } else if (e.key >= '1' && e.key <= '6') {
+      const idx = parseInt(e.key, 10) - 1;
+      setTileFocus(idx);
+      const tiles = document.querySelectorAll('.tv-tile');
+      if (tiles[idx]) tiles[idx].click();
+    }
+  });
+
+  // =========================================================
+  // 8. INITIALIZATION & LIVE POLLING FOR NEW CHECK-INS
+  // =========================================================
+  window.addEventListener('DOMContentLoaded', () => {
+    updateClock();
+    setInterval(updateClock, 10000);
+
+    renderGuestGreeting();
+    fetchActiveGuestStatus();
+    // Poll every 12 seconds so when a guest opens the Haustür, the TV updates their name immediately!
+    setInterval(fetchActiveGuestStatus, 12000);
+
+    fetchLeipzigWeather();
+    setInterval(fetchLeipzigWeather, 15 * 60 * 1000);
+
+    tryLoadRepoCustomChannels();
+    setTileFocus(0);
+  });
+</script>
+
+</body>
+</html>

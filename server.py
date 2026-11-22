@@ -11,8 +11,10 @@ import http.server
 import json
 import os
 import re
+import socket
 import socketserver
 import subprocess
+import threading
 import time
 import urllib.parse
 import urllib.request
@@ -20,6 +22,16 @@ from datetime import datetime, timedelta
 
 PORT = 8083
 FHEM_PORT = 8086
+DEFAULT_TV_IP = "192.168.8.113"
+DEFAULT_TV_MACS = ("74:6D:FA:7B:B0:3B", "94:E6:BA:B1:04:D2")
+ALLOWED_TV_APPS = {
+    "3202010022079": "Samsung Browser",
+    "3201907018807": "Netflix",
+    "111299001912": "YouTube",
+    "3201910019365": "Prime Video",
+    "3201606009684": "Spotify",
+    "3201901017640": "Disney+"
+}
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
 
@@ -192,6 +204,225 @@ def trigger_door(door, settings):
             continue
     return False, "Fehler beim Auslösen der Tür"
 
+def send_wol_magic_packet(mac_address, ip_hint=""):
+    if not mac_address:
+        return False, "Keine TV MAC-Adresse konfiguriert"
+    clean_mac = re.sub(r"[^0-9A-Fa-f]", "", str(mac_address))
+    if len(clean_mac) != 12:
+        return False, "Ungültige MAC-Adresse: {0}".format(mac_address)
+    try:
+        mac_bytes = bytes.fromhex(clean_mac)
+    except Exception:
+        return False, "MAC-Konvertierungsfehler"
+    magic_packet = (b"\xff" * 6) + (mac_bytes * 16)
+
+    targets = ["255.255.255.255", "192.168.8.255", "192.168.178.255", "192.168.1.255"]
+    if ip_hint and "." in str(ip_hint):
+        parts = str(ip_hint).strip().split(".")
+        if len(parts) == 4:
+            sub_bcast = "{0}.{1}.{2}.255".format(parts[0], parts[1], parts[2])
+            if sub_bcast not in targets:
+                targets.insert(0, sub_bcast)
+            targets.append(str(ip_hint).strip())
+
+    sent = 0
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        sock.settimeout(1.0)
+        for host in targets:
+            for port in (9, 7, 2304):
+                try:
+                    sock.sendto(magic_packet, (host, port))
+                    sent += 1
+                except Exception:
+                    pass
+        sock.close()
+    except Exception as e:
+        return False, str(e)
+    return (sent > 0), "Wake-on-LAN Magic Packet gesendet ({0} Pakete an {1})".format(sent, mac_address)
+
+def read_arp_table():
+    entries = {}
+    if os.path.exists("/proc/net/arp"):
+        try:
+            with open("/proc/net/arp", "r", encoding="utf-8") as f:
+                for line in f.read().splitlines()[1:]:
+                    cols = line.split()
+                    if len(cols) >= 4 and cols[3] != "00:00:00:00:00:00":
+                        entries[cols[0]] = cols[3].upper()
+        except Exception:
+            pass
+    return entries
+
+def probe_samsung_tv_ip(ip_addr, timeout=1.0):
+    url = "http://{0}:8001/api/v2/".format(ip_addr)
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "StayInLeipzig-AutoCheckin/1.0"})
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            raw = resp.read().decode("utf-8", errors="ignore")
+            info = json.loads(raw)
+            dev = info.get("device", {})
+            mac = dev.get("wifiMac") or dev.get("mac") or ""
+            name = dev.get("name") or info.get("name") or dev.get("modelName") or "Samsung Smart TV"
+            model = dev.get("modelName") or ""
+            return {"ip": ip_addr, "mac": mac.upper(), "name": name, "model": model}
+    except Exception:
+        return None
+
+def discover_samsung_tv():
+    arp = read_arp_table()
+    candidate_ips = list(arp.keys())
+    data = load_data()
+    settings = data.get("settings", {})
+    saved_ip = str(settings.get("tv_ip", "")).strip()
+    if saved_ip and saved_ip not in candidate_ips:
+        candidate_ips.insert(0, saved_ip)
+
+    # Probe ARP candidates first
+    for ip_addr in candidate_ips:
+        res = probe_samsung_tv_ip(ip_addr, timeout=1.0)
+        if res:
+            if not res.get("mac") and ip_addr in arp:
+                res["mac"] = arp[ip_addr]
+            return res
+
+    # Fast parallel scan of common GigaCube subnet 192.168.8.x
+    found = []
+    lock = threading.Lock()
+    def worker(ip_list):
+        for ip_addr in ip_list:
+            if found:
+                return
+            r = probe_samsung_tv_ip(ip_addr, timeout=0.65)
+            if r:
+                with lock:
+                    found.append(r)
+                return
+
+    subnet_ips = ["192.168.8.{0}".format(i) for i in range(100, 255)] + ["192.168.8.{0}".format(i) for i in range(2, 100)]
+    threads = []
+    chunk_size = 16
+    for idx in range(0, len(subnet_ips), chunk_size):
+        t = threading.Thread(target=worker, args=(subnet_ips[idx:idx + chunk_size],))
+        t.daemon = True
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join(timeout=2.5)
+
+    if found:
+        res = found[0]
+        arp_now = read_arp_table()
+        if not res.get("mac") and res["ip"] in arp_now:
+            res["mac"] = arp_now[res["ip"]]
+        return res
+    return None
+
+def launch_samsung_tv_welcome(tv_ip, guest_pin="", settings=None):
+    settings = settings or {}
+    welcome_url = "https://checkin.stayinleipzig.de/tv.html"
+    if guest_pin:
+        welcome_url += "?pin=" + urllib.parse.quote(str(guest_pin))
+
+    # 1. Try FHEM TV command if configured
+    user = settings.get("fhem_user", "admin")
+    password = settings.get("fhem_pass", "octasias")
+    import base64
+    auth_str = "{0}:{1}".format(user, password)
+    auth_header = "Basic " + base64.b64encode(auth_str.encode()).decode()
+    for fhem_cmd in ("set%20TV%20on", "set%20SamsungTV%20on"):
+        try:
+            furl = "http://127.0.0.1:{0}/fhem?cmd={1}&XHR=1".format(FHEM_PORT, fhem_cmd)
+            req = urllib.request.Request(furl, headers={"Authorization": auth_header})
+            urllib.request.urlopen(req, timeout=1.5).read()
+        except Exception:
+            pass
+
+    if not tv_ip:
+        tv_ip = DEFAULT_TV_IP
+    # 2. Try Samsung Tizen REST API browser launch on port 8001 (3202010022079 = Samsung 2025 Browser)
+    for app_id in ("3202010022079", "org.tizen.browser", "CloudBrowser"):
+        try:
+            api_url = "http://{0}:8001/api/v2/applications/{1}".format(tv_ip, app_id)
+            req = urllib.request.Request(api_url, data=welcome_url.encode("utf-8"), method="POST")
+            req.add_header("Content-Type", "text/plain; charset=utf-8")
+            with urllib.request.urlopen(req, timeout=2.0) as resp:
+                if resp.status in (200, 201):
+                    return True
+        except Exception:
+            pass
+    return False
+
+def wake_and_greet_tv_async(entry, door="haustuer", manual=False):
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    guest_name = (entry or {}).get("name", "Gast")
+    guest_pin = str((entry or {}).get("pin", ""))
+    salutation = (entry or {}).get("salutation", "auto")
+
+    data = load_data()
+    settings = data.get("settings", {})
+    settings["tv_last_guest"] = {
+        "name": guest_name,
+        "salutation": salutation,
+        "pin": guest_pin,
+        "valid_from": (entry or {}).get("valid_from", ""),
+        "valid_until": (entry or {}).get("valid_until", ""),
+        "woke_at": now_str,
+        "door": door
+    }
+    data["settings"] = settings
+    save_data(data)
+
+    def bg_task():
+        try:
+            d = load_data()
+            st = d.get("settings", {})
+            tv_mac = str(st.get("tv_mac", "")).strip() or DEFAULT_TV_MACS[0]
+            tv_ip = str(st.get("tv_ip", "")).strip() or DEFAULT_TV_IP
+
+            mac_list = []
+            for m in [tv_mac] + list(DEFAULT_TV_MACS):
+                if m and m not in mac_list:
+                    mac_list.append(m)
+
+            # Send Wake-on-LAN bursts while guest walks upstairs from Haustür
+            wol_msg = "Wake-on-LAN gesendet"
+            for delay_sec in (0, 2, 4):
+                if delay_sec > 0:
+                    time.sleep(delay_sec)
+                for mac_addr in mac_list:
+                    ok_w, msg_w = send_wol_magic_packet(mac_addr, tv_ip)
+                    if ok_w:
+                        wol_msg = msg_w
+
+            # Wait briefly for TV boot then launch Browser (3202010022079)
+            time.sleep(3)
+            disc = probe_samsung_tv_ip(tv_ip, timeout=2.0)
+            if not disc:
+                disc = discover_samsung_tv()
+            if disc and disc.get("ip"):
+                tv_ip = disc["ip"]
+                st["tv_ip"] = tv_ip
+                if disc.get("mac"):
+                    st["tv_mac"] = disc["mac"]
+                if disc.get("name"):
+                    st["tv_name"] = disc["name"]
+                d["settings"] = st
+                save_data(d)
+
+            launch_samsung_tv_welcome(tv_ip, guest_pin=guest_pin, settings=st)
+            trig = "Manuell (Admin)" if manual else "Haustür Check-in"
+            log_access("127.0.0.1", guest_pin or "TV", guest_name, "tv", True,
+                       "Smart-TV Wake-on-LAN ({0}): {1}".format(trig, wol_msg))
+        except Exception as e:
+            log_access("127.0.0.1", guest_pin or "TV", guest_name, "tv", False,
+                       "Smart-TV Wake-Fehler: " + str(e))
+
+    t = threading.Thread(target=bg_task)
+    t.daemon = True
+    t.start()
+
 class CheckinHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -219,6 +450,9 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_admin_list(parsed)
         elif parsed.path in ("/", "/mechler", "/mechler/"):
             self.path = "/index.html"
+            super().do_GET()
+        elif parsed.path in ("/tv", "/tv/", "/tv.html"):
+            self.path = "/tv.html"
             super().do_GET()
         elif parsed.path in ("/admin", "/admin/", "/admin.html", "/admin.php"):
             qs_dict = urllib.parse.parse_qs(parsed.query)
@@ -256,6 +490,14 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
                 self.handle_admin_save(payload)
             elif action == "admin_delete_pin":
                 self.handle_admin_delete(payload)
+            elif action == "admin_wake_tv":
+                self.handle_admin_wake_tv(payload)
+            elif action == "admin_discover_tv":
+                self.handle_admin_discover_tv(payload)
+            elif action == "admin_tv_settings":
+                self.handle_admin_tv_settings(payload)
+            elif action == "tv_launch_app":
+                self.handle_tv_launch_app(payload)
             else:
                 self.handle_open(payload)
         else:
@@ -321,6 +563,9 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
             return
         if action == "cleaning_ical":
             self.handle_cleaning_ical(parsed)
+            return
+        if action == "tv_status":
+            self.handle_tv_status(parsed)
             return
         pin = qs.get("pin", [""])[0].strip()
         self.verify_pin_response(pin)
@@ -418,6 +663,11 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
 
             log_msg = "{0} geöffnet".format(door_name) + (" (Erster Check-in)" if is_first else "")
             log_access(ip, pin, entry.get("name", "Gast"), door, True, log_msg)
+
+            # Auto Wake-on-LAN & TV Welcome when guest opens Haustür (or on first check-in)
+            if (door == "haustuer" or is_first) and settings.get("tv_auto_wake", True) is not False:
+                wake_and_greet_tv_async(entry, door=door, manual=False)
+
             self.send_json({
                 "success": True,
                 "door": door,
@@ -727,6 +977,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         pins = data.get("pins", [])
         new_pin = str(payload.get("pin", "")).strip()
         name = str(payload.get("name", "Gast")).strip()
+        salutation = str(payload.get("salutation", "auto")).strip() or "auto"
         valid_from = payload.get("valid_from")
         valid_until = payload.get("valid_until")
         booking_id = payload.get("booking_id")
@@ -737,6 +988,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
                 if p.get("booking_id") == booking_id:
                     p["pin"] = new_pin
                     p["name"] = name
+                    p["salutation"] = salutation
                     p["valid_from"] = valid_from
                     p["valid_until"] = valid_until
                     p["active"] = True
@@ -747,6 +999,7 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
             pins.append({
                 "pin": new_pin,
                 "name": name,
+                "salutation": salutation,
                 "booking_id": booking_id or ("MANUAL-" + str(int(time.time()))),
                 "valid_from": valid_from,
                 "valid_until": valid_until,
@@ -756,6 +1009,144 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         data["pins"] = pins
         save_data(data)
         self.send_json({"success": True, "message": "PIN gespeichert"})
+
+    def handle_tv_status(self, parsed):
+        qs = urllib.parse.parse_qs(parsed.query)
+        req_pin = qs.get("pin", [""])[0].strip()
+        data = load_data()
+        settings = data.get("settings", {})
+        pins = data.get("pins", [])
+        guest_pins = [p for p in pins if p.get("role") != "admin" and p.get("active", True)]
+
+        chosen = None
+        if req_pin:
+            for p in guest_pins:
+                if str(p.get("pin", "")).strip() == req_pin:
+                    chosen = p
+                    break
+
+        if not chosen and settings.get("tv_last_guest"):
+            last_g = settings.get("tv_last_guest")
+            if last_g and last_g.get("name"):
+                chosen = last_g
+
+        now = datetime.now()
+        if not chosen:
+            for p in guest_pins:
+                try:
+                    vf = parse_iso(p.get("valid_from")) - timedelta(hours=12)
+                    vu = parse_iso(p.get("valid_until")) + timedelta(hours=6)
+                    if vf <= now <= vu:
+                        chosen = p
+                        if p.get("checked_in_at"):
+                            break
+                except Exception:
+                    pass
+
+        if not chosen and guest_pins:
+            chosen = guest_pins[0]
+
+        self.send_json({
+            "success": True,
+            "guest": chosen or {"name": "Liebe Gäste", "salutation": "auto"},
+            "tv_custom_m3u": settings.get("tv_custom_m3u", ""),
+            "tv_ip": settings.get("tv_ip", ""),
+            "tv_mac": settings.get("tv_mac", ""),
+            "tv_name": settings.get("tv_name", ""),
+            "tv_auto_wake": settings.get("tv_auto_wake", True)
+        })
+
+    def handle_admin_discover_tv(self, payload):
+        admin_pin = str(payload.get("admin_pin", "")).strip()
+        if admin_pin not in ("04157", "octasias"):
+            self.send_json({"success": False, "error": "Nicht autorisiert"}, code=403)
+            return
+        disc = discover_samsung_tv()
+        arp = read_arp_table()
+        if disc:
+            data = load_data()
+            settings = data.get("settings", {})
+            if disc.get("ip"):
+                settings["tv_ip"] = disc["ip"]
+            if disc.get("mac"):
+                settings["tv_mac"] = disc["mac"]
+            if disc.get("name"):
+                settings["tv_name"] = disc["name"]
+            data["settings"] = settings
+            save_data(data)
+            self.send_json({"success": True, "tv": disc, "arp": arp})
+        else:
+            self.send_json({
+                "success": False,
+                "error": "Kein eingeschalteter Samsung TV auf Port 8001 gefunden (bitte TV einmalig einschalten oder IP/MAC manuell eintragen).",
+                "arp": arp
+            })
+
+    def handle_admin_tv_settings(self, payload):
+        admin_pin = str(payload.get("admin_pin", "")).strip()
+        if admin_pin not in ("04157", "octasias"):
+            self.send_json({"success": False, "error": "Nicht autorisiert"}, code=403)
+            return
+        data = load_data()
+        settings = data.get("settings", {})
+        if "tv_ip" in payload:
+            settings["tv_ip"] = str(payload.get("tv_ip", "")).strip()
+        if "tv_mac" in payload:
+            settings["tv_mac"] = str(payload.get("tv_mac", "")).strip().upper()
+        if "tv_auto_wake" in payload:
+            settings["tv_auto_wake"] = bool(payload.get("tv_auto_wake", True))
+        if "tv_custom_m3u" in payload:
+            settings["tv_custom_m3u"] = str(payload.get("tv_custom_m3u", ""))
+        data["settings"] = settings
+        save_data(data)
+        self.send_json({"success": True, "settings": settings})
+
+    def handle_admin_wake_tv(self, payload):
+        admin_pin = str(payload.get("admin_pin", "")).strip()
+        if admin_pin not in ("04157", "octasias"):
+            self.send_json({"success": False, "error": "Nicht autorisiert"}, code=403)
+            return
+        data = load_data()
+        settings = data.get("settings", {})
+        if payload.get("tv_ip"):
+            settings["tv_ip"] = str(payload.get("tv_ip")).strip()
+        if payload.get("tv_mac"):
+            settings["tv_mac"] = str(payload.get("tv_mac")).strip().upper()
+        data["settings"] = settings
+        save_data(data)
+
+        entry = {
+            "name": str(payload.get("guest_name", "")).strip() or "Gast",
+            "salutation": str(payload.get("salutation", "auto")).strip() or "auto",
+            "pin": str(payload.get("pin", "")).strip(),
+            "valid_from": payload.get("valid_from", ""),
+            "valid_until": payload.get("valid_until", "")
+        }
+        wake_and_greet_tv_async(entry, door="haustuer", manual=True)
+        self.send_json({
+            "success": True,
+            "message": "Wake-on-LAN & TV-Begrüßung für „{0}“ gestartet!".format(entry["name"]),
+            "tv_ip": settings.get("tv_ip", DEFAULT_TV_IP),
+            "tv_mac": settings.get("tv_mac", DEFAULT_TV_MACS[0])
+        })
+
+    def handle_tv_launch_app(self, payload):
+        app_id = str(payload.get("app_id", "")).strip()
+        if app_id not in ALLOWED_TV_APPS:
+            self.send_json({"success": False, "error": "App nicht freigegeben"}, code=400)
+            return
+        data = load_data()
+        settings = data.get("settings", {})
+        tv_ip = str(settings.get("tv_ip", "")).strip() or DEFAULT_TV_IP
+        try:
+            api_url = "http://{0}:8001/api/v2/applications/{1}".format(tv_ip, app_id)
+            req = urllib.request.Request(api_url, data=b"", method="POST")
+            with urllib.request.urlopen(req, timeout=2.5) as resp:
+                ok = resp.status in (200, 201)
+                self.send_json({"success": ok, "app": ALLOWED_TV_APPS[app_id], "tv_ip": tv_ip})
+                return
+        except Exception as e:
+            self.send_json({"success": False, "error": str(e), "tv_ip": tv_ip})
 
     def handle_admin_delete(self, payload):
         admin_pin = str(payload.get("admin_pin", "")).strip()
