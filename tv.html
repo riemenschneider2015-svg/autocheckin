@@ -802,9 +802,9 @@
     @media (max-width:850px) { .place-grid { grid-template-columns:1fr 1fr; } .departure-card { grid-template-columns:1fr; } .departure-card small { justify-self:start; } }
 
 
-    .tv-backdrop { background:#f5f6f8; }
-    .tv-stage { background:#f5f6f8; color:#18202b; padding:3vh 4vw; gap:2vh; }
-    .tv-topbar { border-color:#dce1e7; padding-bottom:1.3vh; }
+    .tv-backdrop { background:#d8e1ea url("leipzig-augustusplatz-day.jpg") center center / cover no-repeat; }
+    .tv-stage { background:transparent; color:#18202b; padding:3vh 4vw; gap:2vh; }
+    .tv-topbar { padding:.65rem 1.2rem; border:1px solid rgba(234,239,245,.8); border-radius:18px; background:rgba(250,252,255,.94); box-shadow:0 5px 22px rgba(20,32,52,.12); }
     .brand-pill,.clock-pill,.current-weather-city,.remote-hint { color:#34404f; }
     .brand-title,.clock-time { color:#18202b; }
     .clock-date { color:#4a5665; }
@@ -812,34 +812,33 @@
     .tv-stage .tv-field { background:#fff; border:1px solid #d7dde5; color:#1d2632; }
     .uk-shortcut { min-height:2.5rem; padding:.5rem .85rem; border:1px solid #d7dde5; border-radius:999px; background:#fff; color:#253448; font:inherit; font-weight:650; cursor:pointer; }
     .uk-shortcut[aria-pressed=true] { background:#e0ebff; border-color:#82a3df; color:#173a77; }
-    .hero-grid { display:grid; grid-template-columns:1fr 1.36fr; align-items:center; gap:3vw; }
-    .welcome-card { padding:0; }
+    .hero-grid { display:block; }
+    .welcome-card { max-width:min(62rem,62vw); padding:clamp(15px,2vw,30px); border-radius:20px; background:rgba(250,252,255,.95); box-shadow:0 6px 28px rgba(20,32,52,.14); }
     .welcome-kicker { color:#465469; }
-    .welcome-headline { font-family:inherit; font-weight:650; color:#18202b; font-size:clamp(32px,4.4vw,82px); letter-spacing:-.06em; }
+    .welcome-headline { font-family:inherit; font-weight:650; color:#18202b; font-size:clamp(32px,4.1vw,78px); letter-spacing:-.06em; }
     .welcome-guest { font-size:clamp(20px,2vw,34px); font-weight:650; color:#214278; margin:.18em 0; overflow-wrap:anywhere; }
     .welcome-subtext,.welcome-badges .info-chip { color:#40516a; }
     .stay-guide-link { display:inline-block; color:#485970; text-decoration:none; border-bottom:1px solid #a9b7cd; line-height:1.6; font-size:clamp(13px,1.1vw,18px); }
     .stay-guide-link:focus { outline:2px solid #4670b7; outline-offset:3px; }
     .transit-context { color:var(--text-muted); font-size:clamp(14px,1.15vw,20px); }
-    .hero-photo { position:relative; overflow:hidden; margin:0; border-radius:clamp(15px,2vw,28px); box-shadow:0 15px 42px rgba(36,58,86,.13); }
-    .hero-photo img { width:100%; height:clamp(140px,24vh,350px); display:block; object-fit:cover; object-position:center; }
-    .hero-photo .photo-credit { position:absolute; right:.65rem; bottom:.55rem; background:#fff; border-radius:6px; padding:.2rem .45rem; color:#233144; font-size:.72rem; margin:0; }
     .home-actions { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(290px,1fr); gap:2.2vw; align-items:start; }
+    .menu-section { padding:clamp(12px,1.6vw,25px); background:rgba(250,252,255,.94); border-radius:20px; box-shadow:0 6px 28px rgba(20,32,52,.14); }
     .menu-header { margin-bottom:.8rem; }
+    .menu-title { color:#243249; }
     .tiles-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(9px,1vw,16px); }
     .tv-tile { min-height:clamp(50px,8vh,96px); color:#232e3c; background:#fff; border:1px solid #e2e7ee; border-radius:16px; box-shadow:0 3px 12px rgba(28,47,72,.055); padding:.52rem .85rem; gap:.65rem; }
     .tv-tile:hover,.tv-tile:focus { color:#173a77; background:#edf4ff; border-color:#4670b7; box-shadow:0 0 0 2px #4670b7; }
-    .tile-name { font-weight:650; font-size:clamp(15px,1.45vw,25px); }
+    .tile-name { color:inherit; margin:0; font-weight:700; font-size:clamp(17px,1.65vw,28px); }
     .tv-line-icon { display:block; flex:none; width:clamp(21px,1.9vw,34px); height:clamp(21px,1.9vw,34px); color:#365582; }
     .home-departures { background:#fff; border:1px solid #e2e7ee; border-radius:20px; box-shadow:0 4px 22px rgba(28,47,72,.06); padding:.8rem; min-width:0; }
     .home-departures-button { display:flex; gap:.65rem; align-items:center; padding:.2rem .2rem .6rem; width:100%; text-align:left; background:none; border:0; border-radius:9px; color:#1d2b3e; font:inherit; font-size:clamp(16px,1.35vw,24px); font-weight:650; cursor:pointer; }
     .home-departures-button:focus,.uk-shortcut:focus { outline:2px solid #4670b7; outline-offset:3px; }
     .home-stop-name { margin:.55rem .2rem .3rem; color:#273951; font-size:clamp(15px,1.15vw,21px); font-weight:650; }
-    .home-stationboard { display:block; width:100%; height:clamp(115px,18vh,188px); border:0; border-radius:10px; background:#f8fafc; pointer-events:none; }
+    .home-stationboard { display:block; width:100%; height:clamp(143px,19vh,213px); border:0; border-radius:10px; background:#f8fafc; }
     .place-card .tv-line-icon,.transit-route .tv-line-icon { color:#adc9fa; }
     .place-card { background:#1b2738; }
     .shopping-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
-    @media (max-width:850px) { .tv-stage {height:100vh;min-height:0;} .hero-grid,.home-actions {grid-template-columns:1fr;} .tiles-grid,.shopping-grid {grid-template-columns:repeat(2,minmax(0,1fr));} }
+    @media (max-width:850px) { .tv-stage {height:100vh;min-height:0;} .home-actions {grid-template-columns:1fr;} .welcome-card {max-width:none;} .tiles-grid,.shopping-grid {grid-template-columns:repeat(2,minmax(0,1fr));} }
 
     .home-support { display:grid; grid-template-columns:1fr 1.4fr; gap:1rem; margin-top:.8rem; }
     .home-wifi,.home-forecast { display:flex; align-items:center; gap:.75rem; background:#fff; border:1px solid #e2e7ee; border-radius:16px; box-shadow:0 5px 20px rgba(28,47,72,.06); padding:.65rem .8rem; min-width:0; }
@@ -847,7 +846,12 @@
     .home-wifi strong,.home-wifi small { display:block; }
     .home-wifi small { overflow-wrap:anywhere; color:#44546a; }
     .home-forecast { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); text-align:center; }
-    .forecast-day { display:grid; gap:.15em; font-size:clamp(12px,1vw,18px); color:#42556d; }
+    .forecast-day { display:grid; justify-items:center; gap:.22rem; font-size:clamp(13px,1.05vw,18px); color:#42556d; }
+    .forecast-day + .forecast-day { border-left:1px solid #dfe6ee; }
+    .weather-pictogram { display:block; width:clamp(21px,2vw,34px); height:auto; color:#335f8f; }
+    .current-weather-icon .weather-pictogram { width:clamp(24px,2.5vw,42px); }
+    .guide-photo-source { color:var(--text-muted); align-self:flex-start; }
+    .guide-photo-source a { color:inherit; }
     .forecast-day strong { font-size:clamp(15px,1.25vw,22px); color:#1d2b3e; }
     .radio-catalog-tools { display:flex; gap:.6rem; flex-wrap:wrap; }
     .channel-logo { width:2rem; height:1.55rem; object-fit:contain; background:#fff; border-radius:4px; }
@@ -880,7 +884,7 @@
     <div class="welcome-badges"><p class="info-chip" id="stayPeriodText" hidden></p></div>
     <a class="stay-guide-link" href="gaestemappe.html" target="_blank" rel="noopener noreferrer" data-stay-rules>Bitte im Haus nicht rauchen · Nachtruhe 22–7 Uhr · Check-out bis 11 Uhr</a>
     <div id="nowPlayingRadioBanner" style="display:none"><span id="nowPlayingRadioName"></span></div>
-  </div><figure class="hero-photo"><img src="leipzig-augustusplatz-day.jpg" alt="Augustusplatz mit Gewandhaus, Neuem Augusteum und Oper"><figcaption><a class="photo-credit" href="https://commons.wikimedia.org/wiki/File:Leipzig_Augustusplatz_2019.jpg" target="_blank" rel="noopener noreferrer">Whgler · CC BY-SA 4.0</a></figcaption></figure></section>
+  </div></section>
   <div class="home-actions">
   <section class="menu-section" aria-labelledby="easyMenuHeading">
     <div class="menu-header"><h2 class="menu-title" id="easyMenuHeading"><span data-text="3">Entdecken</span></h2>
@@ -892,11 +896,10 @@
       <button type="button" class="tv-tile" onclick="openModal('satModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a10 10 0 0 0 14 14L5 5Zm7 7 5-5m-7 10-3 4m0 0h7M16 3a5 5 0 0 1 5 5"/></svg><span class="tile-name"><span data-text="7">Satelliten-TV</span></span></button>
       <button type="button" class="tv-tile" onclick="openModal('youtubeModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3V9Z"/></svg><span class="tile-name"><span data-text="8">YouTube</span></span></button>
       <button type="button" class="tv-tile" onclick="openModal('netflixModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4l3 5m3-5 3 5m-7 4 5 2-5 2v-4Z"/></svg><span class="tile-name"><span data-text="9">Streaming</span></span></button>
-      <button type="button" class="tv-tile" onclick="openModal('wifiModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a14 14 0 0 1 18 0M6 12a9 9 0 0 1 12 0m-9 3a4 4 0 0 1 6 0"/><circle cx="12" cy="19" r="1"/></svg><span class="tile-name"><span data-text="11">WLAN</span></span></button>
     </div>
 <div class="home-support"><div class="home-wifi"><img src="qrcodes/qr_wifi.svg" width="72" height="72" alt="WLAN QR"><span><strong data-text="11">WLAN</strong><small>gigacube-EA6A</small></span></div><div id="weatherForecast" class="home-forecast" hidden aria-label="Wetter für die nächsten Tage"></div></div>
   </section>
-  <section class="home-departures"><button type="button" class="home-departures-button" onclick="openModal('departureModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14M8 18l-2 3m10-3 2 3m-10-6h1m6 0h1"/></svg><span data-home-transit>Live-Abfahrten · Chausseehaus</span></button><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012968?showheader=0&amp;numrows=3&amp;showtransportType=1&amp;bgodd=f7f9fc&amp;codd=1b2837&amp;bgeven=ffffff&amp;ceven=1b2837" title="LVB Stationboard · Chausseehaus" tabindex="-1"></iframe><h3 class="home-stop-name">Fritz-Seger-Straße</h3><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012971?showheader=0&amp;numrows=3&amp;showtransportType=1&amp;bgodd=f7f9fc&amp;codd=1b2837&amp;bgeven=ffffff&amp;ceven=1b2837" title="LVB Stationboard · Fritz-Seger-Straße" tabindex="-1"></iframe></section>
+  <section class="home-departures"><button type="button" class="home-departures-button" onclick="openModal('departureModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14M8 18l-2 3m10-3 2 3m-10-6h1m6 0h1"/></svg><span data-home-transit>Live-Abfahrten · Chausseehaus</span></button><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=0" title="LVB Stationboard · Chausseehaus" tabindex="-1"></iframe><h3 class="home-stop-name">Fritz-Seger-Straße</h3><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012971?headertext=Fritz-Seger-Stra%C3%9Fe&amp;showheader=0" title="LVB Stationboard · Fritz-Seger-Straße" tabindex="-1"></iframe></section>
   </div>
 </main>
 <!-- =========================================================
@@ -1069,20 +1072,21 @@
       </a>
     </article>
   </div>
+  <div class="guide-photo-source">Augustusplatz, Whgler · <a href="https://commons.wikimedia.org/wiki/File:Leipzig_Augustusplatz_2019.jpg" target="_blank" rel="noopener noreferrer">Bildquelle</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></div>
 </div>
 <div class="tv-modal" id="departureModal" role="dialog" aria-modal="true" aria-labelledby="departureModalTitle">
   <div class="modal-topbar">
     <h2 class="modal-title" id="departureModalTitle" data-transit-title>Straßenbahn & Bus · Live</h2>
     <div class="modal-actions">
-      <a class="tv-btn" id="departureBoardLink" href="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=1&amp;numrows=10&amp;showtransportType=1&amp;bgh=141c2b&amp;ch=ffffff&amp;bgodd=151f30&amp;codd=ffffff&amp;bgeven=202c40&amp;ceven=ffffff" target="_blank" rel="noopener noreferrer">LVB Stationboard</a>
+      <a class="tv-btn" id="departureBoardLink" href="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=1" target="_blank" rel="noopener noreferrer">LVB Stationboard</a>
       <button class="tv-btn tv-btn-primary" type="button" onclick="closeAllModals()" data-text="17">Zurück</button>
     </div>
   </div>
   <div class="departure-layout">
     <div class="departure-main">
       <div class="stop-switcher">
-        <button type="button" class="tv-btn stop-button" onclick="selectDepartureStop(this)" aria-pressed="true" data-board="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=1&amp;numrows=10&amp;showtransportType=1&amp;bgh=141c2b&amp;ch=ffffff&amp;bgodd=151f30&amp;codd=ffffff&amp;bgeven=202c40&amp;ceven=ffffff">Chausseehaus</button>
-        <button type="button" class="tv-btn stop-button" onclick="selectDepartureStop(this)" aria-pressed="false" data-board="https://stationboard.l.de/monitor/0012971?headertext=Fritz-Seger-Stra%C3%9Fe&amp;showheader=1&amp;numrows=10&amp;showtransportType=1&amp;bgh=141c2b&amp;ch=ffffff&amp;bgodd=151f30&amp;codd=ffffff&amp;bgeven=202c40&amp;ceven=ffffff">Fritz-Seger-Straße</button>
+        <button type="button" class="tv-btn stop-button" onclick="selectDepartureStop(this)" aria-pressed="true" data-board="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=1">Chausseehaus</button>
+        <button type="button" class="tv-btn stop-button" onclick="selectDepartureStop(this)" aria-pressed="false" data-board="https://stationboard.l.de/monitor/0012971?headertext=Fritz-Seger-Stra%C3%9Fe&amp;showheader=1">Fritz-Seger-Straße</button>
       </div>
       <p class="transit-context" id="fritzContext" hidden>Georg-Schumann-Straße · Richtung Innenstadt und Wahren. Linie 10 zum Hauptbahnhof · Linie 11 zum Hauptbahnhof und Augustusplatz.</p>
       <iframe class="departures-frame" id="departureBoard" title="LVB Stationboard" tabindex="-1"></iframe>
@@ -1107,7 +1111,6 @@
     </aside>
   </div>
 </div>
-<div class="tv-modal" id="wifiModal" role="dialog" aria-modal="true" aria-labelledby="wifiModalTitle"><div class="modal-topbar"><h2 class="modal-title" id="wifiModalTitle"><span data-text="11">WLAN</span></h2><div class="modal-actions"><button class="tv-btn tv-btn-primary" type="button" onclick="closeAllModals()"><span data-text="17">Zurück</span></button></div></div><div class="tv-dialog-copy"><p><span data-text="22">Netzwerk</span> · <strong>gigacube-EA6A</strong></p><div class="wifi-qr-box"><img src="qrcodes/qr_wifi.svg" alt="Wi-Fi QR" width="150" height="150"></div></div></div>
 
 <script>
   // =========================================================
@@ -1506,6 +1509,32 @@
     } catch (_) {}
   }
 
+
+  const weatherPaths = {
+    sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2m10-10 2-2"/>',
+    moon:'<path d="M20 15a8 8 0 0 1-11-11 8.5 8.5 0 1 0 11 11Z"/>',
+    partly:'<path d="M8 9a4 4 0 1 1 7-3M7 3l-1-1m-3 6H1m13-6 1-1M7 19h11a4 4 0 0 0 0-8h-1a5 5 0 0 0-9 2H7a3 3 0 0 0 0 6Z"/>',
+    cloud:'<path d="M6 18h12a4 4 0 0 0 0-8h-1a5.4 5.4 0 0 0-10.4 1H6a3.5 3.5 0 1 0 0 7Z"/>',
+    fog:'<path d="M6 12h12a3 3 0 0 0 0-6h-1a5 5 0 0 0-9 1H6a2.5 2.5 0 0 0 0 5Zm-2 4h16M6 20h12"/>',
+    rain:'<path d="M7 15H6a3 3 0 0 1 0-6h1a5 5 0 0 1 10-1h1a3.5 3.5 0 0 1 0 7h-1m-7 2-1 3m5-3-1 3m5-3-1 3"/>',
+    snow:'<path d="M12 3v18M4 7l16 10M4 17 20 7M9 4l3 3 3-3M9 20l3-3 3 3M4 11l4-1-1-4m13 7-4 1 1 4M4 13l4 1-1 4m13-7-4-1 1-4"/>',
+    storm:'<path d="M7 15H6a3 3 0 0 1 0-6h1a5 5 0 0 1 10-1h1a3.5 3.5 0 0 1 0 7h-2m-4-3-3 5h4l-2 4"/>'
+  };
+
+  function weatherPictogram(code, isDay = true) {
+    let symbol = 'cloud';
+    if (code === 0) symbol = isDay ? 'sun' : 'moon';
+    else if (code === 1 || code === 2) symbol = 'partly';
+    else if (code === 45 || code === 48) symbol = 'fog';
+    else if (code >= 95) symbol = 'storm';
+    else if ((code >= 71 && code <= 77) || code === 85 || code === 86) symbol = 'snow';
+    else if (code >= 51) symbol = 'rain';
+    const icon = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    const attributes = { class:'weather-pictogram',viewBox:'0 0 24 24',fill:'none',stroke:'currentColor','stroke-width':'1.65','stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true' };
+    Object.entries(attributes).forEach(([name,value]) => icon.setAttribute(name,value));
+    icon.innerHTML = weatherPaths[symbol];
+    return icon;
+  }
   let forecast = [];
   function renderForecast() {
     const panel = document.getElementById('weatherForecast');
@@ -1517,30 +1546,23 @@
       label.textContent = new Date(day.date + 'T12:00:00').toLocaleDateString(currentLang,{weekday:'short'});
       const temperatures = document.createElement('strong');
       temperatures.textContent = Math.round(day.high) + '° / ' + Math.round(day.low) + '°';
-      cell.append(label,temperatures);
+      cell.append(label,weatherPictogram(day.code),temperatures);
       return cell;
     }));
   }
 
   async function updateWeather() {
     try {
-      const url = 'https://api.open-meteo.com/v1/forecast?latitude=51.34&longitude=12.37&current=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min&forecast_days=4&timezone=Europe%2FBerlin';
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=51.34&longitude=12.37&current=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min,weather_code&forecast_days=4&timezone=Europe%2FBerlin';
       const response = await fetch(url);
       if (!response.ok) return;
       const { current, daily } = await response.json();
       if (daily && Array.isArray(daily.time)) {
-        forecast = daily.time.slice(1,4).map((date,i) => ({date, high:daily.temperature_2m_max[i+1], low:daily.temperature_2m_min[i+1]})).filter(day => Number.isFinite(day.high) && Number.isFinite(day.low));
+        forecast = daily.time.slice(1,4).map((date,i) => ({date, high:daily.temperature_2m_max[i+1], low:daily.temperature_2m_min[i+1], code:daily.weather_code[i+1]})).filter(day => Number.isFinite(day.high) && Number.isFinite(day.low));
         renderForecast();
       }
       if (!current || !Number.isFinite(current.temperature_2m)) return;
-      const code = current.weather_code;
-      let icon = '☁';
-      if (code === 0) icon = current.is_day ? '☀' : '☾';
-      else if (code === 1 || code === 2) icon = '⛅';
-      else if (code >= 95) icon = '⛈';
-      else if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) icon = '❄';
-      else if (code >= 51) icon = '☂';
-      document.getElementById('weatherIcon').textContent = icon;
+      document.getElementById('weatherIcon').replaceChildren(weatherPictogram(current.weather_code, Boolean(current.is_day)));
       document.getElementById('weatherTemp').textContent = Math.round(current.temperature_2m) + ' °C';
       document.getElementById('currentWeather').hidden = false;
     } catch (_) {}
@@ -2164,7 +2186,7 @@
     } else if (key === 'Enter' && target.matches('button,a[href]')) {
       event.preventDefault();
       if (!event.repeat) target.click();
-    } else if (!active && /^[1-7]$/.test(key)) {
+    } else if (!active && /^[1-6]$/.test(key)) {
       const tile = document.querySelectorAll('.tv-tile')[Number(key)-1];
       tile.focus();
       tile.click();
