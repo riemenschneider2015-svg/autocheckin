@@ -801,6 +801,57 @@
     .photo-credit { margin-top:auto; }
     @media (max-width:850px) { .place-grid { grid-template-columns:1fr 1fr; } .departure-card { grid-template-columns:1fr; } .departure-card small { justify-self:start; } }
 
+
+    .tv-backdrop { background:#f5f6f8; }
+    .tv-stage { background:#f5f6f8; color:#18202b; padding:3vh 4vw; gap:2vh; }
+    .tv-topbar { border-color:#dce1e7; padding-bottom:1.3vh; }
+    .brand-pill,.clock-pill,.current-weather-city,.remote-hint { color:#34404f; }
+    .brand-title,.clock-time { color:#18202b; }
+    .clock-date { color:#4a5665; }
+    .current-weather { border-color:#dce1e7; }
+    .tv-stage .tv-field { background:#fff; border:1px solid #d7dde5; color:#1d2632; }
+    .uk-shortcut { min-height:2.5rem; padding:.5rem .85rem; border:1px solid #d7dde5; border-radius:999px; background:#fff; color:#253448; font:inherit; font-weight:650; cursor:pointer; }
+    .uk-shortcut[aria-pressed=true] { background:#e0ebff; border-color:#82a3df; color:#173a77; }
+    .hero-grid { display:grid; grid-template-columns:1fr 1.36fr; align-items:center; gap:3vw; }
+    .welcome-card { padding:0; }
+    .welcome-kicker { color:#465469; }
+    .welcome-headline { font-family:inherit; font-weight:650; color:#18202b; font-size:clamp(32px,4.4vw,82px); letter-spacing:-.06em; }
+    .welcome-guest { font-size:clamp(20px,2vw,34px); font-weight:650; color:#214278; margin:.18em 0; overflow-wrap:anywhere; }
+    .welcome-subtext,.welcome-badges .info-chip { color:#40516a; }
+    .stay-guide-link { display:inline-block; color:#485970; text-decoration:none; border-bottom:1px solid #a9b7cd; line-height:1.6; font-size:clamp(13px,1.1vw,18px); }
+    .stay-guide-link:focus { outline:2px solid #4670b7; outline-offset:3px; }
+    .transit-context { color:var(--text-muted); font-size:clamp(14px,1.15vw,20px); }
+    .hero-photo { position:relative; overflow:hidden; margin:0; border-radius:clamp(15px,2vw,28px); box-shadow:0 15px 42px rgba(36,58,86,.13); }
+    .hero-photo img { width:100%; height:clamp(140px,24vh,350px); display:block; object-fit:cover; object-position:center; }
+    .hero-photo .photo-credit { position:absolute; right:.65rem; bottom:.55rem; background:#fff; border-radius:6px; padding:.2rem .45rem; color:#233144; font-size:.72rem; margin:0; }
+    .home-actions { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(290px,1fr); gap:2.2vw; align-items:start; }
+    .menu-header { margin-bottom:.8rem; }
+    .tiles-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(9px,1vw,16px); }
+    .tv-tile { min-height:clamp(50px,8vh,96px); color:#232e3c; background:#fff; border:1px solid #e2e7ee; border-radius:16px; box-shadow:0 3px 12px rgba(28,47,72,.055); padding:.52rem .85rem; gap:.65rem; }
+    .tv-tile:hover,.tv-tile:focus { color:#173a77; background:#edf4ff; border-color:#4670b7; box-shadow:0 0 0 2px #4670b7; }
+    .tile-name { font-weight:650; font-size:clamp(15px,1.45vw,25px); }
+    .tv-line-icon { display:block; flex:none; width:clamp(21px,1.9vw,34px); height:clamp(21px,1.9vw,34px); color:#365582; }
+    .home-departures { background:#fff; border:1px solid #e2e7ee; border-radius:20px; box-shadow:0 4px 22px rgba(28,47,72,.06); padding:.8rem; min-width:0; }
+    .home-departures-button { display:flex; gap:.65rem; align-items:center; padding:.2rem .2rem .6rem; width:100%; text-align:left; background:none; border:0; border-radius:9px; color:#1d2b3e; font:inherit; font-size:clamp(16px,1.35vw,24px); font-weight:650; cursor:pointer; }
+    .home-departures-button:focus,.uk-shortcut:focus { outline:2px solid #4670b7; outline-offset:3px; }
+    .home-stop-name { margin:.55rem .2rem .3rem; color:#273951; font-size:clamp(15px,1.15vw,21px); font-weight:650; }
+    .home-stationboard { display:block; width:100%; height:clamp(115px,18vh,188px); border:0; border-radius:10px; background:#f8fafc; pointer-events:none; }
+    .place-card .tv-line-icon,.transit-route .tv-line-icon { color:#adc9fa; }
+    .place-card { background:#1b2738; }
+    .shopping-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    @media (max-width:850px) { .tv-stage {height:100vh;min-height:0;} .hero-grid,.home-actions {grid-template-columns:1fr;} .tiles-grid,.shopping-grid {grid-template-columns:repeat(2,minmax(0,1fr));} }
+
+    .home-support { display:grid; grid-template-columns:1fr 1.4fr; gap:1rem; margin-top:.8rem; }
+    .home-wifi,.home-forecast { display:flex; align-items:center; gap:.75rem; background:#fff; border:1px solid #e2e7ee; border-radius:16px; box-shadow:0 5px 20px rgba(28,47,72,.06); padding:.65rem .8rem; min-width:0; }
+    .home-wifi img { width:clamp(40px,5vw,75px); border-radius:4px; }
+    .home-wifi strong,.home-wifi small { display:block; }
+    .home-wifi small { overflow-wrap:anywhere; color:#44546a; }
+    .home-forecast { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); text-align:center; }
+    .forecast-day { display:grid; gap:.15em; font-size:clamp(12px,1vw,18px); color:#42556d; }
+    .forecast-day strong { font-size:clamp(15px,1.25vw,22px); color:#1d2b3e; }
+    .radio-catalog-tools { display:flex; gap:.6rem; flex-wrap:wrap; }
+    .channel-logo { width:2rem; height:1.55rem; object-fit:contain; background:#fff; border-radius:4px; }
+    .channel-btn .channel-row-name { display:flex; align-items:center; gap:.55rem; }
   </style>
 </head>
 <body>
@@ -811,6 +862,7 @@
   <header class="tv-topbar">
     <div class="brand-pill"><div class="brand-title">StayInLeipzig</div></div>
     <div class="top-right-cluster">
+      <button type="button" class="uk-shortcut" id="ukShortcut" lang="uk" aria-pressed="false" onclick="setTvLang('uk')">Українська</button>
       <select id="tvLanguage" class="tv-field" aria-label="Sprache / Language" onchange="setTvLang(this.value)"><option value="de">Deutsch</option><option value="en">English</option><option value="uk">Українська</option><option value="es">Español</option><option value="fr">Français</option><option value="pl">Polski</option><option value="tr">Türkçe</option><option value="ru">Русский</option><option value="it">Italiano</option><option value="pt">Português</option><option value="ro">Română</option><option value="ar">العربية</option></select>
       <div class="clock-pill"><div class="clock-time" id="clockTime">--:--</div><div class="clock-date" id="clockDate"></div></div>
       <div class="current-weather" id="currentWeather" hidden>
@@ -823,24 +875,29 @@
   <section class="hero-grid"><div class="welcome-card">
     <p class="welcome-kicker">Mechlerstraße 10</p>
     <h1 class="welcome-headline" id="welcomeHeadline">Willkommen in Leipzig</h1>
-    <p class="welcome-subtext" id="welcomeSubtext">Liebe Gäste</p>
+    <p class="welcome-guest" id="welcomeGuest" hidden></p>
+    <p class="welcome-subtext" id="welcomeSubtext">Schön, dass Sie da sind!</p>
     <div class="welcome-badges"><p class="info-chip" id="stayPeriodText" hidden></p></div>
+    <a class="stay-guide-link" href="gaestemappe.html" target="_blank" rel="noopener noreferrer" data-stay-rules>Bitte im Haus nicht rauchen · Nachtruhe 22–7 Uhr · Check-out bis 11 Uhr</a>
     <div id="nowPlayingRadioBanner" style="display:none"><span id="nowPlayingRadioName"></span></div>
-  </div></section>
+  </div><figure class="hero-photo"><img src="leipzig-augustusplatz-day.jpg" alt="Augustusplatz mit Gewandhaus, Neuem Augusteum und Oper"><figcaption><a class="photo-credit" href="https://commons.wikimedia.org/wiki/File:Leipzig_Augustusplatz_2019.jpg" target="_blank" rel="noopener noreferrer">Whgler · CC BY-SA 4.0</a></figcaption></figure></section>
+  <div class="home-actions">
   <section class="menu-section" aria-labelledby="easyMenuHeading">
     <div class="menu-header"><h2 class="menu-title" id="easyMenuHeading"><span data-text="3">Entdecken</span></h2>
     <p class="remote-hint"><span data-text="4">Pfeiltasten · OK · Zurück</span></p></div>
     <div class="tiles-grid" id="tilesGrid">
-      <button type="button" class="tv-tile" onclick="openModal('liveTvModal')"><span class="tile-icon" aria-hidden="true">▣</span><span class="tile-name"><span data-text="5">Live-TV</span></span></button>
-      <button type="button" class="tv-tile" onclick="openModal('radioModal')"><span class="tile-icon" aria-hidden="true">♫</span><span class="tile-name"><span data-text="6">Radio</span></span></button>
-      <button type="button" class="tv-tile" onclick="openModal('guideModal')"><span class="tile-icon" aria-hidden="true">◷</span><span class="tile-name"><span data-text="10">Bahn & Leipzig</span></span></button>
-      <button type="button" class="tv-tile" onclick="openModal('satModal')"><span class="tile-icon" aria-hidden="true">⌁</span><span class="tile-name"><span data-text="7">Satelliten-TV</span></span></button>
-      <button type="button" class="tv-tile" onclick="openModal('youtubeModal')"><span class="tile-icon" aria-hidden="true">▷</span><span class="tile-name"><span data-text="8">YouTube</span></span></button>
-      <button type="button" class="tv-tile" onclick="openModal('netflixModal')"><span class="tile-icon" aria-hidden="true">▤</span><span class="tile-name"><span data-text="9">Streaming</span></span></button>
-      <button type="button" class="tv-tile" onclick="openModal('wifiModal')"><span class="tile-icon" aria-hidden="true">◉</span><span class="tile-name"><span data-text="11">WLAN</span></span></button>
+      <button type="button" class="tv-tile" onclick="openModal('liveTvModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></svg><span class="tile-name"><span data-text="5">Live-TV</span></span></button>
+      <button type="button" class="tv-tile" onclick="openModal('radioModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="m5 7 12-4M15 12h3m-3 4h3"/><circle cx="9" cy="14" r="2"/></svg><span class="tile-name"><span data-text="6">Radio</span></span></button>
+      <button type="button" class="tv-tile" onclick="openModal('guideModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l1 12H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"/></svg><span class="tile-name"><span data-shopping>Einkaufen</span></span></button>
+      <button type="button" class="tv-tile" onclick="openModal('satModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a10 10 0 0 0 14 14L5 5Zm7 7 5-5m-7 10-3 4m0 0h7M16 3a5 5 0 0 1 5 5"/></svg><span class="tile-name"><span data-text="7">Satelliten-TV</span></span></button>
+      <button type="button" class="tv-tile" onclick="openModal('youtubeModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3V9Z"/></svg><span class="tile-name"><span data-text="8">YouTube</span></span></button>
+      <button type="button" class="tv-tile" onclick="openModal('netflixModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4l3 5m3-5 3 5m-7 4 5 2-5 2v-4Z"/></svg><span class="tile-name"><span data-text="9">Streaming</span></span></button>
+      <button type="button" class="tv-tile" onclick="openModal('wifiModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a14 14 0 0 1 18 0M6 12a9 9 0 0 1 12 0m-9 3a4 4 0 0 1 6 0"/><circle cx="12" cy="19" r="1"/></svg><span class="tile-name"><span data-text="11">WLAN</span></span></button>
     </div>
+<div class="home-support"><div class="home-wifi"><img src="qrcodes/qr_wifi.svg" width="72" height="72" alt="WLAN QR"><span><strong data-text="11">WLAN</strong><small>gigacube-EA6A</small></span></div><div id="weatherForecast" class="home-forecast" hidden aria-label="Wetter für die nächsten Tage"></div></div>
   </section>
-  <a class="photo-credit" href="https://commons.wikimedia.org/wiki/File:Leipzig_Augustusplatz_Nacht.jpg" target="_blank" rel="noopener noreferrer">Augustusplatz · Joeb07 / Wikimedia Commons</a>
+  <section class="home-departures"><button type="button" class="home-departures-button" onclick="openModal('departureModal')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14M8 18l-2 3m10-3 2 3m-10-6h1m6 0h1"/></svg><span data-home-transit>Live-Abfahrten · Chausseehaus</span></button><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012968?showheader=0&amp;numrows=3&amp;showtransportType=1&amp;bgodd=f7f9fc&amp;codd=1b2837&amp;bgeven=ffffff&amp;ceven=1b2837" title="LVB Stationboard · Chausseehaus" tabindex="-1"></iframe><h3 class="home-stop-name">Fritz-Seger-Straße</h3><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012971?showheader=0&amp;numrows=3&amp;showtransportType=1&amp;bgodd=f7f9fc&amp;codd=1b2837&amp;bgeven=ffffff&amp;ceven=1b2837" title="LVB Stationboard · Fritz-Seger-Straße" tabindex="-1"></iframe></section>
+  </div>
 </main>
 <!-- =========================================================
      MODAL 1: LIVE-TV (FOREIGN & GERMAN CHANNELS BY COUNTRY)
@@ -861,6 +918,7 @@
     </div>
   </div>
 
+<div class="radio-catalog-tools"><select class="tv-field" id="radioLanguage" aria-label="Radio · Sprache" onchange="loadRadioCatalog(true)"><option value="local">Leipzig & Sachsen</option><option value="">International</option><option value="ukrainian">Українська</option></select><button class="tv-btn" type="button" id="radioMore" onclick="loadRadioCatalog(false)" hidden>Weitere Sender</button><p id="radioCatalogStatus" class="list-status" role="status"></p></div>
   <div class="radio-grid" id="radioStationsGrid"></div>
   <audio id="radioAudioPlayer" preload="none"></audio>
 </div>
@@ -973,29 +1031,16 @@
      ========================================================= -->
 <div class="tv-modal" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideModalTitle">
   <div class="modal-topbar">
-    <h2 class="modal-title" id="guideModalTitle" data-text="10">Bahn & Leipzig</h2>
+    <h2 class="modal-title" id="guideModalTitle" data-shopping>Einkaufen</h2>
     <div class="modal-actions">
       <a class="tv-btn" href="tel:+4915253453390" data-call-label>Gastgeber anrufen</a>
       <a class="tv-btn" href="gaestemappe.html" target="_blank" rel="noopener noreferrer" data-text="20">Gästemappe</a>
       <button class="tv-btn tv-btn-primary" type="button" onclick="closeAllModals()" data-text="17">Zurück</button>
     </div>
   </div>
-  <button type="button" class="departure-card" onclick="openModal('departureModal')">
-    <span aria-hidden="true">◷</span>
-    <strong data-text="19">Live-Abfahrten · Chausseehaus</strong>
-    <small>LVB Stationboard</small>
-  </button>
   <p class="guide-hint" data-scan-label>QR-Code mit dem Handy scannen, um den Fußweg zu öffnen.</p>
-  <div class="place-grid">
-    <article class="place-card">
-      <span class="place-icon" aria-hidden="true">◷</span>
-      <h3>Chausseehaus</h3>
-      <p>Straßenbahn & Bus</p>
-      <a class="place-route" href="https://www.google.com/maps/dir/?api=1&amp;travelmode=walking&amp;dir_action=navigate&amp;destination=51.356073%2C12.376795" target="_blank" rel="noopener noreferrer">
-        <img src="tv-routes/chausseehaus.svg" alt="Chausseehaus · QR">
-        <span data-route-label>Fußweg in Google Maps</span>
-      </a>
-    </article>
+  <div class="place-grid shopping-grid">
+
     <article class="place-card">
       <span class="place-icon" aria-hidden="true">🥐</span>
       <h3>LUKAS Bäcker</h3>
@@ -1029,16 +1074,17 @@
   <div class="modal-topbar">
     <h2 class="modal-title" id="departureModalTitle" data-transit-title>Straßenbahn & Bus · Live</h2>
     <div class="modal-actions">
-      <a class="tv-btn" id="departureBoardLink" href="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=1&amp;numrows=6&amp;showtransportType=1&amp;bgh=141c2b&amp;ch=ffffff&amp;bgodd=151f30&amp;codd=ffffff&amp;bgeven=202c40&amp;ceven=ffffff" target="_blank" rel="noopener noreferrer">LVB Stationboard</a>
+      <a class="tv-btn" id="departureBoardLink" href="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=1&amp;numrows=10&amp;showtransportType=1&amp;bgh=141c2b&amp;ch=ffffff&amp;bgodd=151f30&amp;codd=ffffff&amp;bgeven=202c40&amp;ceven=ffffff" target="_blank" rel="noopener noreferrer">LVB Stationboard</a>
       <button class="tv-btn tv-btn-primary" type="button" onclick="closeAllModals()" data-text="17">Zurück</button>
     </div>
   </div>
   <div class="departure-layout">
     <div class="departure-main">
       <div class="stop-switcher">
-        <button type="button" class="tv-btn stop-button" onclick="selectDepartureStop(this)" aria-pressed="true" data-board="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=1&amp;numrows=6&amp;showtransportType=1&amp;bgh=141c2b&amp;ch=ffffff&amp;bgodd=151f30&amp;codd=ffffff&amp;bgeven=202c40&amp;ceven=ffffff">Chausseehaus</button>
-        <button type="button" class="tv-btn stop-button" onclick="selectDepartureStop(this)" aria-pressed="false" data-board="https://stationboard.l.de/monitor/0012971?headertext=Fritz-Seger-Stra%C3%9Fe&amp;showheader=1&amp;numrows=6&amp;showtransportType=1&amp;bgh=141c2b&amp;ch=ffffff&amp;bgodd=151f30&amp;codd=ffffff&amp;bgeven=202c40&amp;ceven=ffffff">Fritz-Seger-Straße</button>
+        <button type="button" class="tv-btn stop-button" onclick="selectDepartureStop(this)" aria-pressed="true" data-board="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=1&amp;numrows=10&amp;showtransportType=1&amp;bgh=141c2b&amp;ch=ffffff&amp;bgodd=151f30&amp;codd=ffffff&amp;bgeven=202c40&amp;ceven=ffffff">Chausseehaus</button>
+        <button type="button" class="tv-btn stop-button" onclick="selectDepartureStop(this)" aria-pressed="false" data-board="https://stationboard.l.de/monitor/0012971?headertext=Fritz-Seger-Stra%C3%9Fe&amp;showheader=1&amp;numrows=10&amp;showtransportType=1&amp;bgh=141c2b&amp;ch=ffffff&amp;bgodd=151f30&amp;codd=ffffff&amp;bgeven=202c40&amp;ceven=ffffff">Fritz-Seger-Straße</button>
       </div>
+      <p class="transit-context" id="fritzContext" hidden>Georg-Schumann-Straße · Richtung Innenstadt und Wahren. Linie 10 zum Hauptbahnhof · Linie 11 zum Hauptbahnhof und Augustusplatz.</p>
       <iframe class="departures-frame" id="departureBoard" title="LVB Stationboard" tabindex="-1"></iframe>
     </div>
     <aside class="departure-routes">
@@ -1392,13 +1438,24 @@
     ar:['اتصل بالمضيف','امسح رمز QR لفتح مسار المشي.','مسار المشي']
   };
   let currentGuest = null;
-  const guestParams = new URLSearchParams(location.search);
-  const guestPreview = guestParams.get('guest') || guestParams.get('name');
+  const shoppingLabels = { de:'Einkaufen',en:'Shopping',uk:'Покупки',es:'Compras',fr:'Commerces',pl:'Zakupy',tr:'Alışveriş',ru:'Магазины',it:'Negozi',pt:'Compras',ro:'Magazine',ar:'التسوّق' };
+  const welcomeMessages = { de:'Schön, dass Sie da sind! Wir wünschen Ihnen einen wunderbaren Aufenthalt. Fühlen Sie sich wie zu Hause.',en:'We’re so glad you’re here! Have a wonderful stay and make yourself at home.',uk:'Ми дуже раді вас бачити! Бажаємо чудового перебування. Почувайтеся як удома.' };
+  function getDisplayGuest(guest) {
+    const name = guest && typeof guest.name === 'string' ? guest.name.trim() : '';
+    const role = guest && String(guest.role || '').trim();
+    if (!name || /^(?:admin(?:istrator)?|master(?:login|pin)?|owner|gastgeber)$/i.test(role) ||
+        /^(?:master(?:[\s_-]?(?:login|pin))?|admin(?:istrator)?|gastgeber)(?:$|[\s:_-])/i.test(name) ||
+        /^(?:gast|liebe gäste)$/i.test(name)) return null;
+    return { name, valid_from: guest.valid_from, valid_until: guest.valid_until };
+  }
   function renderGuestGreeting() {
     const strings = translations[currentLang];
     document.getElementById('welcomeHeadline').textContent = strings[0];
-    const name = currentGuest && currentGuest.name || guestPreview;
-    document.getElementById('welcomeSubtext').textContent = name && name.trim().toLowerCase() !== 'gast' ? name : strings[1];
+    const message = welcomeMessages[currentLang] || strings[2];
+    const greeting = document.getElementById('welcomeGuest');
+    greeting.hidden = !currentGuest;
+    greeting.textContent = currentGuest ? currentGuest.name : '';
+    document.getElementById('welcomeSubtext').textContent = message;
     const period = document.getElementById('stayPeriodText');
     const from = new Date(currentGuest && currentGuest.valid_from || '');
     const until = new Date(currentGuest && currentGuest.valid_until || '');
@@ -1410,6 +1467,12 @@
     currentLang = Object.prototype.hasOwnProperty.call(translations, lang) ? lang : 'de';
     document.documentElement.lang = currentLang;
     document.getElementById('tvLanguage').value = currentLang;
+    document.getElementById('ukShortcut').setAttribute('aria-pressed', String(currentLang === 'uk'));
+    document.querySelectorAll('[data-shopping]').forEach(el => { el.textContent = shoppingLabels[currentLang]; });
+    document.querySelector('[data-home-transit]').textContent = translations[currentLang][19];
+    renderForecast();
+    const stayRules = { de:'Bitte im Haus nicht rauchen · Nachtruhe 22–7 Uhr · Check-out bis 11 Uhr', en:'Please don’t smoke indoors · Quiet hours 22:00–07:00 · Check-out by 11:00', uk:'Не куріть у будинку · Тиша з 22:00 до 07:00 · Виїзд до 11:00' };
+    document.querySelector('[data-stay-rules]').textContent = stayRules[currentLang] || translations[currentLang][20];
     document.querySelectorAll('[data-text]').forEach(el => { el.textContent = translations[currentLang][el.dataset.text]; });
     const [callLabel, scanLabel, routeLabel] = guideLabels[currentLang];
     document.querySelector('[data-call-label]').textContent = callLabel;
@@ -1434,7 +1497,7 @@
       if (!response.ok) return;
       const data = await response.json();
       if (!data.success) return;
-      currentGuest = data.guest ? { name:data.guest.name, valid_from:data.guest.valid_from, valid_until:data.guest.valid_until } : null;
+      currentGuest = getDisplayGuest(data.guest);
       renderGuestGreeting();
       if (typeof data.tv_custom_m3u === 'string' && data.tv_custom_m3u !== serverPlaylist) {
         serverPlaylist = data.tv_custom_m3u;
@@ -1443,12 +1506,32 @@
     } catch (_) {}
   }
 
+  let forecast = [];
+  function renderForecast() {
+    const panel = document.getElementById('weatherForecast');
+    panel.hidden = !forecast.length;
+    panel.replaceChildren(...forecast.map(day => {
+      const cell = document.createElement('span');
+      cell.className = 'forecast-day';
+      const label = document.createElement('span');
+      label.textContent = new Date(day.date + 'T12:00:00').toLocaleDateString(currentLang,{weekday:'short'});
+      const temperatures = document.createElement('strong');
+      temperatures.textContent = Math.round(day.high) + '° / ' + Math.round(day.low) + '°';
+      cell.append(label,temperatures);
+      return cell;
+    }));
+  }
+
   async function updateWeather() {
     try {
-      const url = 'https://api.open-meteo.com/v1/forecast?latitude=51.34&longitude=12.37&current=temperature_2m,weather_code,is_day';
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=51.34&longitude=12.37&current=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min&forecast_days=4&timezone=Europe%2FBerlin';
       const response = await fetch(url);
       if (!response.ok) return;
-      const { current } = await response.json();
+      const { current, daily } = await response.json();
+      if (daily && Array.isArray(daily.time)) {
+        forecast = daily.time.slice(1,4).map((date,i) => ({date, high:daily.temperature_2m_max[i+1], low:daily.temperature_2m_min[i+1]})).filter(day => Number.isFinite(day.high) && Number.isFinite(day.low));
+        renderForecast();
+      }
       if (!current || !Number.isFinite(current.temperature_2m)) return;
       const code = current.weather_code;
       let icon = '☁';
@@ -1569,10 +1652,11 @@
   const PAGE_SIZE = 48;
   const languageOrder = ['Deutsch','English','Українська','Polski','Русский','Türkçe','Français','Español','Italiano','Português','Română','العربية'];
   const germanTvOrder = [/^das erste\b/i,/^zdf(?:\s|$)/i,/^rtl(?:\s|$)/i,/^sat\.?1(?:\s|$)/i,/^prosieben(?:\s|$)/i,
-    /^vox(?:\s|$)/i,/^mdr sachsen(?:\s|$)/i,/^arte(?:\s|$)/i,/^3sat(?:\s|$)/i,/^kika(?:\s|$)/i,/^zdfneo\b/i,
+    /^vox(?:\s|$)/i,/^n-tv\b/i,/^welt\b/i,/^n24 doku\b/i,/^mdr sachsen(?:\s|$)/i,/^arte(?:\s|$)/i,/^3sat(?:\s|$)/i,/^kika(?:\s|$)/i,/^zdfneo\b/i,
     /^zdfinfo\b/i,/^phoenix\b/i,/^tagesschau24\b/i,/^(ndr|br|hr|rbb|swr|wdr)\b/i];
   const languageAliases = { Russian:'Русский', Arabic:'العربية', German:'Deutsch', Ukrainian:'Українська' };
   let repoChannels = [];
+
   let personalPlaylist = '';
   let serverPlaylist = '';
   let channelPage = 0;
@@ -1587,8 +1671,10 @@
       if (line.startsWith('#EXTINF')) {
         const country = (line.match(/group-title="([^"]*)"/i) || [])[1] || '';
         const language = (line.match(/tvg-language="([^"]*)"/i) || [])[1] || ((country.match(/\(([^()]*)\)$/) || [])[1] || '');
+        const official = /tvg-type="official"/i.test(line);
+        const logo = (line.match(/tvg-logo="([^"]*)"/i) || [])[1] || '';
         const titleIndex = line.search(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
-        meta = { name:titleIndex >= 0 ? line.slice(titleIndex + 1).trim() : '', country, language };
+        meta = { name:titleIndex >= 0 ? line.slice(titleIndex + 1).trim() : '', country, language, logo, official };
         continue;
       }
       if (!line || line.startsWith('#')) continue;
@@ -1699,9 +1785,19 @@
         button.setAttribute('aria-current','true');
       }
       const name = document.createElement('span');
-      name.textContent = channel.name;
+      name.className = 'channel-row-name';
+      if (isHttps(channel.logo)) {
+        const logo = document.createElement('img');
+        logo.className = 'channel-logo';
+        logo.alt = '';
+        logo.loading = 'lazy';
+        logo.onerror = () => logo.remove();
+        logo.src = channel.logo;
+        name.appendChild(logo);
+      }
+      name.appendChild(document.createTextNode(channel.name));
       const group = document.createElement('small');
-      group.textContent = channel.country;
+      group.textContent = channel.official ? channel.country + ' · Web' : channel.country;
       button.append(name,group);
       button.onclick = () => playTvChannel(channel);
       return button;
@@ -1754,6 +1850,10 @@
 
     const video = document.getElementById('liveTvVideo');
     const isHls = /\.m3u8(?:[?#]|$)/i.test(channel.url);
+    if (!isHls && channel.official) {
+      openExternalStreamTab();
+      return;
+    }
     if (isHls && window.Hls && Hls.isSupported()) {
       hlsInstance = new Hls({ enableWorker:true });
       hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(() => {}));
@@ -1791,11 +1891,11 @@
     { name:'RADIO PSR', genre:'Hits für Sachsen', logo:'tv-radio/radio-psr.jpg', url:'https://streams.radiopsr.de/psr-live/mp3-192/streams.radiopsr.de/' },
     { name:'ENERGY Sachsen', genre:'Aktuelle Hits', logo:'tv-radio/energy.png', url:'https://nrj.de/sachsen' },
     { name:'sunshine live', genre:'Electronic Music', logo:'tv-radio/sunshine-live.png', url:'https://stream.sunshine-live.de/live/mp3-192/stream.sunshine-live.de/' },
-    { name: '🏙️ Radio Leipzig', genre: 'Leipzigs Nummer 1 · Lokal & Hits', url: 'https://streams.bcs-systems.de/slp/live/leipzig/mp3/radioplayer/web' },
-    { name: '🟢 MDR SACHSEN – Das Sachsenradio', genre: 'Regionalprogramm Leipzig & Sachsen', url: 'https://mdr-284280-1.sslcast.mdr.de/mdr/284280/1/mp3/high/stream.mp3' },
-    { name: '⚡ MDR JUMP', genre: 'Pop, Charts & Aktuelles aus Mitteldeutschland', url: 'https://mdr-284320-0.sslcast.mdr.de/mdr/284320/0/mp3/high/stream.mp3' },
-    { name: '🎻 MDR KULTUR', genre: 'Kultur, Klassik & Gewandhaus-Stadt Leipzig', url: 'https://mdr-284310-0.sslcast.mdr.de/mdr/284310/0/mp3/high/stream.mp3' },
-    { name: '📰 MDR AKTUELL', genre: 'Nachrichten im 15-Minuten-Takt', url: 'https://mdr-284340-0.sslcast.mdr.de/mdr/284340/0/mp3/high/stream.mp3' },
+    { name: 'Radio Leipzig', logo:'tv-radio/radio-leipzig.ico', genre: 'Leipzigs Nummer 1 · Lokal & Hits', url: 'https://streams.bcs-systems.de/slp/live/leipzig/mp3/radioplayer/web' },
+    { name: 'MDR SACHSEN', logo:'tv-radio/mdr-sachsen.svg', genre: 'Regionalprogramm Leipzig & Sachsen', url: 'https://mdr-284280-1.sslcast.mdr.de/mdr/284280/1/mp3/high/stream.mp3' },
+    { name: 'MDR JUMP', logo:'tv-radio/mdr-jump.png', genre: 'Pop, Charts & Aktuelles aus Mitteldeutschland', url: 'https://mdr-284320-0.sslcast.mdr.de/mdr/284320/0/mp3/high/stream.mp3' },
+    { name: 'MDR KULTUR', logo:'tv-radio/mdr-kultur.png', genre: 'Kultur, Klassik & Gewandhaus-Stadt Leipzig', url: 'https://mdr-284310-0.sslcast.mdr.de/mdr/284310/0/mp3/high/stream.mp3' },
+    { name: 'MDR AKTUELL', logo:'tv-radio/mdr-aktuell.png', genre: 'Nachrichten im 15-Minuten-Takt', url: 'https://mdr-284340-0.sslcast.mdr.de/mdr/284340/0/mp3/high/stream.mp3' },
     { name: '🛋️ SomaFM Groove Salad', genre: 'Ambient Chillout & Downtempo Lounge (Werbefrei)', url: 'https://ice2.somafm.com/groovesalad-128-mp3' },
     { name: '🎷 SwissJazz (SRG SSR)', genre: '24/7 Smooth Jazz, Swing & Soul (100 % Werbefrei)', url: 'https://stream.srg-ssr.ch/m/rsj/mp3_128' },
     { name: '🎼 SwissClassic (SRG SSR)', genre: '24/7 Klassische Meisterwerke (100 % Werbefrei)', url: 'https://stream.srg-ssr.ch/m/rsc_de/mp3_128' },
@@ -1803,13 +1903,78 @@
   ];
 
   let activeRadioUrl = '';
+  let radioHls = null;
+  let radioCatalog = [];
+  let radioOffset = 0;
+  let radioSearchVersion = 0;
+  let radioLanguagesRequested = false;
+  const radioBase = 'https://de1.api.radio-browser.info/json/';
+  const radioLanguageNames = { ukrainian:'Українська',german:'Deutsch',english:'English',polish:'Polski',french:'Français',spanish:'Español',turkish:'Türkçe',russian:'Русский',arabic:'العربية',italian:'Italiano' };
+
+  function isHttps(value) {
+    return typeof value === 'string' && /^https:\/\/[^\s]+$/i.test(value);
+  }
+
+  async function loadRadioLanguages() {
+    if (radioLanguagesRequested) return;
+    radioLanguagesRequested = true;
+    try {
+      const response = await fetch(radioBase + 'languages?hidebroken=true');
+      if (!response.ok) throw Error('Radio Browser');
+      const languages = await response.json();
+      const select = document.getElementById('radioLanguage');
+      languages.filter(item => item.name && item.name !== 'ukrainian' && item.stationcount >= 2 && !item.name.startsWith('#'))
+        .sort((a,b) => (radioLanguageNames[a.name] || a.name).localeCompare(radioLanguageNames[b.name] || b.name,currentLang))
+        .forEach(item => select.add(new Option(radioLanguageNames[item.name] || item.name,item.name)));
+    } catch (_) { radioLanguagesRequested = false; }
+  }
+
+  async function loadRadioCatalog(reset) {
+    const select = document.getElementById('radioLanguage');
+    const more = document.getElementById('radioMore');
+    const status = document.getElementById('radioCatalogStatus');
+    const version = ++radioSearchVersion;
+    if (reset) {
+      radioCatalog = [];
+      radioOffset = 0;
+      renderRadioStations();
+    }
+    more.hidden = true;
+    status.textContent = '';
+    if (select.value === 'local') return;
+    status.textContent = '…';
+    const query = new URLSearchParams({hidebroken:'true',order:'votes',reverse:'true',limit:'100',offset:String(radioOffset)});
+    if (select.value) query.set('language',select.value);
+    try {
+      const response = await fetch(radioBase + 'stations/search?' + query);
+      if (!response.ok) throw Error('Radio Browser');
+      const rows = await response.json();
+      if (version !== radioSearchVersion) return;
+      radioOffset += rows.length;
+      const known = new Set(radioCatalog.map(st => st.url));
+      rows.forEach(item => {
+        if (!item.lastcheckok || !(item.codec === 'MP3' || item.hls) || !isHttps(item.url_resolved) || known.has(item.url_resolved)) return;
+        known.add(item.url_resolved);
+        radioCatalog.push({name:item.name,genre:item.country,logo:isHttps(item.favicon) ? item.favicon : '',url:item.url_resolved,hls:Boolean(item.hls)});
+      });
+      renderRadioStations();
+      more.hidden = rows.length < 100;
+      status.textContent = radioCatalog.length ? String(radioCatalog.length) : translations[currentLang][16];
+      if (!reset && !more.hidden) more.focus();
+    } catch (_) {
+      if (version !== radioSearchVersion) return;
+      status.textContent = 'Radio Browser · offline';
+      more.hidden = false;
+    }
+  }
 
   function renderRadioStations() {
     const grid = document.getElementById('radioStationsGrid');
     if (!grid) return;
     const focusedStation = grid.contains(document.activeElement) ? document.activeElement.dataset.station : '';
     grid.innerHTML = '';
-    RADIO_STATIONS.forEach(st => {
+    const stations = document.getElementById('radioLanguage').value === 'local' ? RADIO_STATIONS.filter(st => st.logo) : radioCatalog;
+    stations.forEach(st => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.dataset.station = st.url;
@@ -1825,6 +1990,7 @@
         const logo = document.createElement('img');
         logo.className = 'radio-station-logo';
         logo.alt = '';
+        logo.loading = 'lazy';
         logo.src = st.logo;
         logo.onerror = () => { logo.hidden = true; };
         btn.prepend(logo);
@@ -1838,8 +2004,14 @@
   function playRadioStation(st) {
     const audio = document.getElementById('radioAudioPlayer');
     activeRadioUrl = st.url;
-    audio.src = st.url;
-    audio.play().catch(() => {});
+    if (radioHls) { radioHls.destroy(); radioHls = null; }
+    const start = () => audio.play().catch(() => { document.getElementById('radioCatalogStatus').textContent = 'Stream nicht verfügbar'; });
+    if ((st.hls || /\.m3u8(?:[?#]|$)/i.test(st.url)) && window.Hls && Hls.isSupported()) {
+      radioHls = new Hls();
+      radioHls.attachMedia(audio);
+      radioHls.on(Hls.Events.MANIFEST_PARSED,start);
+      radioHls.loadSource(st.url);
+    } else { audio.src = st.url; start(); }
     document.getElementById('nowPlayingRadioName').textContent = st.name;
     document.getElementById('nowPlayingRadioBanner').style.display = 'block';
     renderRadioStations();
@@ -1847,8 +2019,10 @@
 
   function stopRadio() {
     const audio = document.getElementById('radioAudioPlayer');
+    if (radioHls) { radioHls.destroy(); radioHls = null; }
     audio.pause();
-    audio.src = '';
+    audio.removeAttribute('src');
+    audio.load();
     activeRadioUrl = '';
     document.getElementById('nowPlayingRadioBanner').style.display = 'none';
     renderRadioStations();
@@ -1901,6 +2075,7 @@
       stopRadio();
       renderIptvLists();
     } else if (id === 'radioModal') {
+      loadRadioLanguages();
       renderRadioStations();
     } else if (id === 'youtubeModal') {
       stopRadio();
@@ -1919,6 +2094,7 @@
     const frame = document.getElementById('departureBoard');
     if (frame.getAttribute('src') !== stop.dataset.board) frame.src = stop.dataset.board;
     frame.title = 'LVB Stationboard · ' + stop.textContent;
+    document.getElementById('fritzContext').hidden = !stop.dataset.board.includes('/0012971?');
     document.getElementById('departureBoardLink').href = stop.dataset.board;
   }
 
@@ -1936,10 +2112,7 @@
     active.classList.remove('active');
     document.querySelector('.tv-stage').removeAttribute('inert');
     if (!restoreFocus) return;
-    if (active.id === 'departureModal') {
-      openModal('guideModal');
-      document.querySelector('.departure-card').focus();
-    } else if (menuFocus) menuFocus.focus();
+    if (menuFocus) menuFocus.focus();
   }
 
   function moveRemoteFocus(root, key) {
