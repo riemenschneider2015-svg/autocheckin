@@ -1172,13 +1172,13 @@
       <button type="button" class="channel-btn" onclick="loadYoutubeEmbed('jazz')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="m5 7 12-4M15 12h3m-3 4h3"/><circle cx="9" cy="14" r="2"/></svg> Café Jazz & Lounge</button>
       <button type="button" class="channel-btn" onclick="loadYoutubeEmbed('classical')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="m5 7 12-4M15 12h3m-3 4h3"/><circle cx="9" cy="14" r="2"/></svg> Bach & Klassik</button>
       <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin:8px 0;">
-      <button type="button" class="tv-btn tv-btn-primary" style="width:100%; justify-content:center;" onclick="launchNativeTvApp('111299001912', 'https://www.youtube.com/tv')">
-        YouTube App öffnen
+      <button type="button" class="tv-btn tv-btn-primary" style="width:100%; justify-content:center;" onclick="launchNativeTvApp('xvvl3S1TT1.TizenTubeStandalone', null)">
+        YouTube mit Werbeblocker öffnen
       </button>
       <button type="button" class="tv-btn" style="width:100%; justify-content:center; margin-top:4px;" onclick="launchNativeTvApp('3201606009684', 'https://open.spotify.com')">
         Spotify App öffnen
       </button>
-      <p class="youtube-help">Wählen Sie ein Video oder öffnen Sie direkt Ihre Lieblings-App. Viel Freude beim Entspannen!</p>
+      <p class="youtube-help">Für YouTube mit Werbeblocker öffnen Sie bitte TizenTube über den blauen Knopf. Die Video-Vorschau im Browser kann Werbung enthalten. Viel Freude beim Entspannen!</p>
     </div>
 
     <div class="iptv-player-box youtube-player-box">
@@ -2289,6 +2289,7 @@
       }
     } catch (e) {}
     if (fallbackUrl) window.open(fallbackUrl, '_blank');
+    else if (appId === 'xvvl3S1TT1.TizenTubeStandalone') alert('TizenTube konnte gerade nicht gestartet werden. Bitte öffnen Sie TizenTube über die Home-Taste Ihrer Fernbedienung.');
   }
 
   // =========================================================

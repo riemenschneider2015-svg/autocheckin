@@ -28,6 +28,7 @@ ALLOWED_TV_APPS = {
     "3202010022079": "Samsung Browser",
     "3201907018807": "Netflix",
     "111299001912": "YouTube",
+    "xvvl3S1TT1.TizenTubeStandalone": "TizenTube",
     "3201910019365": "Prime Video",
     "3201606009684": "Spotify",
     "3201901017640": "Disney+"
