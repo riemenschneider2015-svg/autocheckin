@@ -1,11 +1,5 @@
 #EXTM3U
-
-# =========================================================================
-# StayInLeipzig · Smart-TV Live-TV Senderliste (55 geprüfte HD-Streams)
-# Sortiert nach Ländern & in der jeweiligen Landessprache
-# =========================================================================
-
-# --- 🇩🇪 Deutschland (Deutsch) ---
+# StayInLeipzig: 896 direct media streams, sorted by language.
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/MDR_Logo_2017.svg/960px-MDR_Logo_2017.svg.png" group-title="🇩🇪 Deutschland (Deutsch)",MDR Sachsen HD (Leipzig)
 https://mdrtvsnhls.akamaized.net/hls/live/2016928/mdrtvsn/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/ARD_Dachmarke_2014.svg/960px-ARD_Dachmarke_2014.svg.png" group-title="🇩🇪 Deutschland (Deutsch)",Das Erste (ARD) HD
@@ -36,8 +30,6 @@ https://rbb-hls-berlin.akamaized.net/hls/live/2017824/rbb_berlin/master.m3u8
 https://mdrtvthhls.akamaized.net/hls/live/2016880/mdrtvth/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/MDR_Logo_2017.svg/960px-MDR_Logo_2017.svg.png" group-title="🇩🇪 Deutschland (Deutsch)",MDR Sachsen-Anhalt HD
 https://mdrtvsahls.akamaized.net/hls/live/2016879/mdrtvsa/index.m3u8
-
-# --- 🇬🇧 United Kingdom & Intl. (English) ---
 #EXTINF:-1 group-title="🇬🇧 United Kingdom & Intl. (English)",Sky News International HD
 https://linear901-oo-hls0-prd-gtm.delivery.skycdp.com/17501/sde-fast-skynews/master.m3u8
 #EXTINF:-1 group-title="🇬🇧 United Kingdom & Intl. (English)",GB News UK HD
@@ -48,16 +40,12 @@ https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8
 https://tv-trtworld.medya.trt.com.tr/master.m3u8
 #EXTINF:-1 group-title="🇬🇧 United Kingdom & Intl. (English)",CGTN English HD
 https://news.cgtn.com/resource/live/english/cgtn-news.m3u8
-
-# --- 🇺🇸 United States (English) ---
 #EXTINF:-1 group-title="🇺🇸 United States (English)",CBS News 24/7 USA HD
 https://cbsn-us.cbsnstream.cbsnews.com/out/v1/55a8648e8f134e82a470f83d562deeca/master.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5e7cb84a172a0f0007da69e4/colorLogoPNG.png" group-title="🇺🇸 United States (English)",Red Bull TV HD
 https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8
 #EXTINF:-1 group-title="🇺🇸 United States (English)",NASA TV Public HD
 https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8
-
-# --- 🇫🇷 France (Français) ---
 #EXTINF:-1 group-title="🇫🇷 France (Français)",TV5MONDE Info HD
 https://ott.tv5monde.com/Content/HLS/Live/channel(info)/variant.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/20_Minutes_TV_IDF_logo_%282023%29.png/960px-20_Minutes_TV_IDF_logo_%282023%29.png" group-title="🇫🇷 France (Français)",20 Minutes TV Paris HD
@@ -66,8 +54,6 @@ https://live-20minutestv.digiteka.com/1961167769/index.m3u8
 https://r.eu.cdn-redge.media/livehls/oeu/mt/live/6ter_fr/live.livx/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/9C7UsOe.png" group-title="🇫🇷 France (Français)",AB1 France HD
 https://r.eu.cdn-redge.media/livehls/oeu/mt/live/ab1/live.livx/playlist.m3u8
-
-# --- 🇪🇸 España & Latinoamérica (Español) ---
 #EXTINF:-1 tvg-logo="https://i.imgur.com/8MRNFb9.png" group-title="🇪🇸 España & Latinoamérica (Español)",DW Español HD
 https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8
 #EXTINF:-1 group-title="🇪🇸 España & Latinoamérica (Español)",3CatInfo Noticias 24h HD
@@ -76,32 +62,24 @@ https://directes-tv-int.3catdirectes.cat/live-origin/canal324-hls/master.m3u8
 https://especial7tv.gestec-video.com/hls/7TVSEVILLA.m3u8
 #EXTINF:-1 group-title="🇪🇸 España & Latinoamérica (Español)",3Cat Entretenimiento HD
 https://fast-tailor.3catdirectes.cat/v1/channel/ccma-channel2/hls.m3u8
-
-# --- 🇮🇹 Italia (Italiano) ---
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/7gold.jpg/960px-7gold.jpg" group-title="🇮🇹 Italia (Italiano)",7 Gold Italia HD
 https://streamcdnr6-dddfac816632463dac50b21109dc1bb3.msvdn.net/live/S58803518/OOZape6Nxp4H/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/D3OTRzf.png" group-title="🇮🇹 Italia (Italiano)",50 Canale Italia HD
 https://load-balancer.azotosolutions.com/cdnedge37/canale50/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/mBYxWOg.png" group-title="🇮🇹 Italia (Italiano)",12 TV Parma Italia
 https://5929b138b139d.streamlock.net/12TVParma/livestream/playlist.m3u8
-
-# --- 🇵🇱 Polska (Polski) ---
 #EXTINF:-1 tvg-logo="https://i.ibb.co/B5BfmQNs/ATM.jpg" group-title="🇵🇱 Polska (Polski)",ATM Rozrywka Polska HD
 https://183.giatvcdn.com/giatvplayout7/giatv-211353/playlist.m3u8
 #EXTINF:-1 group-title="🇵🇱 Polska (Polski)",4Fun TV Polska
 https://stream.4fun.tv:8888/hls/4f.m3u8
 #EXTINF:-1 group-title="🇵🇱 Polska (Polski)",4Fun Kids Polska HD
 https://stream.4fun.tv:8889/hd/kids_hd_high.m3u8
-
-# --- 🇳🇱 Nederland (Nederlands) ---
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ftiuNK3.png" group-title="🇳🇱 Nederland (Nederlands)",1Twente TV Nederland HD
 https://ms7.mx-cd.net/dtv-11/198-989148/1Twente_TV.smil/chunklist_w954512639_b4292608_slNLD.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/XfkbTrU.png" group-title="🇳🇱 Nederland (Nederlands)",1Almere TV Nederland HD
 https://d3472rjicrodic.cloudfront.net/nlpo/clr-nlpo/709d5260/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/1Fyezng.png" group-title="🇳🇱 Nederland (Nederlands)",360TuneBox Muziek HD
 https://dash3.antik.sk/live/test_360_tunebox_medium_atk/playlist.m3u8
-
-# --- 🇹🇷 Türkiye (Türkçe) ---
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/TRT_Haber_Eyl%C3%BCl_2020_Logo.svg/960px-TRT_Haber_Eyl%C3%BCl_2020_Logo.svg.png" group-title="🇹🇷 Türkiye (Türkçe)",TRT Haber HD
 https://tv-trthaber.medya.trt.com.tr/master.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/TRT_T%C3%BCrk_logo.svg/960px-TRT_T%C3%BCrk_logo.svg.png" group-title="🇹🇷 Türkiye (Türkçe)",TRT Türk HD
@@ -110,8 +88,6 @@ https://tv-trtturk.medya.trt.com.tr/master.m3u8
 https://tv-trtmuzik.medya.trt.com.tr/master.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TRT_%C3%87ocuk_logo_%282021%29.svg/960px-TRT_%C3%87ocuk_logo_%282021%29.svg.png" group-title="🇹🇷 Türkiye (Türkçe)",TRT Çocuk HD
 https://tv-trtcocuk.medya.trt.com.tr/master.m3u8
-
-# --- 🇺🇦 Україна (Українська) ---
 #EXTINF:-1 tvg-logo="https://i.imgur.com/LOY0rtp.png" group-title="🇺🇦 Україна (Українська)",1+1 International HD
 https://dash2.antik.sk/live/test_one_plus_one_int_tizen/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/smQKa2G.png" group-title="🇺🇦 Україна (Українська)",1+1 Марафон · Єдині Новини HD
@@ -120,18 +96,12 @@ https://dash2.antik.sk/live/1plus1_marathon/playlist.m3u8
 https://cdn15.live-tv.cloud/ua_infinitas_tv/news24-abr/playlist.m3u8
 #EXTINF:-1 group-title="🇺🇦 Україна (Українська)",DW Східна Європа HD
 https://dwamdstream105.akamaized.net/hls/live/2015531/dwstream105/index.m3u8
-
-# --- 🇷🇺 Русский (Russian) ---
-#EXTINF:-1 group-title="🇷🇺 Русский (Russian)",DW Русский HD
-https://dwamdstream105.akamaized.net/hls/live/2015531/dwstream105/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/VTJqdoX.png" group-title="🇷🇺 Русский (Russian)",360° HD (1080p)
 https://cdn-evacoder-tv.facecast.io/evacoder_hls_hi/CkxfR1xNUAJwTgtXTBZTAJli/index.m3u8
 #EXTINF:-1 group-title="🇷🇺 Русский (Russian)",360° Новости HD (1080p)
 https://edge-tv-ll.facecast.io/evacoder_hls_hi/UBZfFgtKB1JwTwoDERNQVGGs/index.m3u8
 #EXTINF:-1 group-title="🇷🇺 Русский (Russian)",365 Дней ТВ (История)
 https://stream8.cinerama.uz/1242/tracks-v1a1/mono.m3u8
-
-# --- 🇦🇹 Österreich & 🇨🇭 Schweiz ---
 #EXTINF:-1 tvg-logo="https://i.imgur.com/nUKFDsb.jpeg" group-title="🇦🇹 Österreich & 🇨🇭 Schweiz",Antenne Kärnten TV HD (AT)
 https://60efd7a2b4d02.streamlock.net/a_kaernten/ngrp:livestream_all/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/qnappvd.jpeg" group-title="🇦🇹 Österreich & 🇨🇭 Schweiz",Antenne Steiermark TV HD (AT)
@@ -140,16 +110,12 @@ https://60efd7a2b4d02.streamlock.net/a_steiermark/ngrp:livestream_all/playlist.m
 https://canalalphaju.vedge.infomaniak.com/livecast/ik:canalalphaju/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/TSc35U6.png" group-title="🇦🇹 Österreich & 🇨🇭 Schweiz",Carac 1 Suisse HD (CH)
 https://edge13.vedge.infomaniak.com/livecast/ik:event/manifest.m3u8
-
-# --- 🌍 العربية (Arabic) ---
 #EXTINF:-1 group-title="🌍 العربية (Arabic)",Al Jazeera الجزيرة مباشر HD
 https://live-hls-web-aja.getaj.net/AJA/index.m3u8
 #EXTINF:-1 group-title="🌍 العربية (Arabic)",DW عربية HD
 https://dwamdstream103.akamaized.net/hls/live/2015526/dwstream103/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/dEfI2M9.png" group-title="🌍 العربية (Arabic)",TRT عربي HD
 https://tv-trtarabi.medya.trt.com.tr/master.m3u8
-
-# IPTV-org · additional HTTPS/HLS streams · https://github.com/iptv-org/iptv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/WhPlJzh.jpeg" tvg-id="ABNsat.iq" tvg-language="العربية" group-title="Irak",ABNsat (720p)
 https://mediaserver.abnvideos.com/streams/abnsat.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/r8MmFRX.png" tvg-id="AfghanistanInternational.uk" tvg-language="العربية" group-title="Vereinigtes Königreich",Afghanistan International (720p)
@@ -998,8 +964,6 @@ https://stream.hrbtv.net/yspd/playlist.m3u8
 https://event.pull.hebtv.com/live/live101.m3u8
 #EXTINF:-1 tvg-logo="https://www.tvchinese.net/uploads/tv/hnjs.jpg" tvg-id="HunanEconomyChannel.cn" tvg-language="中文" group-title="China",Hunan Economy Channel
 https://p8.vzan.com/slowlive/415983998730568937/live.m3u8
-
-# Additional IPTV-org feeds, verified over HTTPS
 #EXTINF:-1 tvg-id="BMSTV.id" tvg-logo="https://i.imgur.com/snMxng5.png" tvg-language="Bahasa Indonesia" group-title="Indonesien",BMS TV (720p) [Not 24/7]
 https://5bf7b725107e5.streamlock.net/bmstv/bmstv/playlist.m3u8
 #EXTINF:-1 tvg-id="DhammaTV.id" tvg-logo="https://dhammaweb.tv/wp-content/uploads/2018/08/cropped-dhammatv-3.png" tvg-language="Bahasa Indonesia" group-title="Indonesien",Dhamma TV (720p) [Not 24/7]
@@ -1570,59 +1534,6 @@ https://live.wcetv.com/hls/master-ttvnews.m3u8
 https://h5cul1yar48um3t.wcetv.com/hls/wcetv318.m3u8
 #EXTINF:-1 tvg-id="ShopChannel.jp" tvg-logo="https://www.shopch.jp/com/images/common/logo_2021.png" tvg-language="日本語" group-title="Japan",Shop Channel (1080p) [Not 24/7]
 https://stream3.shopch.jp/HLS/master.m3u8
-
-# Official broadcaster live streams and websites
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/hd/welt-hd-de.png" tvg-type="official" tvg-language="Deutsch" group-title="Deutschland",WELT (ehemals N24)
-https://www.welt.de/tv-programm-live-stream/
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/n24-doku-de.png" tvg-type="official" tvg-language="Deutsch" group-title="Deutschland",N24 Doku
-https://www.welt.de/tv-programm-n24-doku/
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/ntv-de.png" tvg-type="official" tvg-language="Deutsch" group-title="Deutschland",n-tv
-https://www.n-tv.de/mediathek/livestream/
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/hd/rtl-hd-de.png" tvg-type="official" tvg-language="Deutsch" group-title="Deutschland",RTL
-https://plus.rtl.de/tv-programm
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/hd/sat-1-hd-de.png" tvg-type="official" tvg-language="Deutsch" group-title="Deutschland",SAT.1
-https://www.joyn.de/live-tv/sat1
-#EXTINF:-1 tvg-type="official" tvg-language="Deutsch" group-title="Deutschland",ProSieben
-https://www.joyn.de/live-tv/prosieben
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/hd/vox-hd-de.png" tvg-type="official" tvg-language="Deutsch" group-title="Deutschland",VOX
-https://plus.rtl.de/tv-programm#vox
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/france/tf1-fr.png" tvg-type="official" tvg-language="Français" group-title="Frankreich",TF1
-https://www.tf1.fr/direct
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/france/m6-fr.png" tvg-type="official" tvg-language="Français" group-title="Frankreich",M6
-https://www.m6.fr/m6/direct
-#EXTINF:-1 tvg-type="official" tvg-language="Español" group-title="Spanien",Antena 3
-https://www.atresplayer.com/directos/antena3/
-#EXTINF:-1 tvg-type="official" tvg-language="Türkçe" group-title="Türkei",atv
-https://www.atv.com.tr/canli-yayin
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="English" group-title="Europa",Euronews · English
-https://www.euronews.com/live
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="Deutsch" group-title="Europa",Euronews · Deutsch
-https://de.euronews.com/live
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="Français" group-title="Europa",Euronews · Français
-https://fr.euronews.com/live
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="Italiano" group-title="Europa",Euronews · Italiano
-https://it.euronews.com/live
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="Español" group-title="Europa",Euronews · Español
-https://es.euronews.com/live
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="Português" group-title="Europa",Euronews · Português
-https://pt.euronews.com/live
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="Ελληνικά" group-title="Europa",Euronews · Ελληνικά
-https://gr.euronews.com/live
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="Magyar" group-title="Europa",Euronews · Magyar
-https://hu.euronews.com/live
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="Русский" group-title="Europa",Euronews · Русский
-https://ru.euronews.com/live
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="فارسی" group-title="Europa",Euronews · فارسی
-https://fa.euronews.com/live
-
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="العربية" group-title="Europa",Euronews · العربية
-https://arabic.euronews.com/live
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="Türkçe" group-title="Europa",Euronews · Türkçe
-https://tr.euronews.com/live
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/germany/euronews-deutsch-de.png" tvg-type="official" tvg-language="Polski" group-title="Europa",Euronews · Polski
-https://pl.euronews.com/live
-
-# Free-TV/IPTV · HLS tested · https://github.com/Free-TV/IPTV
 #EXTINF:-1 tvg-id="BNTV.ba" tvg-logo="https://i.imgur.com/DUBvfWb.png" tvg-language="Bosanski" group-title="Bosnien und Herzegowina",RTV BN
 https://stream2.rtvbn.tv:8080/live_1935/bnstream/index.m3u8
 #EXTINF:-1 tvg-id="RTVZenica.ba" tvg-logo="https://i.imgur.com/TKUaflB.png" tvg-language="Bosanski" group-title="Bosnien und Herzegowina",RTV ZE

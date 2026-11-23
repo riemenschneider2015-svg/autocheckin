@@ -1016,42 +1016,88 @@ class CheckinHandler(http.server.SimpleHTTPRequestHandler):
         data = load_data()
         settings = data.get("settings", {})
         pins = data.get("pins", [])
-        guest_pins = [p for p in pins if p.get("role") != "admin" and p.get("active", True)]
+        def is_guest_booking(entry):
+            if not isinstance(entry, dict) or not entry.get("active", True):
+                return False
+            role = str(entry.get("role", "")).strip().lower()
+            name = str(entry.get("name", "")).strip().lower()
+            if role in ("admin", "administrator", "master", "owner", "host"):
+                return False
+            if entry.get("is_master") or entry.get("is_admin"):
+                return False
+            return bool(name) and not re.match(
+                r"^(?:master(?:[\s_-]?(?:login|pin))?|admin(?:istrator)?|gastgeber)(?:$|[\s:_-])",
+                name
+            )
+
+        guest_pins = [p for p in pins if is_guest_booking(p)]
+
+        now = datetime.now()
+
+        def in_stay_window(p):
+            try:
+                if not p.get("valid_from") or not p.get("valid_until"):
+                    # Manual TV greeting without dates: show for 12h after wake
+                    woke = p.get("woke_at")
+                    if not woke:
+                        return False
+                    w = datetime.strptime(str(woke)[:19], "%Y-%m-%d %H:%M:%S")
+                    return w <= now <= w + timedelta(hours=12)
+                vf = parse_iso(p.get("valid_from")) - timedelta(hours=12)
+                vu = parse_iso(p.get("valid_until")) + timedelta(hours=6)
+                return vf <= now <= vu
+            except Exception:
+                return False
 
         chosen = None
         if req_pin:
             for p in guest_pins:
-                if str(p.get("pin", "")).strip() == req_pin:
+                if str(p.get("pin", "")).strip() == req_pin and in_stay_window(p):
                     chosen = p
                     break
 
         if not chosen and settings.get("tv_last_guest"):
             last_g = settings.get("tv_last_guest")
-            if last_g and last_g.get("name"):
+            if is_guest_booking(last_g) and in_stay_window(last_g):
                 chosen = last_g
 
-        now = datetime.now()
         if not chosen:
             for p in guest_pins:
+                if in_stay_window(p):
+                    chosen = p
+                    if p.get("checked_in_at"):
+                        break
+
+        # Prepare the next arrival welcome; door access stays unchanged.
+        if not chosen:
+            upcoming = []
+            for p in guest_pins:
                 try:
-                    vf = parse_iso(p.get("valid_from")) - timedelta(hours=12)
-                    vu = parse_iso(p.get("valid_until")) + timedelta(hours=6)
-                    if vf <= now <= vu:
-                        chosen = p
-                        if p.get("checked_in_at"):
-                            break
+                    arrival = parse_iso(p.get("valid_from"))
+                    departure = parse_iso(p.get("valid_until"))
+                    if now < arrival <= now + timedelta(hours=24) and departure > arrival:
+                        upcoming.append((arrival, p))
                 except Exception:
                     pass
+            if upcoming:
+                upcoming.sort(key=lambda item: item[0])
+                chosen = upcoming[0][1]
 
-        if not chosen and guest_pins:
-            chosen = guest_pins[0]
+        # Public endpoint: never expose PIN, booking id or other private data
+        if chosen:
+            public_guest = {
+                "name": chosen.get("name", "Liebe Gäste"),
+                "salutation": chosen.get("salutation", "auto"),
+                "valid_from": chosen.get("valid_from", ""),
+                "valid_until": chosen.get("valid_until", "")
+            }
+        else:
+            public_guest = {"name": "Liebe Gäste", "salutation": "auto"}
 
         self.send_json({
             "success": True,
-            "guest": chosen or {"name": "Liebe Gäste", "salutation": "auto"},
+            "guest": public_guest,
             "tv_custom_m3u": settings.get("tv_custom_m3u", ""),
-            "tv_ip": settings.get("tv_ip", ""),
-            "tv_mac": settings.get("tv_mac", ""),
             "tv_name": settings.get("tv_name", ""),
             "tv_auto_wake": settings.get("tv_auto_wake", True)
         })
