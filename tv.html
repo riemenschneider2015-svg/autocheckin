@@ -1059,6 +1059,134 @@
       .welcome-subtext { margin:2px 0 3px; }
       .stay-rule { padding:5px; }
     }
+
+    /* TV reading scale: one font, shared surfaces and consistent controls. */
+    :root { --tv-font:Arial,"Segoe UI",sans-serif; --tv-body:clamp(16px,1.25vw,24px); --tv-small:clamp(14px,1.05vw,20px); --tv-label:clamp(18px,1.45vw,28px); --tv-radius:22px; --tv-gap:clamp(12px,1vw,20px); --text:#18283e; --text-muted:#40536d; }
+    html { font-size:16px; }
+    body,button,input,select,textarea { font-family:var(--tv-font); }
+    body { font-size:var(--tv-body); line-height:1.4; }
+    h1,h2,h3,p { font-family:inherit; }
+    .welcome-headline { font-family:var(--tv-font); font-weight:700; font-size:clamp(32px,2.85vw,55px); letter-spacing:-.035em; line-height:1.12; }
+    .welcome-guest { font-size:clamp(24px,1.9vw,36px); font-weight:700; }
+    .welcome-kicker { display:none; }
+    .welcome-subtext { font-size:var(--tv-body); line-height:1.45; margin:.45rem 0; }
+    .welcome-badges .info-chip { font-size:var(--tv-small); font-weight:600; }
+    .home-primary>.welcome-card { padding:clamp(16px,1.25vw,24px); gap:5px; overflow:auto; }
+    .stay-rules { gap:10px; margin-top:8px; }
+    .stay-rule { font-size:var(--tv-small); line-height:1.4; padding:10px; min-height:64px; color:var(--text); background:#edf2f8; }
+    .welcome-contact,.host-contact { font-size:var(--tv-small); margin-top:10px; }
+    .welcome-contact strong,.host-contact strong { font-weight:700; }
+    .brand-title { font-size:clamp(22px,1.65vw,32px); font-weight:700; }
+    .language-select,.lang-select,.uk-shortcut,.tv-topbar select { font-family:inherit; font-size:var(--tv-small); min-height:42px; }
+    .clock-date,.current-weather-city { font-size:var(--tv-small); }
+    .tv-topbar,.welcome-card,.menu-section,.home-departures,.home-support { border:1px solid #d7e1ed; border-radius:var(--tv-radius); background:rgba(250,252,255,.98); box-shadow:0 4px 18px rgba(20,40,70,.12); }
+    .home-actions,.home-primary,.tiles-grid { gap:var(--tv-gap); }
+    .menu-section { padding:clamp(14px,1.25vw,24px); }
+    .menu-title { font-size:var(--tv-label); text-transform:none; letter-spacing:0; font-weight:700; }
+    .remote-hint { font-size:var(--tv-small); }
+    .menu-header { margin-bottom:12px; }
+    .tv-tile { min-height:clamp(58px,7.5vh,82px); padding:12px 16px; border:1px solid #ccd8e7; border-radius:14px; background:#fff; box-shadow:0 2px 6px rgba(24,40,62,.05); }
+    .tile-name { font-size:var(--tv-label); line-height:1.2; font-weight:700; }
+    .tv-line-icon { color:#315a8b; }
+    .home-departures { padding:clamp(14px,1.35vw,26px); }
+    .home-departures-button { font-size:clamp(18px,1.35vw,26px); font-weight:700; line-height:1.3; margin-bottom:6px; }
+    .home-board { overflow:hidden; }
+    .home-support { padding:12px 16px; }
+    .home-wifi { font-size:var(--tv-small); }
+    .home-wifi small,.home-wifi .wifi-password,.wifi-password b { font-size:var(--tv-small); line-height:1.45; }
+    .home-wifi strong { font-size:var(--tv-label); }
+    .forecast-day { font-size:var(--tv-small); gap:4px; }
+    .forecast-day strong { font-size:clamp(18px,1.35vw,26px); }
+    .weather-pictogram { width:clamp(26px,2vw,38px); }
+    .tv-modal { font-family:var(--tv-font); font-size:var(--tv-body); background:#f3f6fb; gap:var(--tv-gap); padding:clamp(18px,2vw,38px); }
+    .modal-topbar { padding:0 0 16px; min-height:64px; border-bottom:1px solid #ccd8e7; }
+    .modal-title { font-size:clamp(25px,2vw,38px); font-weight:700; line-height:1.2; }
+    .modal-actions { gap:12px; }
+    .tv-btn,.tv-field,.country-btn,.channel-btn { font-family:inherit; font-size:var(--tv-body); line-height:1.35; min-height:48px; border-radius:12px; }
+    .tv-btn { padding:12px 20px; font-weight:600; justify-content:center; }
+    .tv-btn-primary { background:#285da3; color:#fff; }
+    .tv-btn-primary .tv-line-icon { color:inherit; }
+    .iptv-panel,.radio-card,.detail-card,.streaming-card,.shopping-map-card,.place-card,.transit-route,.qr-guide-card,.iptv-player-box { border:1px solid #d2ddea; border-radius:var(--tv-radius); background:#fff; box-shadow:0 3px 12px rgba(24,40,62,.06); color:var(--text); }
+    .iptv-panel { padding:16px; gap:12px; }
+    .iptv-panel-header { font-size:var(--tv-small); font-weight:700; text-transform:none; letter-spacing:0; }
+    #channelsListContainer .channel-btn { font-size:var(--tv-body); min-height:58px; padding:12px; }
+    .channel-logo { width:52px; height:36px; }
+    .list-status,.channel-group,.count-pill,.player-osd,.guide-hint,.map-legend,.youtube-help,.transit-context { font-size:var(--tv-small); line-height:1.45; }
+    .channel-group { font-weight:700; }
+    .radio-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--tv-gap); }
+    .radio-card { padding:20px; gap:10px; }
+    .radio-name { font-size:var(--tv-label); font-weight:700; line-height:1.25; }
+    .radio-description,.radio-state { font-size:var(--tv-small); line-height:1.4; }
+    .radio-state { font-weight:600; }
+    .youtube-layout { display:grid; grid-template-columns:minmax(300px,1fr) minmax(0,1.8fr); gap:var(--tv-gap); flex:1; min-height:0; }
+    .detail-grid,.streaming-grid,.shopping-layout { gap:var(--tv-gap); }
+    .detail-card,.streaming-card { padding:clamp(20px,2vw,38px); }
+    .detail-card h2,.streaming-card strong { font-size:clamp(24px,2vw,38px); font-weight:700; }
+    .detail-card p,.detail-note,.streaming-card span,.streaming-card small,.shopping-place p,.place-route { font-size:var(--tv-body); line-height:1.45; }
+    .shopping-map-card h3,.shopping-group>h3,.shopping-place h3 { font-size:var(--tv-label); font-weight:700; }
+    .shopping-place { border-radius:16px; padding:16px; }
+    .map-source,.guide-photo-source { font-size:14px; line-height:1.4; }
+    #guideModal .delivery-note { margin:0; padding:12px 16px; font-size:var(--tv-small); flex:none; }
+    .player-empty strong { font-size:clamp(24px,2vw,38px); font-weight:700; }
+    .player-empty span { font-size:var(--tv-body); }
+    button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible { outline:3px solid #285da3; outline-offset:3px; }
+    @media(min-width:851px) and (max-height:800px) {
+      :root { --tv-body:17px; --tv-small:15px; --tv-label:20px; --tv-gap:12px; }
+      .tv-stage { padding:14px 24px; gap:12px; }
+      .tv-topbar { padding:8px 16px; }
+      .home-primary>.welcome-card { padding:14px 18px; gap:3px; }
+      .welcome-headline { font-size:34px; margin:0; }
+      .welcome-guest { font-size:25px; margin:0; }
+      .welcome-subtext { font-size:17px; margin:3px 0; line-height:1.35; }
+      .stay-rules { margin-top:4px; gap:8px; }
+      .stay-rule { padding:7px; min-height:52px; }
+      .welcome-contact { margin-top:5px; }
+      .menu-header { margin-bottom:8px; }
+      .menu-section { padding:12px 16px; }
+      .tv-tile { min-height:58px; padding:10px 12px; }
+      .home-support { padding:8px 12px; }
+      .home-wifi img { width:60px; }
+      .current-weather-temp { font-size:36px; }
+      .home-departures { padding:14px; }
+      .home-departures-button { font-size:18px; }
+      .radio-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    }
+    @media(max-width:850px) {
+      .tv-stage { height:100vh; overflow:auto; }
+      .home-primary>.welcome-card { overflow:visible; }
+      .radio-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .youtube-layout { grid-template-columns:1fr; overflow:auto; }
+      .youtube-player-box { min-height:280px; }
+    }
+
+    .welcome-headline,.welcome-guest { margin:0; }
+    /* Official departure boards stay complete at compact TV browser heights. */
+    .home-board-viewport { position:relative; flex:1; min-height:0; overflow:hidden; border-radius:12px; background:#fff; }
+    .home-board .home-board-viewport .home-stationboard { position:absolute; inset:0 auto auto 0; width:75%; max-width:none; height:75%; min-height:0; transform:scale(1.333333); transform-origin:top left; border:0; }
+    .iptv-layout { grid-template-columns:minmax(380px,34%) minmax(0,1fr); }
+    .iptv-filters { grid-template-columns:1fr; }
+    .iptv-filters .tv-field { width:100%; }
+    .tv-btn { text-decoration:none; }
+    .youtube-layout .channel-btn { justify-content:flex-start; gap:12px; border:1px solid #d2ddea; }
+    .shopping-groups { grid-template-rows:minmax(0,2fr) minmax(0,1.15fr); min-height:0; gap:14px; }
+    .shopping-group { min-height:0; gap:10px; }
+    .shopping-group:first-child { grid-template-rows:auto repeat(2,minmax(0,1fr)); }
+    .shopping-group:last-child { grid-template-rows:auto minmax(0,1fr); }
+    .shopping-place { min-height:0; padding:12px; }
+    @media(min-width:851px) and (max-height:800px) {
+      .home-board .home-board-viewport .home-stationboard { width:100%; height:100%; transform:none; }
+      .shopping-place { grid-template-columns:28px minmax(0,1fr) 84px; gap:4px 10px; padding:10px; }
+      .shopping-place .place-route img { width:78px; }
+      .shopping-place h3 { font-size:19px; }
+      .shopping-place p { font-size:16px; }
+      .iptv-filters { gap:8px; }
+    }
+    @media(max-width:850px) {
+      .home-board-viewport { flex:none; height:240px; }
+      .iptv-layout { grid-template-columns:1fr; overflow:auto; }
+      .shopping-groups,.shopping-group:first-child,.shopping-group:last-child { grid-template-rows:auto; }
+      .shopping-place { min-height:120px; }
+    }
   </style>
 </head>
 <body>
@@ -1087,7 +1215,7 @@
     <p class="welcome-subtext" id="welcomeSubtext">Schön, dass Sie da sind!</p>
     <div class="welcome-badges" id="welcomeDates" hidden><p class="info-chip" id="stayPeriodText"></p></div>
 <div class="stay-rules"><div class="stay-rule"><svg class="no-smoking-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 19h18v5H7zM21 19v5M19 7c-3 3 4 4 1 7m4-9c-3 4 4 5 1 9"/><circle cx="16" cy="16" r="14" stroke="#b43e48"/><path d="m6 6 20 20" stroke="#b43e48" stroke-width="3"/></svg><span data-rule="0">Bitte nicht rauchen<br>in der Wohnung</span></div><div class="stay-rule"><svg class="stay-rule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 15a8 8 0 0 1-11-11 8.5 8.5 0 1 0 11 11Z"/></svg><span data-rule="1">Bitte leise sein<br>22–7 Uhr Nachtruhe</span></div><div class="stay-rule"><svg class="stay-rule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4H4v16h6m3-12 4 4-4 4m-5-4h12"/></svg><span data-rule="2">Check-out bis 11 Uhr<br>Vielen Dank!</span></div></div><div class="welcome-contact"><span data-host-label>Wir helfen Ihnen gern</span><strong>+49 152 53453390</strong></div>
-    <div class="delivery-note"><svg class="stay-rule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3v6a3 3 0 0 0 6 0V3M7 3v18m11-18c-3 2-4 6-4 10h4m0-10v18"/></svg><div><strong data-delivery-heading>Essen bestellen · z. B. Lieferando</strong><div class="delivery-address"><span>Mechlerstr. 10, 04105 Leipzig</span><span><span data-delivery-bell>Bitte klingeln bei</span> <b>Riemenschneider</b></span></div></div></div>
+
     <div id="nowPlayingRadioBanner" style="display:none"><span id="nowPlayingRadioName"></span></div>
   </section>
   <section class="menu-section" aria-labelledby="easyMenuHeading">
@@ -1104,8 +1232,8 @@
   </section>
   </div>
   <section class="home-departures" aria-label="LVB Live-Abfahrten">
-    <div class="home-board"><button type="button" class="home-departures-button" onclick="openModal('departureModal','0012968')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14M8 18l-2 3m10-3 2 3m-10-6h1m6 0h1"/></svg><span data-home-transit>Live-Abfahrten · Chausseehaus</span></button><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=0" title="LVB Stationboard · Chausseehaus" tabindex="-1"></iframe></div>
-    <div class="home-board"><button type="button" class="home-departures-button" onclick="openModal('departureModal','0012971')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14M8 18l-2 3m10-3 2 3m-10-6h1m6 0h1"/></svg><span>Fritz-Seger-Straße</span></button><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012971?headertext=Fritz-Seger-Stra%C3%9Fe&amp;showheader=0" title="LVB Stationboard · Fritz-Seger-Straße" tabindex="-1"></iframe></div>
+    <div class="home-board"><button type="button" class="home-departures-button" onclick="openModal('departureModal','0012968')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14M8 18l-2 3m10-3 2 3m-10-6h1m6 0h1"/></svg><span data-home-transit>Live-Abfahrten · Chausseehaus</span></button><div class="home-board-viewport"><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012968?headertext=Chausseehaus&amp;showheader=0" title="LVB Stationboard · Chausseehaus" tabindex="-1"></iframe></div></div>
+    <div class="home-board"><button type="button" class="home-departures-button" onclick="openModal('departureModal','0012971')"><svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14M8 18l-2 3m10-3 2 3m-10-6h1m6 0h1"/></svg><span>Fritz-Seger-Straße</span></button><div class="home-board-viewport"><iframe class="home-stationboard" src="https://stationboard.l.de/monitor/0012971?headertext=Fritz-Seger-Stra%C3%9Fe&amp;showheader=0" title="LVB Stationboard · Fritz-Seger-Straße" tabindex="-1"></iframe></div></div>
   </section>
   </div>
   <div class="home-support"><div class="home-wifi"><img src="qrcodes/qr_wifi.svg" width="72" height="72" alt="WLAN QR"><span><strong data-text="11">WLAN</strong><small>gigacube-EA6A</small><small class="wifi-password"><span data-wifi-password-label>Passwort</span>: <b>Leipzig2025#</b></small></span></div><div id="weatherForecast" class="home-forecast" hidden aria-label="Wetter für die nächsten fünf Tage"></div></div>
@@ -1123,7 +1251,7 @@
       <svg class="tv-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="m5 7 12-4M15 12h3m-3 4h3"/><circle cx="9" cy="14" r="2"/></svg>
       <span data-text="6">Radio</span>
     </div>
-    <div style="display:flex; gap:10px;">
+    <div class="modal-actions">
       <button type="button" class="tv-btn" onclick="stopRadio()">Radio stoppen</button>
       <button type="button" class="tv-btn tv-btn-primary" onclick="closeAllModals()" data-text="17">Zurück</button>
     </div>
@@ -1164,7 +1292,7 @@
     <button type="button" class="tv-btn tv-btn-primary" onclick="closeAllModals()">Zurück</button>
   </div>
 
-  <div style="display:grid; grid-template-columns: 340px 1fr; gap:18px; flex:1; min-height:0;">
+  <div class="youtube-layout">
     <div class="iptv-panel">
       <div class="iptv-panel-header">Schnellwahl & App-Start</div>
       <a class="tv-btn" href="https://www.youtube.com/watch?v=5WnQMhxU4Lg" target="_blank" rel="noopener noreferrer">Leipzig Stadtrundgang (4K) · YouTube</a>
@@ -1249,6 +1377,7 @@
       </a>
     </article></section></div>
   </div>
+    <div class="delivery-note"><svg class="stay-rule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3v6a3 3 0 0 0 6 0V3M7 3v18m11-18c-3 2-4 6-4 10h4m0-10v18"/></svg><div><strong data-delivery-heading>Essen bestellen · z. B. Lieferando</strong><div class="delivery-address"><span><span data-delivery-bell>Bitte klingeln bei</span> <b>Riemenschneider</b></span></div></div></div>
   <div class="guide-photo-source">Augustusplatz, Whgler · <a href="https://commons.wikimedia.org/wiki/File:Leipzig_Augustusplatz_2019.jpg" target="_blank" rel="noopener noreferrer">Bildquelle</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></div>
 </div>
 <div class="tv-modal" id="departureModal" role="dialog" aria-modal="true" aria-labelledby="departureModalTitle">
@@ -2214,9 +2343,9 @@
       btn.dataset.station = st.url;
       btn.className = 'radio-card' + (activeRadioUrl === st.url ? ' playing' : '');
       btn.innerHTML = `
-        <div style="font-size:17px; font-weight:800; color:var(--text);">${escapeHtml(st.name)}</div>
-        <div style="font-size:13px; color:var(--text-muted);">${escapeHtml(st.genre)}</div>
-        <div style="margin-top:6px; font-size:12px; font-weight:700; color:${activeRadioUrl === st.url ? '#17643f' : 'var(--primary)'};">
+        <div class="radio-name">${escapeHtml(st.name)}</div>
+        <div class="radio-description">${escapeHtml(st.genre)}</div>
+        <div class="radio-state" style="color:${activeRadioUrl === st.url ? '#17643f' : 'var(--primary)'};">
           ${activeRadioUrl === st.url ? '🟢 Läuft gerade…' : '▶ Jetzt abspielen'}
         </div>
       `;
