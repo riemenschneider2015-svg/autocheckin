@@ -1,5 +1,5 @@
 #EXTM3U
-# StayInLeipzig: 896 direct media streams, sorted by language.
+# StayInLeipzig: 884 direct media streams, sorted by language; known geo-blocked entries excluded.
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/MDR_Logo_2017.svg/960px-MDR_Logo_2017.svg.png" group-title="🇩🇪 Deutschland (Deutsch)",MDR Sachsen HD (Leipzig)
 https://mdrtvsnhls.akamaized.net/hls/live/2016928/mdrtvsn/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/ARD_Dachmarke_2014.svg/960px-ARD_Dachmarke_2014.svg.png" group-title="🇩🇪 Deutschland (Deutsch)",Das Erste (ARD) HD
@@ -202,10 +202,6 @@ https://stream.polar.cz/polar/polarlive-1/playlist.m3u8
 https://stream.mediawork.cz/retrotv/retrotvHQ1/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/8Xm3WSn.png" tvg-id="TVBrno1.cz" tvg-language="Čeština" group-title="Tschechien",TV Brno 1 (1080p)
 https://stream.polar.cz/tvbrno1/tvbrno1live-1/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Noe-logo-2016.png/500px-Noe-logo-2016.png" tvg-id="TVNoe.cz" tvg-language="Čeština" group-title="Tschechien",TV Noe (720p) [Geo-blocked]
-https://n105.quickmedia.tv/noetv/live/noetv/Ifd4_1_4/chunks_dvr_timeshift-0-7200.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/p4FtFUl.png" tvg-id="TVNoePlus.cz" tvg-language="Čeština" group-title="Tschechien",TV Noe+ (720p) [Geo-blocked]
-https://n105.quickmedia.tv/noetvplus/live/noetvplus/Shz3_1_1/chunks_dvr_timeshift-0-7200.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/cwlHDjh.png" tvg-id="UpNetwork.cz" tvg-language="Čeština" group-title="Tschechien",Up Network
 https://dash.antik.sk/live/test_upnetwork/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ulfeIwM.png" tvg-id="UTV.cz" tvg-language="Čeština" group-title="Tschechien",UTV (Czech Republic) (1080p)
@@ -222,8 +218,6 @@ https://alex-stream.rosebud-media.de/bounce/alexlivetv50.smil/index.m3u8
 https://stream01.welocal.stream/stream/fhd-allgaeutv_25679/ngrp:stream_all/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/ARD_alpha.svg/960px-ARD_alpha.svg.png" tvg-id="ARDalpha.de" tvg-language="Deutsch" group-title="Deutschland",ARD-alpha (720p)
 https://mcdn.br.de/br/fs/ard_alpha/hls/de/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ecXMjNl.png" tvg-id="arte.de" tvg-language="Deutsch" group-title="Deutschland",arte (Germany) (720p) [Geo-blocked]
-https://artesimulcast.akamaized.net/hls/live/2030993/artelive_de/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/27AKMUL.png" tvg-id="AugsburgTV.de" tvg-language="Deutsch" group-title="Deutschland",Augsburg TV (1080p)
 https://stream02.welocal.stream/stream/fhd-augsburgtv_104951/ngrp:stream_all/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/RLwmrk3.png" tvg-id="BibelTV.de" tvg-language="Deutsch" group-title="Deutschland",Bibel TV (720p)
@@ -436,8 +430,6 @@ https://cdn.live247stream.com/hyder/tv/playlist.m3u8
 https://live.kanshitv.co.uk/mobile/kanshitvkey.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/WsOfy19.png" tvg-id="LLBNTVSouthAsia.us" tvg-language="हिन्दी" group-title="Vereinigte Staaten",LLBN TV South Asia (480p)
 https://brightstar-southasia-pull-secure.akamaized.net/brightstarsouthasia/stream.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/TTAGFHG.png" tvg-id="MBCBollywood.ae" tvg-language="हिन्दी" group-title="Vereinigte Arabische Emirate",MBC Bollywood (1080p) [Geo-blocked]
-https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-bollywood/546eb40d7dcf9a209255dd2496903764/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/JcJ6fQ9.png" tvg-id="BravoKidsTV.hr" tvg-language="Hrvatski" group-title="Kroatien",Bravo! Kids TV
 https://streaming.radiohub.hr/RadioHub_WEB_streaming/BHWUC27pGZ/3.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/FCb7Ag2.png" tvg-id="CMCTV.hr" tvg-language="Hrvatski" group-title="Kroatien",CMC TV (1080p)
@@ -562,8 +554,6 @@ https://dnx1f4sl30ba2.cloudfront.net/nlpo/clr-nlpo/altenatv/index.m3u8
 https://live.zendzend.com/mpegts/29375_107244/media_mpegts_0.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/egK33Dj.png" tvg-id="BEATTV.nl" tvg-language="Nederlands" group-title="Niederlande",BEATTV (1080p)
 https://tv.beatfm.nl/live.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/d0KLwkj.png" tvg-id="BNRNieuwsradio.nl" tvg-language="Nederlands" group-title="Niederlande",BNR Nieuwsradio (720p) [Geo-blocked]
-https://bnr-cache-cdp.triple-it.nl/studio/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/rG8pHh9/bonaire-tv-logo-596x150.png" tvg-id="Bonairetv.bq" tvg-language="Nederlands" group-title="Karibische Niederlande",Bonaire.tv (1080p) [Not 24/7]
 https://media.streambrothers.com:1936/8506/8506/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/7cVkllH.png" tvg-id="BonceTV.cw" tvg-language="Nederlands" group-title="Curaçao",Bonce TV (480p) [Not 24/7]
@@ -676,8 +666,6 @@ https://atomic.streamnet.ro/academia.m3u8
 https://atomic.streamnet.ro/atomictv.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/B1_TV_logo.svg/960px-B1_TV_logo.svg.png" tvg-id="B1.ro" tvg-language="Română" group-title="Rumänien",B1
 https://hls02ns.antenaplay.ro/hls/b1-tv-hd/index.m3u8
-#EXTINF:-1 tvg-logo="https://web02.antik.sk/assets/img/channels/645a85b97a8257d6702639d6e540fe5b.svg" tvg-id="Eurosport4K.fr" tvg-language="Română" group-title="Frankreich",Eurosport 4K Romania (2160p) [Geo-blocked]
-https://vip-acasatv.online:25463/lrZuGxAuP3/6782859900/5449.m3u8
 #EXTINF:-1 tvg-logo="https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bhits.png" tvg-id="FILMBOXPlusHits.pl" tvg-language="Română" group-title="Polen",FILMBOX+ Hits Romania (576p)
 https://nosignal1.antenaplay.ro/hls/fb-hits-sd/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/QwqM5j6.png" tvg-id="HitFM.md" tvg-language="Română" group-title="Republik Moldau",Hit FM (1080p)
@@ -766,8 +754,6 @@ https://rtvelivestream.rtve.es/rtvesec/cat/24h_cat_main_dvr.m3u8
 https://panel.host-live.com:19360/cn247tv/cn247tv.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/F4NZM3s.jpeg" tvg-id="36TVHuacho.pe" tvg-language="Español" group-title="Peru",36 TV Huacho (720p)
 https://live-evg10.tv360.bitel.com.pe/bitel/36tvSRT/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/EBtgnxR.png" tvg-id="360RFTV.cr" tvg-language="Español" group-title="Costa Rica",360 RFTV (576p) [Geo-blocked]
-https://acceso.mediosdecostarica.com:3638/live/360rftvcrlive.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/mSn7ACs.png" tvg-id="5tv.ar" tvg-language="Español" group-title="Argentinien",5tv (608p)
 https://617c5175c970b.streamlock.net:4444/tvcinco/live1/playlist.m3u8
 #EXTINF:-1 tvg-id="6WiseTv.us" tvg-language="Español" group-title="Vereinigte Staaten",6 Wise Tv (720p)
@@ -822,8 +808,6 @@ https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/atv/atv_1080p.m3u8
 https://edge.taksimbilisim.com/birtv/bant1/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/bmkXfIE.png" tvg-id="BloombergHT.tr" tvg-language="Türkçe" group-title="Türkei",Bloomberg HT (720p)
 https://mumbai-edge.smartplaytv.in/BloombergHT/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/U3qlEAp.png" tvg-id="BRTV.tr" tvg-language="Türkçe" group-title="Türkei",BRTV (Turkiye) (720p) [Geo-blocked]
-https://live.artidijitalmedya.com/artidijital_brtv/brtv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ZIS2ZQ1.png" tvg-id="ChassePeche.fr" tvg-language="Türkçe" group-title="Frankreich",Chasse & Peche (540p)
 https://r.eu.cdn-redge.media/livehls/oeu/mt/live/chasse_et_peche/live.livx/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/CLzP4vL.png" tvg-id="CiftciTV.tr" tvg-language="Türkçe" group-title="Türkei",Ciftci TV (720p) [Not 24/7]
@@ -916,8 +900,6 @@ https://freem3u.xyz/api/live/play.m3u8?vid=216
 https://mediaserver.abnvideos.com/streams/abnchina.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/gDn101f.png" tvg-id="AnhuiTV.cn" tvg-language="中文" group-title="China",Anhui TV (1080p)
 https://restream.pdtvhd.com/memfs/c1cd2ed0-3b2b-4c25-af98-a7fb0b1eb130.m3u8
-#EXTINF:-1 tvg-logo="https://www.tvchinese.net/uploads/tv/baicheng.jpg" tvg-id="BaichengTV.cn" tvg-language="中文" group-title="China",Baicheng TV [Geo-blocked]
-https://stream2.jlntv.cn/baicheng1/sd/live.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/hkwcBM9.png" tvg-id="BeautifulLifeTV.tw" tvg-language="中文" group-title="Taiwan",Beautiful Life TV (720p)
 https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/gBbLyqh.png" tvg-id="CCTV4America.cn" tvg-language="中文" group-title="China",CCTV-4 America
@@ -1112,8 +1094,6 @@ https://d2ycaxub5x98iw.cloudfront.net/nlpo/clr-nlpo/merwetv/index.m3u8
 https://ms2.mx-cd.net/tv/276-2860564/Omroep_NOOS.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="Notele.be" tvg-logo="https://i.imgur.com/fGS55nR.png" tvg-language="Nederlands" group-title="Belgien",Notele (576p) [Not 24/7]
 https://streaming01.divercom.be/notele_live/direct.stream/playlist.m3u8
-#EXTINF:-1 tvg-id="NPO2.nl" tvg-logo="https://i.imgur.com/wmqaoXS.png" tvg-language="Nederlands" group-title="Niederlande",NPO 2 HD (720p) [Geo-blocked]
-https://bpm.tv.delta.nl/hls/combined/2/mobile.m3u8
 #EXTINF:-1 tvg-id="OmroepBrabantRadio.nl" tvg-language="Nederlands" group-title="Niederlande",Omroep Brabant Radio (1080p)
 https://d3slqp9xhts6qb.cloudfront.net/live/omroepbrabant/visualradio/index.m3u8
 #EXTINF:-1 tvg-id="OmroepFlevoland.nl" tvg-logo="https://i.imgur.com/rF4MTYD.png" tvg-language="Nederlands" group-title="Niederlande",Omroep Flevoland (720p) [Not 24/7]
@@ -1200,8 +1180,6 @@ https://informatia.streamnet.ro/mobile_tv/informatiatv.m3u8
 https://live77cdn2.antenaplay.ro/live2_fast/ch3/stream.m3u8
 #EXTINF:-1 tvg-id="KanalD.ro" tvg-logo="https://i.imgur.com/15ILp0P.png" tvg-language="Română" group-title="Rumänien",Kanal D (Romania) (480p)
 https://stream1.kanald.ro/iphone/knd-live.m3u8
-#EXTINF:-1 tvg-id="LoveNature.ca" tvg-logo="https://tv.lovenature.com/wp-content/uploads/2024/10/LoveNature2024_Logo_full_colour-copy.png" tvg-language="Română" group-title="Kanada",Love Nature 4K (2160p) [Geo-blocked]
-https://pb-ehs1glsha1juy.akamaized.net/Love_Nature_4K.m3u8
 #EXTINF:-1 tvg-id="MediCOOLTV.ro" tvg-logo="https://i.imgur.com/Xe7x1k2.png" tvg-language="Română" group-title="Rumänien",MediCOOL TV
 https://live77cdn2.antenaplay.ro/live2_fast/ch1/stream.m3u8
 #EXTINF:-1 tvg-id="MireasaPlus.ro" tvg-logo="https://i.imgur.com/URwmGuY.png" tvg-language="Română" group-title="Rumänien",Mireasa+ (480p)
@@ -1386,8 +1364,6 @@ https://dash2.antik.sk/live/kvartal_tv/playlist.m3u8
 https://cdn1.live-tv.cloud/rivne1/rivne1-abr/playlist.m3u8
 #EXTINF:-1 tvg-id="Rybalka.ua" tvg-logo="https://i.imgur.com/NafW0xT.png" tvg-language="Українська" group-title="Ukraine",Rybalka (1080p)
 https://dash2.antik.sk/live/test_rybalka_tv_atktv/playlist.m3u8
-#EXTINF:-1 tvg-id="Simon.ua" tvg-logo="https://i.imgur.com/FfYVCJC.png" tvg-language="Українська" group-title="Ukraine",Simon (720p) [Geo-blocked]
-https://hls.simon.ua/live-HD/live/playlist.m3u8
 #EXTINF:-1 tvg-id="TelekanalRAI.ua" tvg-logo="https://i.imgur.com/Ouv51WB.png" tvg-language="Українська" group-title="Ukraine",Telekanal RAI (480p)
 https://stream.rai.ua/rai/stream.m3u8
 #EXTINF:-1 tvg-id="AlIraqiaSport.iq" tvg-logo="https://i.imgur.com/DrrlxTO.png" tvg-language="العربية" group-title="Irak",Al Iraqia Sport (720p)
